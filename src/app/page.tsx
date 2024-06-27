@@ -6,6 +6,8 @@ import HomeProductsList from '@/components/home/home-products-list'
 import Newsletter from '@/components/shared/newsletter'
 import Prefooter from '@/components/home/prefooter'
 
+export const runtime = 'edge';
+
 /**
  * Renders the Home component which displays a hero section, categories section,
  * home products list, info section, featured lists for jewelry and electronics,
