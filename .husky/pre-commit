@@ -1,0 +1,2 @@
+pnpm biome lint --apply --staged ./src
+pnpm biome format --write --staged ./src
