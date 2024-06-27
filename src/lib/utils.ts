@@ -1,13 +1,13 @@
-import { type ClassValue, clsx } from 'clsx'
+import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 /**
  * A utility function that merges and normalizes CSS class names using Tailwind CSS.
  *
- * @param {...ClassValue[]} inputs - The CSS class names to merge.
- * @return {ClassValue} - The merged and normalized CSS class names.
+ * @param {string | undefined} inputs - The CSS class names to merge.
+ * @return {string | undefined} - The merged and normalized CSS class names.
  */
-export function cn(...inputs: ClassValue[]): ClassValue {
+export function cn(...inputs: Array<string | undefined>): string | undefined {
 	return twMerge(clsx(inputs))
 }
 
