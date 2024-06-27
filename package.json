@@ -30,7 +30,6 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.3",
-		"@cloudflare/next-on-pages": "^1.12.0",
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
