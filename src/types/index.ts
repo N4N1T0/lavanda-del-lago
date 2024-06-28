@@ -13,3 +13,10 @@ export interface InfoCardProps {
 	title: string
 	text: string
 }
+
+export interface Breadcrumb {
+	name: string
+	path: string
+}
+
+export interface Breadcrumbs extends Array<Breadcrumb> {}
