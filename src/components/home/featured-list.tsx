@@ -1,6 +1,7 @@
 // Project component imports
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import ProductCarousel from '@/components/shared/product-carousel'
+import type { Product } from '@/types'
 
 /**
  * Renders a featured list section with a title and a product carousel.
@@ -25,7 +26,7 @@ const FeaturedList = async ({
 		const response = await fetch(
 			`https://fakestoreapi.com/products/category/${itemCategory}`,
 		)
-		const items = await response.json()
+		const items: Product[] = await response.json()
 
 		return (
 			<section>
@@ -45,7 +46,7 @@ const FeaturedList = async ({
 		)
 	} catch (error) {
 		console.error(error)
-		return <ServerFetchError />
+		return <ServerFetchError error={error} />
 	}
 }
 

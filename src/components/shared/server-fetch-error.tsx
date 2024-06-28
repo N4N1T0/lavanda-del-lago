@@ -1,12 +1,12 @@
 // React Imports
-import React from 'react'
+import React, { type ReactNode } from 'react'
 
 /**
  * Renders an error component for the home products list.
  *
  * @return {JSX.Element} The error component for the home products list.
  */
-export const ServerFetchError = React.memo(() => {
+export const ServerFetchError = React.memo(({ error }: { error: unknown }) => {
 	return (
 		<section
 			id='home-products-list-error'
@@ -14,7 +14,7 @@ export const ServerFetchError = React.memo(() => {
 		>
 			<h3 className='text-3xl text-center'>
 				Lo sentimos, <br />
-				Hubo un error cargando los Elementos
+				<span>{error as ReactNode}</span>
 			</h3>
 		</section>
 	)

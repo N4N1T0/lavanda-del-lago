@@ -9,15 +9,13 @@ import type { Product } from '@/types'
 // UI component imports
 import { Skeleton } from '@/components/ui/skeleton'
 
-// Next.js Imports
-import useSWR from 'swr'
-
 // Project component imports
 import ProductCard from '@/components/shared/product-card'
 import { ClientFetchError } from '@/components/shared/client-fetch-error'
 
 // Fetcher function
 import { fetcher } from '@/lib/utils'
+import useSWR from 'swr'
 
 // Constants
 const categoriesList: string[] = [
@@ -44,10 +42,10 @@ const HomeProductsList = (): JSX.Element => {
 			revalidateOnFocus: false,
 			revalidateOnReconnect: false,
 		},
-	)
+	) as { data: Product[]; error: unknown }
 
 	if (productsError) {
-		return <ClientFetchError />
+		return <ClientFetchError error={productsError} />
 	}
 
 	if (!products) {

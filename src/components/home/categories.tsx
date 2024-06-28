@@ -13,7 +13,7 @@ import { ServerFetchError } from '../shared/server-fetch-error'
 export const Categories = async (): Promise<JSX.Element> => {
 	try {
 		const response = await fetch('https://fakestoreapi.com/products/categories')
-		const categories = await response.json()
+		const categories: string[] = await response.json()
 
 		return (
 			<section
@@ -38,7 +38,7 @@ export const Categories = async (): Promise<JSX.Element> => {
 		)
 	} catch (error) {
 		console.error(error)
-		return <ServerFetchError />
+		return <ServerFetchError error={error} />
 	}
 }
 

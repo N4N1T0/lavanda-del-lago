@@ -8,7 +8,7 @@ import React from 'react'
  *
  * @return {JSX.Element} The error component for the home products list.
  */
-export const ClientFetchError = React.memo(() => {
+export const ClientFetchError = React.memo(({ error }: { error: unknown }) => {
 	const router = useRouter()
 	const handleClick = React.useCallback(() => router.refresh(), [router])
 
@@ -19,7 +19,7 @@ export const ClientFetchError = React.memo(() => {
 		>
 			<h3 className='text-3xl text-center'>
 				Lo sentimos, <br />
-				Hubo un error cargando los Elementos
+				{error as React.ReactNode}
 			</h3>
 			<button
 				type='button'
