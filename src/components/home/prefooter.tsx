@@ -12,9 +12,14 @@ import { PrefooterImage } from '@/assets'
  */
 const Prefooter = (): JSX.Element => {
 	return (
-		<section id='prefooter'>
+		<section id='prefooter' className='w-full'>
 			<Link href='/'>
-				<Image alt='prefooter' src={PrefooterImage} title='prefooter' />
+				<Image
+					alt='prefooter'
+					src={PrefooterImage}
+					title='prefooter'
+					className='w-full object-fill'
+				/>
 			</Link>
 		</section>
 	)
