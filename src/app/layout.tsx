@@ -9,17 +9,17 @@ import Footer from '@/components/layout/footer'
 const lemon = localFont({
 	src: [
 		{
-			path: './lemon-milk-PRO/Lemon_Milk_Pro_Ultra_Light.otf',
+			path: '../assets/lemon-milk-PRO/Lemon_Milk_Pro_Ultra_Light.otf',
 			weight: '100',
 			style: 'light',
 		},
 		{
-			path: './lemon-milk-PRO/Lemon_Milk_Pro_Regular.otf',
+			path: '../assets/lemon-milk-PRO/Lemon_Milk_Pro_Regular.otf',
 			weight: '400',
 			style: 'normal',
 		},
 		{
-			path: './lemon-milk-PRO/Lemon_Milk_Pro_Bold.otf',
+			path: '../assets/lemon-milk-PRO/Lemon_Milk_Pro_Bold.otf',
 			weight: '700',
 			style: 'bold',
 		},
