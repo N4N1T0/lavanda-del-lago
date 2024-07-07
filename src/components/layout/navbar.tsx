@@ -1,5 +1,5 @@
 // Project assets
-import { Cart, User, Favorites, MainLogo } from '@/assets'
+import { User, Favorites, MainLogo } from '@/assets'
 
 // Next.js imports
 import Image from 'next/image'
@@ -12,6 +12,7 @@ import {
 	NavbarLinks,
 	NavbarLinksMobile,
 } from '@/components/layout/navbar-links'
+import Link from 'next/link'
 
 /**
  * Renders the Navbar component.
@@ -23,11 +24,13 @@ const Navbar = (): JSX.Element => {
 		<header className='flex items-center justify-between px-5 md:px-10 2xl:px-20 py-4 border-b border-accent/50'>
 			<div className='inline-flex flex-col items-center flex-[0_0_auto]'>
 				<div className='inline-flex items-center flex-[0_0_auto]'>
-					<Image
-						className='w-[50px] h-[50px] object-cover hover:opacity-50 duration-150 transition-opacity cursor-pointer hidden md:block'
-						alt='Lavanda del lago'
-						src={MainLogo}
-					/>
+					<Link href='/'>
+						<Image
+							className='w-[50px] h-[50px] object-cover hover:opacity-50 duration-150 transition-opacity cursor-pointer hidden md:block'
+							alt='Lavanda del lago'
+							src={MainLogo}
+						/>
+					</Link>
 					<NavbarLinksMobile />
 				</div>
 			</div>
@@ -37,20 +40,8 @@ const Navbar = (): JSX.Element => {
 
 			<div className='inline-flex items-center justify-center gap-6 flex-[0_0_auto]'>
 				<SearchMobile />
-				<WishlistCart>
-					<Image
-						className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
-						alt='Icon favorites'
-						src={Favorites}
-					/>
-				</WishlistCart>
-				<CartSheet>
-					<Image
-						className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
-						alt='Icon cart'
-						src={Cart}
-					/>
-				</CartSheet>
+				<WishlistCart />
+				<CartSheet />
 				<Image
 					className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
 					alt='Icon user'
