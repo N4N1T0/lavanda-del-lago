@@ -1,3 +1,5 @@
+import { Naturale, Bio, OlioEsential, NoParabem, AguaTermale } from '@/assets'
+
 export const navItems = [
 	{
 		label: 'Productos',
@@ -92,3 +94,53 @@ export const footerLinks = {
 		},
 	],
 }
+
+export const productsFilers = [
+	{
+		name: 'Mas Vendidos',
+		value: 'mas-vendidos',
+	},
+	{
+		name: 'Nuevos',
+		value: 'nuevos',
+	},
+	{
+		name: 'Ofertas',
+		value: 'ofertas',
+	},
+]
+
+export const categoriesList = [
+	'electronics',
+	'jewelery',
+	"men's clothing",
+	"women's clothing",
+]
+
+export const badges = [
+	{
+		src: OlioEsential,
+		alt: 'Olio Esencial',
+		title: 'Olio Esencial de Lavanda',
+	},
+	{
+		src: NoParabem,
+		alt: 'No Parabem',
+		title: 'Lavanda Sin Parabencitos',
+	},
+	{
+		src: AguaTermale,
+		alt: 'Agua Termale',
+		title: 'Agua Termale de Lavanda',
+	},
+	{
+		src: Bio,
+		alt: 'Bio',
+		title: 'Lavanda Natural Bio',
+	},
+	{
+		src: Naturale,
+		alt: 'Naturale',
+		title: 'Lavanda Naturale',
+	},
+]
