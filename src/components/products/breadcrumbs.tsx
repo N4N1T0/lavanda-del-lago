@@ -4,7 +4,7 @@
 import React from 'react'
 
 // Next.js Imports
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 // UI Imports
 import {
@@ -25,19 +25,44 @@ import { breakUrlToBreadcrumb, capitalizeFirstLetter } from '@/lib/utils'
  * @return {JSX.Element} The breadcrumb component.
  */
 const Breadcrumbs = (): JSX.Element => {
+	// Get the current path from Next.js's usePathname hook
 	const path = usePathname()
-	const breadcrumbsArray = React.useMemo(
-		() => breakUrlToBreadcrumb(path),
-		[path],
-	)
+	// Get the category from the search params
+	const searchParams = useSearchParams()
+	const category = searchParams.get('category') || 'Todos'
+
+	// Memoize an array of breadcrumbs based on the current path and category
+	const breadcrumbsArray = React.useMemo(() => {
+		// Get an array of breadcrumbs based on the current path
+		const result = breakUrlToBreadcrumb(path)
+
+		// If there are more than 1 breadcrumb, add the category to the middle
+		if (result.length > 1) {
+			result.splice(1, 0, {
+				name: category,
+				path: `/products?category=${category}`,
+			})
+		} else {
+			// If there is only 1 breadcrumb, add the category to the end
+			result.push({
+				name: category,
+				path: `/products?category=${category}`,
+			})
+		}
+
+		return result
+	}, [path, category])
+
+	// Log the array of breadcrumbs for debugging purposes
+	console.log(breadcrumbsArray)
 
 	return (
 		<section
 			id='breadcrumbs'
-			className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex flex-col gap-7'
+			className='mx-auto max-w-screen-2xl px-4 pt-8 sm:px-6 sm:pt-12 lg:px-8 flex flex-col gap-7'
 		>
 			<Breadcrumb>
-				<BreadcrumbList>
+				<BreadcrumbList className='w-fit'>
 					<BreadcrumbItem>
 						<BreadcrumbLink
 							href='/'
@@ -50,6 +75,7 @@ const Breadcrumbs = (): JSX.Element => {
 						<React.Fragment key={`${breadcrumb.name}-breadcrumb-${index + 1}`}>
 							<BreadcrumbSeparator />
 							<BreadcrumbItem>
+								{/* If this is the last breadcrumb, display it as a BreadcrumbPage */}
 								{index === breadcrumbsArray.length - 1 ? (
 									<BreadcrumbPage className='text-accent font-medium'>
 										{capitalizeFirstLetter(breadcrumb.name)}
