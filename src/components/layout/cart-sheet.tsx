@@ -11,6 +11,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
+	SheetClose,
 } from '@/components/ui/sheet'
 
 // Utils Imports
@@ -43,7 +44,7 @@ const CartSheet = (): JSX.Element => {
 	}
 
 	// Calculate the total price of the items in the shopping cart
-	const total = calculateTotal(count)
+	const [subTotal] = calculateTotal(count)
 
 	// Render the shopping cart sheet component
 	return (
@@ -84,29 +85,33 @@ const CartSheet = (): JSX.Element => {
 						<div className='border-t border-gray-200 px-4 py-6 sm:px-6 w-full'>
 							<div className='flex justify-between text-base font-medium text-gray-900'>
 								<p>Subtotal</p>
-								<p>{total}</p>
+								<p>{subTotal}</p>
 							</div>
 							<p className='mt-1 text-sm text-gray-500'>
 								Gastos de envío e impuestos calculados en el checkout.
 							</p>
 							<div className='mt-6'>
-								<Link
-									href='/checkout'
-									className='flex items-center justify-center rounded-md border border-accent bg-accent px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-accent/30 hover:text-accent transition-colors duration-200'
-								>
-									Checkout
-								</Link>
+								<SheetClose asChild>
+									<Link
+										href='/checkout'
+										className='flex items-center justify-center rounded-md border border-accent bg-accent px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-accent/30 hover:text-accent transition-colors duration-200'
+									>
+										Checkout
+									</Link>
+								</SheetClose>
 							</div>
 							<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
 								<p>
 									o{' '}
-									<Link
-										href='/products'
-										className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
-									>
-										Continua Comprando
-										<span aria-hidden='true'> &rarr;</span>
-									</Link>
+									<SheetClose asChild>
+										<Link
+											href='/products'
+											className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
+										>
+											Continua Comprando
+											<span aria-hidden='true'> &rarr;</span>
+										</Link>
+									</SheetClose>
 								</p>
 							</div>
 						</div>
@@ -117,20 +122,24 @@ const CartSheet = (): JSX.Element => {
 							<p>No hay elementos en el carrito de la compra</p>
 							<p className='text-sm text-gray-500'>Puedes empezar por:</p>
 							<div className='w-full flex justify-between items-center'>
-								<Link
-									href='/products'
-									className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
-								>
-									Lista de Productos
-									<span aria-hidden='true'> &rarr;</span>
-								</Link>
-								<Link
-									href='/oferts'
-									className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
-								>
-									Nuevas Ofertas
-									<span aria-hidden='true'> &rarr;</span>
-								</Link>
+								<SheetClose asChild>
+									<Link
+										href='/products'
+										className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
+									>
+										Lista de Productos
+										<span aria-hidden='true'> &rarr;</span>
+									</Link>
+								</SheetClose>
+								<SheetClose asChild>
+									<Link
+										href='/oferts'
+										className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
+									>
+										Nuevas Ofertas
+										<span aria-hidden='true'> &rarr;</span>
+									</Link>
+								</SheetClose>
 							</div>
 						</div>
 					</SheetFooter>

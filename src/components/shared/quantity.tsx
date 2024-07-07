@@ -48,7 +48,6 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
 	// Function to add to the Cart and show a toast with a meesage of completed
 	const addToCart = () => {
 		setCount([...count, cartItem])
-		// ???????? Why dosnt this work???
 		toast({
 			title: 'Se agrego correctamente al carrito',
 			description:

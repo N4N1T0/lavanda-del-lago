@@ -24,6 +24,10 @@ import Bio from './biocento 1.png'
 import OlioEsential from './con-olio-essenziale-di-lavanda 1.png'
 import NoParabem from './no-parabeni 1.png'
 import AguaTermale from './con-acqua-termale 1.png'
+import EnergiaRinnovabile from './energia-rinnovabile 1.png'
+import VecetaleCento from './vecetalecento 1.png'
+import Image404 from './annie-spratt-NrflUuJJK0I-unsplash.webp'
+import Image500 from './baraa-jalahej-qfZGhapxoa4-unsplash.webp'
 
 export {
 	Cart,
@@ -49,4 +53,8 @@ export {
 	OlioEsential,
 	NoParabem,
 	AguaTermale,
+	EnergiaRinnovabile,
+	VecetaleCento,
+	Image404,
+	Image500,
 }
