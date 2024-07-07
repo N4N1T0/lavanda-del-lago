@@ -10,6 +10,11 @@ const nextConfig = {
 				hostname: 'fakestoreapi.com',
 				port: '',
 			},
+			{
+				protocol: 'https',
+				hostname: 'dummyimage.com',
+				port: '',
+			},
 		],
 	},
 }
