@@ -19,6 +19,11 @@ import Condimento1 from './insaporitore-grigliate-oggetto 1.png'
 import Condimento2 from './insaporitore-insalate-oggetto 1.png'
 import FeaturedImage1 from './banner-quadrato-tonico-cuor-di-rosa 1.webp'
 import PrefooterImage from './Banner 2.webp'
+import Naturale from './lavanda-naturale 1.png'
+import Bio from './biocento 1.png'
+import OlioEsential from './con-olio-essenziale-di-lavanda 1.png'
+import NoParabem from './no-parabeni 1.png'
+import AguaTermale from './con-acqua-termale 1.png'
 
 export {
 	Cart,
@@ -39,4 +44,9 @@ export {
 	FooterLogo,
 	NavbarLogo,
 	PrefooterImage,
+	Naturale,
+	Bio,
+	OlioEsential,
+	NoParabem,
+	AguaTermale,
 }
