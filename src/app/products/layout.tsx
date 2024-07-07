@@ -1,21 +1,22 @@
+// Project Comonents Imports
 import Breadcrumbs from '@/components/products/breadcrumbs'
-import ProductsSidebar from '@/components/products/sidebar'
 
+/**
+ * Renders the layout for the products page.
+ *
+ * @param {Readonly<{ children: React.ReactNode }>} props - The component props.
+ * @param {React.ReactNode} props.children - The children to be rendered within the layout.
+ * @return {JSX.Element} The rendered layout component.
+ */
 export default function ProductsLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
-}>) {
+}>): JSX.Element {
 	return (
-		<>
+		<section id='products-layout' className='w-full relative'>
 			<Breadcrumbs />
-			<section
-				id='main-products'
-				className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex gap-10'
-			>
-				<ProductsSidebar />
-				{children}
-			</section>
-		</>
+			{children}
+		</section>
 	)
 }

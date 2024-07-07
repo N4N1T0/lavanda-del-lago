@@ -7,6 +7,10 @@ export interface Product {
 	image: string
 }
 
+export interface CartItem extends Product {
+	quantity: number
+}
+
 export interface InfoCardProps {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	image: any
