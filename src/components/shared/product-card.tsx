@@ -9,6 +9,12 @@ import React from 'react'
 import type { Product } from '@/types'
 import { eurilize } from '@/lib/utils'
 
+// UI Import
+import { Skeleton } from '@/components/ui/skeleton'
+
+// Project Imports
+import WishlistBtn from '@/components/shared/wishlist-btn'
+
 /**
  * Renders a product card component with details such as title, price, description, and image.
  *
@@ -16,9 +22,9 @@ import { eurilize } from '@/lib/utils'
  * @return {JSX.Element} The rendered product card component.
  */
 const ProductCard = ({ product }: { product: Product }): JSX.Element => {
-	const { title, price, description, image, id } = product
+	const { title, price, description, image, id, category } = product
 	return (
-		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black'>
+		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black relative'>
 			<div className='aspect-square'>
 				<Image
 					src={image}
@@ -31,7 +37,8 @@ const ProductCard = ({ product }: { product: Product }): JSX.Element => {
 			<div className='self-stretch flex-col justify-start items-center gap-6 flex'>
 				<div className='self-stretch flex-col justify-start items-start gap-4 flex'>
 					<Link
-						href={`/products/${id}`}
+						prefetch
+						href={`/products/${id}?category=${category}`}
 						className='self-stretch text-center text-accent font-medium leading-bold text-sm lg:text-base hover:text-black transition-colors duration-200'
 					>
 						{title.split(' ').slice(0, 3).join(' ')}
@@ -44,15 +51,30 @@ const ProductCard = ({ product }: { product: Product }): JSX.Element => {
 						{eurilize(Number(price))}
 					</div>
 				</div>
-				<button
-					type='button'
+				<Link
+					prefetch
+					href={`/products/${id}?category=${category}`}
 					className='px-6 py-3 text-sm md:text-base bg-accent rounded-lg text-white hover:bg-white hover:text-accent transition-colors duration-200'
 				>
 					Comprar <span className='hidden md:inline'>Ahora</span>
-				</button>
+				</Link>
 			</div>
+			<WishlistBtn product={product} className='absolute top-5 right-5' />
 		</li>
 	)
 }
 
-export default ProductCard
+/**
+ * Renders a skeleton component for the product card.
+ *
+ * @return {JSX.Element} The skeleton component for the product card.
+ */
+const ProductCardSkeleton = (): JSX.Element => {
+	return (
+		<li className='rounded-md col-span-1 h-[500px] w-full'>
+			<Skeleton className='w-full h-full' />
+		</li>
+	)
+}
+
+export { ProductCard, ProductCardSkeleton }

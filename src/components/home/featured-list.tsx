@@ -18,7 +18,7 @@ const FeaturedList = async ({
 	featuredTitle,
 	direction = 'left',
 }: {
-	itemCategory: string
+	itemCategory: string | undefined
 	featuredTitle: string
 	direction?: 'left' | 'right'
 }): Promise<JSX.Element> => {

@@ -13,7 +13,10 @@ import {
 import type { Product } from '@/types'
 
 // Project component imports
-import ProductCard from '@/components/shared/product-card'
+import {
+	ProductCard,
+	ProductCardSkeleton,
+} from '@/components/shared/product-card'
 
 // Packages imports
 import Autoplay from 'embla-carousel-autoplay'
@@ -50,8 +53,8 @@ const ProductCarousel = ({
 					</CarouselItem>
 				))}
 			</CarouselContent>
-			<CarouselPrevious className='bg-accent text-white hover:bg-white hover:text-accent transition-colors duration-150 hidden md:block' />
-			<CarouselNext className='bg-accent text-white hover:bg-white hover:text-accent transition-colors duration-150 hidden md:block' />
+			<CarouselPrevious className='bg-accent text-white hover:bg-white hover:text-accent transition-colors duration-150 hidden md:flex' />
+			<CarouselNext className='bg-accent text-white hover:bg-white hover:text-accent transition-colors duration-150 hidden md:flex' />
 		</Carousel>
 	)
 }

@@ -1,5 +1,5 @@
 // Type imports
-import type { Breadcrumbs } from '@/types'
+import type { Breadcrumbs, CartItem, Product } from '@/types'
 
 // Package imports
 import { clsx } from 'clsx'
@@ -60,22 +60,21 @@ export function capitalizeFirstLetter(str: string): string {
 	return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-/**
- * A utility function that checks if a string is a URL and extracts the category query parameter if it exists.
- *
- * @param {string} url - The URL to check.
- * @return {{category: string }} The original URL and the extracted category query parameter if it exists, or just the original URL if it doesn't.
- *
- */
-export function extractCategoryFromUrl(url: string): {
-	category: string
-} {
-	// TODO: Change Base in the URL constructure for the eviroment production site
-	const urlObj = new URL(url, 'http://localhost:3000/')
-	if (urlObj.searchParams.has('category')) {
-		return {
-			category: urlObj.searchParams.get('category') ?? 'Todos',
-		}
+export function calculateTotal(count: CartItem[]) {
+	let total = 0
+	for (const item of count) {
+		total += Number(item.price) * item.quantity
 	}
-	return { category: 'Todos' }
+	return eurilize(total)
+}
+
+/**
+ * Removes an item from the wishlist based on its ID.
+ *
+ * @param {WPProduct[]} count - The current wishlist.
+ * @param {string} id - The ID of the item to remove.
+ * @return {WPProduct[]} - The updated wishlist with the item removed.
+ */
+export const removeFromWishlist = (count: Product[], id: number): Product[] => {
+	return count.filter((item) => item.id !== id)
 }
