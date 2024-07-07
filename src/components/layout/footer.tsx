@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { FooterLogo } from '@/assets'
 
 // Data Imports
-import { footerLinks, socialLinks } from '@/constants/site-data'
+import { footerLinks, socialLinks, badges } from '@/constants/site-data'
 
 /**
  * Renders a footer component with a logo, social links, services list, contact information, and copyright notice.
@@ -43,40 +43,54 @@ const Footer = (): JSX.Element => {
 						</ul>
 					</div>
 
-					<div className='flex gap-6'>
-						<div className='text-center sm:text-left grid place-content-center'>
-							<p className='text-lg font-medium'>Servicios</p>
-							<ul className='mt-8 space-y-4 text-sm'>
-								{footerLinks.services.map(({ name, href }) => (
-									<li key={name}>
-										<Link
-											className='hover:text-gray-400 transition-colors duration-150'
-											href={href}
-										>
-											{name}
-										</Link>
-									</li>
-								))}
-							</ul>
+					<div className='flex flex-col'>
+						<div className='flex gap-6'>
+							<div className='text-center sm:text-left grid place-content-center'>
+								<p className='text-lg font-medium'>Servicios</p>
+								<ul className='mt-8 space-y-4 text-sm'>
+									{footerLinks.services.map(({ name, href }) => (
+										<li key={name}>
+											<Link
+												className='hover:text-gray-400 transition-colors duration-150'
+												href={href}
+											>
+												{name}
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+							<div className='text-center sm:text-left grid place-content-center'>
+								<p className='text-lg font-medium'>Contacto</p>
+								<ul className='mt-8 space-y-4 text-sm'>
+									{footerLinks.contact.map(({ name, href }) => (
+										<li key={name}>
+											<Link
+												className='hover:text-gray-400 transition-colors duration-150'
+												target='_blank'
+												rel='noreferrer'
+												href={href}
+											>
+												<span className='flex-1'>{name}</span>
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
 						</div>
-
-						<div className='text-center sm:text-left grid place-content-center'>
-							<p className='text-lg font-medium'>Contacto</p>
-							<ul className='mt-8 space-y-4 text-sm'>
-								{footerLinks.contact.map(({ name, href }) => (
-									<li key={name}>
-										<Link
-											className='hover:text-gray-400 transition-colors duration-150'
-											target='_blank'
-											rel='noreferrer'
-											href={href}
-										>
-											<span className='flex-1'>{name}</span>
-										</Link>
-									</li>
-								))}
-							</ul>
-						</div>
+						<ul className='flex gap-3 mt-5'>
+							{badges.map(({ src, alt, title }) => (
+								<li key={alt}>
+									<Image
+										src={src}
+										alt={alt}
+										title={title}
+										width={50}
+										height={50}
+									/>
+								</li>
+							))}
+						</ul>
 					</div>
 				</div>
 

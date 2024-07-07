@@ -35,6 +35,9 @@ import { capitalizeFirstLetter } from '@/lib/utils'
 import { MenuIcon, ChevronDown } from 'lucide-react'
 import { NavbarLogo } from '@/assets'
 
+// Add All the categories to the list
+categoriesList.unshift('Todos')
+
 /**
  * Renders a navigation bar with links.
  *
@@ -61,7 +64,11 @@ const NavbarLinks = (): JSX.Element => {
 									{categoriesList.map((category) => (
 										<li key={category}>
 											<Link
-												href={`/products/${category}`}
+												href={
+													category === 'Todos'
+														? '/products'
+														: `/products?category=${category}`
+												}
 												className={`w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer ${
 													path === `/products/${category}`
 														? 'text-accent'
