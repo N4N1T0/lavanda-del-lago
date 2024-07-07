@@ -3,8 +3,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
 // Components Imports
-import Navbar from '@/components/layout/navbar'
-import Footer from '@/components/layout/footer'
 import { seoMetatags } from '@/components/layout/seo'
 
 // Utility Imports
@@ -60,9 +58,7 @@ export default function RootLayout({
 					lemon.variable,
 				)}
 			>
-				<Navbar />
 				<main>{children}</main>
-				<Footer />
 				<Toaster />
 			</body>
 		</html>
