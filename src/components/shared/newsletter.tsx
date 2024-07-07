@@ -32,7 +32,10 @@ const Newsletter = React.memo(() => {
 	}
 
 	return (
-		<div className='flex w-full flex-col items-center justify-center bg-tertiary text-white py-20'>
+		<section
+			id='newsletter'
+			className='flex w-full flex-col items-center justify-center bg-tertiary text-white py-20'
+		>
 			<div className='max-w-2xl space-y-6 text-center'>
 				<h1 className='text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl uppercase'>
 					Se parte de nuestra comunidad
@@ -68,7 +71,7 @@ const Newsletter = React.memo(() => {
 					.
 				</small>
 			</div>
-		</div>
+		</section>
 	)
 })
 

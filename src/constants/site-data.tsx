@@ -1,4 +1,12 @@
-import { Naturale, Bio, OlioEsential, NoParabem, AguaTermale } from '@/assets'
+import {
+	Naturale,
+	Bio,
+	OlioEsential,
+	NoParabem,
+	AguaTermale,
+	VecetaleCento,
+	EnergiaRinnovabile,
+} from '@/assets'
 
 export const navItems = [
 	{
@@ -142,5 +150,30 @@ export const badges = [
 		src: Naturale,
 		alt: 'Naturale',
 		title: 'Lavanda Naturale',
+	},
+	{
+		src: EnergiaRinnovabile,
+		alt: 'Energia Rinnovabile',
+		title: 'Hecho con Energia Renovable',
+	},
+	{
+		src: VecetaleCento,
+		alt: 'Vecetale Cento',
+		title: '100% Vegetal',
+	},
+]
+
+export const contactLinks = [
+	{
+		label: '+32293829323',
+		link: 'tel:+32293829323',
+	},
+	{
+		label: 'info@lavandadellago.it',
+		link: 'mailto:info@lavandadellago.it',
+	},
+	{
+		label: '@lavandadellago',
+		link: 'https://www.instagram.com/o.lavandadellago/',
 	},
 ]
