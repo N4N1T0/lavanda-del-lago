@@ -3,40 +3,37 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
+// External Libraries Imports
+import { v4 as uuidv4 } from 'uuid'
+import type { BentoThreeImage } from '@/types'
+
 /**
  * Renders the Hero component which displays a grid of images and information about
  * two products: Condimentos Naturales and Jabón en frío Depurativo.
  *
  * @return {JSX.Element} The Hero component.
  */
-export const Hero = (): JSX.Element => {
+export const Hero = ({
+	bentoThreeImages,
+}: { bentoThreeImages: BentoThreeImage[] }): JSX.Element => {
 	return (
 		<section id='hero' className='bg-white pt-4'>
 			<div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4'>
-				<div className='col-span-1'>
-					<Image
-						src={Hero3}
-						alt='Lavanda Diario'
-						className='w-full h-auto object-cover aspect-square'
-						priority
-					/>
-				</div>
-				<div className='col-span-1 hidden md:block'>
-					<Image
-						src={Hero1}
-						alt='Gift Box'
-						className='w-full h-auto object-cover aspect-square'
-						priority
-					/>
-				</div>
-				<div className='col-span-1 hidden md:block'>
-					<Image
-						src={Hero2}
-						alt='Herbs'
-						className='w-full h-auto object-cover aspect-square'
-						priority
-					/>
-				</div>
+				{bentoThreeImages.map(({ image }, index) => (
+					<div
+						key={uuidv4()}
+						className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''}`}
+					>
+						<Image
+							src={image}
+							alt='Lavanda Del Lago'
+							className='w-full h-auto object-cover aspect-square'
+							width={500}
+							height={500}
+							priority
+						/>
+					</div>
+				))}
 			</div>
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4'>
 				<div className='col-span-1'>

@@ -29,7 +29,7 @@ const FeaturedList = async ({
 		const items: Product[] = await response.json()
 
 		return (
-			<section>
+			<section id={itemCategory}>
 				<div className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 space-y-5'>
 					<h2
 						className={`text-4xl font-bold text-accent uppercase ${
@@ -38,7 +38,7 @@ const FeaturedList = async ({
 					>
 						{featuredTitle}
 					</h2>
-					<div className='flex gap-5 w-full mx-auto'>
+					<div className='flex gap-5 w-[93%] mx-auto'>
 						<ProductCarousel productList={items} />
 					</div>
 				</div>

@@ -23,6 +23,9 @@ import useSWR from 'swr'
 // Constants
 import { categoriesList } from '@/constants/site-data'
 
+// External Libraies Imports
+import { v4 as uuidv4 } from 'uuid'
+
 /**
  * Renders a list of products based on the selected category.
  *
@@ -30,7 +33,10 @@ import { categoriesList } from '@/constants/site-data'
  */
 const HomeProductsList = (): JSX.Element => {
 	const [categories, setCategories] = useState(categoriesList[0])
-	const productsUrl = `https://fakestoreapi.com/products/category/${categories}`
+	const productsUrl =
+		categories !== 'Todos'
+			? `https://fakestoreapi.com/products/category/${categories}`
+			: 'https://fakestoreapi.com/products'
 
 	const { data: products, error: productsError } = useSWR(
 		productsUrl,
@@ -81,7 +87,7 @@ const HomeProductsListHeader = React.memo(
 				{categoriesList.map((category: string) => (
 					<button
 						type='button'
-						key={category}
+						key={uuidv4()}
 						className={`text-base leading-normal hover:text-accent transition-colors duration-150 ${
 							category === categories ? 'text-accent' : 'text-accent/70'
 						}`}
@@ -108,15 +114,12 @@ const HomeProductsListSkeleton = (): JSX.Element => {
 		>
 			<div className='flex justify-center lg:justify-start items-center flex-wrap gap-10'>
 				{categoriesList.map((category: string) => (
-					<Skeleton
-						key={`${category}-sekeleton`}
-						className='h-4 w-24 rounded-md'
-					/>
+					<Skeleton key={uuidv4()} className='h-4 w-24 rounded-md' />
 				))}
 			</div>
 			<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-				{Array.from({ length: 8 }).map((_, index) => (
-					<ProductCardSkeleton key={`Product-card-skeleton-${index + 1}`} />
+				{Array.from({ length: 8 }).map((_, _i) => (
+					<ProductCardSkeleton key={uuidv4()} />
 				))}
 			</ul>
 		</section>

@@ -5,6 +5,9 @@ import React from 'react'
 // Project component imports
 import { ServerFetchError } from '../shared/server-fetch-error'
 
+// External Libraries Imports
+import { v4 as uuidv4 } from 'uuid'
+
 /**
  * Asynchronously fetches categories from the Fake Store API and renders a list of category links.
  *
@@ -28,7 +31,7 @@ export const Categories = async (): Promise<JSX.Element> => {
 				<div className='flex items-start gap-8 w-full'>
 					<ul className='flex gap-8 w-full overflow-x-scroll snap-x snap-mandatory'>
 						{categories.map((category: string) => (
-							<li key={category} className='snap-start'>
+							<li key={uuidv4()} className='snap-start'>
 								<CategoryLink category={category} />
 							</li>
 						))}
