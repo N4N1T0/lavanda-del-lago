@@ -1,4 +1,16 @@
-@tailwind base;
+  @tailwind base;
   @tailwind components;
   @tailwind utilities;
   
+  :root {
+  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+  --fc-border-color: #a89ac6;
+
+  --fc-button-text-color: #fff;
+  --fc-button-bg-color: #694DAB;
+  --fc-button-border-color: #694DAB;
+  --fc-button-hover-bg-color: #a89ac6;
+  --fc-button-hover-border-color: #a89ac6;
+  --fc-button-active-bg-color: #a89ac6;
+  --fc-button-active-border-color: #a89ac6;
+}
