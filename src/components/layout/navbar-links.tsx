@@ -35,6 +35,9 @@ import { capitalizeFirstLetter } from '@/lib/utils'
 import { MenuIcon, ChevronDown } from 'lucide-react'
 import { NavbarLogo } from '@/assets'
 
+// External Libraies Imports
+import { v4 as uuidv4 } from 'uuid'
+
 // Add All the categories to the list
 categoriesList.unshift('Todos')
 
@@ -62,7 +65,7 @@ const NavbarLinks = (): JSX.Element => {
 							<PopoverContent>
 								<ul>
 									{categoriesList.map((category) => (
-										<li key={category}>
+										<li key={uuidv4()}>
 											<Link
 												href={
 													category === 'Todos'
@@ -87,7 +90,7 @@ const NavbarLinks = (): JSX.Element => {
 
 				return (
 					<Link
-						key={item.label}
+						key={uuidv4()}
 						href={item.href}
 						className={`w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer ${
 							path === item.href ? 'text-accent' : 'opacity-60'
@@ -130,7 +133,7 @@ const NavbarLinksMobile = (): JSX.Element => {
 					{navItems.map((item) => {
 						if (item.label === 'Productos') {
 							return (
-								<>
+								<div key={uuidv4()}>
 									<SheetClose asChild>
 										<Link
 											href={item.href}
@@ -143,7 +146,7 @@ const NavbarLinksMobile = (): JSX.Element => {
 									</SheetClose>
 									<ul className='space-y-1'>
 										{categoriesList.map((category) => (
-											<li key={category} className='pl-2 text-gray-600'>
+											<li key={uuidv4()} className='pl-2 text-gray-600'>
 												<SheetClose asChild>
 													<Link href={`/products?category=${category}`}>
 														{capitalizeFirstLetter(category)}
@@ -152,12 +155,12 @@ const NavbarLinksMobile = (): JSX.Element => {
 											</li>
 										))}
 									</ul>
-								</>
+								</div>
 							)
 						}
 
 						return (
-							<SheetClose key={item.label} asChild>
+							<SheetClose key={uuidv4()} asChild>
 								<Link
 									href={item.href}
 									className={`w-fit font-medium text-gray-950 text-xl ${

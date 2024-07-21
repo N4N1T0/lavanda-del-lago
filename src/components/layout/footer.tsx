@@ -8,6 +8,9 @@ import { FooterLogo } from '@/assets'
 // Data Imports
 import { footerLinks, socialLinks, badges } from '@/constants/site-data'
 
+// External Libraries Imports
+import { v4 as uuidv4 } from 'uuid'
+
 /**
  * Renders a footer component with a logo, social links, services list, contact information, and copyright notice.
  *
@@ -28,7 +31,7 @@ const Footer = (): JSX.Element => {
 						</p>
 						<ul className='mt-8 flex justify-center gap-6 sm:justify-start md:gap-8'>
 							{socialLinks.map(({ name, link, svg }) => (
-								<li key={name}>
+								<li key={uuidv4()}>
 									<Link
 										href={link}
 										rel='noreferrer'
@@ -64,7 +67,7 @@ const Footer = (): JSX.Element => {
 								<p className='text-lg font-medium'>Contacto</p>
 								<ul className='mt-8 space-y-4 text-sm'>
 									{footerLinks.contact.map(({ name, href }) => (
-										<li key={name}>
+										<li key={uuidv4()}>
 											<Link
 												className='hover:text-gray-400 transition-colors duration-150'
 												target='_blank'
@@ -80,7 +83,7 @@ const Footer = (): JSX.Element => {
 						</div>
 						<ul className='flex gap-3 mt-5'>
 							{badges.map(({ src, alt, title }) => (
-								<li key={alt}>
+								<li key={uuidv4()}>
 									<Image
 										src={src}
 										alt={alt}

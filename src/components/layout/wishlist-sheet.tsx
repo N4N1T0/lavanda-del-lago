@@ -39,8 +39,6 @@ const WishlistCart = (): JSX.Element => {
 	// State hook to access and update the wishlist items
 	const [count, setCount] = useWishlist()
 
-	console.log(count)
-
 	// Function to remove an item from the wishlist
 	const removeFromWishlist = (id: number) => {
 		// Filter out the item with the given id

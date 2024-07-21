@@ -1,8 +1,9 @@
 // Project assets
-import { User, Favorites, MainLogo } from '@/assets'
+import { User, MainLogo } from '@/assets'
 
 // Next.js imports
 import Image from 'next/image'
+import Link from 'next/link'
 
 // Project components
 import WishlistCart from '@/components/layout/wishlist-sheet'
@@ -12,7 +13,6 @@ import {
 	NavbarLinks,
 	NavbarLinksMobile,
 } from '@/components/layout/navbar-links'
-import Link from 'next/link'
 
 /**
  * Renders the Navbar component.
@@ -42,11 +42,13 @@ const Navbar = (): JSX.Element => {
 				<SearchMobile />
 				<WishlistCart />
 				<CartSheet />
-				<Image
-					className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
-					alt='Icon user'
-					src={User}
-				/>
+				<Link href={'/login'}>
+					<Image
+						className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
+						alt='Icon user'
+						src={User}
+					/>
+				</Link>
 			</div>
 		</header>
 	)
