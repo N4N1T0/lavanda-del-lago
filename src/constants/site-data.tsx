@@ -18,8 +18,8 @@ export const navItems = [
 		href: '/about',
 	},
 	{
-		label: 'Ofertas',
-		href: '/offers',
+		label: 'Eventos',
+		href: '/events',
 	},
 	{
 		label: 'Blog',

@@ -7,6 +7,9 @@ import { capitalizeFirstLetter } from '@/lib/utils'
 // Data imports
 import { categoriesList } from '@/constants/site-data'
 
+// External Libraies Imports
+import { v4 as uuidv4 } from 'uuid'
+
 /**
  * Asynchronously fetches categories from the Fake Store API and renders a sidebar with category links.
  *
@@ -22,7 +25,7 @@ const ProductsSidebar = ({
 				{['Todos', ...categoriesList].map((category: string) => {
 					return (
 						<li
-							key={category}
+							key={uuidv4()}
 							className={`${
 								categoryPath === category ||
 								(category === 'Todos' && categoryPath === undefined)

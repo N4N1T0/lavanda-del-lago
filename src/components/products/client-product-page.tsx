@@ -1,7 +1,9 @@
 'use client'
 
-import type React from 'react'
+// React Imports
 import { useState } from 'react'
+
+// UI Imports
 import {
 	Select,
 	SelectContent,
@@ -9,17 +11,17 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from '@/components/ui/sheet'
 
-import { ProductCard } from '../shared/product-card'
+// Project Components Imports
+import { ProductCard } from '@/components/shared/product-card'
+
+// Types Imports
 import type { Product } from '@/types'
+
+// External Libraries Imports
+import { v4 as uuidv4 } from 'uuid'
+
+// Constants Imports
 import { productsFilers } from '@/constants/site-data'
 
 const ClientProductPage = ({ products }: { products: Product[] }) => {
@@ -65,7 +67,7 @@ const ProductPageHeader = ({
 				<SelectContent>
 					{productsFilers.map((filter) => (
 						<SelectItem
-							key={filter.value}
+							key={uuidv4()}
 							value={filter.value}
 							className='pl-3'
 							onClick={() => setFilter(filter.value)}

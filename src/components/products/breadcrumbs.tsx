@@ -19,6 +19,9 @@ import {
 // Utility Imports
 import { breakUrlToBreadcrumb, capitalizeFirstLetter } from '@/lib/utils'
 
+// External Libraries Imports
+import { v4 as uuidv4 } from 'uuid'
+
 /**
  * Renders a breadcrumb component based on the current path.
  *
@@ -53,9 +56,6 @@ const Breadcrumbs = (): JSX.Element => {
 		return result
 	}, [path, category])
 
-	// Log the array of breadcrumbs for debugging purposes
-	console.log(breadcrumbsArray)
-
 	return (
 		<section
 			id='breadcrumbs'
@@ -72,7 +72,7 @@ const Breadcrumbs = (): JSX.Element => {
 						</BreadcrumbLink>
 					</BreadcrumbItem>
 					{breadcrumbsArray.map((breadcrumb, index) => (
-						<React.Fragment key={`${breadcrumb.name}-breadcrumb-${index + 1}`}>
+						<React.Fragment key={uuidv4()}>
 							<BreadcrumbSeparator />
 							<BreadcrumbItem>
 								{/* If this is the last breadcrumb, display it as a BreadcrumbPage */}

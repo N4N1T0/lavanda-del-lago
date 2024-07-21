@@ -16,6 +16,9 @@ import { Quantity } from '@/components/shared/quantity'
 // Data Import
 import { badges } from '@/constants/site-data'
 
+// External Libraies Imports
+import { v4 as uuidv4 } from 'uuid'
+
 /**
  * Renders the details of a product including title, price, description, and image.
  *
@@ -77,7 +80,7 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
 					{/* Display the product badges */}
 					{badges.map((badge) => (
 						<Image
-							key={badge.alt}
+							key={uuidv4()}
 							src={badge.src}
 							alt={badge.alt}
 							title={badge.title}
