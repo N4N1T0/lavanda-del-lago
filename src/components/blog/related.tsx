@@ -1,12 +1,12 @@
 import type { Posts } from '@/types'
 import { ServerFetchError } from '../shared/server-fetch-error'
 import { ArticleListCard } from './article-card'
+import { sanityClient } from '@sanity-studio/lib/client'
+import { relatedArticulesByCategory } from '@/lib/queries'
 
 const Related = async ({ category }: { category: string }) => {
-	// ??? Use the category to fetch the related articles
 	try {
-		const response = await fetch('https://jsonplaceholder.org/posts')
-		const posts: Posts[] = await response.json()
+		const posts = await sanityClient.fetch(relatedArticulesByCategory(category))
 		return (
 			<section id='related-articles' className='w-full h-auto'>
 				<h2 className='text-3xl'>Articulos Relacionados</h2>

@@ -5,6 +5,9 @@ import type { Posts } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// External Libraries Imports
+import { v4 as uuidv4 } from 'uuid'
+
 const ArticleCard = ({
 	article,
 	index = 1,
@@ -15,37 +18,40 @@ const ArticleCard = ({
 				index === 0 ? 'row-span-2 flex-col' : 'row-span-1 flex-row'
 			}`}
 		>
-			<Link href={`/blog/${article.id}`} className='group overflow-hidden'>
+			<Link
+				href={`/blog/${article.slug}`}
+				className='group overflow-hidden rounded-md'
+			>
 				<Image
 					src={article.image}
 					alt={article.title}
 					title={article.title}
 					className={`${
-						index !== 0 ? 'aspect-square' : 'w-full h-full object-cover flex-1'
-					} group-hover:scale-110 transition-all duration-300 ease-in-out`}
+						index !== 0 ? 'aspect-square' : 'w-full h-full flex-1'
+					} group-hover:scale-110 transition-all duration-300 ease-in-out object-cover`}
 					width={300}
 					height={300}
+					priority
 				/>
 			</Link>
 			<div className='flex-1 space-y-3 flex flex-col justify-between items-start py-5 px-2'>
 				<small className='text-accent'>
-					Jose Perez - {article.publishedAt}
+					{article.author.name} -{' '}
+					{new Date(article.createdAt).toLocaleDateString('es-ES')}
 				</small>
 				<Link
-					href={`/blog/${article.id}`}
+					href={`/blog/${article.slug}`}
 					className='text-xl hover:text-accent transition-colors duration-200 ease-in-out'
 				>
 					{article.title}
 				</Link>
-				<p className='text-gray-600'>
-					{article.content.split(' ').slice(0, 20).join(' ')}
-				</p>
+				<p className='text-gray-600'>{article.description}</p>
 				<ul className='text-tertiary flex gap-2'>
-					{Array.from({ length: 3 })
-						.fill(article.category)
-						.map((item, index) => (
-							<li key={`${item}-${index + 1}`}>{item as string}</li>
-						))}
+					{article.categories.map((category) => (
+						<li key={uuidv4()} className='text-sm'>
+							{category}
+						</li>
+					))}
 				</ul>
 			</div>
 		</li>
@@ -56,37 +62,36 @@ const ArticleListCard = ({ article }: { article: Posts }) => {
 	return (
 		<article className='col-span-1 w-full h-auto'>
 			<Link
-				href={`/blog/${article.id}`}
-				className='group overflow-hidden w-full h-full block'
+				href={`/blog/${article.slug}`}
+				className='group overflow-hidden w-full h-full block rounded-md'
 			>
 				<Image
 					src={article.image}
 					alt={article.title}
 					title={article.title}
-					className='group-hover:scale-110 transition-all duration-300 ease-in-out h-full w-full'
+					className='group-hover:scale-110 transition-all duration-300 ease-in-out h-full min-w-full'
 					width={300}
 					height={300}
 				/>
 			</Link>
 			<div className='flex-1 space-y-3 flex flex-col justify-between items-start py-5 px-2'>
 				<small className='text-accent'>
-					Jose Perez - {article.publishedAt}
+					{article.author.name} -{' '}
+					{new Date(article.createdAt).toLocaleDateString('es-ES')}
 				</small>
 				<Link
-					href={`/blog/${article.id}`}
+					href={`/blog/${article.slug}`}
 					className='text-xl hover:text-accent transition-colors duration-200 ease-in-out'
 				>
 					<h1>{article.title}</h1>
 				</Link>
-				<p className='text-gray-600'>
-					{article.content.split(' ').slice(0, 20).join(' ')}
-				</p>
+				<p className='text-gray-600'>{article.description}</p>
 				<ul className='text-tertiary flex gap-2'>
-					{Array.from({ length: 3 })
-						.fill(article.category)
-						.map((item, index) => (
-							<li key={`${item}-${index + 1}`}>{item as string}</li>
-						))}
+					{article.categories.map((category) => (
+						<li key={uuidv4()} className='text-sm'>
+							{category}
+						</li>
+					))}
 				</ul>
 			</div>
 		</article>
