@@ -15,6 +15,11 @@ const nextConfig = {
 				hostname: 'dummyimage.com',
 				port: '',
 			},
+			{
+				protocol: 'https',
+				hostname: 'cdn.sanity.io',
+				port: '',
+			},
 		],
 	},
 }

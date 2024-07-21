@@ -12,6 +12,10 @@
 	},
 	"dependencies": {
 		"@builder.io/partytown": "^0.10.2",
+		"@fullcalendar/core": "^6.1.15",
+		"@fullcalendar/daygrid": "^6.1.15",
+		"@fullcalendar/interaction": "^6.1.15",
+		"@fullcalendar/react": "^6.1.15",
 		"@hookform/resolvers": "^3.9.0",
 		"@radix-ui/react-dialog": "^1.0.5",
 		"@radix-ui/react-label": "^2.1.0",
@@ -20,20 +24,26 @@
 		"@radix-ui/react-slot": "^1.0.2",
 		"@radix-ui/react-tabs": "^1.1.0",
 		"@radix-ui/react-toast": "^1.2.1",
+		"@sanity/image-url": "1",
+		"@sanity/vision": "3",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"embla-carousel-autoplay": "^8.1.5",
 		"embla-carousel-react": "^8.1.5",
 		"lucide-react": "^0.379.0",
 		"next": "15.0.0-rc.0",
+		"next-sanity": "9",
 		"react": "19.0.0-rc-fb9a90fa48-20240614",
 		"react-dom": "19.0.0-rc-fb9a90fa48-20240614",
 		"react-hook-form": "^7.52.1",
+		"sanity": "3",
 		"sharp": "^0.33.4",
+		"styled-components": "6",
 		"swr": "^2.2.5",
 		"swr-global-state": "^2.2.0",
 		"tailwind-merge": "^2.3.0",
 		"tailwindcss-animate": "^1.0.7",
+		"uuid": "^10.0.0",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
@@ -41,10 +51,11 @@
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
+		"@types/uuid": "^10.0.0",
 		"husky": "^9.0.11",
 		"postcss": "^8",
 		"tailwindcss": "^3.4.1",
 		"typescript": "^5"
 	},
-	"packageManager": "pnpm@9.1.2"
+	"packageManager": "pnpm@9.5.0"
 }
