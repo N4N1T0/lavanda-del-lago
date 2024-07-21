@@ -14,6 +14,10 @@ import './globals.css'
 // UI Imports
 import { Toaster } from '@/components/ui/toaster'
 
+// Clerk Imports
+import { ClerkProvider } from '@clerk/nextjs'
+import { esES } from '@clerk/localizations'
+
 // Local Fonts Configuration
 const lemon = localFont({
 	src: [
@@ -58,8 +62,15 @@ export default function RootLayout({
 					lemon.variable,
 				)}
 			>
-				<main>{children}</main>
-				<Toaster />
+				<ClerkProvider
+					localization={esES}
+					appearance={{
+						variables: { colorPrimary: '#694DAB', colorInputText: '#694DAB' },
+					}}
+				>
+					<main>{children}</main>
+					<Toaster />
+				</ClerkProvider>
 			</body>
 		</html>
 	)

@@ -13,6 +13,7 @@ import {
 	NavbarLinks,
 	NavbarLinksMobile,
 } from '@/components/layout/navbar-links'
+import UserPopover from './user-popover'
 
 /**
  * Renders the Navbar component.
@@ -42,13 +43,7 @@ const Navbar = (): JSX.Element => {
 				<SearchMobile />
 				<WishlistCart />
 				<CartSheet />
-				<Link href={'/login'}>
-					<Image
-						className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
-						alt='Icon user'
-						src={User}
-					/>
-				</Link>
+				<UserPopover />
 			</div>
 		</header>
 	)
