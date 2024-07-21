@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 // Assets Imports
 import { Image500 } from '@/assets'
 import { contactLinks } from '@/constants/site-data'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function ErrorPage({
 	error,
@@ -33,7 +34,7 @@ export default function ErrorPage({
 					</h2>
 					<ul className='mt-3 space-y-1'>
 						{contactLinks.map((link) => (
-							<li key={link.label}>
+							<li key={uuidv4()}>
 								<Link
 									href={link.link}
 									target='_blank'
