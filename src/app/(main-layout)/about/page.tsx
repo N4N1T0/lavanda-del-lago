@@ -73,7 +73,7 @@ const AboutUsPage = async () => {
 				<ul className='grid grid-cols-2 md:grid-cols-3 lg:grid.cols-4 xl:grid-cols-5 gap-5'>
 					{teams.map((team) => (
 						<li
-							key={team._key}
+							key={team.id}
 							className='flex flex-col gap-3 justify-center items-start text-sm'
 						>
 							<Image
