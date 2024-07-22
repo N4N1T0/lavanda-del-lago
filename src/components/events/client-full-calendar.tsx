@@ -72,7 +72,6 @@ const EventModal = ({
 	setModalOpen: Dispatch<SetStateAction<boolean>>
 	modalOpen: boolean
 }): JSX.Element => {
-	console.log(event?._def?.extendedProps?.urls)
 	return (
 		<Dialog open={modalOpen} onOpenChange={setModalOpen}>
 			<DialogContent className='p-5 text-left'>
