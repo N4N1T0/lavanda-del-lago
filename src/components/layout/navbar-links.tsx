@@ -54,7 +54,7 @@ const NavbarLinks = (): JSX.Element => {
 			{navItems.map((item) => {
 				if (item.label === 'Productos') {
 					return (
-						<Popover>
+						<Popover key={uuidv4()}>
 							<PopoverTrigger
 								className={`w-fit -mt-1 flex font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer ${
 									path === item.href ? 'text-accent' : 'opacity-60'
