@@ -78,7 +78,7 @@ export const aboutUsPage = groq`
     "image": image.asset->url,
     role,
     links,
-    _key
+    "id": _id
   }
 }
 `

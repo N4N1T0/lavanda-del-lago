@@ -94,7 +94,7 @@ export interface Team {
 	name: string
 	description: string
 	image: string
-	_key: string
+	id: string
 }
 
 export interface Link {
