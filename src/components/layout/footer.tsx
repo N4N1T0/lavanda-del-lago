@@ -90,6 +90,7 @@ const Footer = (): JSX.Element => {
 										title={title}
 										width={50}
 										height={50}
+										className='h-auto w-auto'
 									/>
 								</li>
 							))}
