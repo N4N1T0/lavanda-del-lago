@@ -133,10 +133,10 @@ const CartSheet = (): JSX.Element => {
 								</SheetClose>
 								<SheetClose asChild>
 									<Link
-										href='/oferts'
+										href='/events'
 										className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
 									>
-										Nuevas Ofertas
+										Nuestros Eventos
 										<span aria-hidden='true'> &rarr;</span>
 									</Link>
 								</SheetClose>

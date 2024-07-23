@@ -10,6 +10,7 @@ const ClerkLayout = ({ children }: { children: React.ReactNode }) => {
 						alt='Sign up image'
 						src={SignUpImage}
 						className='absolute inset-0 h-full w-full object-cover'
+						priority
 					/>
 				</aside>
 

@@ -25,8 +25,8 @@ const SearchPage = async ({
 			</div>
 			<section id='search-products-list' className='mt-5'>
 				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-					{products.slice(0, 4).map((product: Product) => (
-						<ProductCard key={product.id} product={product} />
+					{products.slice(0, 4).map((product: Product, index: number) => (
+						<ProductCard key={product.id} product={product} index={index} />
 					))}
 				</ul>
 			</section>

@@ -21,7 +21,10 @@ import WishlistBtn from '@/components/shared/wishlist-btn'
  * @param {Product} product - The product object containing title, price, description, image, and id.
  * @return {JSX.Element} The rendered product card component.
  */
-const ProductCard = ({ product }: { product: Product }): JSX.Element => {
+const ProductCard = ({
+	product,
+	index,
+}: { product: Product; index: number }): JSX.Element => {
 	const { title, price, description, image, id, category } = product
 	return (
 		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black relative'>
@@ -31,6 +34,7 @@ const ProductCard = ({ product }: { product: Product }): JSX.Element => {
 					alt={title}
 					width={200}
 					height={200}
+					priority={index < 8}
 					className='object-cover aspect-square'
 				/>
 			</div>

@@ -113,7 +113,7 @@ const ResellerForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit'>Submit</Button>
+				<Button type='submit'>Enviar</Button>
 			</form>
 		</Form>
 	)

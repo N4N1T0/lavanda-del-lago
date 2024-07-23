@@ -44,12 +44,12 @@ const ProductCarousel = ({
 			className='w-full'
 		>
 			<CarouselContent className='gap-5'>
-				{productList.map((product) => (
+				{productList.map((product, index: number) => (
 					<CarouselItem
 						key={product.id}
 						className='md:basis-1/2 lg:basis-1/3 2xl:basis-1/4 px-14 md:px-10 lg:px-8 2xl:px-6'
 					>
-						<ProductCard product={product} />
+						<ProductCard product={product} index={index} />
 					</CarouselItem>
 				))}
 			</CarouselContent>

@@ -55,6 +55,7 @@ const AboutUsPage = async () => {
 					className='object-cover col-span-1 aspect-square'
 					width={1500}
 					height={1500}
+					priority
 				/>
 			</div>
 

@@ -37,7 +37,7 @@ const BlogArticlePage = async ({
 					<div className='w-full md:w-3/4 text-center space-y-5'>
 						<h1 className='text-5xl'>{post.title}</h1>
 						{/* Display the first 20 words of the blog post's content */}
-						<p className='text-gray-600'>{post.description}</p>
+						<p className='text-gray-600 text-lg'>{post.description}</p>
 					</div>
 					{/* Display the main image of the blog post */}
 					<Image
@@ -47,9 +47,10 @@ const BlogArticlePage = async ({
 						width={1800}
 						height={1800}
 						className='rounded-md shadow-md'
+						priority
 					/>
 					{/* Display the rest of the blog post's content */}
-					<div className='w-full md:w-3/4 text-left space-y-7 font-light'>
+					<div className='w-full md:w-3/4 text-left space-y-7'>
 						<PortableText value={post.content} />
 					</div>
 					<Related category={post.categories[0]} />

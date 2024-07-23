@@ -13,8 +13,8 @@ const LastMinute = async () => {
 			<article className='mt-10'>
 				<h2 className='text-2xl mb-4'>Última Oportunidad</h2>
 				<ul className='flex gap-3'>
-					{products.slice(0, 2).map((product: Product) => (
-						<ProductCard key={product.id} product={product} />
+					{products.slice(0, 2).map((product: Product, index: number) => (
+						<ProductCard key={product.id} product={product} index={index} />
 					))}
 				</ul>
 			</article>

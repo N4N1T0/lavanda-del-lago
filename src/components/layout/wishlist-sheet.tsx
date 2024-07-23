@@ -76,31 +76,6 @@ const WishlistCart = (): JSX.Element => {
 						/>
 					))}
 				</ul>
-				{/* ???? que pasa aqui */}
-				{count.length === 0 && (
-					<SheetFooter className='w-full border-t border-accent/70 pt-5'>
-						<div className='w-full flex flex-col items-center gap-5'>
-							<p>No hay elementos en el carrito de la compra</p>
-							<p className='text-sm text-gray-500'>Puedes empezar por:</p>
-							<div className='w-full flex justify-between items-center'>
-								<Link
-									href='/products'
-									className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
-								>
-									Lista de Productos
-									<span aria-hidden='true'> &rarr;</span>
-								</Link>
-								<Link
-									href='/oferts'
-									className='font-medium text-accent hover:text-accent/80 transition-colors duration-200'
-								>
-									Nuevas Ofertas
-									<span aria-hidden='true'> &rarr;</span>
-								</Link>
-							</div>
-						</div>
-					</SheetFooter>
-				)}
 			</SheetContent>
 		</Sheet>
 	)
