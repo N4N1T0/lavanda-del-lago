@@ -22,17 +22,22 @@ import { esES } from '@clerk/localizations'
 const lemon = localFont({
 	src: [
 		{
-			path: './lemon/LemonMilkProUltraLight.otf',
+			path: '@/app/lemon/LemonMilkProUltraLight.woff2',
 			weight: '100',
 			style: 'light',
 		},
 		{
-			path: './lemon/LemonMilkProRegular.otf',
+			path: '@/app/lemon/LemonMilkProRegular.woff2',
 			weight: '400',
 			style: 'normal',
 		},
 		{
-			path: './lemon/LemonMilkProBold.otf',
+			path: '@/app/lemon/LemonMilkProMedium.woff2',
+			weight: '500',
+			style: 'medium',
+		},
+		{
+			path: '@/app/lemon/LemonMilkProBold.woff2',
 			weight: '700',
 			style: 'bold',
 		},
