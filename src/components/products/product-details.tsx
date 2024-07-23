@@ -67,11 +67,11 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
 					</TabsList>
 					{/* Content for the product description tab */}
 					<TabsContent value='description' className='text-center px-5 py-3'>
-						<p className='text-lg font-light'>{description}</p>{' '}
+						<p className='text-lg text-gray-600'>{description}</p>{' '}
 					</TabsContent>
 					{/* Content for the product usage tab */}
 					<TabsContent value='use' className='text-center px-5 py-3'>
-						<p className='text-lg font-light'>{description}</p>{' '}
+						<p className='text-lg text-gray-600'>{description}</p>{' '}
 					</TabsContent>
 				</Tabs>
 				{/* Display the product quantity */}

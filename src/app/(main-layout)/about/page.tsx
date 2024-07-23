@@ -23,13 +23,13 @@ const AboutUsPage = async () => {
 	return (
 		<section
 			id='about-us'
-			className='inline-flex flex-col items-start gap-10 md:gap-20 px-5 lg:px-10 2xl:px-20 py-10 2xl:py-20 w-full font-light'
+			className='inline-flex flex-col items-start gap-10 md:gap-20 px-5 lg:px-10 2xl:px-20 py-10 2xl:py-20 w-full'
 		>
 			{/* Header Section */}
 			<div className='w-full space-y-3 max-w-3xl'>
-				<span>Lavanda del Lago</span>
+				<span className='font-light'>Lavanda del Lago</span>
 				<h1 className='text-3xl font-bold'>{title}</h1>
-				<p>{description}</p>
+				<p className='text-gray-600'>{description}</p>
 			</div>
 
 			{/* Stats Section */}
@@ -38,13 +38,13 @@ const AboutUsPage = async () => {
 					{stats.map((stat) => (
 						<li
 							key={stat._key}
-							className='flex flex-col gap-3 justify-center items-center text-center'
+							className='flex flex-col gap-2 justify-center items-center text-center'
 						>
 							<p className='text-3xl md:text-5xl font-bold text-accent'>
 								{stat.value}
 							</p>
-							<p className='font-bold'>{stat.title}</p>
-							<p className='text-sm'>{stat.description}</p>
+							<p className='font-bold text-lg'>{stat.title}</p>
+							<p className='text-sm text-gray-600'>{stat.description}</p>
 						</li>
 					))}
 				</ul>
@@ -61,14 +61,16 @@ const AboutUsPage = async () => {
 			{/* Second Section */}
 			<div className='w-full space-y-3'>
 				<h2 className='text-3xl font-bold'>{second_section_title}</h2>
-				<PortableText value={second_section_description} />
+				<div className='text-gray-600'>
+					<PortableText value={second_section_description} />
+				</div>
 			</div>
 
 			{/* Teams Section */}
 			<div className='w-full space-y-5 md:space-y-10'>
 				<div className='w-full space-y-3 max-w-3xl'>
 					<h2 className='text-3xl font-bold'>{teams_section_title}</h2>
-					<p>{teams_section_description}</p>
+					<p className='text-gray-600'>{teams_section_description}</p>
 				</div>
 				<ul className='grid grid-cols-2 md:grid-cols-3 lg:grid.cols-4 xl:grid-cols-5 gap-5'>
 					{teams.map((team) => (
@@ -88,7 +90,7 @@ const AboutUsPage = async () => {
 								<h3 className='text-base'>{team.name}</h3>
 								<p className='font-bold text-accent'>{team.role}</p>
 							</div>
-							<p>{team.description}</p>
+							<p className='text-gray-600'>{team.description}</p>
 							<ul>
 								{team.links.map((link) => (
 									<li key={link._key}>

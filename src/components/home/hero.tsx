@@ -41,7 +41,7 @@ export const Hero = ({
 						<h2 className='uppercase text-3xl md:text-5xl'>
 							Condimentos <br /> Naturales
 						</h2>
-						<p className='w-[80%] md:w-[50%] text-gray-700 font-light'>
+						<p className='w-[80%] md:w-[50%] text-gray-600'>
 							Mezcla de hierbas aromáticas ideal como condimento para nuestras
 							comidas. Ideal para todo tipo de carnes: a la plancha, hervidas o
 							cocidas en una olla.
@@ -75,7 +75,7 @@ export const Hero = ({
 						<h2 className='uppercase text-5xl'>
 							Jabón en frío <br /> Depurativo
 						</h2>
-						<p className='text-gray-100 font-light'>
+						<p className='text-gray-100'>
 							Jabón en frío con función cicatrizante, emoliente y elastizante.
 						</p>
 						<Button>Comprar</Button>

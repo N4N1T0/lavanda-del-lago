@@ -64,7 +64,7 @@ const WishlistCart = (): JSX.Element => {
 			</SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetTitle className='font-light'>Tus Favoritos</SheetTitle>
+					<SheetTitle className='text-2xl'>Tus Favoritos</SheetTitle>
 				</SheetHeader>
 				<ul className='w-full h-full space-y-2'>
 					{/* Render each item in the shopping cart */}
@@ -139,7 +139,7 @@ const WishlistCartSheetCard = ({
 			<div className='ml-4 flex flex-1 flex-col'>
 				<div>
 					{/* Product title and price */}
-					<div className='flex justify-between items-end text-sm font-light text-gray-100 hover:text-gray-300 transition-colors duration-150'>
+					<div className='flex justify-between items-end text-sm text-gray-100 hover:text-gray-300 transition-colors duration-150'>
 						<h3>
 							<Link
 								href={`/products/${product.id}?category=${product.category}`}

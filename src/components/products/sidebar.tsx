@@ -31,7 +31,7 @@ const ProductsSidebar = ({
 								(category === 'Todos' && categoryPath === undefined)
 									? 'bg-gray-200 pointer-events-none'
 									: 'hover:bg-gray-200 cursor-pointer'
-							} border-b border-gray-200 font-light transition-colors duration-150 rounded-md my-2`}
+							} border-b border-gray-200 transition-colors duration-150 rounded-md my-2`}
 						>
 							<Link
 								href={

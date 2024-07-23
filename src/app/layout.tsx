@@ -1,6 +1,7 @@
 // Next.js Imports
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { Josefin_Sans } from 'next/font/google'
 
 // Components Imports
 import { seoMetatags } from '@/components/layout/seo'
@@ -19,9 +20,10 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { esES } from '@clerk/localizations'
 
 // Local Fonts Configuration
-const lemon = localFont({
-	src: './lemon/LemonMilkProRegular.woff2',
-	variable: '--font-lemon',
+const josefinSand = Josefin_Sans({
+	weight: ['300', '500', '700'],
+	subsets: ['latin'],
+	variable: '--josefin-sans',
 })
 
 // Metatdata for this site
@@ -43,7 +45,7 @@ export default function RootLayout({
 			<body
 				className={cn(
 					'min-h-screen bg-background font-sans antialiased overflow-x-hidden',
-					lemon.variable,
+					josefinSand.variable,
 				)}
 			>
 				<ClerkProvider

@@ -25,7 +25,7 @@ const config = {
 				tertiary: '#DF4344',
 			},
 			fontFamily: {
-				sans: ['var(--font-lemon)', ...fontFamily.sans],
+				sans: ['var(--josefin-sans)', ...fontFamily.sans],
 			},
 			keyframes: {
 				'accordion-down': {

@@ -38,7 +38,7 @@ const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
 						<h2 className='text-3xl font-bold tracking-tighter text-accent sm:text-5xl'>
 							{event.title}
 						</h2>
-						<p className='max-w-[600px] text-[#7b8c8d] text-base/relaxed font-light'>
+						<p className='max-w-[600px] text-gray-600 text-base/relaxed'>
 							{event.description}
 						</p>
 					</div>

@@ -54,14 +54,14 @@ const ProductPageHeader = ({
 }): JSX.Element => {
 	return (
 		<header className='w-full flex flex-row-reverse md:flex-row items-center justify-between px-2 py-4'>
-			<p className='font-light text-sm md:text-base'>
+			<p className='text-gray-600 text-sm md:text-base'>
 				Total de Productos{' '}
 				<span className='text-accent font-medium text-lg'>
 					{productsLength}
 				</span>
 			</p>
 			<Select>
-				<SelectTrigger className='w-[160px] md:w-[190px] border-accent font-light'>
+				<SelectTrigger className='w-[160px] md:w-[190px] border-accent text-gray-600'>
 					<SelectValue placeholder='Ordenar por...' />
 				</SelectTrigger>
 				<SelectContent>

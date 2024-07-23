@@ -67,7 +67,7 @@ const CartSheet = (): JSX.Element => {
 			</SheetTrigger>
 			<SheetContent className='flex flex-col justify-between items-start'>
 				<SheetHeader>
-					<SheetTitle className='font-light'>Carrito de la Compra</SheetTitle>
+					<SheetTitle className='text-2xl'>Carrito de la Compra</SheetTitle>
 				</SheetHeader>
 				<ul className='w-full h-full space-y-2'>
 					{/* Render each item in the shopping cart */}

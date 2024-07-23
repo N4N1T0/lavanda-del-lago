@@ -17,7 +17,7 @@ export default function NotFound() {
 					<p className='font-medium text-accent text-5xl uppercase'>
 						Error 404
 					</p>
-					<h1 className='mt-3 text-xl md:text-2xl font-semibold text-gray-800'>
+					<h1 className='mt-3 text-xl md:text-2xl font-bold text-gray-800'>
 						Hemos perdido esta Pagina
 					</h1>
 

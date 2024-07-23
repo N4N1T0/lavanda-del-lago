@@ -43,7 +43,7 @@ const ProductCard = ({ product }: { product: Product }): JSX.Element => {
 					>
 						{title.split(' ').slice(0, 3).join(' ')}
 					</Link>
-					<div className='self-stretch text-center font-light tracking-wide text-xs md:text-base'>
+					<div className='self-stretch text-center text-gray-600 tracking-wide text-xs md:text-base'>
 						{description.split(' ').slice(0, 10).join(' ')}
 						{'...'}
 					</div>
