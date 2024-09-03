@@ -58,12 +58,12 @@ const Newsletter = React.memo(() => {
 						Subscribete
 					</Button>
 				</form>
-				<small className='text-sm text-gray-300 block px-10 md:px-0'>
+				<small className='text-sm text-gray-100 block px-10 md:px-0'>
 					Subsicibete a nuestro newsletter para ofertas e informacion esclusiva
 					sobre nuestros eventos. Lee nuestra{' '}
 					<Link
-						href='#'
-						className='underline text-gray-400 hover:text-white transition-colors duration-150'
+						href='/privacy-policy'
+						className='underline text-gray-300 hover:text-white transition-colors duration-150'
 						prefetch={false}
 					>
 						politica de privacidad
