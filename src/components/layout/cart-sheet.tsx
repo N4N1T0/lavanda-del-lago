@@ -38,7 +38,7 @@ const CartSheet = (): JSX.Element => {
 	const [count, setCount] = useShoppingCart()
 
 	// Function to remove an item from the shopping cart
-	const removeFromCart = (id: number) => {
+	const removeFromCart = (id: string) => {
 		// Filter out the item with the given id
 		setCount(count.filter((item) => item.id !== id))
 	}
@@ -162,7 +162,7 @@ const CartSheetCard = ({
 	removeFromCart,
 }: {
 	product: CartItem
-	removeFromCart: (id: number) => void
+	removeFromCart: (id: string) => void
 }): JSX.Element => {
 	// Render a card for each product in the cart
 	return (
@@ -171,8 +171,8 @@ const CartSheetCard = ({
 			<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
 				<Image
 					src={product.image}
-					alt={product.title}
-					title={product.title}
+					alt={product.nombre}
+					title={product.nombre}
 					width={200}
 					height={200}
 					className='h-full w-full object-cover object-center'
@@ -186,12 +186,12 @@ const CartSheetCard = ({
 					<div className='flex justify-between text-base font-light text-gray-900 hover:text-gray-800 transition-colors duration-150'>
 						<h3>
 							<Link
-								href={`/products/${product.id}?category=${product.category}`}
+								href={`/products/${product.id}?category=${product.categoria}`}
 							>
-								{product.title}
+								{product.nombre}
 							</Link>
 						</h3>
-						<p className='ml-4 font-bold'>{eurilize(Number(product.price))}</p>
+						<p className='ml-4 font-bold'>{eurilize(Number(product.precio))}</p>
 					</div>
 				</div>
 				<div className='flex flex-1 items-end justify-between text-sm'>
