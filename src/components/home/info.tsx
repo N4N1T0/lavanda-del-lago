@@ -1,38 +1,23 @@
 // Next.js Imports
 import Image from 'next/image'
 
-// Assets Imports
-import { Lock, Puzzle, Speech } from '@/assets'
-
 // Type imports
-import type { InfoCardProps } from '@/types'
+import type { InfoCard } from '@/types'
 
 /**
  * Renders the Info section with InfoCards for free shipping, secure payment methods, and customer satisfaction.
  *
  * @return {JSX.Element} The rendered Info section.
  */
-export const Info = (): JSX.Element => (
+export const Info = ({ infoCards }: { infoCards: InfoCard[] }): JSX.Element => (
 	<section
 		id='info'
 		className='flex flex-col items-center justify-center gap-2.5 py-10 2xl:py-20 bg-accent text-white'
 	>
 		<div className='h-full flex flex-col md:flex-row justify-center items-center w-[80%] gap-5'>
-			<InfoCard
-				image={Puzzle}
-				title='Free shipping'
-				text='Free shipping to national area in 24/48 hours. For other areas, check shipping price.'
-			/>
-			<InfoCard
-				image={Lock}
-				title='100% secure payment methods'
-				text='Payment through bank transfer, credit/debit card and PayPal.'
-			/>
-			<InfoCard
-				image={Speech}
-				title='100% customer satisfaction'
-				text='If any issue? We take care of it. Our goal: 100% customer satisfaction.'
-			/>
+			{infoCards.map((infoCard: InfoCard) => (
+				<InfoCard key={infoCard.id} {...infoCard} />
+			))}
 		</div>
 	</section>
 )
@@ -40,16 +25,16 @@ export const Info = (): JSX.Element => (
 /**
  * Renders an InfoCard component with the provided image, title, and text.
  *
- * @param {any} image - The image for the InfoCard.
- * @param {string} props.title - The title for the InfoCard.
- * @param {string} props.text - The text content for the InfoCard.
+ * @param {string} description - The text content for the InfoCard.
+ * @param {any} icon - The image for the InfoCard.
+ * @param {string} title - The title for the InfoCard.
  * @return {JSX.Element} The rendered InfoCard component.
  */
-const InfoCard = ({ image, title, text }: InfoCardProps): JSX.Element => (
+const InfoCard = ({ description, icon, title }: InfoCard): JSX.Element => (
 	<div className='space-y-5 flex-1 px-5'>
-		<Image alt={title} src={image} />
+		<Image alt={title} src={icon} width={35} height={35} />
 		<h3 className='text-xl uppercase'>{title}</h3>
-		<p className='font-light'>{text}</p>
+		<p className='font-light'>{description}</p>
 	</div>
 )
 
