@@ -1,21 +1,40 @@
-import { Hero1, Hero2, Hero3, Sapone, Condimento1, Condimento2 } from '@/assets'
+import { Sapone, Condimento1, Condimento2 } from '@/assets'
+
+// Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
+
+// UI Imports
 import { Button } from '@/components/ui/button'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
-import type { BentoThreeImage } from '@/types'
 
-/**
- * Renders the Hero component which displays a grid of images and information about
- * two products: Condimentos Naturales and Jabón en frío Depurativo.
- *
- * @return {JSX.Element} The Hero component.
- */
-export const Hero = ({
+// Types Imports
+import type { BentofeaturedCategory, BentoThreeImage, Product } from '@/types'
+import { productsByCategory } from '@/lib/queries'
+import { sanityClient } from '@sanity-studio/lib/client'
+
+
+export const Hero = async ({
 	bentoThreeImages,
-}: { bentoThreeImages: BentoThreeImage[] }): JSX.Element => {
+	bentoFeaturedProducto,
+	bentofeaturedCategory
+}: { 
+	bentoThreeImages: BentoThreeImage[],
+	bentoFeaturedProducto: Product,
+	bentofeaturedCategory: BentofeaturedCategory
+ }) => {
+
+	const response: Product[] = await sanityClient.fetch(productsByCategory(bentofeaturedCategory.title))
+	const featuredProducts = response.slice(0, 2).map(product => {
+		return {
+			name: product.nombre,
+			id: product.id,
+			image: product.image,
+			categoria: product.categoria
+		}})
+
 	return (
 		<section id='hero' className='bg-white pt-4'>
 			<div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4'>
@@ -38,52 +57,46 @@ export const Hero = ({
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4'>
 				<div className='col-span-1'>
 					<div className='flex flex-col items-center justify-center gap-4 p-10 text-center'>
-						<h2 className='uppercase text-3xl md:text-5xl'>
-							Condimentos <br /> Naturales
+						<h2 className='uppercase text-3xl md:text-5xl text-wrap'>
+							{bentofeaturedCategory.title}
 						</h2>
 						<p className='w-[80%] md:w-[50%] text-gray-600'>
-							Mezcla de hierbas aromáticas ideal como condimento para nuestras
-							comidas. Ideal para todo tipo de carnes: a la plancha, hervidas o
-							cocidas en una olla.
+							{bentofeaturedCategory.description}
 						</p>
 					</div>
 					<div className='grid grid-cols-2'>
-						<div className='col-span-1 flex justify-center items-center p-10 group bg-gray-200 overflow-hidden'>
-							<Link href='/products' prefetch>
+						{featuredProducts.map((product, index) => (
+						<div className={`col-span-1 flex justify-center items-center p-10 group overflow-hidden ${index > 0 ? 'bg-secondary' : 'bg-gray-200'}`} key={product.id}>
+							<Link href={`/products/${product.id}?category=${product.categoria}`} prefetch>
 								<Image
-									src={Condimento1}
-									alt='Condiments'
+									src={product.image}
+									alt={product.name}
+									width={200}
+									height={200}
 									priority
 									className='group-hover:scale-110 transition-transform duration-200'
 								/>
 							</Link>
 						</div>
-						<div className='col-span-1 flex justify-center items-center p-10 group bg-secondary overflow-hidden'>
-							<Link href='/products' prefetch>
-								<Image
-									src={Condimento2}
-									alt='Condiments'
-									priority
-									className='group-hover:scale-110 transition-transform duration-200'
-								/>
-							</Link>
-						</div>
+						))}
 					</div>
 				</div>
 				<div className='col-span-1 grid-cols-2 bg-accent text-white overflow-hidden md:grid hidden'>
 					<div className='col-span-1 flex justify-center items-start flex-col p-10 gap-5'>
 						<h2 className='uppercase text-5xl'>
-							Jabón en frío <br /> Depurativo
+							{bentoFeaturedProducto.nombre}
 						</h2>
 						<p className='text-gray-100'>
-							Jabón en frío con función cicatrizante, emoliente y elastizante.
+							{bentoFeaturedProducto.descripcion.split(' ').slice(0, 10).join(' ') + '...'}
 						</p>
 						<Button>Comprar</Button>
 					</div>
 					<div className='col-span-1 relative'>
 						<Image
-							src={Sapone}
-							alt='Sapone'
+							src={bentoFeaturedProducto.image}
+							alt={bentoFeaturedProducto.nombre}
+							height={1500}
+							width={1500}
 							priority
 							className='w-full h-auto absolute bottom-0 top-0 right-0'
 						/>
