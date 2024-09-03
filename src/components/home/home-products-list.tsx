@@ -1,10 +1,10 @@
 'use client'
 
 // React and useState imports
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Type imports
-import type { Product } from '@/types'
+import type { CategoriesList, Product } from '@/types'
 
 // UI component imports
 import { Skeleton } from '@/components/ui/skeleton'
@@ -14,17 +14,16 @@ import {
 	ProductCard,
 	ProductCardSkeleton,
 } from '@/components/shared/product-card'
-import { ClientFetchError } from '@/components/shared/client-fetch-error'
-
-// Fetcher function
-import { fetcher } from '@/lib/utils'
-import useSWR from 'swr'
 
 // Constants
 import { categoriesList } from '@/constants/site-data'
 
-// External Libraies Imports
+// External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
+import { sanityClient } from '@sanity-studio/lib/client'
+
+import { allProducts, categories } from '@/lib/queries'
+
 
 /**
  * Renders a list of products based on the selected category.
@@ -32,25 +31,34 @@ import { v4 as uuidv4 } from 'uuid'
  * @return {JSX.Element} The JSX element containing the list of products.
  */
 const HomeProductsList = (): JSX.Element => {
-	const [categories, setCategories] = useState(categoriesList[0])
-	const productsUrl =
-		categories !== 'Todos'
-			? `https://fakestoreapi.com/products/category/${categories}`
-			: 'https://fakestoreapi.com/products'
+	const [allCategories, setAllCategories] = useState<string[]>([])
+	const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined)
+	const [products, setProducts] = useState<Product[] | null>(null)
 
-	const { data: products, error: productsError } = useSWR(
-		productsUrl,
-		fetcher,
-		{
-			revalidateIfStale: false,
-			revalidateOnFocus: false,
-			revalidateOnReconnect: false,
-		},
-	) as { data: Product[]; error: unknown }
+	useEffect(() => {
+		const getCategories = async () => {
+			const response: CategoriesList[] = await sanityClient.fetch(categories)
+			const filterCategories = response
+				.map((category) => category.categoria)
+				.filter(
+					(category, index, array) =>
+						category && array.indexOf(category) === index,
+				)
 
-	if (productsError) {
-		return <ClientFetchError error={productsError} />
-	}
+			filterCategories.unshift('Todos')
+
+			setAllCategories(filterCategories as string[])
+			setActiveCategory(filterCategories[0] as string)
+		}
+
+		const getProductsByCategory = async () => {
+			const response: Product[] = await sanityClient.fetch(allProducts)
+			setProducts(response)
+		}
+
+		getCategories()
+		getProductsByCategory()
+	}, [])
 
 	if (!products) {
 		return <HomeProductsListSkeleton />
@@ -62,36 +70,49 @@ const HomeProductsList = (): JSX.Element => {
 			className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex flex-col gap-7'
 		>
 			<HomeProductsListHeader
-				setCategories={setCategories}
-				categories={categories}
+				setActiveCategory={setActiveCategory}
+				activeCategory={activeCategory}
+				categories={allCategories}
 			/>
-			<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
+
+			{activeCategory === 'Todos' ? (
+				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
 				{products.slice(0, 8).map((product: Product, index: number) => (
 					<ProductCard key={product.id} product={product} index={index} />
 				))}
 			</ul>
+			) : (
+				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
+				{products.filter((product: Product) => product.categoria === activeCategory).slice(0, 8).map((product: Product, index: number) => (
+					<ProductCard key={product.id} product={product} index={index} />
+				))}
+			</ul>
+			)}
+
 		</section>
 	)
 }
 
 const HomeProductsListHeader = React.memo(
 	({
-		setCategories,
+		setActiveCategory,
 		categories,
+		activeCategory,
 	}: {
-		setCategories: React.Dispatch<React.SetStateAction<string>>
-		categories: string
+		setActiveCategory: React.Dispatch<React.SetStateAction<string | undefined>>
+		categories: string[]
+		activeCategory: string | undefined
 	}) => {
 		return (
 			<div className='flex justify-center lg:justify-start items-center flex-wrap gap-10'>
-				{categoriesList.map((category: string) => (
+				{categories.map((category: string) => (
 					<button
 						type='button'
 						key={uuidv4()}
 						className={`text-base leading-normal hover:text-accent transition-colors duration-150 ${
-							category === categories ? 'text-accent' : 'text-accent/70'
+							category === activeCategory ? 'text-accent' : 'text-accent/70'
 						}`}
-						onClick={() => setCategories(category)}
+						onClick={() => setActiveCategory(category)}
 					>
 						{category}
 					</button>
@@ -113,7 +134,7 @@ const HomeProductsListSkeleton = (): JSX.Element => {
 			className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex flex-col gap-7'
 		>
 			<div className='flex justify-center lg:justify-start items-center flex-wrap gap-10'>
-				{categoriesList.map((category: string) => (
+				{categoriesList.map((_) => (
 					<Skeleton key={uuidv4()} className='h-4 w-24 rounded-md' />
 				))}
 			</div>
