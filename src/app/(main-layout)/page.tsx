@@ -1,3 +1,4 @@
+// Project component imports
 import Info from '@/components/home/info'
 import Hero from '@/components/home/hero'
 import Categories from '@/components/home/categories'
@@ -5,10 +6,14 @@ import FeaturedList from '@/components/home/featured-list'
 import HomeProductsList from '@/components/home/home-products-list'
 import Newsletter from '@/components/shared/newsletter'
 import Prefooter from '@/components/home/prefooter'
+import FeaturedEvent from '@/components/home/featured-event'
+
+// Queries Imports
 import { homePage } from '@/lib/queries'
 import { sanityClient } from '@sanity-studio/lib/client'
+
+// Types Imports
 import type { HomePageType } from '@/types'
-import FeaturedEvent from '@/components/home/featured-event'
 
 /**
  * Renders the Home component which displays a hero section, categories section,
@@ -23,25 +28,24 @@ export default async function Home(): Promise<JSX.Element> {
 	// TODO
 	const {
 		bentoFeaturedProducto,
-		featuredCategories,
-		productsWithOffer,
 		bentoThreeImages,
 		bentofeaturedCategory,
-		newProducts,
-		topSellingProducts,
+		InfoCards,
+		carousel1,
+		carousel2,
 		featuredEvent,
 	} = homePageResponse
 
 	return (
 		<>
-			<Hero bentoThreeImages={bentoThreeImages} />
+			<Hero bentoThreeImages={bentoThreeImages} bentoFeaturedProducto={bentoFeaturedProducto} bentofeaturedCategory={bentofeaturedCategory} />
 			<Categories />
 			<HomeProductsList />
-			<Info />
-			<FeaturedList itemCategory='jewelery' featuredTitle='productos Nuevos' />
+			<Info infoCards={InfoCards} />
+			<FeaturedList itemCategory={carousel1.category} featuredTitle={carousel1.title} />
 			<FeaturedList
-				itemCategory='electronics'
-				featuredTitle='Lo mas vendido'
+				itemCategory={carousel2.category}
+				featuredTitle={carousel2.title}
 				direction='right'
 			/>
 			<FeaturedEvent event={featuredEvent} />
