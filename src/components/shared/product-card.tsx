@@ -25,13 +25,14 @@ const ProductCard = ({
 	product,
 	index,
 }: { product: Product; index: number }): JSX.Element => {
-	const { title, price, description, image, id, category } = product
+	const { nombre, precio, descripcion, image, id, categoria } = product
+	
 	return (
 		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black relative'>
 			<div className='aspect-square'>
 				<Image
 					src={image}
-					alt={title}
+					alt={nombre}
 					width={200}
 					height={200}
 					priority={index < 8}
@@ -42,22 +43,22 @@ const ProductCard = ({
 				<div className='self-stretch flex-col justify-start items-start gap-4 flex'>
 					<Link
 						prefetch
-						href={`/products/${id}?category=${category}`}
+						href={`/products/${id}?category=${categoria}`}
 						className='self-stretch text-center text-accent font-medium leading-bold text-sm lg:text-base hover:text-black transition-colors duration-200'
 					>
-						{title.split(' ').slice(0, 3).join(' ')}
+						{nombre.split(' ').slice(0, 3).join(' ')}
 					</Link>
 					<div className='self-stretch text-center text-gray-600 tracking-wide text-xs md:text-base'>
-						{description.split(' ').slice(0, 10).join(' ')}
+						{descripcion.split(' ').slice(0, 10).join(' ')}
 						{'...'}
 					</div>
 					<div className='self-stretch text-center text-2xl font-bold leading-normal tracking-wide'>
-						{eurilize(Number(price))}
+						{eurilize(Number(precio))}
 					</div>
 				</div>
 				<Link
 					prefetch
-					href={`/products/${id}?category=${category}`}
+					href={`/products/${id}?category=${categoria}`}
 					className='px-6 py-3 text-sm md:text-base bg-accent rounded-lg text-white hover:bg-white hover:text-accent transition-colors duration-200'
 				>
 					Comprar <span className='hidden md:inline'>Ahora</span>
