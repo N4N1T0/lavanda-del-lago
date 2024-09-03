@@ -7,6 +7,9 @@ import { ServerFetchError } from '../shared/server-fetch-error'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
+import { sanityClient } from '@sanity-studio/lib/client'
+import { categories } from '@/lib/queries'
+import type { CategoriesList } from '@/types'
 
 /**
  * Asynchronously fetches categories from the Fake Store API and renders a list of category links.
@@ -15,8 +18,13 @@ import { v4 as uuidv4 } from 'uuid'
  */
 export const Categories = async (): Promise<JSX.Element> => {
 	try {
-		const response = await fetch('https://fakestoreapi.com/products/categories')
-		const categories: string[] = await response.json()
+		const response: CategoriesList[] = await sanityClient.fetch(categories)
+		const filterCategories = response
+			.map((category) => category.categoria)
+			.filter(
+				(category, index, array) =>
+					category && array.indexOf(category) === index,
+			)
 
 		return (
 			<section
@@ -30,9 +38,9 @@ export const Categories = async (): Promise<JSX.Element> => {
 				</div>
 				<div className='flex items-start gap-8 w-full'>
 					<ul className='flex gap-8 w-full overflow-x-scroll snap-x snap-mandatory'>
-						{categories.map((category: string) => (
+						{filterCategories.map((category: string | null) => (
 							<li key={uuidv4()} className='snap-start'>
-								<CategoryLink category={category} />
+								<CategoryLink category={category!} />
 							</li>
 						))}
 					</ul>
@@ -57,7 +65,7 @@ const CategoryLink = React.memo(
 		<Link
 			prefetch
 			href={`/products?category=${category}`}
-			className='flex flex-col w-40 h-32 items-center justify-center gap-2 px-10 py-6 bg-white rounded-[15px] border-[3px] border-accent cursor-pointer hover:bg-accent hover:text-white transition-colors duration-150'
+			className='flex flex-col w-40 h-32 items-center justify-center gap-2 px-10 py-6 bg-white rounded-[15px] border-[3px] border-accent cursor-pointer hover:bg-accent hover:text-white transition-colors duration-150 text-center'
 		>
 			{category}
 		</Link>
