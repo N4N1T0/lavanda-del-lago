@@ -84,11 +84,11 @@ export const footerLinks = {
 	services: [
 		{
 			name: 'Politica de Cookies',
-			href: '/cookies',
+			href: '/cookies-policy',
 		},
 		{
 			name: 'Politica de Privacidad',
-			href: '/privacy',
+			href: '/privacy-policy',
 		},
 	],
 	contact: [
