@@ -9,6 +9,11 @@ export default {
 			type: 'string',
 		},
 		{
+			name: 'description',
+			title: 'Description',
+			type: 'text',
+		},
+		{
 			name: 'image',
 			title: 'Image',
 			type: 'image',
@@ -17,4 +22,11 @@ export default {
 			},
 		},
 	],
+	preview: {
+		select: {
+			title: 'name',
+			subtitle: 'description',
+			image: 'image',
+		},
+	}
 }

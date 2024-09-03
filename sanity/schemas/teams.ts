@@ -49,4 +49,11 @@ export default {
 			],
 		},
 	],
+	preview: {
+		select: {
+			title: 'name',
+			subtitle: 'role',
+			media: 'image',
+		},
+	}
 }

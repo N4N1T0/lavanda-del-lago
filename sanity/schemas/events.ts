@@ -46,4 +46,11 @@ export default {
 			],
 		},
 	],
+	preview: {
+		select: {
+			title: 'title',
+			subtitle: 'date',
+			media: 'image'
+		},
+	}
 }

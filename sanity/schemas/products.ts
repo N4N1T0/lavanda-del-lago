@@ -1,5 +1,3 @@
-// schemas/product.js
-
 export default {
 	name: 'product',
 	title: 'Producto',
@@ -56,22 +54,27 @@ export default {
 			fields: [
 				{
 					name: 'ancho',
-					title: 'Ancho',
+					title: 'Ancho en cm',
 					type: 'number',
 				},
 				{
 					name: 'alto',
-					title: 'Alto',
+					title: 'Alto en cm',
 					type: 'number',
 				},
 				{
 					name: 'profundidad',
-					title: 'Profundidad',
+					title: 'Profundidad en cm',
 					type: 'number',
 				},
 				{
 					name: 'peso',
 					title: 'Peso',
+					type: 'number',
+				},
+				{
+					name: 'volumen',
+					title: 'Volumen en ml',
 					type: 'number',
 				},
 			],
@@ -106,9 +109,31 @@ export default {
 			type: 'string',
 		},
 		{
+			name: 'subcategoria',
+			title: 'Subcategoría del Producto',
+			type: 'string',
+		},
+		{
 			name: 'certificacion',
 			title: 'Certificación del producto',
 			type: 'string',
 		},
 	],
+	preview: {
+  select: {
+    title: 'nombre',
+    subtitle: 'categoria',
+    media: 'fotoPrincipal'
+  },
+  prepare(selection: any) {
+    const { title, subtitle, media } = selection;
+    
+    return {
+      title: title || 'Sin nombre',  // Valor por defecto si el título es nulo
+      subtitle: subtitle || 'Sin categoría',  // Valor por defecto si la categoría es nula
+      media: media // La imagen debería mostrarse correctamente si existe
+    };
+  },
+},
+
 }
