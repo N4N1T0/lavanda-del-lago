@@ -1,6 +1,12 @@
 // Project component imports
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import ProductCarousel from '@/components/shared/product-carousel'
+
+// Queries imports
+import { sanityClient } from '@sanity-studio/lib/client'
+import { productsByCategory } from '@/lib/queries'
+
+// Types imports
 import type { Product } from '@/types'
 
 /**
@@ -18,15 +24,12 @@ const FeaturedList = async ({
 	featuredTitle,
 	direction = 'left',
 }: {
-	itemCategory: string | undefined
+	itemCategory: string
 	featuredTitle: string
 	direction?: 'left' | 'right'
 }): Promise<JSX.Element> => {
 	try {
-		const response = await fetch(
-			`https://fakestoreapi.com/products/category/${itemCategory}`,
-		)
-		const items: Product[] = await response.json()
+		const response: Product[] = await sanityClient.fetch(productsByCategory(itemCategory))
 
 		return (
 			<section id={itemCategory}>
@@ -39,7 +42,7 @@ const FeaturedList = async ({
 						{featuredTitle}
 					</h2>
 					<div className='flex gap-5 w-[93%] mx-auto'>
-						<ProductCarousel productList={items} />
+						<ProductCarousel productList={response} />
 					</div>
 				</div>
 			</section>
