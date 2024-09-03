@@ -1,21 +1,15 @@
 export interface Product {
-	id: number
-	title: string
-	price: string
-	category: string
-	description: string
-	image: string
+   id:          string;
+   nombre:      string;
+   descripcion: string;
+   precio:      number;
+   image:       string;
+	 categoria: string
 }
+
 
 export interface CartItem extends Product {
 	quantity: number
-}
-
-export interface InfoCardProps {
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	image: any
-	title: string
-	text: string
 }
 
 export interface Breadcrumb {
@@ -39,6 +33,14 @@ export interface Posts {
 
 export interface Author {
 	name: string
+}
+
+export interface Policies {
+  _id: string; // Assuming the document has an ID
+  _type: 'cookiePolicy';
+  title: string;
+  description: string;
+  content: Content[];
 }
 
 export interface Content {
@@ -104,18 +106,34 @@ export interface Link {
 }
 
 export interface HomePageType {
-	bentoThreeImages: BentoThreeImage[]
-	bentoFeaturedProducto: string
-	newProducts: boolean
-	topSellingProducts: boolean
-	featuredCategories: string[]
-	productsWithOffer: boolean
-	bentofeaturedCategory: string
-	featuredEvent: Event
+    featuredEvent:         Event;
+    carousel1:             Carousel;
+    carousel2:             Carousel;
+    InfoCards:             InfoCard[];
+    bentofeaturedCategory: BentofeaturedCategory;
+    bentoFeaturedProducto: Product;
+    bentoThreeImages:      BentoThreeImage[];
 }
 
 export interface BentoThreeImage {
 	image: string
+}
+
+export interface BentofeaturedCategory {
+	title: string
+	description: string
+}
+
+export interface Carousel {
+    category: string;
+    title:    string;
+}
+
+export interface InfoCard {
+    id:          string;
+    title:       string;
+    description: string;
+    icon:        string;
 }
 
 export interface Event {
@@ -131,4 +149,8 @@ export interface URL {
 	id: string
 	calendarName: string
 	calendarUrl: string
+}
+
+export interface CategoriesList {
+	readonly categoria: null | string
 }
