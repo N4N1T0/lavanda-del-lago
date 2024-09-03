@@ -84,17 +84,10 @@ export const aboutUsPage = groq`
 `
 
 export const homePage = groq`
-*[_type == "homePage"][0]{
-  bentofeaturedCategory,
+*[_type == "homePage"]{
   bentoThreeImages[]{
     "image": asset->url
   },
-  bentoFeaturedProducto,
-  featuredCategories,
-  newProducts,
-  topSellingProducts,
-  featuredCategories,
-  productsWithOffer,
   featuredEvent->{
     date,
     title,
@@ -105,8 +98,24 @@ export const homePage = groq`
       calendarName,
       calendarUrl
     }
+  },
+  carousel1,
+  carousel2,
+  InfoCards[][]{
+    "id": _key,
+    title,
+    description,
+    "icon": icon.asset->url
+ },
+  bentofeaturedCategory,
+  bentoFeaturedProducto->{
+    nombre,
+    descripcion,
+    categoria,
+    "id": _id,
+    "image": fotoPrincipal.asset->url,
   }
-}
+}[0]
 `
 export const events = groq`
 *[_type == "events"]{
@@ -121,4 +130,41 @@ export const events = groq`
     calendarUrl
   }
 }
+`
+export const categories = groq`
+*[_type == "product"]{
+  categoria
+} | order(categoria)
+`
+
+export const allProducts = groq`
+*[_type == "product"]{
+  "id": _id,
+  nombre,
+  descripcion,
+  precio,
+  "image": fotoPrincipal.asset->url,
+  categoria
+}
+`
+
+export const productsByCategory = (category: string) => {
+  return groq`
+  *[_type == "product" && categoria == "${category}"]{
+  "id": _id,
+  nombre,
+  descripcion,
+  precio,
+  "image": fotoPrincipal.asset->url,
+  categoria
+}
+  `
+}
+
+export const cookiePolicy = groq`
+*[_type == "cookiePolicy"][0]
+`
+
+export const privacyPolicy = groq`
+*[_type == "privacyPolicy"][0]
 `
