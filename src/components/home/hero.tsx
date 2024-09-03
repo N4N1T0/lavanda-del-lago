@@ -15,25 +15,26 @@ import type { BentofeaturedCategory, BentoThreeImage, Product } from '@/types'
 import { productsByCategory } from '@/lib/queries'
 import { sanityClient } from '@sanity-studio/lib/client'
 
-
 export const Hero = async ({
 	bentoThreeImages,
 	bentoFeaturedProducto,
-	bentofeaturedCategory
-}: { 
-	bentoThreeImages: BentoThreeImage[],
-	bentoFeaturedProducto: Product,
+	bentofeaturedCategory,
+}: {
+	bentoThreeImages: BentoThreeImage[]
+	bentoFeaturedProducto: Product
 	bentofeaturedCategory: BentofeaturedCategory
- }) => {
-
-	const response: Product[] = await sanityClient.fetch(productsByCategory(bentofeaturedCategory.title))
-	const featuredProducts = response.slice(0, 2).map(product => {
+}) => {
+	const response: Product[] = await sanityClient.fetch(
+		productsByCategory(bentofeaturedCategory.title),
+	)
+	const featuredProducts = response.slice(0, 2).map((product) => {
 		return {
 			name: product.nombre,
 			id: product.id,
 			image: product.image,
-			categoria: product.categoria
-		}})
+			categoria: product.categoria,
+		}
+	})
 
 	return (
 		<section id='hero' className='bg-white pt-4'>
@@ -66,18 +67,26 @@ export const Hero = async ({
 					</div>
 					<div className='grid grid-cols-2'>
 						{featuredProducts.map((product, index) => (
-						<div className={`col-span-1 flex justify-center items-center p-10 group overflow-hidden ${index > 0 ? 'bg-secondary' : 'bg-gray-200'}`} key={product.id}>
-							<Link href={`/products/${product.id}?category=${product.categoria}`} prefetch>
-								<Image
-									src={product.image}
-									alt={product.name}
-									width={200}
-									height={200}
-									priority
-									className='group-hover:scale-110 transition-transform duration-200'
-								/>
-							</Link>
-						</div>
+							<div
+								className={`col-span-1 flex justify-center items-center p-10 group overflow-hidden ${
+									index > 0 ? 'bg-secondary' : 'bg-gray-200'
+								}`}
+								key={product.id}
+							>
+								<Link
+									href={`/products/${product.id}?category=${product.categoria}`}
+									prefetch
+								>
+									<Image
+										src={product.image}
+										alt={product.name}
+										width={200}
+										height={200}
+										priority
+										className='group-hover:scale-110 transition-transform duration-200'
+									/>
+								</Link>
+							</div>
 						))}
 					</div>
 				</div>
@@ -87,7 +96,10 @@ export const Hero = async ({
 							{bentoFeaturedProducto.nombre}
 						</h2>
 						<p className='text-gray-100'>
-							{bentoFeaturedProducto.descripcion.split(' ').slice(0, 10).join(' ') + '...'}
+							{bentoFeaturedProducto.descripcion
+								.split(' ')
+								.slice(0, 10)
+								.join(' ') + '...'}
 						</p>
 						<Button>Comprar</Button>
 					</div>

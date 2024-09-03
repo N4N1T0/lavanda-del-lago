@@ -26,7 +26,7 @@ const ProductCard = ({
 	index,
 }: { product: Product; index: number }): JSX.Element => {
 	const { nombre, precio, descripcion, image, id, categoria } = product
-	
+
 	return (
 		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black relative'>
 			<div className='aspect-square'>

@@ -1,12 +1,11 @@
 export interface Product {
-   id:          string;
-   nombre:      string;
-   descripcion: string;
-   precio:      number;
-   image:       string;
-	 categoria: string
+	id: string
+	nombre: string
+	descripcion: string
+	precio: number
+	image: string
+	categoria: string
 }
-
 
 export interface CartItem extends Product {
 	quantity: number
@@ -36,11 +35,11 @@ export interface Author {
 }
 
 export interface Policies {
-  _id: string; // Assuming the document has an ID
-  _type: 'cookiePolicy';
-  title: string;
-  description: string;
-  content: Content[];
+	_id: string // Assuming the document has an ID
+	_type: 'cookiePolicy'
+	title: string
+	description: string
+	content: Content[]
 }
 
 export interface Content {
@@ -106,13 +105,13 @@ export interface Link {
 }
 
 export interface HomePageType {
-    featuredEvent:         Event;
-    carousel1:             Carousel;
-    carousel2:             Carousel;
-    InfoCards:             InfoCard[];
-    bentofeaturedCategory: BentofeaturedCategory;
-    bentoFeaturedProducto: Product;
-    bentoThreeImages:      BentoThreeImage[];
+	featuredEvent: Event
+	carousel1: Carousel
+	carousel2: Carousel
+	InfoCards: InfoCard[]
+	bentofeaturedCategory: BentofeaturedCategory
+	bentoFeaturedProducto: Product
+	bentoThreeImages: BentoThreeImage[]
 }
 
 export interface BentoThreeImage {
@@ -125,15 +124,15 @@ export interface BentofeaturedCategory {
 }
 
 export interface Carousel {
-    category: string;
-    title:    string;
+	category: string
+	title: string
 }
 
 export interface InfoCard {
-    id:          string;
-    title:       string;
-    description: string;
-    icon:        string;
+	id: string
+	title: string
+	description: string
+	icon: string
 }
 
 export interface Event {

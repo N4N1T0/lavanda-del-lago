@@ -38,7 +38,7 @@ const ProductPage = async ({
 					<FeaturedList
 						featuredTitle='Productos Relacionados'
 						direction='left'
-						itemCategory={searchParams?.category}
+						itemCategory={searchParams?.category!}
 					/>
 				</section>
 				<Newsletter />

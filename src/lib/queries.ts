@@ -149,7 +149,7 @@ export const allProducts = groq`
 `
 
 export const productsByCategory = (category: string) => {
-  return groq`
+	return groq`
   *[_type == "product" && categoria == "${category}"]{
   "id": _id,
   nombre,

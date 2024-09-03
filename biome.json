@@ -8,7 +8,9 @@
 		"rules": {
 			"recommended": true,
 			"style": {
-				"noNonNullAssertion": null
+				"noNonNullAssertion": {
+					"level": "off"
+				}
 			}
 		}
 	},

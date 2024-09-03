@@ -24,7 +24,6 @@ import { sanityClient } from '@sanity-studio/lib/client'
 
 import { allProducts, categories } from '@/lib/queries'
 
-
 /**
  * Renders a list of products based on the selected category.
  *
@@ -32,7 +31,9 @@ import { allProducts, categories } from '@/lib/queries'
  */
 const HomeProductsList = (): JSX.Element => {
 	const [allCategories, setAllCategories] = useState<string[]>([])
-	const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined)
+	const [activeCategory, setActiveCategory] = useState<string | undefined>(
+		undefined,
+	)
 	const [products, setProducts] = useState<Product[] | null>(null)
 
 	useEffect(() => {
@@ -77,18 +78,20 @@ const HomeProductsList = (): JSX.Element => {
 
 			{activeCategory === 'Todos' ? (
 				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-				{products.slice(0, 8).map((product: Product, index: number) => (
-					<ProductCard key={product.id} product={product} index={index} />
-				))}
-			</ul>
+					{products.slice(0, 8).map((product: Product, index: number) => (
+						<ProductCard key={product.id} product={product} index={index} />
+					))}
+				</ul>
 			) : (
 				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-				{products.filter((product: Product) => product.categoria === activeCategory).slice(0, 8).map((product: Product, index: number) => (
-					<ProductCard key={product.id} product={product} index={index} />
-				))}
-			</ul>
+					{products
+						.filter((product: Product) => product.categoria === activeCategory)
+						.slice(0, 8)
+						.map((product: Product, index: number) => (
+							<ProductCard key={product.id} product={product} index={index} />
+						))}
+				</ul>
 			)}
-
 		</section>
 	)
 }

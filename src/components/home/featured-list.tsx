@@ -29,7 +29,9 @@ const FeaturedList = async ({
 	direction?: 'left' | 'right'
 }): Promise<JSX.Element> => {
 	try {
-		const response: Product[] = await sanityClient.fetch(productsByCategory(itemCategory))
+		const response: Product[] = await sanityClient.fetch(
+			productsByCategory(itemCategory),
+		)
 
 		return (
 			<section id={itemCategory}>

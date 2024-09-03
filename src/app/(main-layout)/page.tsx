@@ -38,11 +38,18 @@ export default async function Home(): Promise<JSX.Element> {
 
 	return (
 		<>
-			<Hero bentoThreeImages={bentoThreeImages} bentoFeaturedProducto={bentoFeaturedProducto} bentofeaturedCategory={bentofeaturedCategory} />
+			<Hero
+				bentoThreeImages={bentoThreeImages}
+				bentoFeaturedProducto={bentoFeaturedProducto}
+				bentofeaturedCategory={bentofeaturedCategory}
+			/>
 			<Categories />
 			<HomeProductsList />
 			<Info infoCards={InfoCards} />
-			<FeaturedList itemCategory={carousel1.category} featuredTitle={carousel1.title} />
+			<FeaturedList
+				itemCategory={carousel1.category}
+				featuredTitle={carousel1.title}
+			/>
 			<FeaturedList
 				itemCategory={carousel2.category}
 				featuredTitle={carousel2.title}

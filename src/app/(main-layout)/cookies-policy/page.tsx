@@ -10,7 +10,7 @@ import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import { PortableText } from 'next-sanity'
 
 // Types Imports
-import { Policies } from '@/types'
+import type { Policies } from '@/types'
 
 /**
  * Fetches the cookies policy from the Sanity client and renders it.
@@ -19,19 +19,19 @@ import { Policies } from '@/types'
  * @throws {Error} If there is an error fetching the policy.
  */
 const CookiesPolicyPage = async (): Promise<JSX.Element> => {
-  try {
-    const response: Policies = await sanityClient.fetch(cookiePolicy)
-    return (
-      <main>
-        <h1>{response.title}</h1>
-        <div className='w-full md:w-3/4 text-left space-y-7'>
-						<PortableText value={response.content} />
+	try {
+		const response: Policies = await sanityClient.fetch(cookiePolicy)
+		return (
+			<main>
+				<h1>{response.title}</h1>
+				<div className='w-full md:w-3/4 text-left space-y-7'>
+					<PortableText value={response.content} />
 				</div>
-      </main>
-    )
-  } catch (error) {
-    return <ServerFetchError error={error} />
-  }
+			</main>
+		)
+	} catch (error) {
+		return <ServerFetchError error={error} />
+	}
 }
 
 export default CookiesPolicyPage
