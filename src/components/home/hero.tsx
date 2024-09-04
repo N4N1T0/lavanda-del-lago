@@ -96,10 +96,10 @@ export const Hero = async ({
 							{bentoFeaturedProducto.nombre}
 						</h2>
 						<p className='text-gray-100'>
-							{bentoFeaturedProducto.descripcion
+							{`${bentoFeaturedProducto.descripcion
 								.split(' ')
 								.slice(0, 10)
-								.join(' ') + '...'}
+								.join(' ')}...`}
 						</p>
 						<Button>Comprar</Button>
 					</div>

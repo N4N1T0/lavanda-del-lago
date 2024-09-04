@@ -104,7 +104,7 @@ const QuantitySmall = ({
 	removeFromWishlist,
 }: {
 	prduct: Product
-	removeFromWishlist: (id: number) => void
+	removeFromWishlist: (id: string) => void
 }): JSX.Element => {
 	// State to hold the selected quantity
 	const [quantity, setQuantity] = useState(1)

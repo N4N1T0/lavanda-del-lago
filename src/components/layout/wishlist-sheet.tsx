@@ -40,7 +40,7 @@ const WishlistCart = (): JSX.Element => {
 	const [count, setCount] = useWishlist()
 
 	// Function to remove an item from the wishlist
-	const removeFromWishlist = (id: number) => {
+	const removeFromWishlist = (id: string) => {
 		// Filter out the item with the given id
 		setCount(count.filter((item) => item.id !== id))
 	}
@@ -94,7 +94,7 @@ const WishlistCartSheetCard = ({
 	removeFromWishlist,
 }: {
 	product: Product
-	removeFromWishlist: (id: number) => void
+	removeFromWishlist: (id: string) => void
 }): JSX.Element => {
 	return (
 		<li className='flex py-6 px-3 bg-accent/70 rounded-lg items-center relative'>
@@ -102,8 +102,8 @@ const WishlistCartSheetCard = ({
 			<div className='h-24 w-24 flex-shrink-0 overflow-hidden'>
 				<Image
 					src={product.image}
-					alt={product.title}
-					title={product.title}
+					alt={product.nombre}
+					title={product.nombre}
 					width={200}
 					height={200}
 					className='h-full w-full object-cover object-center'
@@ -117,12 +117,12 @@ const WishlistCartSheetCard = ({
 					<div className='flex justify-between items-end text-sm text-gray-100 hover:text-gray-300 transition-colors duration-150'>
 						<h3>
 							<Link
-								href={`/products/${product.id}?category=${product.category}`}
+								href={`/products/${product.id}?category=${product.categoria}`}
 							>
-								{product.title}
+								{product.nombre}
 							</Link>
 						</h3>
-						<p className='ml-4 font-bold'>{eurilize(Number(product.price))}</p>
+						<p className='ml-4 font-bold'>{eurilize(Number(product.precio))}</p>
 					</div>
 				</div>
 				<WishlistCartSheetCardFooter
@@ -151,7 +151,7 @@ const WishlistCartSheetCardFooter = ({
 	removeFromWishlist,
 }: {
 	product: Product
-	removeFromWishlist: (id: number) => void
+	removeFromWishlist: (id: string) => void
 }): JSX.Element => {
 	return (
 		<div className='w-full border-t border-gray-100 mt-2 pt-2'>
