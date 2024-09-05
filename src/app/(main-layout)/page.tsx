@@ -34,6 +34,7 @@ export default async function Home(): Promise<JSX.Element> {
 		carousel1,
 		carousel2,
 		featuredEvent,
+		mainListCategories,
 	} = homePageResponse
 
 	return (
@@ -44,7 +45,7 @@ export default async function Home(): Promise<JSX.Element> {
 				bentofeaturedCategory={bentofeaturedCategory}
 			/>
 			<Categories />
-			<HomeProductsList />
+			<HomeProductsList categories={mainListCategories} />
 			<Info infoCards={InfoCards} />
 			<FeaturedList
 				itemCategory={carousel1.category}
