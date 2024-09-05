@@ -1,5 +1,5 @@
 // Project assets
-import { User, MainLogo } from '@/assets'
+import { MainLogo } from '@/assets'
 
 // Next.js imports
 import Image from 'next/image'
@@ -15,12 +15,25 @@ import {
 } from '@/components/layout/navbar-links'
 import UserPopover from './user-popover'
 
+// Quries Imports
+import { sanityClient } from '@sanity-studio/lib/client'
+import { categories } from '@/lib/queries'
+
+// Types Imports
+import type { CategoriesList } from '@/types'
+
+// Utils Imports
+import { categoriesFilter } from '@/lib/utils'
+
 /**
  * Renders the Navbar component.
  *
  * @return {JSX.Element} The rendered Navbar component.
  */
-const Navbar = (): JSX.Element => {
+const Navbar = async (): Promise<JSX.Element> => {
+	const response: CategoriesList[] = await sanityClient.fetch(categories)
+	const filterCategories = categoriesFilter(response)
+
 	return (
 		<header className='flex items-center justify-between px-5 md:px-10 2xl:px-20 py-4 border-b border-accent/50'>
 			<div className='inline-flex flex-col items-center flex-[0_0_auto]'>
@@ -32,12 +45,12 @@ const Navbar = (): JSX.Element => {
 							src={MainLogo}
 						/>
 					</Link>
-					<NavbarLinksMobile />
+					<NavbarLinksMobile categories={filterCategories} />
 				</div>
 			</div>
 			<Search />
 
-			<NavbarLinks />
+			<NavbarLinks categories={filterCategories} />
 
 			<div className='inline-flex items-center justify-center gap-6 flex-[0_0_auto]'>
 				<SearchMobile />
