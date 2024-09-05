@@ -40,7 +40,7 @@ const WishlistBtn = ({
 	 */
 	const handleWishlist = (
 		isWishlisted: boolean,
-		id: number,
+		id: string,
 		product: Product,
 	) => {
 		// if the product is in the Cart, show a toast and return

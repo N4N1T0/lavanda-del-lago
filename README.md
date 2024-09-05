@@ -72,3 +72,4 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 [] Refactor Product Page (Ask Jorge)
 [] Sanity Handoff
 [] Redsys Configuration
+[] Style and Performance Review
