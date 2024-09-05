@@ -1,5 +1,4 @@
-// React Imports
-import React from 'react'
+
 
 // Queries Imports
 import { sanityClient } from '@sanity-studio/lib/client'
