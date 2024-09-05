@@ -2,12 +2,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-// React Imports
-import React from 'react'
-
 // Type imports
 import type { Product } from '@/types'
-import { eurilize } from '@/lib/utils'
+import { eurilize, urlize } from '@/lib/utils'
 
 // UI Import
 import { Skeleton } from '@/components/ui/skeleton'
@@ -58,7 +55,7 @@ const ProductCard = ({
 				</div>
 				<Link
 					prefetch
-					href={`/products/${id}?category=${categoria}`}
+					href={`/products/${urlize(nombre)}?category=${categoria}`}
 					className='px-6 py-3 text-sm md:text-base bg-accent rounded-lg text-white hover:bg-white hover:text-accent transition-colors duration-200'
 				>
 					Comprar <span className='hidden md:inline'>Ahora</span>

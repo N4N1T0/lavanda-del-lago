@@ -17,7 +17,11 @@ import {
 } from '@/components/ui/breadcrumb'
 
 // Utility Imports
-import { breakUrlToBreadcrumb, capitalizeFirstLetter } from '@/lib/utils'
+import {
+	breakUrlToBreadcrumb,
+	capitalizeFirstLetter,
+	desurlize,
+} from '@/lib/utils'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
@@ -78,7 +82,7 @@ const Breadcrumbs = (): JSX.Element => {
 								{/* If this is the last breadcrumb, display it as a BreadcrumbPage */}
 								{index === breadcrumbsArray.length - 1 ? (
 									<BreadcrumbPage className='text-accent font-medium'>
-										{capitalizeFirstLetter(breadcrumb.name)}
+										{capitalizeFirstLetter(desurlize(breadcrumb.name))}
 									</BreadcrumbPage>
 								) : (
 									<BreadcrumbLink

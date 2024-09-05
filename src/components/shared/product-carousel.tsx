@@ -15,7 +15,6 @@ import type { Product } from '@/types'
 // Project component imports
 import {
 	ProductCard,
-	ProductCardSkeleton,
 } from '@/components/shared/product-card'
 
 // Packages imports

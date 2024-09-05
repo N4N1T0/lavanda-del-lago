@@ -8,7 +8,6 @@ import { X } from 'lucide-react'
 import {
 	Sheet,
 	SheetContent,
-	SheetFooter,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,

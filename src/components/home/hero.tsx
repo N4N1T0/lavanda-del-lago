@@ -1,5 +1,3 @@
-import { Sapone, Condimento1, Condimento2 } from '@/assets'
-
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
@@ -110,7 +108,7 @@ export const Hero = async ({
 							height={1500}
 							width={1500}
 							priority
-							className='w-full h-auto absolute bottom-0 top-0 right-0'
+							className='w-full h-auto absolute inset-0 object-cover translate-y-1/4'
 						/>
 					</div>
 				</div>
