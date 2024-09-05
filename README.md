@@ -63,9 +63,12 @@ To install all dependencies, run npm install or yarn install as outlined in the 
 his project is licensed under a Free License. Feel free to use, modify, and distribute the code.
 
 ## TODOS
-[] new README.md
+[X] new README.md
 [] newsletter with Sanity
-[X] Footer
+[] Add more pages to the Footer (Ask Jorge)
 [] Add SEO
+[] Clerk and Sanity User Muation
 [] Add Error and 404 Page Sanity
 [] Refactor Product Page (Ask Jorge)
+[] Sanity Handoff
+[] Redsys Configuration

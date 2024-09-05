@@ -37,7 +37,7 @@ export const Categories = async (): Promise<JSX.Element> => {
 					</div>
 				</div>
 				<div className='flex items-start gap-8 w-full'>
-					<ul className='flex gap-8 w-full overflow-x-scroll snap-x snap-mandatory'>
+					<ul className='flex gap-8 w-full overflow-x-scroll snap-x snap-mandatory pb-3 scrollbar-hide'>
 						{filterCategories.map((category: string | null) => (
 							<li key={uuidv4()} className='snap-start'>
 								<CategoryLink category={category!} />
