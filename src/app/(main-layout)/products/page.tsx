@@ -1,13 +1,14 @@
 // Type imports
 import type { Product } from '@/types'
 
-// React Imports
-import type React from 'react'
-
 // Project component imports
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import ClientProductPage from '@/components/products/client-product-page'
 import ProductsSidebar from '@/components/products/sidebar'
+
+// Types Imports
+import { sanityClient } from '@sanity-studio/lib/client'
+import { allProducts, productsByCategory } from '@/lib/queries'
 
 /**
  * Asynchronously fetches products based on search parameters and renders them on the page.
@@ -22,12 +23,16 @@ const ProdcutsPage = async ({
 	searchParams?: { category?: string }
 }): Promise<JSX.Element> => {
 	const productUrl = searchParams?.category
-		? `https://fakestoreapi.com/products/category/${searchParams?.category}`
-		: 'https://fakestoreapi.com/products'
-
+		? productsByCategory(searchParams.category)
+		: allProducts
 	try {
-		const response = await fetch(productUrl)
-		const products: Product[] = await response.json()
+		const response: Product[] = await sanityClient.fetch(productUrl)
+		const fileredProducts = response
+			.map((product: Product) => ({
+				...product,
+				categoria: product.categoria.trim(),
+			}))
+			.filter((product: Product) => product.stock > 0)
 
 		return (
 			<section
@@ -36,7 +41,7 @@ const ProdcutsPage = async ({
 			>
 				<ProductsSidebar categoryPath={searchParams?.category} />
 				<article className='flex-[80%]'>
-					<ClientProductPage products={products} />
+					<ClientProductPage products={fileredProducts} />
 				</article>
 			</section>
 		)
