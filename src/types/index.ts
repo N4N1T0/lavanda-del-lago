@@ -5,6 +5,9 @@ export interface Product {
 	precio: number
 	image: string
 	categoria: string
+	stock: number
+	createdAt: string
+	usabilidad: string
 }
 
 export interface CartItem extends Product {
@@ -112,6 +115,7 @@ export interface HomePageType {
 	bentofeaturedCategory: BentofeaturedCategory
 	bentoFeaturedProducto: Product
 	bentoThreeImages: BentoThreeImage[]
+	mainListCategories: string[]
 }
 
 export interface BentoThreeImage {
@@ -151,5 +155,23 @@ export interface URL {
 }
 
 export interface CategoriesList {
-	readonly categoria: null | string
+	categoria: string
+}
+
+export interface Footer {
+	subtitle: string
+	socialMedia: SocialMedia[]
+	contactInfo: ContactInfo
+	copyright: string
+}
+
+export interface ContactInfo {
+	email: string
+	phone: string
+}
+
+export interface SocialMedia {
+	link: string
+	platformName: string
+	id: string
 }
