@@ -1,5 +1,5 @@
 // Type imports
-import type { Breadcrumbs, CartItem, Product } from '@/types'
+import type { Breadcrumbs, CartItem, CategoriesList, Product } from '@/types'
 
 // Package imports
 import { clsx } from 'clsx'
@@ -101,7 +101,7 @@ export function calculateTotal(
 ): [string, string, string] {
 	let subTotal = 0
 	for (const item of count) {
-		subTotal += Number(item.price) * item.quantity
+		subTotal += Number(item.precio) * item.quantity
 	}
 	return [
 		eurilize(subTotal),
@@ -121,6 +121,45 @@ export function calculateTotal(
  * removeFromWishlist([{ id: 1, name: 'Product 1' }, { id: 2, name: 'Product 2' }], '2') // [{ id: 1, name: 'Product 1' }]
  * removeFromWishlist([{ id: 3, name: 'Product 3' }], '2') // [{ id: 3, name: 'Product 3' }]
  */
-export const removeFromWishlist = (count: Product[], id: number): Product[] => {
+export const removeFromWishlist = (count: Product[], id: string): Product[] => {
 	return count.filter((item) => item.id !== id)
+}
+
+/**
+ * Filters and sorts an array of categories, removing duplicates and adding a "Todos" category at the beginning.
+ *
+ * @param {CategoriesList[]} categories - The array of categories to filter and sort.
+ * @return {string[]} - The filtered and sorted array of categories.
+ */
+export const categoriesFilter = (categories: CategoriesList[]): string[] => {
+	const tempCategories = categories.map((category) => category.categoria.trim())
+	return ['Todos', ...Array.from(new Set(tempCategories)).sort()]
+}
+
+/**
+ * Converts a string into a URL-friendly format.
+ *
+ * @param {string} name - The string to be converted.
+ * @return {string} The converted string.
+ */
+export function urlize(name: string): string {
+	return name
+		.trim() // Elimina los espacios al principio y al final
+		.toLowerCase() // Convierte a minúsculas
+		.replace(/\s+/g, '-') // Reemplaza los espacios por guiones
+}
+
+/**
+ * Converts a URL-friendly string back to its original format.
+ *
+ * @param {string} url - The URL-friendly string to be converted.
+ * @return {string} The converted string with spaces and proper capitalization.
+ */
+export function desurlize(url: string): string {
+	return url
+		.replace(/-/g, ' ') // Reemplaza guiones por espacios
+		.normalize('NFC')
+		.split(' ')
+		.map(capitalizeFirstLetter)
+		.join(' ') // Convierte la primera letra de cada palabra a mayúscula
 }
