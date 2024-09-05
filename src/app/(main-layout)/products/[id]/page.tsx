@@ -1,11 +1,18 @@
 // Project component imports
 import FeaturedList from '@/components/home/featured-list'
 import Prefooter from '@/components/home/prefooter'
-import ProductDetails from '@/components/products/product-details'
 import Newsletter from '@/components/shared/newsletter'
+import ProductDetails from '@/components/products/product-details'
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
 
-// Type imports
+// Utils Imports
+import { desurlize } from '@/lib/utils'
+
+// Queries imports
+import { sanityClient } from '@sanity-studio/lib/client'
+import { productByName } from '@/lib/queries'
+
+// Types Imports
 import type { Product } from '@/types'
 
 /**
@@ -23,22 +30,28 @@ const ProductPage = async ({
 	searchParams?: { category?: string }
 }): Promise<JSX.Element> => {
 	try {
-		const response = await fetch(
-			`https://fakestoreapi.com/products/${params.id}`,
+		const desurlizedProductName = desurlize(params.id).toUpperCase()
+
+		const response: Product = await sanityClient.fetch(
+			productByName(desurlizedProductName),
 		)
-		const product: Product = await response.json()
 
 		return (
 			<>
 				<section
 					id='main-products'
-					className='mx-auto max-w-screen-2xl px-4 py-4 pb-8 sm:px-6 lg:px-8 flex gap-10 flex-col'
+					className='mx-auto max-w-screen-2xl px-4 py-4 pb-8 sm:px-6 lg:px-8 flex gap-5 flex-col'
 				>
-					<ProductDetails product={product} />
+					<ProductDetails product={response} />
 					<FeaturedList
 						featuredTitle='Productos Relacionados'
 						direction='left'
 						itemCategory={searchParams?.category!}
+					/>
+					<FeaturedList
+						featuredTitle='Mas Vendidos'
+						direction='right'
+						itemCategory={'Bienestar'}
 					/>
 				</section>
 				<Newsletter />
