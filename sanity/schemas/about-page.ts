@@ -7,11 +7,13 @@ export default {
 			name: 'title',
 			title: 'Titulo',
 			type: 'string',
+			description: 'El título que se mostrará en la página',
 		},
 		{
 			name: 'description',
 			title: 'Descripcion',
 			type: 'text',
+			description: 'La descripción de la página',
 		},
 		{
 			name: 'stats',
@@ -25,20 +27,24 @@ export default {
 							name: 'title',
 							title: 'Titulo',
 							type: 'string',
+							description: 'El título de la estadística',
 						},
 						{
 							name: 'value',
 							title: 'Valor',
 							type: 'string',
+							description: 'El valor de la estadística',
 						},
 						{
 							name: 'description',
 							title: 'Descripción',
 							type: 'string',
+							description: 'La descripción de la estadística',
 						},
 					],
 				},
 			],
+			description: 'La lista de estadisticas',
 		},
 		{
 			name: 'stats_image',
@@ -47,11 +53,13 @@ export default {
 			options: {
 				hotspot: true,
 			},
+			description: 'La imagen que se mostrará en la sección de estadisticas',
 		},
 		{
 			name: 'second_section_title',
 			title: 'Titulo de la Segunda sección',
 			type: 'string',
+			description: 'El título de la segunda sección',
 		},
 		{
 			name: 'second_section_description',
@@ -68,16 +76,19 @@ export default {
 					},
 				},
 			],
+			description: 'La descripción de la segunda sección',
 		},
 		{
 			name: 'teams_section_title',
 			title: 'Titulo de la sección de equipos',
 			type: 'string',
+			description: 'El título de la sección de equipos',
 		},
 		{
 			name: 'teams_section_description',
 			title: 'Descripción de la sección de equipos',
 			type: 'text',
+			description: 'La descripción de la sección de equipos',
 		},
 		{
 			name: 'teams',
@@ -89,66 +100,83 @@ export default {
 					to: { type: 'teams' },
 				},
 			],
+			description: 'La lista de equipos',
 		},
 		{
-		name: "SEO",
-		title: "SEO",
-		type: "object",
-		fields: [
-			{
-				name: "metaTitle",
-				title: "Meta Title",
-				type: "string",
-				description: "El título que aparecerá en la pestaña del navegador y en los resultados de búsqueda.",
-				validation: (Rule: { max: (arg0: number) => { (): any; new(): any; warning: { (arg0: string): any; new(): any; }; }; }) => Rule.max(60).warning('El título debe tener menos de 60 caracteres.')
-			},
-			{
-				name: "metaDescription",
-				title: "Meta Description",
-				type: "text",
-				description: "Una breve descripción de la página para los motores de búsqueda. Generalmente entre 50-160 caracteres.",
-				validation: (Rule: { max: (arg0: number) => { (): any; new(): any; warning: { (arg0: string): any; new(): any; }; }; }) => Rule.max(160).warning('La descripción debe tener menos de 160 caracteres.')
-			},
-			{
-				name: "metaKeywords",
-				title: "Meta Keywords",
-				type: "array",
-				of: [{ type: "string" }],
-				options: {
-					layout: "tags"
+			name: 'SEO',
+			title: 'SEO',
+			type: 'object',
+			fields: [
+				{
+					name: 'metaTitle',
+					title: 'Meta Title',
+					type: 'string',
+					description:
+						'El título que aparecerá en la pestaña del navegador y en los resultados de búsqueda.',
+					// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+					validation: (Rule: any) =>
+						Rule.max(60).warning(
+							'El título debe tener menos de 60 caracteres.',
+						),
 				},
-				description: "Palabras clave para esta página. No son tan importantes hoy en día, pero pueden ayudar con la relevancia."
-			},
-			{
-				name: "openGraphImage",
-				title: "Open Graph Image",
-				type: "image",
-				description: "La imagen que se compartirá cuando esta página se enlace en redes sociales.",
-				options: {
-					hotspot: true
-				}
-			},
-			{
-				name: "twitterCard",
-				title: "Twitter Card",
-				type: "string",
-				options: {
-					list: [
-						{ title: "Summary", value: "summary" },
-						{ title: "Summary with Large Image", value: "summary_large_image" },
-					],
-					layout: "radio"
+				{
+					name: 'metaDescription',
+					title: 'Meta Description',
+					type: 'text',
+					description:
+						'Una breve descripción de la página para los motores de búsqueda. Generalmente entre 50-160 caracteres.',
+					// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+					validation: (Rule: any) =>
+						Rule.max(160).warning(
+							'La descripción debe tener menos de 160 caracteres.',
+						),
 				},
-				description: "El tipo de tarjeta que se usará en Twitter cuando se comparta esta página."
-			}
-		]
-	}
+				{
+					name: 'metaKeywords',
+					title: 'Meta Keywords',
+					type: 'array',
+					of: [{ type: 'string' }],
+					options: {
+						layout: 'tags',
+					},
+					description:
+						'Palabras clave para esta página. No son tan importantes hoy en día, pero pueden ayudar con la relevancia.',
+				},
+				{
+					name: 'openGraphImage',
+					title: 'Open Graph Image',
+					type: 'image',
+					description:
+						'La imagen que se compartirá cuando esta página se enlace en redes sociales.',
+					options: {
+						hotspot: true,
+					},
+				},
+				{
+					name: 'twitterCard',
+					title: 'Twitter Card',
+					type: 'string',
+					options: {
+						list: [
+							{ title: 'Summary', value: 'summary' },
+							{
+								title: 'Summary with Large Image',
+								value: 'summary_large_image',
+							},
+						],
+						layout: 'radio',
+					},
+					description:
+						'El tipo de tarjeta que se usará en Twitter cuando se comparta esta página.',
+				},
+			],
+		},
 	],
 	preview: {
 		select: {
 			title: 'title',
 			subtitle: 'description',
-			media: "stats_image"
+			media: 'stats_image',
 		},
-	}
+	},
 }

@@ -7,11 +7,13 @@ export default {
 			name: 'name',
 			title: 'Name',
 			type: 'string',
+			description: 'El nombre del autor',
 		},
 		{
 			name: 'description',
 			title: 'Description',
 			type: 'text',
+			description: 'Una breve descripción del autor',
 		},
 		{
 			name: 'image',
@@ -20,6 +22,7 @@ export default {
 			options: {
 				hotspot: true,
 			},
+			description: 'La imagen del autor',
 		},
 	],
 	preview: {
@@ -28,5 +31,5 @@ export default {
 			subtitle: 'description',
 			image: 'image',
 		},
-	}
+	},
 }
