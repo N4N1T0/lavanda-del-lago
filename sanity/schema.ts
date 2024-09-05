@@ -6,9 +6,21 @@ import teams from '@sanity-studio/schemas/teams'
 import homePage from '@sanity-studio/schemas/home-page'
 import events from '@sanity-studio/schemas/events'
 import products from '@sanity-studio/schemas/products'
-import cookiePolicy from './schemas/cookie-policy'
-import privacyPolicy from './schemas/privacy-policy'
+import cookiePolicy from '@sanity-studio/schemas/cookie-policy'
+import privacyPolicy from '@sanity-studio/schemas/privacy-policy'
+import footer from '@sanity-studio/schemas/footer'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-	types: [blogArticle, author, aboutPage, teams, homePage, events, products, cookiePolicy, privacyPolicy],
+	types: [
+		blogArticle,
+		author,
+		aboutPage,
+		teams,
+		homePage,
+		events,
+		products,
+		cookiePolicy,
+		privacyPolicy,
+		footer,
+	],
 }
