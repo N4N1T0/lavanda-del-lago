@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 // UI Imports
 import {
@@ -28,6 +28,22 @@ const ClientProductPage = ({ products }: { products: Product[] }) => {
 	// TODO: Add Filter Logic
 	const [filter, setfilter] = useState('')
 
+	const filteredProducts = useMemo(() => {
+		if (filter === 'menor-precio') {
+			return [...products].sort((a, b) => a.precio - b.precio)
+		}
+		if (filter === 'mayor-precio') {
+			return [...products].sort((a, b) => b.precio - a.precio)
+		}
+		if (filter === 'nuevos') {
+			return [...products].sort(
+				(a, b) =>
+					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+			)
+		}
+		return products
+	}, [filter, products])
+
 	return (
 		<>
 			<ProductPageHeader
@@ -36,7 +52,7 @@ const ClientProductPage = ({ products }: { products: Product[] }) => {
 			/>
 			<section id='products-list'>
 				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-					{products.map((product: Product, index: number) => (
+					{filteredProducts.map((product: Product, index: number) => (
 						<ProductCard key={product.id} product={product} index={index} />
 					))}
 				</ul>
@@ -60,18 +76,13 @@ const ProductPageHeader = ({
 					{productsLength}
 				</span>
 			</p>
-			<Select>
+			<Select onValueChange={setFilter}>
 				<SelectTrigger className='w-[160px] md:w-[190px] border-accent text-gray-600'>
 					<SelectValue placeholder='Ordenar por...' />
 				</SelectTrigger>
 				<SelectContent>
 					{productsFilers.map((filter) => (
-						<SelectItem
-							key={uuidv4()}
-							value={filter.value}
-							className='pl-3'
-							onClick={() => setFilter(filter.value)}
-						>
+						<SelectItem key={uuidv4()} value={filter.value} className='pl-3'>
 							{filter.name}
 						</SelectItem>
 					))}
