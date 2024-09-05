@@ -80,41 +80,29 @@ export const socialLinks = [
 	},
 ]
 
-export const footerLinks = {
-	services: [
-		{
-			name: 'Politica de Cookies',
-			href: '/cookies-policy',
-		},
-		{
-			name: 'Politica de Privacidad',
-			href: '/privacy-policy',
-		},
-	],
-	contact: [
-		{
-			name: 'info@lavandadellago.it',
-			href: 'mailto:info@lavandadellago.it',
-		},
-		{
-			name: '+39 030 6871259',
-			href: 'tel:+390306871259',
-		},
-	],
-}
+export const footerLinks = [
+	{
+		name: 'Politica de Cookies',
+		href: '/cookies-policy',
+	},
+	{
+		name: 'Politica de Privacidad',
+		href: '/privacy-policy',
+	},
+]
 
 export const productsFilers = [
 	{
-		name: 'Mas Vendidos',
-		value: 'mas-vendidos',
+		name: 'Menor Precio',
+		value: 'menor-precio',
+	},
+	{
+		name: 'Mayor Precio',
+		value: 'mayor-precio',
 	},
 	{
 		name: 'Nuevos',
 		value: 'nuevos',
-	},
-	{
-		name: 'Ofertas',
-		value: 'ofertas',
 	},
 ]
 
