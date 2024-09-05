@@ -5,9 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-// React Imports
-import React from 'react'
-
 // Data Imports
 import { navItems } from '@/constants/site-data'
 import { categoriesList } from '@/constants/site-data'
@@ -46,7 +43,11 @@ categoriesList.unshift('Todos')
  *
  * @return {JSX.Element} The navigation bar component.
  */
-const NavbarLinks = (): JSX.Element => {
+const NavbarLinks = ({
+	categories,
+}: {
+	categories: string[]
+}): JSX.Element => {
 	const path = usePathname()
 
 	return (
@@ -64,7 +65,7 @@ const NavbarLinks = (): JSX.Element => {
 							</PopoverTrigger>
 							<PopoverContent>
 								<ul>
-									{categoriesList.map((category) => (
+									{categories.map((category) => (
 										<li key={uuidv4()}>
 											<Link
 												href={
@@ -109,7 +110,9 @@ const NavbarLinks = (): JSX.Element => {
  *
  * @return {JSX.Element} The mobile navigation bar component.
  */
-const NavbarLinksMobile = (): JSX.Element => {
+const NavbarLinksMobile = ({
+	categories,
+}: { categories: string[] }): JSX.Element => {
 	const path = usePathname()
 	return (
 		<Sheet>
@@ -145,7 +148,7 @@ const NavbarLinksMobile = (): JSX.Element => {
 										</Link>
 									</SheetClose>
 									<ul className='space-y-1'>
-										{categoriesList.map((category) => (
+										{categories.map((category) => (
 											<li key={uuidv4()} className='pl-2 text-gray-600'>
 												<SheetClose asChild>
 													<Link href={`/products?category=${category}`}>
