@@ -1,5 +1,3 @@
-
-
 // Queries Imports
 import { sanityClient } from '@sanity-studio/lib/client'
 import { cookiePolicy } from '@/lib/queries'
