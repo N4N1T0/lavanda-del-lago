@@ -1,6 +1,5 @@
 // Next.js Imports
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import { Josefin_Sans } from 'next/font/google'
 
 // Components Imports
