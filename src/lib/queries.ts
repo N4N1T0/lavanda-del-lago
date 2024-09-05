@@ -107,6 +107,7 @@ export const homePage = groq`
     description,
     "icon": icon.asset->url
  },
+ mainListCategories,
   bentofeaturedCategory,
   bentoFeaturedProducto->{
     nombre,
@@ -144,9 +145,27 @@ export const allProducts = groq`
   descripcion,
   precio,
   "image": fotoPrincipal.asset->url,
-  categoria
+  categoria,
+  stock,
+  "createdAt": _createdAt
 }
 `
+
+export const productByName = (name: string) => {
+	return groq`
+  *[_type == "product" && nombre == "${name}"]{
+  "id": _id,
+  nombre,
+  descripcion,
+  precio,
+  "image": fotoPrincipal.asset->url,
+  categoria,
+  stock,
+  "createdAt": _createdAt,
+  usabilidad
+}[0]
+  `
+}
 
 export const productsByCategory = (category: string) => {
 	return groq`
@@ -156,10 +175,25 @@ export const productsByCategory = (category: string) => {
   descripcion,
   precio,
   "image": fotoPrincipal.asset->url,
-  categoria
+  categoria,
+  stock,
+  "createdAt": _createdAt
 }
   `
 }
+
+export const footer = groq`
+*[_type == "footer"]{
+  subtitle,
+  socialMedia[]{
+    link,
+    platformName,
+    "id": _key
+  },
+  contactInfo,
+  copyright
+}[0]
+`
 
 export const cookiePolicy = groq`
 *[_type == "cookiePolicy"][0]
