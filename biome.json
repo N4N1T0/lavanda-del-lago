@@ -11,6 +11,11 @@
 				"noNonNullAssertion": {
 					"level": "off"
 				}
+			},
+			"correctness": {
+				"noUnusedImports": {
+					"level": "error"
+				}
 			}
 		}
 	},
