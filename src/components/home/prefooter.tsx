@@ -5,18 +5,31 @@ import Link from 'next/link'
 // Assets Imports
 import { PrefooterImage } from '@/assets'
 
+// Types Imports
+import type { Prefooter as PrefooterProps } from '@/types'
+
+// Queries Imports
+import { sanityClientRead } from '@sanity-studio/lib/client'
+import { prefooter } from '@/lib/queries'
+
 /**
  * Renders the Prefooter component.
  *
- * @return {JSX.Element} The rendered prefooter section.
+ * @return {Promise<JSX.Element>} The rendered prefooter section.
  */
-const Prefooter = (): JSX.Element => {
+const Prefooter = async (): Promise<JSX.Element> => {
+	const response: PrefooterProps = await sanityClientRead.fetch(prefooter)
+
+	const { imageUrl, link } = response
+
 	return (
 		<section id='prefooter' className='w-full'>
-			<Link href='/'>
+			<Link href={link} target='_blank'>
 				<Image
 					alt='prefooter'
-					src={PrefooterImage}
+					src={imageUrl || PrefooterImage}
+					width={1800}
+					height={900}
 					title='prefooter'
 					className='w-full object-fill'
 				/>
