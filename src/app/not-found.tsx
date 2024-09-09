@@ -1,5 +1,8 @@
 'use client'
 
+// React Imports
+import { useEffect, useState } from 'react'
+
 // Next.js Imports
 import Link from 'next/link'
 import Image from 'next/image'
@@ -8,8 +11,41 @@ import { useRouter } from 'next/navigation'
 // Assets Imports
 import { Image404 } from '@/assets'
 
+// Types Imports
+import type { Metadata } from 'next'
+import type { NotFoundPage } from '@/types'
+
+// Queries Imports
+import { sanityClientRead } from '@sanity-studio/lib/client'
+import { errorPages } from '@/lib/queries'
+
+// Metadata for the error page
+export const metadata: Metadata = {
+	title: 'Error 404',
+	description: 'Pagina No Encontrada',
+}
+
 export default function NotFound() {
+	// initialize router
 	const router = useRouter()
+
+	// State for the Page info from Sanity
+	const [pageInfo, setPageInfo] = useState<NotFoundPage | null>(null)
+
+	// Fetch Page info from Sanity
+	useEffect(() => {
+		const getPageInfo = async () => {
+			try {
+				const response = await sanityClientRead.fetch(errorPages('not-found'))
+				setPageInfo(response)
+			} catch (err) {
+				console.error('Error fetching error page info:', err)
+			}
+		}
+
+		getPageInfo()
+	}, [])
+
 	return (
 		<section className='bg-white '>
 			<div className='container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12'>
@@ -18,7 +54,7 @@ export default function NotFound() {
 						Error 404
 					</p>
 					<h1 className='mt-3 text-xl md:text-2xl font-bold text-gray-800'>
-						Hemos perdido esta Pagina
+						´{pageInfo?.digest}
 					</h1>
 
 					<div className='flex items-center mt-6 gap-x-3'>
@@ -37,8 +73,8 @@ export default function NotFound() {
 							>
 								<title>Volver</title>
 								<path
-									stroke-linecap='round'
-									stroke-linejoin='round'
+									strokeLinecap='round'
+									strokeLinejoin='round'
 									d='M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18'
 								/>
 							</svg>
@@ -54,103 +90,51 @@ export default function NotFound() {
 						</Link>
 					</div>
 
-					<div className='mt-10 space-y-6'>
-						<div>
-							<Link
-								href='/products'
-								className='inline-flex items-center text-sm text-accent gap-x-2 hover:underline'
-							>
-								<span>Productos</span>
+					<p className='mt-5'>Puedes usar estos links alternativos</p>
 
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									fill='none'
-									viewBox='0 0 24 24'
-									strokeWidth='1.5'
-									stroke='currentColor'
-									className='w-5 h-5 rtl:rotate-180'
+					<div className='mt-5 space-y-6'>
+						{pageInfo?.links.map((link) => (
+							<div key={link}>
+								<Link
+									href={link}
+									className='inline-flex items-center text-sm text-accent gap-x-2 hover:underline'
 								>
-									<title>Flecha Derecha</title>
-									<path
-										stroke-linecap='round'
-										stroke-linejoin='round'
-										d='M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3'
-									/>
-								</svg>
-							</Link>
+									<span>
+										{link
+											.replace(/\/$/, '')
+											.replace(/^[a-z]/, (m) => m.toUpperCase())}{' '}
+									</span>
 
-							<p className='mt-2 text-sm text-gray-500'>
-								Explora nuestra colección de productos.
-							</p>
-						</div>
-
-						<div>
-							<Link
-								href='/ofertas'
-								className='inline-flex items-center text-sm text-accent gap-x-2 hover:underline'
-							>
-								<span>Nuevas Ofertas</span>
-
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									fill='none'
-									viewBox='0 0 24 24'
-									strokeWidth='1.5'
-									stroke='currentColor'
-									className='w-5 h-5 rtl:rotate-180'
-								>
-									<title>Flecha Derecha</title>
-
-									<path
-										stroke-linecap='round'
-										stroke-linejoin='round'
-										d='M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3'
-									/>
-								</svg>
-							</Link>
-
-							<p className='mt-2 text-sm text-gray-500'>
-								Encuentra las mejores ofertas.
-							</p>
-						</div>
-
-						<div>
-							<Link
-								href='/blog'
-								className='inline-flex items-center text-sm text-accent gap-x-2 hover:underline'
-							>
-								<span>Nuestro Blog </span>
-
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									fill='none'
-									viewBox='0 0 24 24'
-									strokeWidth='1.5'
-									stroke='currentColor'
-									className='w-5 h-5 rtl:rotate-180'
-								>
-									<title>Flecha Derecha</title>
-									<path
-										stroke-linecap='round'
-										stroke-linejoin='round'
-										d='M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3'
-									/>
-								</svg>
-							</Link>
-
-							<p className='mt-2 text-sm text-gray-500'>
-								Explora lo mejor de nuestros articulos
-							</p>
-						</div>
+									<svg
+										xmlns='http://www.w3.org/2000/svg'
+										fill='none'
+										viewBox='0 0 24 24'
+										strokeWidth='1.5'
+										stroke='currentColor'
+										className='w-5 h-5 rtl:rotate-180'
+									>
+										<title>Flecha Derecha</title>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											d='M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3'
+										/>
+									</svg>
+								</Link>
+							</div>
+						))}
 					</div>
 				</div>
 
 				<div className='relative w-full mt-8 lg:w-1/2 lg:mt-0'>
 					<Image
 						className='w-full lg:h-[32rem] h-80 md:h-96 rounded-lg object-cover '
-						src={Image404}
+						src={pageInfo?.imageUrl || Image404}
+						width={500}
+						height={500}
 						alt='Imagen Lavanda 404'
 						title='Imagen Lavanda 404'
+						priority
 					/>
 				</div>
 			</div>

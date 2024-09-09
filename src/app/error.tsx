@@ -1,5 +1,8 @@
 'use client'
 
+// React Imports
+import { useEffect, useState } from 'react'
+
 // Next.js Imports
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,17 +10,52 @@ import { useRouter } from 'next/navigation'
 
 // Assets Imports
 import { Image500 } from '@/assets'
-import { contactLinks } from '@/constants/site-data'
 import { v4 as uuidv4 } from 'uuid'
 
-export default function ErrorPage({
+// Types Imports
+import type { Metadata } from 'next'
+import type { ErrorPage as ErrorPageSanity } from '@/types'
+
+// Queries Imports
+import { sanityClientRead } from '@sanity-studio/lib/client'
+import { errorPages } from '@/lib/queries'
+
+// Data Imports
+import { contactLinks } from '@/constants/site-data'
+
+// Metadata for the error page
+export const metadata: Metadata = {
+	title: 'Error 500',
+	description: 'Error Interno',
+}
+
+const ErrorPage = ({
 	error,
 	reset,
 }: {
 	error: Error & { digest?: string }
 	reset: () => void
-}) {
+}) => {
+	// Router initialitation
 	const router = useRouter()
+
+	// State for the Page info from Sanity
+	const [pageInfo, setPageInfo] = useState<ErrorPageSanity | null>(null)
+
+	// Fetch Page info from Sanity
+	useEffect(() => {
+		const getPageInfo = async () => {
+			try {
+				const response = await sanityClientRead.fetch(errorPages('error'))
+				setPageInfo(response)
+			} catch (err) {
+				console.error('Error fetching error page info:', err)
+			}
+		}
+
+		getPageInfo()
+	}, [])
+
 	return (
 		<section className='bg-white '>
 			<div className='container min-h-screen px-6 py-12 mx-auto lg:flex lg:flex-row-reverse lg:items-center lg:gap-12'>
@@ -28,23 +66,33 @@ export default function ErrorPage({
 					<h1 className='mt-3 text-xl md:text-2xl font-bold text-gray-800'>
 						Error Interno
 					</h1>
-					<h2 className='mt-3'>
-						Perdon por las molestias! hemos tenido un error! <br /> puedes
-						comunicarte con nosotros a travez de estos links:
-					</h2>
+					<h2 className='mt-3'>{pageInfo?.digest}</h2>
 					<ul className='mt-3 space-y-1'>
-						{contactLinks.map((link) => (
-							<li key={uuidv4()}>
-								<Link
-									href={link.link}
-									target='_blank'
-									rel='noreferrer'
-									className='text-secondary underline'
-								>
-									{link.label}
-								</Link>
-							</li>
-						))}
+						{pageInfo === null
+							? contactLinks.map((link) => (
+									<li key={uuidv4()}>
+										<Link
+											href={link.link}
+											target='_blank'
+											rel='noreferrer'
+											className='text-secondary underline'
+										>
+											{link.label}
+										</Link>
+									</li>
+								))
+							: pageInfo?.contacts.map((link) => (
+									<li key={uuidv4()}>
+										<Link
+											href={link.link}
+											target='_blank'
+											rel='noreferrer'
+											className='text-secondary underline'
+										>
+											{link.label}
+										</Link>
+									</li>
+								))}
 					</ul>
 
 					<div className='flex items-center mt-6 gap-x-3'>
@@ -63,8 +111,8 @@ export default function ErrorPage({
 							>
 								<title>Volver</title>
 								<path
-									stroke-linecap='round'
-									stroke-linejoin='round'
+									strokeLinecap='round'
+									strokeLinejoin='round'
 									d='M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18'
 								/>
 							</svg>
@@ -95,8 +143,8 @@ export default function ErrorPage({
 							>
 								<title>Reintentar</title>
 								<path
-									stroke-linecap='round'
-									stroke-linejoin='round'
+									strokeLinecap='round'
+									strokeLinejoin='round'
 									d='M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18'
 								/>
 							</svg>
@@ -107,7 +155,10 @@ export default function ErrorPage({
 				<div className='relative w-full mt-8 lg:w-1/2 lg:mt-0'>
 					<Image
 						className='w-full lg:h-[32rem] h-80 md:h-96 rounded-lg object-cover '
-						src={Image500}
+						src={pageInfo?.imageUrl || Image500}
+						priority
+						width={500}
+						height={500}
 						alt='Imagen Lavanda 404'
 						title='Imagen Lavanda 404'
 					/>
@@ -116,3 +167,5 @@ export default function ErrorPage({
 		</section>
 	)
 }
+
+export default ErrorPage
