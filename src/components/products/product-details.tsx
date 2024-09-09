@@ -2,7 +2,7 @@
 import Image from 'next/image'
 
 // Uitility Imports
-import { eurilize } from '@/lib/utils'
+import { eurilize, isNew } from '@/lib/utils'
 
 // Type imports
 import type { Product } from '@/types'
@@ -16,6 +16,9 @@ import { Quantity } from '@/components/shared/quantity'
 // Data Import
 import { badges } from '@/constants/site-data'
 
+// Assets Imports
+import { MainLogo } from '@/assets'
+
 // External Libraies Imports
 import { v4 as uuidv4 } from 'uuid'
 
@@ -26,21 +29,38 @@ import { v4 as uuidv4 } from 'uuid'
  * @return {JSX.Element} The JSX element representing the product details
  */
 const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
-	const { nombre, precio, descripcion, image, usabilidad } = product
+	const {
+		nombre,
+		precio,
+		descripcion,
+		image,
+		usabilidad,
+		categoria,
+		createdAt,
+	} = product
 
 	return (
-		<article className='flex-[80%] grid grid-cols-2 mt-10 gap-10'>
+		<article className='flex-[80%] grid grid-cols-2 mt-7 gap-10'>
 			<Image
-				src={image}
-				alt={nombre}
-				title={nombre}
+				src={image || MainLogo}
+				alt={nombre || 'Logo Principal de Lavanda del Lago'}
+				title={nombre || 'Logo Principal de Lavanda del Lago'}
 				width={500}
 				height={500}
-				className='aspect-square w-full h-auto'
+				priority
+				className='object-cover aspect-square'
 			/>
-			<section id='product-details' className='space-y-7'>
-				<h1 className='text-4xl text-accent'>{nombre}</h1>
-				<p className='text-3xl font-bold'>{eurilize(Number(precio))}</p>
+			<section id='product-details' className='space-y-4'>
+				<div className='w-full flex justify-between items-center'>
+					<h1 className='text-4xl text-accent'>
+						{nombre || 'Estamos trabajando en una nombre'}
+					</h1>
+					<span className='bg-tertiary px-5 py-2 text-white'>
+						{isNew(createdAt) && 'Nuevo'}
+					</span>
+				</div>
+				<h2 className='uppercase text-lg !-mt-1'>{categoria || 'Bienestar'}</h2>
+				<p className='text-3xl font-bold'>{eurilize(Number(precio || '0'))}</p>
 				<Tabs defaultValue='description' className='w-full mt-2'>
 					<TabsList className='w-full bg-transparent flex justify-between items-center gap-10 mb-3'>
 						<TabsTrigger
@@ -57,10 +77,16 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value='description' className='text-center px-5 py-3'>
-						<p className='text-lg text-gray-600'>{descripcion}</p>{' '}
+						<p className='text-lg text-gray-600'>
+							{descripcion ||
+								'Estamos trabajando en una descripcion detallada para usted'}
+						</p>{' '}
 					</TabsContent>
 					<TabsContent value='use' className='text-center px-5 py-3'>
-						<p className='text-lg text-gray-600'>{usabilidad}</p>{' '}
+						<p className='text-lg text-gray-600'>
+							{usabilidad ||
+								'Estamos trabajando en una usabilidad detallada para usted'}
+						</p>{' '}
 					</TabsContent>
 				</Tabs>
 				<Quantity prduct={product} />

@@ -2,30 +2,30 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-// Assets Imports
-import { FooterLogo } from '@/assets'
-
 // Data Imports
 import { footerLinks, socialLinks, badges } from '@/constants/site-data'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
 
+// Assets Imports
+import { FooterLogo } from '@/assets'
+
 // Queries Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { footer } from '@/lib/queries'
 
 // Types Imports
 import type { Footer as FooterProps } from '@/types'
 
 const Footer = async (): Promise<JSX.Element> => {
-	const response: FooterProps = await sanityClient.fetch(footer)
+	const response: FooterProps = await sanityClientRead.fetch(footer)
 
 	const findSocialMedia = (name: string) => {
 		return socialLinks.find((item) => item.name === name)?.svg
 	}
 
-	const { contactInfo, copyright, socialMedia, subtitle } = response
+	const { contactInfo, copyright, socialMedia, subtitle, logo } = response
 
 	return (
 		<footer className='bg-accent'>
@@ -34,7 +34,14 @@ const Footer = async (): Promise<JSX.Element> => {
 					<div>
 						{/* Image of the footer */}
 						<div className='flex justify-center text-teal-600 sm:justify-start'>
-							<Image src={FooterLogo} alt='Footer Logo' title='Footer Logo' />
+							<Image
+								src={logo || FooterLogo}
+								width={100}
+								height={50}
+								alt='Footer Logo'
+								title='Footer Logo'
+								className='w-auto h-auto'
+							/>
 						</div>
 						<p className='mt-6 max-w-md text-center leading-relaxedsm:max-w-xs sm:text-left'>
 							{subtitle}

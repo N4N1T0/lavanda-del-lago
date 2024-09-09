@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 
 // Data Imports
 import { navItems } from '@/constants/site-data'
-import { categoriesList } from '@/constants/site-data'
 
 // UI Imports
 import {
@@ -34,9 +33,6 @@ import { NavbarLogo } from '@/assets'
 
 // External Libraies Imports
 import { v4 as uuidv4 } from 'uuid'
-
-// Add All the categories to the list
-categoriesList.unshift('Todos')
 
 /**
  * Renders a navigation bar with links.

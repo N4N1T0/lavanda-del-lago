@@ -1,6 +1,9 @@
 // Next.js Imports
 import Image from 'next/image'
 
+// Assets Imports
+import { Puzzle } from '@/assets'
+
 // Type imports
 import type { InfoCard as InfoCardProps } from '@/types'
 
@@ -34,7 +37,14 @@ export const Info = ({
  */
 const InfoCard = ({ description, icon, title }: InfoCardProps): JSX.Element => (
 	<div className='space-y-5 flex-1 px-5'>
-		<Image alt={title} src={icon} width={35} height={35} />
+		<Image
+			alt={title}
+			title={title}
+			src={icon || Puzzle}
+			width={35}
+			height={35}
+			className='aspect-square'
+		/>
 		<h3 className='text-xl uppercase'>{title}</h3>
 		<p className='font-light'>{description}</p>
 	</div>

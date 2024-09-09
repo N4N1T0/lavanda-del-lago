@@ -12,6 +12,9 @@ import { Skeleton } from '@/components/ui/skeleton'
 // Project Imports
 import WishlistBtn from '@/components/shared/wishlist-btn'
 
+// Assets Imports
+import { MainLogo } from '@/assets'
+
 /**
  * Renders a product card component with details such as title, price, description, and image.
  *
@@ -22,14 +25,15 @@ const ProductCard = ({
 	product,
 	index,
 }: { product: Product; index: number }): JSX.Element => {
-	const { nombre, precio, descripcion, image, id, categoria } = product
+	const { nombre, precio, descripcion, image, categoria } = product
 
 	return (
 		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black relative'>
 			<div className='aspect-square'>
 				<Image
-					src={image}
-					alt={nombre}
+					src={image || MainLogo}
+					alt={nombre || 'Logo Principal de Lavanda del Lago'}
+					title={nombre || 'Logo Principal de Lavanda del Lago'}
 					width={200}
 					height={200}
 					priority={index < 8}
@@ -40,22 +44,32 @@ const ProductCard = ({
 				<div className='self-stretch flex-col justify-start items-start gap-4 flex'>
 					<Link
 						prefetch
-						href={`/products/${id}?category=${categoria}`}
+						href={
+							nombre && categoria
+								? `/products/${urlize(nombre)}?category=${categoria}`
+								: '/products'
+						}
 						className='self-stretch text-center text-accent font-medium leading-bold text-sm lg:text-base hover:text-black transition-colors duration-200'
 					>
-						{nombre.split(' ').slice(0, 3).join(' ')}
+						{nombre?.split(' ').slice(0, 3).join(' ') ||
+							'Estamos trabajando en una nombre'}
 					</Link>
 					<div className='self-stretch text-center text-gray-600 tracking-wide text-xs md:text-base'>
-						{descripcion.split(' ').slice(0, 10).join(' ')}
+						{descripcion?.split(' ').slice(0, 10).join(' ') ||
+							'Estamos trabajando en una descripcion detallada para usted'}
 						{'...'}
 					</div>
 					<div className='self-stretch text-center text-2xl font-bold leading-normal tracking-wide'>
-						{eurilize(Number(precio))}
+						{eurilize(Number(precio || '0'))}
 					</div>
 				</div>
 				<Link
 					prefetch
-					href={`/products/${urlize(nombre)}?category=${categoria}`}
+					href={
+						nombre && categoria
+							? `/products/${urlize(nombre)}?category=${categoria}`
+							: '/products'
+					}
 					className='px-6 py-3 text-sm md:text-base bg-accent rounded-lg text-white hover:bg-white hover:text-accent transition-colors duration-200'
 				>
 					Comprar <span className='hidden md:inline'>Ahora</span>

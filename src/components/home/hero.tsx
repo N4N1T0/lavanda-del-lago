@@ -8,10 +8,15 @@ import { Button } from '@/components/ui/button'
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
 
+// Assets Imports
+import { Hero1, Sapone, Condimento1 } from '@/assets'
+
 // Types Imports
 import type { BentofeaturedCategory, BentoThreeImage, Product } from '@/types'
+
+// Queries Imports
 import { productsByCategory } from '@/lib/queries'
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 export const Hero = async ({
 	bentoThreeImages,
@@ -22,7 +27,7 @@ export const Hero = async ({
 	bentoFeaturedProducto: Product
 	bentofeaturedCategory: BentofeaturedCategory
 }) => {
-	const response: Product[] = await sanityClient.fetch(
+	const response: Product[] = await sanityClientRead.fetch(
 		productsByCategory(bentofeaturedCategory.title),
 	)
 	const featuredProducts = response.slice(0, 2).map((product) => {
@@ -43,7 +48,7 @@ export const Hero = async ({
 						className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''}`}
 					>
 						<Image
-							src={image}
+							src={image || Hero1}
 							alt='Lavanda Del Lago'
 							className='w-full h-auto object-cover aspect-square'
 							width={500}
@@ -76,12 +81,12 @@ export const Hero = async ({
 									prefetch
 								>
 									<Image
-										src={product.image}
+										src={product.image || Condimento1}
 										alt={product.name}
 										width={200}
 										height={200}
 										priority
-										className='group-hover:scale-110 transition-transform duration-200'
+										className='group-hover:scale-110 transition-transform duration-200 w-auto h-auto'
 									/>
 								</Link>
 							</div>
@@ -103,7 +108,7 @@ export const Hero = async ({
 					</div>
 					<div className='col-span-1 relative'>
 						<Image
-							src={bentoFeaturedProducto.image}
+							src={bentoFeaturedProducto.image || Sapone}
 							alt={bentoFeaturedProducto.nombre}
 							height={1500}
 							width={1500}
