@@ -7,7 +7,13 @@ import { seo } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 export async function seoMetatags(): Promise<Metadata> {
-	const response: SeoMetaTags = await sanityClientRead.fetch(seo)
+	const response: SeoMetaTags = await sanityClientRead.fetch(
+		seo,
+		{},
+		{
+			next: { revalidate: 60 },
+		},
+	)
 
 	return {
 		title: {

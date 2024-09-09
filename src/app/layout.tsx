@@ -1,5 +1,3 @@
-// Next.js Imports
-import type { Metadata } from 'next'
 import { Josefin_Sans } from 'next/font/google'
 
 // Components Imports
@@ -26,7 +24,10 @@ const josefinSand = Josefin_Sans({
 })
 
 // Metatdata for this site
-export const metadata: Promise<Metadata> = seoMetatags()
+export async function generateMetadata() {
+	const metadata = await seoMetatags()
+	return metadata
+}
 
 /**
  * Renders the root layout of the application.
