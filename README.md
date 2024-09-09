@@ -64,12 +64,19 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 
 ## TODOS
 [X] new README.md
-[] newsletter with Sanity
-[] Add more pages to the Footer (Ask Jorge)
-[] Add SEO
+[X] newsletter with Sanity
+[X] Add more pages to the Footer (Ask Jorge)
+[X] Add SEO
+[X] Add Error and 404 Page Sanity
+[X] Assets Sanitition
+[X] Data Sanitition
+[X] Fix categories list Home Page (not Snapping)
+[X] SEO Sanity
+[X] DevTools Error Fix
 [] Clerk and Sanity User Muation
-[] Add Error and 404 Page Sanity
 [] Refactor Product Page (Ask Jorge)
+[] Add Search Functionality
 [] Sanity Handoff
 [] Redsys Configuration
 [] Style and Performance Review
+[] VPS Configuration and Github Actions Link

@@ -27,53 +27,53 @@ import { allProducts } from '@/lib/queries'
  *
  * @return {JSX.Element} The JSX element containing the list of products.
  */
-const HomeProductsList = React.memo(
-	({ categories }: { categories: string[] }): JSX.Element => {
-		// products: The list of products that will be rendered & activeCategory: The currently selected category.
-		const [products, setProducts] = useState<Product[] | null>(null)
-		const [activeCategory, setActiveCategory] = useState<string | undefined>(
-			categories[0],
-		)
+const HomeProductsList = ({
+	categories,
+}: { categories: string[] }): JSX.Element => {
+	// products: The list of products that will be rendered & activeCategory: The currently selected category.
+	const [products, setProducts] = useState<Product[] | null>(null)
+	const [activeCategory, setActiveCategory] = useState<string | undefined>(
+		categories[0],
+	)
 
-		// Fetching of data from sanity as part of client side rendering
-		useEffect(() => {
-			sanityClientRead.fetch(allProducts).then((response: Product[]) => {
-				setProducts(response)
-			})
-		}, [])
+	// Fetching of data from sanity as part of client side rendering
+	useEffect(() => {
+		sanityClientRead.fetch(allProducts).then((response: Product[]) => {
+			setProducts(response)
+		})
+	}, [])
 
-		// Rendering of the list of products based on the selected category
-		if (!products) {
-			return <HomeProductsListSkeleton />
-		}
+	// Rendering of the list of products based on the selected category
+	if (!products) {
+		return <HomeProductsListSkeleton />
+	}
 
-		return (
-			<section
-				id='home-products-list'
-				className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex flex-col gap-7'
-			>
-				<HomeProductsListHeader
-					setActiveCategory={setActiveCategory}
-					activeCategory={activeCategory}
-					categories={categories}
-				/>
+	return (
+		<section
+			id='home-products-list'
+			className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex flex-col gap-7'
+		>
+			<HomeProductsListHeader
+				setActiveCategory={setActiveCategory}
+				activeCategory={activeCategory}
+				categories={categories}
+			/>
 
-				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-					{products
-						.filter((product: Product) =>
-							activeCategory === 'Todos'
-								? true
-								: product.categoria === activeCategory,
-						)
-						.slice(0, 8)
-						.map((product: Product, index: number) => (
-							<ProductCard key={product.id} product={product} index={index} />
-						))}
-				</ul>
-			</section>
-		)
-	},
-)
+			<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
+				{products
+					.filter((product: Product) =>
+						activeCategory === 'Todos'
+							? true
+							: product.categoria === activeCategory,
+					)
+					.slice(0, 8)
+					.map((product: Product, index: number) => (
+						<ProductCard key={product.id} product={product} index={index} />
+					))}
+			</ul>
+		</section>
+	)
+}
 
 /**
  * Renders the Header of the home products list. using React.useMemo for not re-rendering
