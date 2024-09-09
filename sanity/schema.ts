@@ -9,6 +9,11 @@ import products from '@sanity-studio/schemas/products'
 import cookiePolicy from '@sanity-studio/schemas/cookie-policy'
 import privacyPolicy from '@sanity-studio/schemas/privacy-policy'
 import footer from '@sanity-studio/schemas/footer'
+import newsletter from '@sanity-studio/schemas/newsletter'
+import errorPage from '@sanity-studio/schemas/errorPage'
+import notFoundPage from '@sanity-studio/schemas/not-found'
+import prefooter from '@sanity-studio/schemas/prefooter'
+import seo from '@sanity-studio/schemas/seo'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
 	types: [
@@ -22,5 +27,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		cookiePolicy,
 		privacyPolicy,
 		footer,
+		newsletter,
+		errorPage,
+		notFoundPage,
+		prefooter,
+		seo,
 	],
 }

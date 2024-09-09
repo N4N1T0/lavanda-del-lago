@@ -17,6 +17,14 @@ export default {
 				'El subtitulo que se mostrara en la parte superior del footer',
 		},
 		{
+			name: 'logo',
+			title: 'Logo',
+			type: 'image',
+			options: {
+				hotspot: true,
+			},
+		},
+		{
 			name: 'socialMedia',
 			title: 'Social Media',
 			type: 'array',
