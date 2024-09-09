@@ -1,6 +1,28 @@
+// Project component imports
 import { ProductCard } from '@/components/shared/product-card'
-import type { Product } from '@/types'
 
+// Types imports
+import type { Product } from '@/types'
+import type { Metadata } from 'next'
+
+// function to generate metadata
+export async function generateMetadata({
+	searchParams,
+}: {
+	searchParams?: Record<string, string | string[] | undefined>
+}): Promise<Metadata> {
+	return {
+		title: `${searchParams?.q || 'Busqueda'}`,
+		description: `Busqueda dentro de los productos de Lavanda del lago para: ${searchParams?.q || 'Busqueda'}.`,
+	}
+}
+
+/**
+ * A search page component that fetches products from a fake store API and displays the first 4 products.
+ *
+ * @param {Record<string, string | string[] | undefined>} searchParams - An object containing search parameters.
+ * @return {Promise<JSX.Element | null>} A JSX element representing the search page, or null if no results are found.
+ */
 const SearchPage = async ({
 	searchParams,
 }: {

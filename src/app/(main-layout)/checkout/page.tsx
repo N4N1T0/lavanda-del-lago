@@ -3,6 +3,15 @@ import Address from '@/components/checkout/address'
 import LastMinute from '@/components/checkout/last-minute'
 import Summary from '@/components/checkout/summary'
 
+// Type Imports
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Checkout',
+	description:
+		'Esta es la página de checkout para la tienda en linea de Lavanda del lago.',
+}
+
 /**
  * Renders the checkout page component.
  *

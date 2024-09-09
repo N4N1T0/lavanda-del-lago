@@ -9,11 +9,40 @@ import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import { desurlize } from '@/lib/utils'
 
 // Queries imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { productByName } from '@/lib/queries'
 
 // Types Imports
 import type { Product } from '@/types'
+import type { Metadata } from 'next'
+
+// function to generate metadata
+export async function generateMetadata({
+	params,
+}: {
+	params: { id: string }
+}): Promise<Metadata> {
+	const desurlizedProductName = desurlize(params.id).toUpperCase()
+
+	const response: Product = await sanityClientRead.fetch(
+		productByName(desurlizedProductName),
+	)
+
+	return {
+		title: `${response.nombre}`,
+		description: `${response.descripcion}`,
+		openGraph: {
+			title: `${response.nombre}`,
+			description: `${response.descripcion}`,
+			images: response.image,
+		},
+		twitter: {
+			title: `${response.nombre}`,
+			description: `${response.descripcion}`,
+			images: response.image,
+		},
+	}
+}
 
 /**
  * Asynchronously fetches product details based on parameters and renders them on the page.
@@ -32,7 +61,7 @@ const ProductPage = async ({
 	try {
 		const desurlizedProductName = desurlize(params.id).toUpperCase()
 
-		const response: Product = await sanityClient.fetch(
+		const response: Product = await sanityClientRead.fetch(
 			productByName(desurlizedProductName),
 		)
 

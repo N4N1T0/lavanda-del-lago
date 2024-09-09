@@ -9,11 +9,27 @@ import { ServerFetchError } from '@/components/shared/server-fetch-error'
 
 // Types imports
 import type { Posts } from '@/types'
+import type { Metadata } from 'next'
 
 // Sanity Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { blogArticleById } from '@/lib/queries'
 import { PortableText } from 'next-sanity'
+
+// function to generate metadata
+export async function generateMetadata({
+	params,
+}: { params: { slug: string } }): Promise<Metadata> {
+	const post: Posts = await sanityClientRead.fetch(blogArticleById(params.slug))
+
+	return {
+		title: post.title,
+		description: post.description,
+		openGraph: {
+			images: post.image,
+		},
+	}
+}
 
 /**
  * Fetches a blog article from the JSONPlaceholder API based on the provided ID and renders its content.
@@ -25,7 +41,9 @@ const BlogArticlePage = async ({
 	params,
 }: { params: { slug: string } }): Promise<JSX.Element> => {
 	try {
-		const post: Posts = await sanityClient.fetch(blogArticleById(params.slug))
+		const post: Posts = await sanityClientRead.fetch(
+			blogArticleById(params.slug),
+		)
 
 		return (
 			<>

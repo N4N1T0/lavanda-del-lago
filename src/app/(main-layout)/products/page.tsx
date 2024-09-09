@@ -7,8 +7,21 @@ import ClientProductPage from '@/components/products/client-product-page'
 import ProductsSidebar from '@/components/products/sidebar'
 
 // Types Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { allProducts, productsByCategory } from '@/lib/queries'
+import type { Metadata } from 'next'
+
+// function to generate metadata
+export async function generateMetadata({
+	searchParams,
+}: {
+	searchParams?: { category?: string }
+}): Promise<Metadata> {
+	return {
+		title: `Productos | ${searchParams?.category ? searchParams?.category : 'Todos los productos'}`,
+		description: `Productos de la tienda en linea de Lavanda del lago. para la categoria de productos ${searchParams?.category ? searchParams?.category : 'Todos los productos'}`,
+	}
+}
 
 /**
  * Asynchronously fetches products based on search parameters and renders them on the page.
@@ -22,11 +35,15 @@ const ProdcutsPage = async ({
 }: {
 	searchParams?: { category?: string }
 }): Promise<JSX.Element> => {
+	// Product Url to be fetched, in case of no category, fetch all products
 	const productUrl = searchParams?.category
 		? productsByCategory(searchParams.category)
 		: allProducts
+
 	try {
-		const response: Product[] = await sanityClient.fetch(productUrl)
+		// Fetch products
+		const response: Product[] = await sanityClientRead.fetch(productUrl)
+		// Filter products
 		const fileredProducts = response
 			.map((product: Product) => ({
 				...product,

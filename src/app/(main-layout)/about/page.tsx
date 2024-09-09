@@ -1,13 +1,34 @@
-import { aboutUsPage } from '@/lib/queries'
-import type { AboutsPageType } from '@/types'
-import { sanityClient } from '@sanity-studio/lib/client'
-import { PortableText } from 'next-sanity'
+// Next.js Imports
 import Image from 'next/image'
 
-const AboutUsPage = async () => {
-	const aboutUsPageResponse: AboutsPageType =
-		await sanityClient.fetch(aboutUsPage)
+// Sanity Imports
+import { PortableText } from 'next-sanity'
 
+// Queries Imports
+import { sanityClientRead } from '@sanity-studio/lib/client'
+import { aboutUsPage } from '@/lib/queries'
+
+// Types Imports
+import type { AboutsPageType } from '@/types'
+import type { Metadata } from 'next'
+
+// Metdata Configuration for this page
+export const metadata: Metadata = {
+	title: 'Sobre Nosotros',
+	description:
+		'Conoce a nuestro equipo y nuestra mision. En Lavanda del Lago, estamos comprometidos en brindarte la mejor experiencia de compra en l nea, con nuestros productos de alta calidad y nuestro excelente servicio al cliente.',
+}
+
+/**
+ * Fetches and renders the About Us page data from the Sanity client.
+ *
+ * @return {Promise<JSX.Element>} The About Us page component.
+ */
+const AboutUsPage = async (): Promise<JSX.Element> => {
+	// Get About Us Page Data
+	const response: AboutsPageType = await sanityClientRead.fetch(aboutUsPage)
+
+	// deconstruct data
 	const {
 		title,
 		description,
@@ -18,7 +39,7 @@ const AboutUsPage = async () => {
 		teams_section_description,
 		second_section_description,
 		second_section_title,
-	} = aboutUsPageResponse
+	} = response
 
 	return (
 		<section

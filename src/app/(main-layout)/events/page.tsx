@@ -1,9 +1,27 @@
+// Project Components Imports
 import ClientFullCalendar from '@/components/events/client-full-calendar'
-import { events as eventsFetch } from '@/lib/queries'
-import { sanityClient } from '@sanity-studio/lib/client'
 
-const EventsPage = async () => {
-	const events = await sanityClient.fetch(eventsFetch)
+// Queries Imports
+import { events as eventsFetch } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
+
+// Types Imports
+import type { Metadata } from 'next'
+
+// Metadata for this page
+export const metadata: Metadata = {
+	title: 'Eventos',
+	description:
+		'Eventos de la tienda en linea de Lavanda del lago. estos eventos son parte del esfuerzo de Lavanda del Lago españa para promover el el uso de prodcutos naturales apartir de lavanda.',
+}
+
+/**
+ * Fetches events data from the Sanity API and renders the Events page with a full calendar component.
+ *
+ * @return {Promise<JSX.Element>} The JSX element representing the Events page content.
+ */
+const EventsPage = async (): Promise<JSX.Element> => {
+	const response = await sanityClientRead.fetch(eventsFetch)
 
 	return (
 		<section
@@ -13,13 +31,12 @@ const EventsPage = async () => {
 			<div className='w-full space-y-3'>
 				<h1 className='text-3xl font-bold'>Nuestros EVENTOS</h1>
 				<p className='text-gray-600'>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam,
-					repellat deleniti cumque a quo sit aliquam molestiae consectetur
-					tempore ipsa hic eligendi voluptatum natus, dolorem vero quasi ratione
-					quam eius.
+					En esta sección encontraras todos los eventos que tenemos para ti.
+					estos eventos son parte del esfuerzo de Lavanda del Lago españa para
+					promover el el uso de prodcutos naturales apartir de lavanda.
 				</p>
 			</div>
-			<ClientFullCalendar events={events} />
+			<ClientFullCalendar events={response} />
 		</section>
 	)
 }

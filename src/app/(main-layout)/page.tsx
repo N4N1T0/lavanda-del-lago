@@ -10,7 +10,7 @@ import FeaturedEvent from '@/components/home/featured-event'
 
 // Queries Imports
 import { homePage } from '@/lib/queries'
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { HomePageType } from '@/types'
@@ -23,7 +23,7 @@ import type { HomePageType } from '@/types'
  * @return {Promise<JSX.Element>} The rendered Home component.
  */
 export default async function Home(): Promise<JSX.Element> {
-	const homePageResponse: HomePageType = await sanityClient.fetch(homePage)
+	const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage)
 
 	// TODO
 	const {

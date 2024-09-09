@@ -1,5 +1,5 @@
 // Queries Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { privacyPolicy } from '@/lib/queries'
 
 // Components Imports
@@ -8,6 +8,13 @@ import { PortableText } from 'next-sanity'
 
 // Types Imports
 import type { Policies } from '@/types'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Políticas de privacidad',
+	description:
+		'Políticas de privacidad de la tienda en linea de Lavanda del lago.',
+}
 
 /**
  * Fetches the cookies policy from the Sanity client and renders it.
@@ -17,12 +24,16 @@ import type { Policies } from '@/types'
  */
 const PrivacyPoliciesPage = async (): Promise<JSX.Element> => {
 	try {
-		const response: Policies = await sanityClient.fetch(privacyPolicy)
+		const response: Policies = await sanityClientRead.fetch(privacyPolicy)
+
+		// Deconstructure of the response
+		const { title, content } = response
+
 		return (
 			<main>
-				<h1>{response.title}</h1>
+				<h1>{title}</h1>
 				<div className='w-full md:w-3/4 text-left space-y-7'>
-					<PortableText value={response.content} />
+					<PortableText value={content} />
 				</div>
 			</main>
 		)
