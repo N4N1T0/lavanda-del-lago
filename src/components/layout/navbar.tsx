@@ -16,7 +16,7 @@ import {
 import UserPopover from './user-popover'
 
 // Quries Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { categories } from '@/lib/queries'
 
 // Types Imports
@@ -31,7 +31,7 @@ import { categoriesFilter } from '@/lib/utils'
  * @return {JSX.Element} The rendered Navbar component.
  */
 const Navbar = async (): Promise<JSX.Element> => {
-	const response: CategoriesList[] = await sanityClient.fetch(categories)
+	const response: CategoriesList[] = await sanityClientRead.fetch(categories)
 	const filterCategories = categoriesFilter(response)
 
 	return (

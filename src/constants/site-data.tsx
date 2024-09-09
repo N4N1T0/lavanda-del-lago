@@ -106,13 +106,6 @@ export const productsFilers = [
 	},
 ]
 
-export const categoriesList = [
-	'electronics',
-	'jewelery',
-	"men's clothing",
-	"women's clothing",
-]
-
 export const badges = [
 	{
 		src: OlioEsential,

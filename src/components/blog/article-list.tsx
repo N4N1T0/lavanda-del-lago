@@ -4,12 +4,19 @@ import type { Posts } from '@/types'
 // Proyect Components Imports
 import { ArticleListCard } from '@/components/blog/article-card'
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
-import { allBlogArticles } from '@/lib/queries'
-import { sanityClient } from '@sanity-studio/lib/client'
 
-const ArticleList = async () => {
+// Queries Imports
+import { allBlogArticles } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
+
+/**
+ * Fetches and displays a list of all blog articles.
+ *
+ * @return {Promise<JSX.Element>} A JSX element containing the list of articles.
+ */
+const ArticleList = async (): Promise<JSX.Element> => {
 	try {
-		const articles = await sanityClient.fetch(allBlogArticles)
+		const articles = await sanityClientRead.fetch(allBlogArticles)
 
 		return (
 			<section id='articles-list' className='w-full mt-10'>
@@ -21,7 +28,7 @@ const ArticleList = async () => {
 						</li>
 					))}
 				</ul>
-				{/* Add Pagination */}
+				{/* TODO Add Pagination */}
 			</section>
 		)
 	} catch (error) {

@@ -7,7 +7,7 @@ import { ServerFetchError } from '@/components/shared/server-fetch-error'
 
 // Queries Imports
 import { featuredBlogArticles } from '@/lib/queries'
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 /**
  * Renders a section containing featured blog articles.
@@ -18,7 +18,7 @@ import { sanityClient } from '@sanity-studio/lib/client'
  */
 const FeaturedBlogArticles = async (): Promise<JSX.Element> => {
 	try {
-		const articles = await sanityClient.fetch(featuredBlogArticles)
+		const articles = await sanityClientRead.fetch(featuredBlogArticles)
 
 		return (
 			<section id='featured' className='w-full'>

@@ -3,7 +3,7 @@ import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import ProductCarousel from '@/components/shared/product-carousel'
 
 // Queries imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { productsByCategory } from '@/lib/queries'
 
 // Types imports
@@ -29,7 +29,7 @@ const FeaturedList = async ({
 	direction?: 'left' | 'right'
 }): Promise<JSX.Element> => {
 	try {
-		const response: Product[] = await sanityClient.fetch(
+		const response: Product[] = await sanityClientRead.fetch(
 			productsByCategory(itemCategory),
 		)
 

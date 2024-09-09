@@ -7,7 +7,7 @@ import { ServerFetchError } from '../shared/server-fetch-error'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { categories } from '@/lib/queries'
 import type { CategoriesList } from '@/types'
 
@@ -18,7 +18,7 @@ import type { CategoriesList } from '@/types'
  */
 export const Categories = async (): Promise<JSX.Element> => {
 	try {
-		const response: CategoriesList[] = await sanityClient.fetch(categories)
+		const response: CategoriesList[] = await sanityClientRead.fetch(categories)
 		const filterCategories = response
 			.map((category) => category.categoria)
 			.filter(
@@ -37,7 +37,7 @@ export const Categories = async (): Promise<JSX.Element> => {
 					</div>
 				</div>
 				<div className='flex items-start gap-8 w-full'>
-					<ul className='flex gap-8 w-full overflow-x-scroll snap-x snap-mandatory pb-3 scrollbar-hide'>
+					<ul className='flex gap-8 w-full overflow-x-scroll snap-x snap-mandatory pb-3'>
 						{filterCategories.map((category: string | null) => (
 							<li key={uuidv4()} className='snap-start'>
 								<CategoryLink category={category!} />
