@@ -1,6 +1,6 @@
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { cookiePolicy } from '@/lib/queries'
+import { policiesPages } from '@/lib/queries'
 
 // Components Imports
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
@@ -25,15 +25,21 @@ export const metadata: Metadata = {
  */
 const CookiesPolicyPage = async (): Promise<JSX.Element> => {
 	try {
-		const response: Policies = await sanityClientRead.fetch(cookiePolicy)
+		const response: Policies = await sanityClientRead.fetch(
+			policiesPages('cookie'),
+		)
 
 		// deconstructure of the data
 		const { title, content } = response
 		return (
 			<main>
-				<h1>{title}</h1>
+				<h1>{title || 'Política de Cookies'}</h1>
 				<div className='w-full md:w-3/4 text-left space-y-7'>
-					<PortableText value={content} />
+					{response === null ? (
+						<p>No hay contenido disponible</p>
+					) : (
+						<PortableText value={content} />
+					)}
 				</div>
 			</main>
 		)

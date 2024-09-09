@@ -1,6 +1,6 @@
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { privacyPolicy } from '@/lib/queries'
+import { policiesPages } from '@/lib/queries'
 
 // Components Imports
 import { ServerFetchError } from '@/components/shared/server-fetch-error'
@@ -24,16 +24,22 @@ export const metadata: Metadata = {
  */
 const PrivacyPoliciesPage = async (): Promise<JSX.Element> => {
 	try {
-		const response: Policies = await sanityClientRead.fetch(privacyPolicy)
+		const response: Policies = await sanityClientRead.fetch(
+			policiesPages('privacy'),
+		)
 
 		// Deconstructure of the response
 		const { title, content } = response
 
 		return (
 			<main>
-				<h1>{title}</h1>
+				<h1>{title || 'Políticas de privacidad'}</h1>
 				<div className='w-full md:w-3/4 text-left space-y-7'>
-					<PortableText value={content} />
+					{response === null ? (
+						<p>No hay contenido disponible</p>
+					) : (
+						<PortableText value={content} />
+					)}
 				</div>
 			</main>
 		)
