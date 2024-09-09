@@ -38,9 +38,16 @@ const HomeProductsList = ({
 
 	// Fetching of data from sanity as part of client side rendering
 	useEffect(() => {
-		sanityClientRead.fetch(allProducts).then((response: Product[]) => {
-			setProducts(response)
-		})
+		const getAllProducts = async () => {
+			try {
+				const response = await sanityClientRead.fetch(allProducts)
+				setProducts(response)
+			} catch (error) {
+				console.error('Error fetching products:', error)
+			}
+		}
+
+		getAllProducts()
 	}, [])
 
 	// Rendering of the list of products based on the selected category
