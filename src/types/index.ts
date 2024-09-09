@@ -163,6 +163,7 @@ export interface Footer {
 	socialMedia: SocialMedia[]
 	contactInfo: ContactInfo
 	copyright: string
+	logo: string
 }
 
 export interface ContactInfo {
@@ -174,4 +175,55 @@ export interface SocialMedia {
 	link: string
 	platformName: string
 	id: string
+}
+
+export interface ErrorPage {
+	contacts: Contact[]
+	title: string
+	description: string
+	digest: string
+	imageUrl: string
+}
+
+export interface Contact {
+	label: string
+	link: string
+}
+
+export interface NotFoundPage {
+	imageUrl: string
+	links: string[]
+	title: string
+	description: string
+	digest: string
+}
+
+export interface Prefooter {
+	title: string
+	description: string
+	imageUrl: string
+	link: string
+}
+
+export interface SeoMetaTags {
+	titleTemplate: string
+	defaultTitle: string
+	description: string
+	keywords: string[]
+	dominio: string
+	openGraph: {
+		url: string
+		images: {
+			imageUrl: string // URL of the OpenGraph image
+			alt: string
+			width?: number
+			height?: number
+		}[]
+	}
+	twitter: {
+		images: {
+			imageUrl: string // URL of the Twitter image
+			alt: string
+		}[]
+	}
 }
