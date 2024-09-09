@@ -3,7 +3,6 @@ import FeaturedList from '@/components/home/featured-list'
 import Prefooter from '@/components/home/prefooter'
 import Newsletter from '@/components/shared/newsletter'
 import ProductDetails from '@/components/products/product-details'
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
 
 // Utils Imports
 import { desurlize } from '@/lib/utils'
@@ -13,8 +12,11 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 import { productByName } from '@/lib/queries'
 
 // Types Imports
-import type { Product } from '@/types'
 import type { Metadata } from 'next'
+import type { Product } from '@/types'
+
+// Assets Imports
+import { MainLogo } from '@/assets'
 
 // function to generate metadata
 export async function generateMetadata({
@@ -24,22 +26,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const desurlizedProductName = desurlize(params.id).toUpperCase()
 
-	const response: Product = await sanityClientRead.fetch(
-		productByName(desurlizedProductName),
-	)
+	let response: Product | null = null
+
+	// ftist feth for the product with the given name
+	response = await sanityClientRead.fetch(productByName(desurlizedProductName))
+
+	if (!response) {
+		// if not found, fetch for the product with the given name plus and space
+		response = await sanityClientRead.fetch(
+			productByName(`${desurlizedProductName} `),
+		)
+	}
 
 	return {
-		title: `${response.nombre}`,
-		description: `${response.descripcion}`,
+		title: `${response?.nombre || 'Estamos trabajando en una nombre'}`,
+		description: `${response?.descripcion || 'No hay descripción'}`,
 		openGraph: {
-			title: `${response.nombre}`,
-			description: `${response.descripcion}`,
-			images: response.image,
+			title: `${response?.nombre || 'Estamos trabajando en una nombre'}`,
+			description: `${response?.descripcion || 'No hay descripción'}`,
+			images: response?.image || MainLogo.src,
 		},
 		twitter: {
-			title: `${response.nombre}`,
-			description: `${response.descripcion}`,
-			images: response.image,
+			title: `${response?.nombre || 'Estamos trabajando en una nombre'}`,
+			description: `${response?.descripcion || 'No hay descripción'}`,
+			images: response?.image || MainLogo.src,
 		},
 	}
 }
@@ -58,39 +68,42 @@ const ProductPage = async ({
 	params: { id: string }
 	searchParams?: { category?: string }
 }): Promise<JSX.Element> => {
-	try {
-		const desurlizedProductName = desurlize(params.id).toUpperCase()
+	const desurlizedProductName = desurlize(params.id).toUpperCase()
 
-		const response: Product = await sanityClientRead.fetch(
-			productByName(desurlizedProductName),
-		)
+	let response: Product | null = null
 
-		return (
-			<>
-				<section
-					id='main-products'
-					className='mx-auto max-w-screen-2xl px-4 py-4 pb-8 sm:px-6 lg:px-8 flex gap-5 flex-col'
-				>
-					<ProductDetails product={response} />
-					<FeaturedList
-						featuredTitle='Productos Relacionados'
-						direction='left'
-						itemCategory={searchParams?.category!}
-					/>
-					<FeaturedList
-						featuredTitle='Mas Vendidos'
-						direction='right'
-						itemCategory={'Bienestar'}
-					/>
-				</section>
-				<Newsletter />
-				<Prefooter />
-			</>
+	// ftist feth for the product with the given name
+	response = await sanityClientRead.fetch(productByName(desurlizedProductName))
+
+	if (!response) {
+		// if not found, fetch for the product with the given name plus and space
+		response = await sanityClientRead.fetch(
+			productByName(`${desurlizedProductName} `),
 		)
-	} catch (error) {
-		console.error(error)
-		return <ServerFetchError error={error} />
 	}
+
+	return (
+		<>
+			<section
+				id='main-products'
+				className='mx-auto max-w-screen-2xl px-4 py-4 pb-8 sm:px-6 lg:px-8 flex gap-5 flex-col'
+			>
+				{response && <ProductDetails product={response} />}
+				<FeaturedList
+					featuredTitle='Productos Relacionados'
+					direction='left'
+					itemCategory={searchParams?.category!}
+				/>
+				<FeaturedList
+					featuredTitle='Mas Vendidos'
+					direction='right'
+					itemCategory={'Bienestar'}
+				/>
+			</section>
+			<Newsletter />
+			<Prefooter />
+		</>
+	)
 }
 
 export default ProductPage
