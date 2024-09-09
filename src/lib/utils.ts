@@ -163,3 +163,15 @@ export function desurlize(url: string): string {
 		.map(capitalizeFirstLetter)
 		.join(' ') // Convierte la primera letra de cada palabra a mayúscula
 }
+
+/**
+ * Checks if the difference between a given date and the current date is less than a week.
+ *
+ * @param {Date} date - The date to check.
+ * @return {boolean} Whether the difference is less than a week.
+ */
+export function isNew(date: string): boolean {
+	const today = new Date()
+	const difference = today.getTime() - new Date(date).getTime()
+	return difference < 7 * 24 * 60 * 60 * 1000
+}
