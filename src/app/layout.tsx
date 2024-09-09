@@ -26,7 +26,7 @@ const josefinSand = Josefin_Sans({
 })
 
 // Metatdata for this site
-export const metadata: Metadata = seoMetatags
+export const metadata: Promise<Metadata> = seoMetatags()
 
 /**
  * Renders the root layout of the application.
