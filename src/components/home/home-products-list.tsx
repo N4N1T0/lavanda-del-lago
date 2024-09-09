@@ -15,14 +15,11 @@ import {
 	ProductCardSkeleton,
 } from '@/components/shared/product-card'
 
-// Constants
-import { categoriesList } from '@/constants/site-data'
-
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
 
 // Queries Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { allProducts } from '@/lib/queries'
 
 /**
@@ -40,7 +37,7 @@ const HomeProductsList = React.memo(
 
 		// Fetching of data from sanity as part of client side rendering
 		useEffect(() => {
-			sanityClient.fetch(allProducts).then((response: Product[]) => {
+			sanityClientRead.fetch(allProducts).then((response: Product[]) => {
 				setProducts(response)
 			})
 		}, [])
@@ -124,9 +121,11 @@ const HomeProductsListSkeleton = (): JSX.Element => {
 			className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 flex flex-col gap-7'
 		>
 			<div className='flex justify-center lg:justify-start items-center flex-wrap gap-10'>
-				{categoriesList.map((_) => (
-					<Skeleton key={uuidv4()} className='h-4 w-24 rounded-md' />
-				))}
+				{Array(5)
+					.fill('categories')
+					.map((_) => (
+						<Skeleton key={uuidv4()} className='h-4 w-24 rounded-md' />
+					))}
 			</div>
 			<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
 				{Array.from({ length: 8 }).map((_, _i) => (

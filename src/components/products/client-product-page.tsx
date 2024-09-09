@@ -13,7 +13,10 @@ import {
 } from '@/components/ui/select'
 
 // Project Components Imports
-import { ProductCard } from '@/components/shared/product-card'
+import {
+	ProductCard,
+	ProductCardSkeleton,
+} from '@/components/shared/product-card'
 
 // Types Imports
 import type { Product } from '@/types'
@@ -52,9 +55,13 @@ const ClientProductPage = ({ products }: { products: Product[] }) => {
 			/>
 			<section id='products-list'>
 				<ul className='w-full grid content-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 2xl:gap-10'>
-					{filteredProducts.map((product: Product, index: number) => (
-						<ProductCard key={product.id} product={product} index={index} />
-					))}
+					{filteredProducts.length === 0
+						? Array(8)
+								.fill('Product Skeleteon')
+								.map(() => <ProductCardSkeleton key={uuidv4()} />)
+						: filteredProducts.map((product: Product, index: number) => (
+								<ProductCard key={product.id} product={product} index={index} />
+							))}
 				</ul>
 			</section>
 		</>

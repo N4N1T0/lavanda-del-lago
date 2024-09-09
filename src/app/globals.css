@@ -14,8 +14,3 @@
   --fc-button-active-bg-color: #a89ac6;
   --fc-button-active-border-color: #a89ac6;
 }
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}

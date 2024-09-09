@@ -8,7 +8,7 @@ import { capitalizeFirstLetter, categoriesFilter } from '@/lib/utils'
 import { v4 as uuidv4 } from 'uuid'
 
 // Quiries Imports
-import { sanityClient } from '@sanity-studio/lib/client'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import type { CategoriesList } from '@/types'
 
 // Utils Imports
@@ -23,11 +23,11 @@ import { categories } from '@/lib/queries'
 const ProductsSidebar = async ({
 	categoryPath,
 }: { categoryPath: string | undefined }): Promise<JSX.Element> => {
-	const response: CategoriesList[] = await sanityClient.fetch(categories)
+	const response: CategoriesList[] = await sanityClientRead.fetch(categories)
 	const filterCategories = categoriesFilter(response)
 
 	return (
-		<aside className='flex-[20%] sticky top-5 h-fit hidden md:block'>
+		<aside className='flex-[20%] sticky top-5 h-screen hidden md:block overflow-y-auto'>
 			<ul>
 				{filterCategories.map((category: string) => {
 					return (
