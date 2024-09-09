@@ -195,10 +195,72 @@ export const footer = groq`
 }[0]
 `
 
-export const cookiePolicy = groq`
-*[_type == "cookiePolicy"][0]
-`
+export const policiesPages = (name: 'cookie' | 'privacy') => {
+	return name === 'cookie'
+		? groq`*[_type == "cookiePolicy"]{
+      title,
+      description,
+      content
+    }[0]
+    `
+		: groq`*[_type == "privacyPolicy"]{
+      title,
+      description,
+      content
+    }[0]
+    `
+}
 
-export const privacyPolicy = groq`
-*[_type == "privacyPolicy"][0]
+export const errorPages = (name: 'error' | 'not-found') => {
+	return name === 'error'
+		? groq`*[_type == "errorPage"]{
+      title,
+      description,
+      digest,
+      "imageUrl": image.asset->url,
+      contacts[]{
+        label,
+        link
+      }
+    }[0]
+    `
+		: groq`*[_type == "notFoundPage"]{
+      title,
+      description,
+      digest,
+      "imageUrl": image.asset->url,
+      links
+    }[0]
+    `
+}
+
+export const prefooter = groq`*[_type == "prefooter"]{
+  title,
+  description,
+  "imageUrl": image.asset->url,
+  link
+}[0]`
+
+export const seo = groq`*[_type == "seoMetatags"]{
+  titleTemplate,
+  defaultTitle,
+  description,
+  keywords[],
+  dominio,
+  "openGraph": {
+    url,
+    images[]{
+      "imageUrl": asset->url,
+      alt,
+      width,
+      height
+    }
+  },
+  "twitter": {
+    images[]{
+      "imageUrl": asset->url,
+      alt
+    }
+  }
+}[0]
 `
