@@ -14,6 +14,7 @@ import errorPage from '@sanity-studio/schemas/errorPage'
 import notFoundPage from '@sanity-studio/schemas/not-found'
 import prefooter from '@sanity-studio/schemas/prefooter'
 import seo from '@sanity-studio/schemas/seo'
+import user from '@sanity-studio/schemas/user'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
 	types: [
@@ -32,5 +33,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		notFoundPage,
 		prefooter,
 		seo,
+		user,
 	],
 }
