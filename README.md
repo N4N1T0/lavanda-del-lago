@@ -3,50 +3,60 @@
 Lavanda del Lago is an eCommerce platform built using **Next.js** with a focus on performance, user experience, and simplicity. The project utilizes **Tailwind CSS** and **Shadcn UI** for a custom, responsive UI. It also incorporates **Clerk** for user management and **Sanity** as the CMS, making it a robust solution for modern web commerce.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Dependencies](#dependencies)
-- [Examples](#examples)
 - [License](#license)
 
 ## Introduction
+
 Lavanda del Lago is an eCommerce platform leveraging Next.js as the core framework. It uses modern tools like **Shadcn UI** for CRO-optimized UI design, **Tailwind CSS** for styling, and **Sanity** as the content management system (CMS). **Clerk** handles user authentication and management. The platform is designed with SEO and performance optimization in mind, offering a streamlined development process and easy maintenance.
 
 ## Features
+
 - 🤑 **Optimized UI for Conversion Rate Optimization (CRO)** using **Shadcn UI**.
 - ⚙️ **Sanity CMS Integration** for easy content management.
 - 👨‍💻 **Simple and Clean Architecture**, making it easy for developers to work on.
 - 🌐 **SEO and Performance Enhancements** built into the project structure.
 
 ## Installation
+
 Follow the standard steps to set up a Next.js project:
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-repo/lavanda-del-lago.git
    cd lavanda-del-lago
    ```
+
 2. Install the dependencies:
-  ```bash	 
+
+  ```bash  
   npm install
   # or
   yarn install
   ```
 
 ## Usage
-The usage of the project follows a typical Next.js application. Once installed, start the development server and navigate to http://localhost:3000 to begin working on the application.
+
+The usage of the project follows a typical Next.js application. Once installed, start the development server and navigate to <http://localhost:3000> to begin working on the application.
 
 ## Configuration
+
 No special configuration is required beyond the standard Next.js setup. Ensure environment variables for services like Clerk and Sanity are correctly configured in a .env.local file:
-  ```bash	 
+
+  ```bash  
   NEXT_PUBLIC_SANITY_PROJECT_ID=your_sanity_project_id
   CLERK_API_KEY=your_clerk_api_key
   ```
 
 ## Dependencies
+
 This project uses the following key dependencies:
 
 - Next.js: Main framework
@@ -60,23 +70,27 @@ This project uses the following key dependencies:
 To install all dependencies, run npm install or yarn install as outlined in the installation section.
 
 ## License
+
 his project is licensed under a Free License. Feel free to use, modify, and distribute the code.
 
 ## TODOS
-[X] new README.md
-[X] newsletter with Sanity
-[X] Add more pages to the Footer (Ask Jorge)
-[X] Add SEO
-[X] Add Error and 404 Page Sanity
-[X] Assets Sanitition
-[X] Data Sanitition
-[X] Fix categories list Home Page (not Snapping)
-[X] SEO Sanity
-[X] DevTools Error Fix
-[] Clerk and Sanity User Muation
-[] Refactor Product Page (Ask Jorge)
-[] Add Search Functionality
-[] Sanity Handoff
-[] Redsys Configuration
-[] Style and Performance Review
-[] VPS Configuration and Github Actions Link
+
+- [x] new README.md
+- [x] newsletter with Sanity
+- [x] Add more pages to the Footer (Ask Jorge)
+- [x] Add SEO
+- [x] Add Error and 404 Page Sanity
+- [x] Assets Sanitition
+- [x] Data Sanitition
+- [x] Fix categories list Home Page (not Snapping)
+- [x] SEO Sanity
+- [x] DevTools Error Fix
+- [x] Clerk and Sanity User Muation
+- [x] Refactor Product Page (Ask Jorge)
+- [] Profile Page
+- [] Reseller Page
+- [] Add Search Functionality
+- [] Sanity Handoff
+- [] Redsys Configuration
+- [] VPS Configuration and Github Actions Link
+- [] Style and Performance Review (Static Pages)
