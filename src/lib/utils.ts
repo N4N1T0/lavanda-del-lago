@@ -156,7 +156,7 @@ export function urlize(name: string): string {
  * @return {string} The converted string with spaces and proper capitalization.
  */
 export function desurlize(url: string): string {
-	return url
+	return decodeURIComponent(url)
 		.replace(/-/g, ' ') // Reemplaza guiones por espacios
 		.normalize('NFC')
 		.split(' ')

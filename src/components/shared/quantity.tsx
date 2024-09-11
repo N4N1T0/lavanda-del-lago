@@ -20,7 +20,10 @@ import { useState } from 'react'
  * @param {Product} props.prduct - The product to be added to the cart.
  * @return {JSX.Element} The rendered quantity component.
  */
-const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
+const Quantity = ({
+	prduct,
+	className,
+}: { prduct: Product; className?: string }): JSX.Element => {
 	// State to hold the selected quantity
 	const [quantity, setQuantity] = useState(1)
 	// Get the cart items and a function to update the cart items from the shopping cart store
@@ -56,8 +59,8 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
 	}
 
 	return (
-		<div className='w-full flex justify-between items-center px-10 border-t border-b border-accent/50 py-5'>
-			<p className='font-bold text-lg'>Cantidad</p>
+		<div className='w-full flex justify-between items-center px-2 md:px-10 border-t border-b border-accent/50 py-5'>
+			<p className='font-bold text-lg hidden md:block'>Cantidad</p>
 			<label htmlFor='Quantity' className='sr-only'>
 				{' '}
 				Quantity{' '}
@@ -93,7 +96,8 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
 
 			{/* Button to add the selected quantity of the product to the cart */}
 			<Button variant='cart' onClick={() => addToCart()}>
-				Añadir al carrito
+				<span className='hidden md:block'>Añadir al carrito</span>
+				<span className='block md:hidden'>Añadir</span>
 			</Button>
 		</div>
 	)
