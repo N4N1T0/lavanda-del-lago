@@ -5,12 +5,18 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover'
 
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignInButton, SignedOut } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
 import Image from 'next/image'
 import { Button } from '../ui/button'
 import Link from 'next/link'
+import UserProfile from './user-profile'
 
-const UserPopover = () => {
+const UserPopover = async () => {
+	const user = await currentUser()
+
+	if (user) return <UserProfile userId={user.id} />
+
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -22,16 +28,16 @@ const UserPopover = () => {
 			</PopoverTrigger>
 			<PopoverContent className='w-fit flex flex-col gap-2'>
 				<SignedOut>
-					<SignInButton>
+					<SignInButton
+						forceRedirectUrl='/api/create-sanity-user'
+						signUpForceRedirectUrl='/api/create-sanity-user'
+					>
 						<Button>Iniciar Session</Button>
 					</SignInButton>
 					<Button asChild>
 						<Link href='/reseller'>Registrarse como Revendedor</Link>
 					</Button>
 				</SignedOut>
-				<SignedIn>
-					<UserButton />
-				</SignedIn>
 			</PopoverContent>
 		</Popover>
 	)
