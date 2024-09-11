@@ -1,13 +1,33 @@
 export interface Product {
 	id: string
+	categoria: string
+	subcategoria: string
+	codigoBarras: string
 	nombre: string
 	descripcion: string
-	precio: number
 	image: string
-	categoria: string
-	stock: number
 	createdAt: string
+	codigoReferencia: string
+	stock: number
 	usabilidad: string
+	certificacion: string
+	medidas: Medidas
+	precio: number
+	slogan: string
+	fichaTecnica: string
+	fotosVarias: FotosVarias[]
+}
+
+export interface FotosVarias {
+	image: string
+	key: string
+}
+
+export interface Medidas {
+	ancho: number
+	profundidad: number
+	alto: number
+	volumen: number
 }
 
 export interface CartItem extends Product {

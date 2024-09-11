@@ -89,7 +89,8 @@ const SearchMobile = (): JSX.Element => {
 				{/* Search icon */}
 				<SearchIcon
 					size={25}
-					className='hover:text-accent duration-150 transition-colors'
+					className='hover:text-accent duration-150 transition-colors text-gray-800'
+					strokeWidth={1}
 				/>
 			</PopoverTrigger>
 			{/* Popover content */}

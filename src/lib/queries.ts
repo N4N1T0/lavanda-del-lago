@@ -162,7 +162,18 @@ export const productByName = (name: string) => {
   categoria,
   stock,
   "createdAt": _createdAt,
-  usabilidad
+  usabilidad,
+  subcategoria,
+  codigoReferencia,
+  certificacion,
+  medidas,
+  codigoBarras,
+  slogan,
+  fichaTecnica,
+  fotosVarias[]{
+    "image": asset->url,
+    "key": _key
+  }
 }[0]
   `
 }
