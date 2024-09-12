@@ -1,9 +1,8 @@
-import type { NextApiRequest } from 'next'
 import { currentUser } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { sanityClientWrite } from '@sanity-studio/lib/client'
 
-export const GET = async (req: NextApiRequest) => {
+export const GET = async (req: NextRequest) => {
 	const user = await currentUser()
 
 	if (!user) {

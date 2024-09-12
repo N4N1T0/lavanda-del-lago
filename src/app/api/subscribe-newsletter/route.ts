@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { sanityClientWrite } from '@sanity-studio/lib/client'
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	try {
 		const { email } = await request.json()
 		const sanitizedEmail = email.replace(/[@.]/g, '-')
