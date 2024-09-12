@@ -87,10 +87,15 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] DevTools Error Fix
 - [x] Clerk and Sanity User Muation
 - [x] Refactor Product Page (Ask Jorge)
-- [] Profile Page
+- [x] Profile Page
 - [] Reseller Page
+- [] Hidration Error (Navbar)
 - [] Add Search Functionality
+- [] Resend Configuration
+- [] React Email Template for Reseller [React Email](https://react.email/)
 - [] Sanity Handoff
 - [] Redsys Configuration
 - [] VPS Configuration and Github Actions Link
+- [] Security
+- [] List View Sanity Structure [Info](https://www.sanity.io/docs/structure-builder-introduction)
 - [] Style and Performance Review (Static Pages)

@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "biome lint --apply ./src",
+		"lint": "biome lint --write ./src",
 		"format": "biome format --write ./src",
 		"prepare": "husky"
 	},
