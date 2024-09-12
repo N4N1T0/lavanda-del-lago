@@ -15,6 +15,8 @@ import notFoundPage from '@sanity-studio/schemas/not-found'
 import prefooter from '@sanity-studio/schemas/prefooter'
 import seo from '@sanity-studio/schemas/seo'
 import user from '@sanity-studio/schemas/user'
+import salesPolicy from '@sanity-studio/schemas/sales-policy'
+import purchases from '@sanity-studio/schemas/purchases'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
 	types: [
@@ -27,6 +29,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		products,
 		cookiePolicy,
 		privacyPolicy,
+		salesPolicy,
 		footer,
 		newsletter,
 		errorPage,
@@ -34,5 +37,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		prefooter,
 		seo,
 		user,
+		purchases,
 	],
 }
