@@ -206,20 +206,30 @@ export const footer = groq`
 }[0]
 `
 
-export const policiesPages = (name: 'cookie' | 'privacy') => {
-	return name === 'cookie'
-		? groq`*[_type == "cookiePolicy"]{
-      title,
-      description,
-      content
-    }[0]
-    `
-		: groq`*[_type == "privacyPolicy"]{
-      title,
-      description,
-      content
-    }[0]
-    `
+export const policiesPages = (name: 'cookie' | 'privacy' | 'sales') => {
+	switch (name) {
+		case 'cookie':
+			return groq`*[_type == "cookiePolicy"]{
+        title,
+        description,
+        content
+      }[0]
+      `
+		case 'privacy':
+			return groq`*[_type == "privacyPolicy"]{
+        title,
+        description,
+        content
+      }[0]
+      `
+		case 'sales':
+			return groq`*[_type == "salesPolicy"]{
+        title,
+        description,
+        content
+      }[0]
+      `
+	}
 }
 
 export const errorPages = (name: 'error' | 'not-found') => {
@@ -275,3 +285,31 @@ export const seo = groq`*[_type == "seoMetatags"]{
   }
 }[0]
 `
+
+export const userById = (id: string) => {
+	return groq`
+  *[_type == "user" && _id == "${id}"]{
+  "id": _id,
+  email,
+  image,
+  name,
+  phone,
+  address,
+  reseller,
+  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id]{
+    "id": _id,
+    products[]->{
+      "id": _id,
+      nombre,
+      "image": fotoPrincipal.asset->url,
+      categoria
+    },
+    totalAmount,
+    purchaseDate,
+    paymentMethod,
+    status,
+    reseller
+  }
+}[0]
+  `
+}

@@ -30,7 +30,7 @@ const Newsletter = React.memo(() => {
 
 			if (email) {
 				try {
-					const response = await fetch('/api/subscribeNewsletter', {
+					const response = await fetch('/api/subscribe-newsletter', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',

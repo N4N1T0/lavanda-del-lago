@@ -1,5 +1,11 @@
 // Type imports
-import type { Breadcrumbs, CartItem, CategoriesList, Product } from '@/types'
+import type {
+	Breadcrumbs,
+	CartItem,
+	CategoriesList,
+	Product,
+	User,
+} from '@/types'
 
 // Package imports
 import { clsx } from 'clsx'
@@ -174,4 +180,62 @@ export function isNew(date: string): boolean {
 	const today = new Date()
 	const difference = today.getTime() - new Date(date).getTime()
 	return difference < 7 * 24 * 60 * 60 * 1000
+}
+
+/**
+ * Finds the most used category in a user's past purchases.
+ *
+ * @param {User['pastPurchases']} pastPurchases - The user's past purchases.
+ * @return {string | null} The most used category, or null if no purchases are found.
+ */
+export function getMostUsedCategory(
+	pastPurchases: User['pastPurchases'],
+): string | null {
+	const categoryCount: Record<string, number> = {}
+
+	// Loop through past purchases
+	for (const purchase of pastPurchases) {
+		for (const product of purchase.products) {
+			const category = product.categoria
+
+			// Count occurrences of each category
+			if (categoryCount[category]) {
+				categoryCount[category]++
+			} else {
+				categoryCount[category] = 1
+			}
+		}
+	}
+
+	// Find the most used category
+	let mostUsedCategory: string | null = null
+	let maxCount = 0
+
+	for (const category in categoryCount) {
+		if (categoryCount[category] > maxCount) {
+			mostUsedCategory = category
+			maxCount = categoryCount[category]
+		}
+	}
+
+	return mostUsedCategory
+}
+
+/**
+ * Returns a color code based on the given status.
+ *
+ * @param {string} status - The status to determine the color for.
+ * @return {string} The color code corresponding to the status.
+ */
+export function getStatusColor(status: string): string {
+	switch (status) {
+		case 'pendiente':
+			return '#F59E0B' // Yellow (for Pending)
+		case 'completado':
+			return '#10B981' // Green (for Completed)
+		case 'cancelado':
+			return '#EF4444' // Red (for Canceled)
+		default:
+			return '#6B7280' // Gray (for default/fallback)
+	}
 }

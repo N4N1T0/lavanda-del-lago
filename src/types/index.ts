@@ -247,3 +247,24 @@ export interface SeoMetaTags {
 		}[]
 	}
 }
+
+export interface User {
+	name: string
+	phone: null
+	address: null
+	reseller: null
+	pastPurchases: PastPurchase[]
+	id: string
+	email: string
+	image: string
+}
+
+export interface PastPurchase {
+	id: string
+	products: CartItem[]
+	totalAmount: number
+	purchaseDate: string
+	paymentMethod: string
+	status: string
+	reseller: null
+}

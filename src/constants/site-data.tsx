@@ -89,6 +89,10 @@ export const footerLinks = [
 		name: 'Politica de Privacidad',
 		href: '/privacy-policy',
 	},
+	{
+		name: 'Politica de Compra y Ventas',
+		href: '/sales-policy',
+	},
 ]
 
 export const productsFilers = [
