@@ -1,54 +1,32 @@
-import { Button } from '@/components/ui/button'
+// Project Components Imports
+import UserProfileForm from '@/components/profile/user-info-from'
+
+// Next Imports
+import Link from 'next/link'
+
+// UI Components Imports
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Mail, Phone, MapPin, Pencil } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-interface User {
-	name: string
-	email: string
-	phone: string
-	address: string
-	avatarUrl: string
-}
+// Assets Imports
+import { Mail, Phone, MapPin, ReceiptEuro } from 'lucide-react'
 
-interface UserInfoCardProps {
-	user: User
-	onUserUpdate: (updatedUser: User) => void
-}
+// Types Imports
+import type { User } from '@/types'
 
-// TODO add the link for the Reseller Form
-
-export function UserInfoCard({ user, onUserUpdate }: UserInfoCardProps) {
-	const handleUserUpdate = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		const formData = new FormData(e.currentTarget)
-		const updatedUser = {
-			name: formData.get('name') as string,
-			email: formData.get('email') as string,
-			phone: formData.get('phone') as string,
-			address: formData.get('address') as string,
-			avatarUrl: user.avatarUrl,
-		}
-		onUserUpdate(updatedUser)
-	}
-
+export function UserInfoCard({ user }: { user: User }) {
 	return (
-		<Card>
+		<Card className='border-accent/70 border'>
 			<CardHeader>
-				<CardTitle>Personal Information</CardTitle>
+				<CardTitle>Información Personal</CardTitle>
 			</CardHeader>
 			<CardContent className='flex flex-col items-center'>
 				<Avatar className='w-24 h-24 mb-4'>
-					<AvatarImage src={user.avatarUrl} alt={user.name} />
+					<AvatarImage
+						src={user.image}
+						alt={user.name || 'Imagen de usuario'}
+					/>
 					<AvatarFallback>
 						{user.name
 							.split(' ')
@@ -56,62 +34,33 @@ export function UserInfoCard({ user, onUserUpdate }: UserInfoCardProps) {
 							.join('')}
 					</AvatarFallback>
 				</Avatar>
-				<h2 className='text-xl font-semibold mb-2'>{user.name}</h2>
+				<h2 className='text-xl font-semibold mb-2'>
+					{user.name || 'Usuario sin nombre'}
+				</h2>
 				<div className='flex flex-col items-start w-full'>
 					<div className='flex items-center mb-2'>
 						<Mail className='mr-2 h-4 w-4' />
-						<span>{user.email}</span>
+						<span>{user.email || 'Sin correo'}</span>
 					</div>
 					<div className='flex items-center mb-2'>
 						<Phone className='mr-2 h-4 w-4' />
-						<span>{user.phone}</span>
+						<span>{user.phone || 'Sin telefono'}</span>
 					</div>
 					<div className='flex items-center'>
 						<MapPin className='mr-2 h-4 w-4' />
-						<span>{user.address}</span>
+						<span>{user.address || 'Sin dirección'}</span>
 					</div>
 				</div>
-				<Dialog>
-					<DialogTrigger asChild>
-						<Button className='w-full mt-4'>
-							<Pencil className='mr-2 h-4 w-4' />
-							Edit Profile
-						</Button>
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Edit Profile</DialogTitle>
-						</DialogHeader>
-						<form onSubmit={handleUserUpdate} className='space-y-4'>
-							<div>
-								<Label htmlFor='name'>Name</Label>
-								<Input id='name' name='name' defaultValue={user.name} />
-							</div>
-							<div>
-								<Label htmlFor='email'>Email</Label>
-								<Input
-									id='email'
-									name='email'
-									type='email'
-									defaultValue={user.email}
-								/>
-							</div>
-							<div>
-								<Label htmlFor='phone'>Phone</Label>
-								<Input id='phone' name='phone' defaultValue={user.phone} />
-							</div>
-							<div>
-								<Label htmlFor='address'>Address</Label>
-								<Input
-									id='address'
-									name='address'
-									defaultValue={user.address}
-								/>
-							</div>
-							<Button type='submit'>Save Changes</Button>
-						</form>
-					</DialogContent>
-				</Dialog>
+				<UserProfileForm user={user} />
+				<Button asChild className='w-full mt-4' variant='cart'>
+					<Link
+						href='/reseller'
+						className='flex items-center justify-center gap-2'
+					>
+						<ReceiptEuro className='w-4 h-4' />
+						Formulario de Revenedor
+					</Link>
+				</Button>
 			</CardContent>
 		</Card>
 	)
