@@ -88,14 +88,24 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Clerk and Sanity User Muation
 - [x] Refactor Product Page (Ask Jorge)
 - [x] Profile Page
-- [] Reseller Page
-- [] Hidration Error (Navbar)
-- [] Add Search Functionality
-- [] Resend Configuration
-- [] React Email Template for Reseller [React Email](https://react.email/)
-- [] Sanity Handoff
-- [] Redsys Configuration
-- [] VPS Configuration and Github Actions Link
-- [] Security
-- [] List View Sanity Structure [Info](https://www.sanity.io/docs/structure-builder-introduction)
-- [] Style and Performance Review (Static Pages)
+- [ ] Reseller Page
+- [ ] Hidration Error (Navbar)
+- [ ] Redsys Configuration
+- [ ] VPS Configuration and Github Actions Link
+- [ ] Add Search Functionality Orama
+- [ ] Security API
+- [ ] List View Sanity Structure [Info](https://www.sanity.io/docs/structure-builder-introduction)
+- [ ] Style and Performance Review (Static Pages)
+- [ ] Policy Pages Indentation
+- [ ] Carousel in Product Image Dialog
+- [ ] Fix file download
+- [ ] Create Page "Para hacer todo solo hace falta una flor" (Change the name)
+- [ ] Create Page "Hacemos todo"
+- [ ] Create Page "Propiedad"
+- [ ] Create Page "Nuestros Remedios"
+- [ ] Create Page "Certificaciones"
+
+## TODOS After Deploy
+- [ ] Resend Configuration
+- [ ] React Email Template for Reseller [React Email](https://react.email/)
+- [ ] Sanity Handoff
