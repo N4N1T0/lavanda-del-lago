@@ -169,7 +169,7 @@ export const productByName = (name: string) => {
   medidas,
   codigoBarras,
   slogan,
-  fichaTecnica,
+  "fichaTecnica": fichaTecnica.asset->url,
   fotosVarias[]{
     "image": asset->url,
     "key": _key
