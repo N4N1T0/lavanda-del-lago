@@ -1,16 +1,38 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
-const isResellerRoute = createRouteMatcher(['/reseller(.*)'])
+// Define public routes that don't require authentication
+const publicRoutes = createRouteMatcher([
+	'/',
+	'/about',
+	'/blog',
+	'/search',
+	'/privacy-policy',
+	'/cookies-policy',
+	'/events',
+	'/sitemap',
+	'/studio(.*)',
+	'/api(.*)',
+])
+
+// Define routes that need authentication
+const isProtectedRoute = createRouteMatcher(['/reseller(.*)'])
 
 export default clerkMiddleware((auth, req) => {
 	const { userId, sessionClaims } = auth()
 
+	// Bypass authentication for public routes
+	if (publicRoutes(req)) {
+		return NextResponse.next()
+	}
+
+	// Redirect to sign-in if not authenticated
 	if (!userId) {
 		return auth().redirectToSignIn({ returnBackUrl: req.url })
 	}
 
-	if (isResellerRoute(req)) {
+	// Check if the route requires reseller access
+	if (isProtectedRoute(req)) {
 		const isReseller = sessionClaims?.reseller
 
 		if (!isReseller) {
@@ -21,12 +43,12 @@ export default clerkMiddleware((auth, req) => {
 		}
 	}
 
+	// Proceed to the next middleware or handler
 	return NextResponse.next()
 })
 
 export const config = {
 	matcher: [
 		'/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-		'/(api|trpc)(.*)',
 	],
 }
