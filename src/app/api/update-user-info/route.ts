@@ -1,9 +1,22 @@
+// Auth Imports
 import { clerkClient } from '@/auth'
 import { currentUser } from '@clerk/nextjs/server'
-import { sanityClientWrite } from '@sanity-studio/lib/client'
-import { NextResponse, type NextRequest } from 'next/server'
 
-export async function POST(request: NextRequest) {
+// Query Imports
+import { sanityClientWrite } from '@sanity-studio/lib/client'
+
+// Server Functions Imports
+import { type NextRequest, NextResponse } from 'next/server'
+
+/**
+ * Handles the POST request to update user information.
+ *
+ * @param {NextRequest} request - The incoming request object.
+ * @return {NextResponse} A JSON response indicating the success or failure of the update operation.
+ */
+export async function POST(
+	request: NextRequest,
+): Promise<NextResponse<unknown>> {
 	try {
 		// Fetch the current user from Clerk
 		const clerkUser = await currentUser()
@@ -23,7 +36,7 @@ export async function POST(request: NextRequest) {
 		})
 
 		// Update user in Clerk
-		const clerkUpdateResponse = await updateClerkUser(id, name)
+		await updateClerkUser(id, name)
 
 		// Check and update Clerk email addresses
 		await ensureClerkEmail(clerkUser.id, email)
