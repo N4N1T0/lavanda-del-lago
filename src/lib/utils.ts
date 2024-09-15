@@ -239,3 +239,28 @@ export function getStatusColor(status: string): string {
 			return '#6B7280' // Gray (for default/fallback)
 	}
 }
+
+/**
+ * Handles security information based on the provided security status.
+ *
+ * @param {string} security - The security status to handle.
+ * @return {{title: string, description: string}} An object containing a title and description for the security information.
+ */
+export function handlingSecurityInfo(security: string): {
+	title: string
+	description: string
+} {
+	switch (security) {
+		case 'reseller_access_denied':
+			return {
+				title: 'Acceso denegado',
+				description:
+					'No tienes permisos para acceder a esta sección. debes rellenar el formulario de revendedor',
+			}
+		default:
+			return {
+				title: 'Problemas de Seguridad',
+				description: 'Hubo un problema al procesar tu solicitud.',
+			}
+	}
+}
