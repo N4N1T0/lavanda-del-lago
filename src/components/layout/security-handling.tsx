@@ -2,11 +2,11 @@
 
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogClose,
 } from '@/components/ui/dialog'
 import { handlingSecurityInfo } from '@/lib/utils'
 import { useRouter } from 'next/navigation'

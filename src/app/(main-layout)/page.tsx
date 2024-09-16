@@ -1,12 +1,12 @@
+import Categories from '@/components/home/categories'
+import FeaturedEvent from '@/components/home/featured-event'
+import FeaturedList from '@/components/home/featured-list'
+import Hero from '@/components/home/hero'
+import HomeProductsList from '@/components/home/home-products-list'
 // Project component imports
 import Info from '@/components/home/info'
-import Hero from '@/components/home/hero'
-import Categories from '@/components/home/categories'
-import FeaturedList from '@/components/home/featured-list'
-import HomeProductsList from '@/components/home/home-products-list'
-import Newsletter from '@/components/shared/newsletter'
 import Prefooter from '@/components/home/prefooter'
-import FeaturedEvent from '@/components/home/featured-event'
+import Newsletter from '@/components/shared/newsletter'
 
 // Queries Imports
 import { homePage } from '@/lib/queries'
@@ -14,6 +14,7 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { HomePageType } from '@/types'
+import SecurityHandling from '@/components/layout/security-handling'
 
 /**
  * Renders the Home component which displays a hero section, categories section,
@@ -22,7 +23,11 @@ import type { HomePageType } from '@/types'
  *
  * @return {Promise<JSX.Element>} The rendered Home component.
  */
-export default async function Home(): Promise<JSX.Element> {
+export default async function Home({
+	searchParams,
+}: {
+	searchParams?: { security?: string }
+}): Promise<JSX.Element> {
 	const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage)
 
 	// TODO
@@ -59,6 +64,7 @@ export default async function Home(): Promise<JSX.Element> {
 			<FeaturedEvent event={featuredEvent} />
 			<Newsletter />
 			<Prefooter />
+			<SecurityHandling security={searchParams?.security} />
 		</>
 	)
 }
