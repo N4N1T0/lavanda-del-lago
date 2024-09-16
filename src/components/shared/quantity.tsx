@@ -20,10 +20,7 @@ import { useState } from 'react'
  * @param {Product} props.prduct - The product to be added to the cart.
  * @return {JSX.Element} The rendered quantity component.
  */
-const Quantity = ({
-	prduct,
-	className,
-}: { prduct: Product; className?: string }): JSX.Element => {
+const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
 	// State to hold the selected quantity
 	const [quantity, setQuantity] = useState(1)
 	// Get the cart items and a function to update the cart items from the shopping cart store

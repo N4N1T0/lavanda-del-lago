@@ -9,10 +9,11 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
-import { eurilize } from '@/lib/utils'
+import { eurilize, urlize } from '@/lib/utils'
 import type { Product } from '@/types'
 import { MinusCircle, PlusCircle } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Dispatch, SetStateAction } from 'react'
 
 const ResellerTable = ({
@@ -42,9 +43,9 @@ const ResellerTable = ({
 		<section id='reseller-products' className='container mx-auto p-4'>
 			<h1 className='text-3xl font-bold mb-6'>Lista de Productos</h1>
 			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead className='w-[50px]'>Seleccione</TableHead>
+				<TableHeader className='hidden md:table-header-group'>
+					<TableRow className='border-accent/50 text-accent/60 hover:bg-white'>
+						<TableHead className='md:w-[50px]'>Seleccione</TableHead>
 						<TableHead className='w-[100px]'>Imagen</TableHead>
 						<TableHead>Nombre</TableHead>
 						<TableHead>Descripci&oacute;n</TableHead>
@@ -55,31 +56,53 @@ const ResellerTable = ({
 				</TableHeader>
 				<TableBody>
 					{products.map((product) => (
-						<TableRow key={product.id}>
+						<TableRow key={product.id} className='border-accent/50'>
 							<TableCell>
 								<Checkbox
 									checked={selectedProducts.has(product.id)}
 									onCheckedChange={() => toggleProductSelection(product.id)}
 								/>
 							</TableCell>
-							<TableCell>
-								{/* TODO Link blank to the Product */}
-								<Image
-									src={product.image}
-									alt={product.nombre}
-									width={50}
-									height={50}
-									className='rounded-md'
-								/>
+							<TableCell className='w-[100px]'>
+								<Link
+									href={
+										product.nombre && product.categoria
+											? `/products/${urlize(product.nombre)}?category=${product.categoria}`
+											: '/products'
+									}
+									target='_blank'
+									className='group'
+								>
+									<Image
+										src={product.image}
+										alt={product.nombre}
+										width={50}
+										height={50}
+										className='rounded-md group-hover:opacity-70 transition-opacity duration-200:'
+									/>
+								</Link>
 							</TableCell>
-							{/* TODO Link blank to the Product */}
-							<TableCell>{product.nombre}</TableCell>
-							<TableCell>
+							<TableCell className='hidden md:table-cell'>
+								<Link
+									href={
+										product.nombre && product.categoria
+											? `/products/${urlize(product.nombre)}?category=${product.categoria}`
+											: '/products'
+									}
+									target='_blank'
+									className='hover:text-accent transition-colors duration-200'
+								>
+									{product.nombre}
+								</Link>
+							</TableCell>
+							<TableCell className='hidden md:table-cell'>
 								{`${product.descripcion?.split(' ').slice(0, 10).join(' ')} ...` ||
 									'Estamos trabajando en una descripci&oacute;n'}
 							</TableCell>
-							<TableCell>{eurilize(product.precio)}</TableCell>
-							<TableCell>
+							<TableCell className='hidden md:table-cell'>
+								{eurilize(product.precio)}
+							</TableCell>
+							<TableCell className='hidden md:table-cell'>
 								{eurilize(product.precio - product.precio * (discount / 100))}
 							</TableCell>
 							<TableCell>

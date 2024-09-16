@@ -4,9 +4,9 @@ import UserProfileForm from '@/components/profile/user-info-from'
 // Next Imports
 import Link from 'next/link'
 
+// UI Components Imports
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-// UI Components Imports
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // Assets Imports
@@ -15,14 +15,22 @@ import { Mail, MapPin, Phone, ReceiptEuro } from 'lucide-react'
 // Types Imports
 import type { User } from '@/types'
 
-export function UserInfoCard({ user }: { user: User }) {
+/**
+ * A reusable card component for displaying user information.
+ *
+ * @param {User} user - The user object containing information to be displayed.
+ * @return {JSX.Element} The UserInfoCard component.
+ */
+const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
 	return (
 		<Card className='border-accent/70 border'>
 			<CardHeader>
 				<CardTitle>Información Personal</CardTitle>
 			</CardHeader>
 			<CardContent className='flex flex-col items-center'>
-				<Avatar className='w-24 h-24 mb-4'>
+				<Avatar
+					className={`w-24 h-24 mb-4 border-2 ${user.reseller ? 'border-green-600' : 'border-accent/70'}`}
+				>
 					<AvatarImage
 						src={user.image}
 						alt={user.name || 'Imagen de usuario'}
@@ -67,3 +75,5 @@ export function UserInfoCard({ user }: { user: User }) {
 		</Card>
 	)
 }
+
+export default UserInfoCard
