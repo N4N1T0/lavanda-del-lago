@@ -1,15 +1,17 @@
+// Next imports
+import type { Metadata } from 'next'
+
 // Type imports
 import type { Product } from '@/types'
 
 // Project component imports
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
 import ClientProductPage from '@/components/products/client-product-page'
 import ProductsSidebar from '@/components/products/sidebar'
+import { ServerFetchError } from '@/components/shared/server-fetch-error'
 
 // Types Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { allProducts, productsByCategory } from '@/lib/queries'
-import type { Metadata } from 'next'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // function to generate metadata
 export async function generateMetadata({

@@ -8,6 +8,7 @@ import { X } from 'lucide-react'
 import {
 	Sheet,
 	SheetContent,
+	SheetDescription,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
@@ -64,6 +65,7 @@ const WishlistCart = (): JSX.Element => {
 			<SheetContent>
 				<SheetHeader>
 					<SheetTitle className='text-2xl'>Tus Favoritos</SheetTitle>
+					<SheetDescription className='sr-only'>Favoritos</SheetDescription>
 				</SheetHeader>
 				<ul className='w-full h-full space-y-2'>
 					{/* Render each item in the shopping cart */}

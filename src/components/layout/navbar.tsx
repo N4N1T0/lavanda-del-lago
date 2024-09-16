@@ -6,18 +6,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 // Project components
-import WishlistCart from '@/components/layout/wishlist-sheet'
 import CartSheet from '@/components/layout/cart-sheet'
 import { Search, SearchMobile } from '@/components/layout/search'
+import WishlistCart from '@/components/layout/wishlist-sheet'
+import UserPopover from '@/components/layout/user-popover'
 import {
 	NavbarLinks,
 	NavbarLinksMobile,
 } from '@/components/layout/navbar-links'
-import UserPopover from './user-popover'
 
 // Quries Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { categories } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { CategoriesList } from '@/types'

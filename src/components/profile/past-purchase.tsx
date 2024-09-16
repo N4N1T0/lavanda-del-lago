@@ -1,15 +1,30 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { User } from '@/types'
-import { Package } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+// Next Imports
 import Link from 'next/link'
+
+// UI Imports
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+
+// Utils Imports
 import { getStatusColor, urlize } from '@/lib/utils'
 
-export function PastPurchasesCard({
+// Type Imports
+import type { User } from '@/types'
+
+// Assets Imports
+import { Package } from 'lucide-react'
+
+/**
+ * A card component to display a user's past purchases.
+ *
+ * @param {User['pastPurchases']} purchases - A list of past purchases made by the user.
+ * @return {JSX.Element} A JSX element representing the PastPurchasesCard component.
+ */
+const PastPurchasesCard = ({
 	purchases,
 }: {
 	purchases: User['pastPurchases']
-}) {
+}): JSX.Element => {
 	return (
 		<Card className='border-accent/70 border'>
 			<CardHeader>
@@ -90,3 +105,5 @@ export function PastPurchasesCard({
 		</Card>
 	)
 }
+
+export default PastPurchasesCard

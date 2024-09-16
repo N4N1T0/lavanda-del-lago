@@ -1,7 +1,18 @@
+// Next.js Imports
 import Image from 'next/image'
+
+// Assets Imports
 import SignUpImage from '@/assets/baraa-jalahej-qfZGhapxoa4-unsplash.webp'
 
-const ClerkLayout = ({ children }: { children: React.ReactNode }) => {
+/**
+ * A layout component for Clerk authentication pages.
+ *
+ * @param {React.ReactNode} children - The content to be rendered within the layout.
+ * @return {JSX.Element} The JSX element representing the layout.
+ */
+const ClerkLayout = ({
+	children,
+}: { children: React.ReactNode }): JSX.Element => {
 	return (
 		<section className='bg-white'>
 			<div className='lg:grid lg:min-h-screen lg:grid-cols-12'>

@@ -7,9 +7,9 @@ import { capitalizeFirstLetter, categoriesFilter } from '@/lib/utils'
 // External Libraies Imports
 import { v4 as uuidv4 } from 'uuid'
 
+import type { CategoriesList } from '@/types'
 // Quiries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import type { CategoriesList } from '@/types'
 
 // Utils Imports
 import { categories } from '@/lib/queries'

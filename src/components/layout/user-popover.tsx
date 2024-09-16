@@ -8,14 +8,20 @@ import {
 import { SignInButton, SignedOut } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
 import Image from 'next/image'
-import { Button } from '../ui/button'
 import Link from 'next/link'
+import { Button } from '../ui/button'
 import UserProfile from './user-profile'
 
 const UserPopover = async () => {
 	const user = await currentUser()
 
-	if (user) return <UserProfile userId={user.id} />
+	if (user)
+		return (
+			<UserProfile
+				userId={user.id}
+				reseller={user.publicMetadata.reseller as boolean}
+			/>
+		)
 
 	return (
 		<Popover>

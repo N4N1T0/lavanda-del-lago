@@ -1,3 +1,10 @@
+// Next Imports
+import Link from 'next/link'
+
+// Project Component Imports
+import { ServerFetchError } from '@/components/shared/server-fetch-error'
+
+// UI Imports
 import {
 	Card,
 	CardContent,
@@ -5,15 +12,29 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
+
+// Queries Imports
 import { productsByCategory } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { ServerFetchError } from '../shared/server-fetch-error'
-import type { Product } from '@/types'
-import { ShoppingBag } from 'lucide-react'
-import Link from 'next/link'
+
+// Utils Imports
 import { urlize } from '@/lib/utils'
-// import { ShoppingBag } from 'lucide-react'
-const NewItems = async ({ category }: { category: string }) => {
+
+// Type Imports
+import type { Product } from '@/types'
+
+// Assets Imports
+import { ShoppingBag } from 'lucide-react'
+
+/**
+ * A component that fetches and displays new items in a given category.
+ *
+ * @param {string} category - The category of products to fetch.
+ * @return {Promise<JSX.Element>} A Card component containing a list of new items, or an error message if the fetch fails.
+ */
+const NewItems = async ({
+	category,
+}: { category: string }): Promise<JSX.Element> => {
 	try {
 		const response: Product[] = await sanityClientRead.fetch(
 			productsByCategory(category),

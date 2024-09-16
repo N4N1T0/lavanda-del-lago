@@ -1,7 +1,7 @@
 'use client'
 
 // Utils Imports
-import { removeFromWishlist, cn } from '@/lib/utils'
+import { cn, removeFromWishlist } from '@/lib/utils'
 import useShoppingCart from '@/stores/shopping-cart-store'
 
 // Stores Imports

@@ -1,6 +1,12 @@
 'use client'
 
+// UI Imports
+import { Button } from '@/components/ui/button'
+
+// Types Imports
 import type { Product } from '@/types'
+
+// Assets Imports
 import {
 	AwardIcon,
 	BarcodeIcon,
@@ -11,9 +17,17 @@ import {
 	RulerIcon,
 	TagIcon,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
-const ProductCaracteristics = ({ product }: { product: Product }) => {
+/**
+ * A React component that displays the characteristics of a product.
+ *
+ * @param {Object} props - The component props.
+ * @param {Product} props.product - The product data.
+ * @return {JSX.Element} The product characteristics section.
+ */
+const ProductCaracteristics = ({
+	product,
+}: { product: Product }): JSX.Element => {
 	// Deconstruction with default values in Spanish
 	const {
 		certificacion = 'Certificación no disponible',

@@ -4,13 +4,13 @@ import UserProfileForm from '@/components/profile/user-info-from'
 // Next Imports
 import Link from 'next/link'
 
-// UI Components Imports
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+// UI Components Imports
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // Assets Imports
-import { Mail, Phone, MapPin, ReceiptEuro } from 'lucide-react'
+import { Mail, MapPin, Phone, ReceiptEuro } from 'lucide-react'
 
 // Types Imports
 import type { User } from '@/types'
@@ -52,15 +52,17 @@ export function UserInfoCard({ user }: { user: User }) {
 					</div>
 				</div>
 				<UserProfileForm user={user} />
-				<Button asChild className='w-full mt-4' variant='cart'>
-					<Link
-						href='/reseller'
-						className='flex items-center justify-center gap-2'
-					>
-						<ReceiptEuro className='w-4 h-4' />
-						Formulario de Revenedor
-					</Link>
-				</Button>
+				{!user.reseller && (
+					<Button asChild className='w-full mt-4' variant='cart'>
+						<Link
+							href='/reseller'
+							className='flex items-center justify-center gap-2'
+						>
+							<ReceiptEuro className='w-4 h-4' />
+							Formulario de Revenedor
+						</Link>
+					</Button>
+				)}
 			</CardContent>
 		</Card>
 	)

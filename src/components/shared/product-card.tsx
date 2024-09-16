@@ -2,9 +2,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { eurilize, urlize } from '@/lib/utils'
 // Type imports
 import type { Product } from '@/types'
-import { eurilize, urlize } from '@/lib/utils'
 
 // UI Import
 import { Skeleton } from '@/components/ui/skeleton'

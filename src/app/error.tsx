@@ -4,8 +4,8 @@
 import { useEffect, useState } from 'react'
 
 // Next.js Imports
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 // Assets Imports
@@ -13,12 +13,12 @@ import { Image500 } from '@/assets'
 import { v4 as uuidv4 } from 'uuid'
 
 // Types Imports
-import type { Metadata } from 'next'
 import type { ErrorPage as ErrorPageSanity } from '@/types'
+import type { Metadata } from 'next'
 
 // Queries Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { errorPages } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Data Imports
 import { contactLinks } from '@/constants/site-data'

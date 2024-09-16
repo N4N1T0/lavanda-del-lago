@@ -9,8 +9,8 @@ import { PrefooterImage } from '@/assets'
 import type { Prefooter as PrefooterProps } from '@/types'
 
 // Queries Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { prefooter } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 /**
  * Renders the Prefooter component.

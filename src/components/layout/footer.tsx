@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 // Data Imports
-import { footerLinks, socialLinks, badges } from '@/constants/site-data'
+import { badges, footerLinks, socialLinks } from '@/constants/site-data'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
@@ -12,8 +12,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { FooterLogo } from '@/assets'
 
 // Queries Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { footer } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { Footer as FooterProps } from '@/types'

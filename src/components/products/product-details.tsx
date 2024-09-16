@@ -11,8 +11,8 @@ import type { Product } from '@/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 // Component Imports
-import { Quantity } from '@/components/shared/quantity'
 import ProductCaracteristics from '@/components/products/product-caracteristics'
+import { Quantity } from '@/components/shared/quantity'
 
 // Data Import
 import { badges } from '@/constants/site-data'
@@ -43,7 +43,7 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
 	} = product
 
 	const imageGallery =
-		fotosVarias.length > 0
+		fotosVarias !== null
 			? [{ image: image, key: uuidv4() }, ...fotosVarias]
 			: []
 

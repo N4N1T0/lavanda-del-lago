@@ -10,26 +10,26 @@ import { navItems } from '@/constants/site-data'
 
 // UI Imports
 import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from '@/components/ui/popover'
+import {
 	Sheet,
+	SheetClose,
 	SheetContent,
 	SheetDescription,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
-	SheetClose,
 } from '@/components/ui/sheet'
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/components/ui/popover'
 
 // Uitility Imports
 import { capitalizeFirstLetter } from '@/lib/utils'
 
 // Assets Imports
-import { MenuIcon, ChevronDown } from 'lucide-react'
 import { NavbarLogo } from '@/assets'
+import { ChevronDown, MenuIcon } from 'lucide-react'
 
 // External Libraies Imports
 import { v4 as uuidv4 } from 'uuid'

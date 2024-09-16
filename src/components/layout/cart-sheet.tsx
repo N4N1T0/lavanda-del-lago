@@ -6,12 +6,13 @@ import { Cart } from '@/assets'
 // UI Imports
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
+	SheetDescription,
 	SheetFooter,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
-	SheetClose,
 } from '@/components/ui/sheet'
 
 // Utils Imports
@@ -68,6 +69,9 @@ const CartSheet = (): JSX.Element => {
 			<SheetContent className='flex flex-col justify-between items-start'>
 				<SheetHeader>
 					<SheetTitle className='text-2xl'>Carrito de la Compra</SheetTitle>
+					<SheetDescription className='sr-only'>
+						Carrito de la Compra
+					</SheetDescription>
 				</SheetHeader>
 				<ul className='w-full h-full space-y-2'>
 					{/* Render each item in the shopping cart */}

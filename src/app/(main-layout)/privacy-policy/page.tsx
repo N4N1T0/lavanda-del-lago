@@ -1,9 +1,6 @@
 // Queries Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { policiesPages } from '@/lib/queries'
-
-// Components Imports
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { PortableText } from 'next-sanity'
 
 // Types Imports
@@ -23,29 +20,30 @@ export const metadata: Metadata = {
  * @throws {Error} If there is an error fetching the policy.
  */
 const PrivacyPoliciesPage = async (): Promise<JSX.Element> => {
-	try {
-		const response: Policies = await sanityClientRead.fetch(
-			policiesPages('privacy'),
-		)
+	const response: Policies = await sanityClientRead.fetch(
+		policiesPages('privacy'),
+	)
 
-		// Deconstructure of the response
-		const { title, content } = response
+	// Deconstructure of the response
+	const { title, content } = response
 
-		return (
-			<main>
-				<h1>{title || 'Políticas de privacidad'}</h1>
-				<div className='w-full md:w-3/4 text-left space-y-7'>
-					{response === null ? (
-						<p>No hay contenido disponible</p>
-					) : (
-						<PortableText value={content} />
-					)}
-				</div>
-			</main>
-		)
-	} catch (error) {
-		return <ServerFetchError error={error} />
-	}
+	return (
+		<section
+			id={title}
+			className='mx-auto max-w-screen-2xl px-4 py-12 lg:py-20 sm:px-6 lg:px-8 flex flex-col gap-12 items-center h-auto'
+		>
+			<h1 className='text-2xl md:text-4xl text-accent text-center uppercase'>
+				{title || 'Política de Cookies'}
+			</h1>
+			<div className='w-full md:w-3/4 text-left space-y-7'>
+				{response === null ? (
+					<p>No hay contenido disponible</p>
+				) : (
+					<PortableText value={content} />
+				)}
+			</div>
+		</section>
+	)
 }
 
 export default PrivacyPoliciesPage

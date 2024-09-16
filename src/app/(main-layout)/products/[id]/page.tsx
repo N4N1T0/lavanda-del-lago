@@ -1,19 +1,19 @@
 // Project component imports
 import FeaturedList from '@/components/home/featured-list'
 import Prefooter from '@/components/home/prefooter'
-import Newsletter from '@/components/shared/newsletter'
 import ProductDetails from '@/components/products/product-details'
+import Newsletter from '@/components/shared/newsletter'
 
 // Utils Imports
 import { desurlize } from '@/lib/utils'
 
 // Queries imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import { productByName } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
-import type { Metadata } from 'next'
 import type { Product } from '@/types'
+import type { Metadata } from 'next'
 
 // Assets Imports
 import { MainLogo } from '@/assets'

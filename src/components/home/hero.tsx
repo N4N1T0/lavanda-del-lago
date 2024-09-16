@@ -9,10 +9,10 @@ import { Button } from '@/components/ui/button'
 import { v4 as uuidv4 } from 'uuid'
 
 // Assets Imports
-import { Hero1, Sapone, Condimento1 } from '@/assets'
+import { Condimento1, Hero1, Sapone } from '@/assets'
 
 // Types Imports
-import type { BentofeaturedCategory, BentoThreeImage, Product } from '@/types'
+import type { BentoThreeImage, BentofeaturedCategory, Product } from '@/types'
 
 // Queries Imports
 import { productsByCategory } from '@/lib/queries'
