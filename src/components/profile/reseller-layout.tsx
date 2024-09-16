@@ -1,10 +1,10 @@
 'use client'
 
 import type { Product, User } from '@/types'
+import { useState } from 'react'
 import { UserInfoCard } from './info-card'
 import ResellerCheckout from './reseller-checkout'
 import ResellerTable from './reseller-table'
-import { useState } from 'react'
 
 const ResellerLayout = ({
 	user,
