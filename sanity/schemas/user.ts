@@ -40,6 +40,12 @@ export default {
 			description:
 				'Indica si el usuario es un revendedor (IMPORTANTE SOLO ACTIVAR DESPUES DE REVISAR LA INFO DEL FORMULARIO DE REVENDEDOR CON EL MISMO  EMAIL QUE ESTE USANDO EN LA APP)',
 		},
+		{
+			name: 'discount',
+			title: 'Descuento del Revendedor',
+			type: 'number',
+			description: 'El descuento del revendedor',
+		},
 	],
 	initialValue: {
 		reseller: false,
