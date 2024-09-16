@@ -1,3 +1,4 @@
+// Server Middleware
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
@@ -13,6 +14,9 @@ const publicRoutes = createRouteMatcher([
 	'/sitemap',
 	'/studio(.*)',
 	'/api(.*)',
+	'/sign-in(.*)',
+	'/reseller-form',
+	'/sign-up(.*)',
 ])
 
 // Define routes that need authentication

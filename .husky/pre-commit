@@ -1,2 +1,1 @@
-pnpm biome lint --apply --staged ./src
-pnpm biome format --write --staged ./src
+pnpm biome check --staged --write
