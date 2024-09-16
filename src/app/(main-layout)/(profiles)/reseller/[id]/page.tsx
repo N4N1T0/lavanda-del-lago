@@ -1,5 +1,5 @@
 import ResellerLayout from '@/components/profile/reseller-layout'
-import { userById, allProducts } from '@/lib/queries'
+import { allProducts, userById } from '@/lib/queries'
 import type { Product, User } from '@/types'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
