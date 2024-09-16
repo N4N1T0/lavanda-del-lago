@@ -296,6 +296,7 @@ export const userById = (id: string) => {
   phone,
   address,
   reseller,
+  discount,
   "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id]{
     "id": _id,
     products[]->{
@@ -308,7 +309,7 @@ export const userById = (id: string) => {
     purchaseDate,
     paymentMethod,
     status,
-    reseller
+    reseller,
   }
 }[0]
   `

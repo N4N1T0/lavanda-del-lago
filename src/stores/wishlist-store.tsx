@@ -3,7 +3,7 @@ import type { Product } from '@/types'
 
 // Package Imports
 import { createStore } from 'swr-global-state'
-import type { StatePersistor, StateKey } from 'swr-global-state'
+import type { StateKey, StatePersistor } from 'swr-global-state'
 
 /**
  * Creates a persistor function that saves and retrieves data from local storage.

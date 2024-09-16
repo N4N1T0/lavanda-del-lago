@@ -1,11 +1,11 @@
 import {
-	Naturale,
-	Bio,
-	OlioEsential,
-	NoParabem,
 	AguaTermale,
-	VecetaleCento,
+	Bio,
 	EnergiaRinnovabile,
+	Naturale,
+	NoParabem,
+	OlioEsential,
+	VecetaleCento,
 } from '@/assets'
 
 export const navItems = [

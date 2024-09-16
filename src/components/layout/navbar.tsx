@@ -7,13 +7,13 @@ import Link from 'next/link'
 
 // Project components
 import CartSheet from '@/components/layout/cart-sheet'
-import { Search, SearchMobile } from '@/components/layout/search'
-import WishlistCart from '@/components/layout/wishlist-sheet'
-import UserPopover from '@/components/layout/user-popover'
 import {
 	NavbarLinks,
 	NavbarLinksMobile,
 } from '@/components/layout/navbar-links'
+import { Search, SearchMobile } from '@/components/layout/search'
+import UserPopover from '@/components/layout/user-popover'
+import WishlistCart from '@/components/layout/wishlist-sheet'
 
 // Quries Imports
 import { categories } from '@/lib/queries'
