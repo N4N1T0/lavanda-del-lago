@@ -257,6 +257,24 @@ export function handlingSecurityInfo(security: string): {
 				description:
 					'No tienes permisos para acceder a esta sección. debes rellenar el formulario de revendedor',
 			}
+		case 'already_reseller':
+			return {
+				title: 'Ya eres revendedor',
+				description:
+					'No nececitas volver a rellenar el formulario de revendedor, si deseas crear un perfil de revendedor para otra persona puedes hacer que se autentifique en el sistema y rellene el formulario.',
+			}
+		case 'form_already-ok':
+			return {
+				title: 'Ya tiened un Formulario',
+				description:
+					'No nececitas volver a rellenar el formulario. pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico',
+			}
+		case 'form_send-ok':
+			return {
+				title: 'El Formulario ha sido enviado correctamente',
+				description:
+					'pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico',
+			}
 		default:
 			return {
 				title: 'Problemas de Seguridad',

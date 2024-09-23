@@ -80,14 +80,11 @@ async function ensureClerkEmail(userId: string, email: string) {
 	)
 
 	if (!emailExists) {
-		console.log('Email not found, updating:', email)
 		await clerkClient.emailAddresses.createEmailAddress({
 			userId,
 			emailAddress: email,
 			primary: false,
 			verified: false,
 		})
-	} else {
-		console.log('Email already exists:', email)
 	}
 }

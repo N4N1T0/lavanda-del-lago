@@ -1,6 +1,6 @@
 // Next.js Imports
 import { currentUser } from '@clerk/nextjs/server'
-import { NextResponse, type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 // Sanity Client Imports
 import { sanityClientWrite } from '@sanity-studio/lib/client'

@@ -1,12 +1,12 @@
 // Project Components Imports
-import { UserInfoCard } from '@/components/profile/info-card'
+import UserInfoCard from '@/components/profile/info-card'
 
 // Queries Imports
 import { userById } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 import NewItems from '@/components/profile/new-items'
-import { PastPurchasesCard } from '@/components/profile/past-purchase'
+import PastPurchasesCard from '@/components/profile/past-purchase'
 import { getMostUsedCategory } from '@/lib/utils'
 // Types Imports
 import type { User } from '@/types'

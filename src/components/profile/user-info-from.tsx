@@ -101,8 +101,6 @@ const UserProfileForm = ({ user }: { user: User }) => {
 			setTimeout(() => {
 				router.refresh()
 			}, 1000)
-		} else {
-			console.log(data.message)
 		}
 	}
 

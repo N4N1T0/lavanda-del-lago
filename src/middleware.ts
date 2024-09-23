@@ -15,44 +15,54 @@ const publicRoutes = createRouteMatcher([
 	'/studio(.*)',
 	'/api(.*)',
 	'/sign-in(.*)',
-	'/reseller-form',
 	'/sign-up(.*)',
 ])
 
-// Define routes that need authentication
-const isProtectedRoute = createRouteMatcher(['/reseller(.*)'])
+// Define reseller-protected routes
+const resellerProtectedRoutes = createRouteMatcher(['/reseller/(.*)'])
+
+// Reseller Form Protected Routes
+const resellerFormProtectedRoutes = createRouteMatcher(['/reseller-form(.*)'])
 
 export default clerkMiddleware((auth, req) => {
 	const { userId, sessionClaims } = auth()
 
 	// Bypass authentication for public routes
-	if (publicRoutes(req)) {
-		return NextResponse.next()
-	}
+	if (publicRoutes(req)) return NextResponse.next()
 
 	// Redirect to sign-in if not authenticated
 	if (!userId) {
 		return auth().redirectToSignIn({ returnBackUrl: req.url })
 	}
 
-	// Check if the route requires reseller access
-	if (isProtectedRoute(req)) {
+	// If user is authenticated but accesses a reseller-protected route
+	if (resellerProtectedRoutes(req)) {
 		const isReseller = sessionClaims?.reseller
 
+		// If not a reseller, redirect to homepage with a query parameter
 		if (!isReseller) {
-			const homeUrl = new URL('/', req.url)
-			// Add a query parameter to let the homepage know about the unauthorized access
-			homeUrl.searchParams.set('security', 'reseller_access_denied')
-			return NextResponse.redirect(homeUrl)
+			return NextResponse.redirect(
+				new URL('/?security=reseller_access_denied', req.url),
+			)
 		}
 	}
 
-	// Proceed to the next middleware or handler
+	if (resellerFormProtectedRoutes(req)) {
+		const isReseller = sessionClaims?.reseller
+
+		if (isReseller) {
+			return NextResponse.redirect(
+				new URL('/?security=already_reseller', req.url),
+			)
+		}
+	}
+
+	// Continue to the next middleware or handler
 	return NextResponse.next()
 })
 
 export const config = {
 	matcher: [
-		'/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+		'/((?!_next/static|_next/image|favicon.ico|[^?]*\\.(?:html?|css|js|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
 	],
 }

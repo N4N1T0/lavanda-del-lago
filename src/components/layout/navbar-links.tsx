@@ -44,6 +44,7 @@ const NavbarLinks = ({
 }: {
 	categories: string[]
 }): JSX.Element => {
+	// Get current path
 	const path = usePathname()
 
 	return (
@@ -109,7 +110,9 @@ const NavbarLinks = ({
 const NavbarLinksMobile = ({
 	categories,
 }: { categories: string[] }): JSX.Element => {
+	// Get current path
 	const path = usePathname()
+
 	return (
 		<Sheet>
 			<SheetTrigger className='md:hidden block'>

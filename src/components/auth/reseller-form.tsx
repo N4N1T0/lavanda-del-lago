@@ -7,6 +7,7 @@ import { z } from 'zod'
 
 // UI Imports
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
 	Form,
 	FormControl,
@@ -23,7 +24,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { Checkbox } from '@/components/ui/checkbox'
 import { useRouter } from 'next/navigation'
 
 // Form Validation Schema
