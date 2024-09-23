@@ -3,6 +3,7 @@
 // Next.js Imports
 import { useRouter } from 'next/navigation'
 
+import { Button } from '@/components/ui/button'
 // UI Imports
 import {
 	Dialog,
@@ -12,7 +13,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
 
 // Utils Imports
 import { handlingSecurityInfo } from '@/lib/utils'
