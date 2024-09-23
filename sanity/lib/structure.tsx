@@ -1,4 +1,3 @@
-import type { StructureBuilder } from 'sanity/structure'
 import {
 	BadgeEuro,
 	BookOpen,
@@ -15,6 +14,7 @@ import {
 	UserRound,
 	UsersRound,
 } from 'lucide-react'
+import type { StructureBuilder } from 'sanity/structure'
 
 export const lavandaCMSStructure = (S: StructureBuilder) =>
 	S.list()

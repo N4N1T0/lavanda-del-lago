@@ -17,6 +17,7 @@ import seo from '@sanity-studio/schemas/seo'
 import user from '@sanity-studio/schemas/user'
 import salesPolicy from '@sanity-studio/schemas/sales-policy'
 import purchases from '@sanity-studio/schemas/purchases'
+import resellerForm from '@sanity-studio/schemas/reseller-form'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
 	types: [
@@ -38,5 +39,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		seo,
 		user,
 		purchases,
+		resellerForm,
 	],
 }

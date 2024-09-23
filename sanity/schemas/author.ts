@@ -29,7 +29,7 @@ export default {
 		select: {
 			title: 'name',
 			subtitle: 'description',
-			image: 'image',
+			media: 'image',
 		},
 	},
 }

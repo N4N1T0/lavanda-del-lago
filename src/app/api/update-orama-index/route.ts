@@ -2,7 +2,7 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
 // Sanity Secret Helper Functions
-import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
+import { SIGNATURE_HEADER_NAME, isValidSignature } from '@sanity/webhook'
 
 // Orama Cloud Imports
 import { CloudManager } from '@oramacloud/client'
