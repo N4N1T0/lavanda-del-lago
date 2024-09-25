@@ -16,6 +16,9 @@ const publicRoutes = createRouteMatcher([
 	'/api(.*)',
 	'/sign-in(.*)',
 	'/sign-up(.*)',
+	'/products(.*)',
+	'/just-a-flower',
+	'/property',
 ])
 
 // Define reseller-protected routes

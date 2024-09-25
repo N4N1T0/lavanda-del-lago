@@ -22,14 +22,14 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 		.items([
 			S.listItem()
 				.title('Paginas')
-				.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+				.icon(() => <BookOpen className='h-4 w-4' />)
 				.child(
 					S.list()
 						.title('Paginas de Lavanda')
 						.items([
 							S.listItem()
 								.title('Pagina Principal')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('homePage')
@@ -37,7 +37,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Pagina sobre nosotros')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('aboutPage')
@@ -45,7 +45,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Politica de Cookies')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('cookiePolicy')
@@ -53,7 +53,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Pagina de error')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('errorPage')
@@ -61,7 +61,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Pagina de error 404')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('notFoundPage')
@@ -69,7 +69,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Politica de privacidad')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('privacyPolicy')
@@ -77,15 +77,23 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Politica de Compra y Ventas')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('salesPolicy')
 										.documentId('e1e40f71-f9fe-435e-8f4b-a34c1dd92eaa'),
 								),
 							S.listItem()
+								.title('Con Solo una Flor')
+								.icon(() => <BookOpen className='h-4 w-4' />)
+								.child(S.document().schemaType('justAFlower')),
+							S.listItem()
+								.title('Propiedad')
+								.icon(() => <BookOpen className='h-4 w-4' />)
+								.child(S.document().schemaType('property')),
+							S.listItem()
 								.title('SEO Metatags')
-								.icon(() => <BookOpen className='h-4 w-4 text-accent' />)
+								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('seoMetatags')
@@ -95,14 +103,14 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 				),
 			S.listItem()
 				.title('Layout')
-				.icon(() => <PanelsTopLeft className='h-4 w-4 text-accent' />)
+				.icon(() => <PanelsTopLeft className='h-4 w-4' />)
 				.child(
 					S.list()
 						.title('Componentes del Layout')
 						.items([
 							S.listItem()
 								.title('Footer')
-								.icon(() => <Footprints className='h-4 w-4 text-accent' />)
+								.icon(() => <Footprints className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('footer')
@@ -110,9 +118,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.listItem()
 								.title('Pre-Footer')
-								.icon(() => (
-									<RectangleEllipsis className='h-4 w-4 text-accent' />
-								))
+								.icon(() => <RectangleEllipsis className='h-4 w-4' />)
 								.child(
 									S.document()
 										.schemaType('prefooter')
@@ -120,52 +126,52 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								),
 							S.documentTypeListItem('teams')
 								.title('Miembros del Equipo')
-								.icon(() => <UsersRound className='h-4 w-4 text-accent' />),
+								.icon(() => <UsersRound className='h-4 w-4' />),
 						]),
 				),
 			S.listItem()
 				.title('Blog')
-				.icon(() => <Newspaper className='h-4 w-4 text-accent' />)
+				.icon(() => <Newspaper className='h-4 w-4' />)
 				.child(
 					S.list()
 						.title('Contenido del Blog')
 						.items([
 							S.documentTypeListItem('blog-articles')
 								.title('Articulos del Blog')
-								.icon(() => <BookText className='h-4 w-4 text-accent' />),
+								.icon(() => <BookText className='h-4 w-4' />),
 							S.documentTypeListItem('author')
 								.title('Autores')
-								.icon(() => <IdCard className='h-4 w-4 text-accent' />),
+								.icon(() => <IdCard className='h-4 w-4' />),
 						]),
 				),
 			S.listItem()
 				.title('Usuarios y Ventas')
-				.icon(() => <BadgeEuro className='h-4 w-4 text-accent' />)
+				.icon(() => <BadgeEuro className='h-4 w-4' />)
 				.child(
 					S.list()
 						.title('Usuarios y Ventas')
 						.items([
 							S.documentTypeListItem('user')
 								.title('Usuarios')
-								.icon(() => <UserRound className='h-4 w-4 text-accent' />),
+								.icon(() => <UserRound className='h-4 w-4' />),
 							S.documentTypeListItem('resellerForm')
 								.title('Formularios de Revendedores')
-								.icon(() => <ClipboardType className='h-4 w-4 text-accent' />),
+								.icon(() => <ClipboardType className='h-4 w-4' />),
 							S.documentTypeListItem('newsletter')
 								.title('Subscriptor al Newsletter')
-								.icon(() => <Mail className='h-4 w-4 text-accent' />),
+								.icon(() => <Mail className='h-4 w-4' />),
 							S.divider(),
 							S.documentTypeListItem('purchase')
 								.title('Ventas')
-								.icon(() => <BadgeEuro className='h-4 w-4 text-accent' />),
+								.icon(() => <BadgeEuro className='h-4 w-4' />),
 						]),
 				),
 			S.documentTypeListItem('events')
 				.title('Eventos')
-				.icon(() => <Calendar className='h-4 w-4 text-accent' />),
+				.icon(() => <Calendar className='h-4 w-4' />),
 			S.documentTypeListItem('product')
 				.title('Productos')
-				.icon(() => <ShoppingBasket className='h-4 w-4 text-accent' />),
+				.icon(() => <ShoppingBasket className='h-4 w-4' />),
 			...S.documentTypeListItems().filter(
 				(listItem) =>
 					![
@@ -188,6 +194,8 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 						'teams',
 						'events',
 						'product',
+						'justAFlower',
+						'property',
 					].includes(listItem.getId()!),
 			),
 		])
