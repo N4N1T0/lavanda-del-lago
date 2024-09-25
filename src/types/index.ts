@@ -269,3 +269,19 @@ export interface PastPurchase {
 	status: string
 	reseller: null
 }
+
+export interface JustAFlower {
+	secondaryText: string
+	quote: string
+	mainImage: string
+	secondaryImage: string
+	text: string
+	title: string
+}
+
+export interface Property {
+	title: string
+	content: Content[]
+	product: Product
+	featuredImage: string
+}
