@@ -32,9 +32,7 @@ import { Input } from '@/components/ui/input'
 
 // Assets Imports
 import { Loader2, Pencil } from 'lucide-react'
-
-// Type Imports
-import type { UserByIdResult } from '@/types/sanity'
+import type { User } from '@/types'
 
 // Form Validation Schema
 const formSchema = z.object({
@@ -62,7 +60,7 @@ const formSchema = z.object({
 	}),
 })
 
-const UserProfileForm = ({ user }: { user: UserByIdResult }) => {
+const UserProfileForm = ({ user }: { user: User }) => {
 	// initialize the Router
 	const router = useRouter()
 
