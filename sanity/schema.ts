@@ -17,7 +17,9 @@ import salesPolicy from '@sanity-studio/schemas/sales-policy'
 import seo from '@sanity-studio/schemas/seo'
 import teams from '@sanity-studio/schemas/teams'
 import user from '@sanity-studio/schemas/user'
+import justAFlower from '@sanity-studio/schemas/just-a-flower'
 import type { SchemaTypeDefinition } from 'sanity'
+import property from './schemas/property'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
 	types: [
@@ -40,5 +42,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		user,
 		purchases,
 		resellerForm,
+		justAFlower,
+		property,
 	],
 }
