@@ -189,9 +189,13 @@ export function isNew(date: string): boolean {
  * @return {string | null} The most used category, or null if no purchases are found.
  */
 export function getMostUsedCategory(
-	pastPurchases: User['pastPurchases'],
+	pastPurchases: User['pastPurchases'] | null,
 ): string | null {
 	const categoryCount: Record<string, number> = {}
+
+	if (!pastPurchases) {
+		return null
+	}
 
 	// Loop through past purchases
 	for (const purchase of pastPurchases) {
