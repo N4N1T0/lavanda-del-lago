@@ -17,13 +17,13 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 
 // React Imports
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
-import { Skeleton } from '../ui/skeleton'
 
 const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
 	const [loading, setLoading] = useState(true)
