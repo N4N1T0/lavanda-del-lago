@@ -92,9 +92,9 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 								.icon(() => <BookOpen className='h-4 w-4' />)
 								.child(S.document().schemaType('property')),
 							S.listItem()
-								.title('Remedios')
+								.title('Certificaciones')
 								.icon(() => <BookOpen className='h-4 w-4' />)
-								.child(S.document().schemaType('remedies')),
+								.child(S.document().schemaType('certifications')),
 							S.listItem()
 								.title('SEO Metatags')
 								.icon(() => <BookOpen className='h-4 w-4' />)
@@ -201,6 +201,7 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
 						'justAFlower',
 						'property',
 						'remedies',
+						'certifications',
 					].includes(listItem.getId()!),
 			),
 		])

@@ -298,3 +298,13 @@ export interface Benefit {
 	image: string
 	description: string
 }
+
+export interface Certifications {
+	title: string
+	certificationsBlocks: CertificationsBlock[]
+}
+
+export interface CertificationsBlock {
+	title: string
+	description: Content[]
+}

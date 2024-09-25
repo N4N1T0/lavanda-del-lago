@@ -187,6 +187,14 @@ export const remedies = groq`*[_type == "remedies"]{
 }[0]
 `
 
+export const certifications = groq`*[_type == 'certifications']{
+  title,
+  certificationsBlocks[]{
+    title, 
+    description
+  }
+}[0]`
+
 // BLOG
 export const featuredBlogArticles = groq`
 *[_type == "blog-articles" && featured]{

@@ -21,6 +21,7 @@ import justAFlower from '@sanity-studio/schemas/just-a-flower'
 import type { SchemaTypeDefinition } from 'sanity'
 import property from '@sanity-studio/schemas/property'
 import remedies from '@sanity-studio/schemas/remedies'
+import certification from '@sanity-studio/schemas/certification'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
 	types: [
@@ -46,5 +47,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 		justAFlower,
 		property,
 		remedies,
+		certification,
 	],
 }
