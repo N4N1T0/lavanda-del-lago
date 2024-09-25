@@ -1,18 +1,31 @@
+// Next.js Imports
+import Image from 'next/image'
+import Link from 'next/link'
+
+// Project components
+import UserProfile from './user-profile'
+
+// Assets Imports
 import { User } from '@/assets'
+
+// UI Imports
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
 
+// Auth Imports
 import { SignInButton, SignedOut } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Button } from '../ui/button'
-import UserProfile from './user-profile'
 
-const UserPopover = async () => {
+/**
+ * A component that renders a user popover with different content based on whether the user is signed in or not.
+ *
+ * @return {Promise<JSX.Element>} The user popover component.
+ */
+const UserPopover = async (): Promise<JSX.Element> => {
 	const user = await currentUser()
 
 	if (user)
