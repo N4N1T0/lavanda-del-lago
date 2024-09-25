@@ -1,11 +1,18 @@
+// Project Components Imports
 import ResellerLayout from '@/components/profile/reseller-layout'
+
+// Queries Imports
 import { allProducts, userById } from '@/lib/queries'
-import type { Product, User } from '@/types'
 import { sanityClientRead } from '@sanity-studio/lib/client'
+
+// Types Imports
+import type { Product, User } from '@/types'
 
 const ResellerPage = async ({ params }: { params: { id: string } }) => {
 	// Fetch user data
-	const response: User = await sanityClientRead.fetch(userById(params.id))
+	const response: User = await sanityClientRead.fetch(userById, {
+		id: params.id,
+	})
 
 	// Fetch products
 	const products: Product[] = await sanityClientRead.fetch(allProducts)

@@ -32,26 +32,29 @@ export async function generateMetadata({
  * @param {string} searchParams.category - The category for which products are fetched.
  * @return {Promise<JSX.Element>} A React component representing the main products section.
  */
-const ProdcutsPage = async ({
+const ProductsPage = async ({
 	searchParams,
 }: {
 	searchParams?: { category?: string }
 }): Promise<JSX.Element> => {
-	// Product Url to be fetched, in case of no category, fetch all products
-	const productUrl = searchParams?.category
-		? productsByCategory(searchParams.category)
-		: allProducts
+	// Determine query based on the presence of a category
+	const productQuery = searchParams?.category
+		? sanityClientRead.fetch(productsByCategory, {
+				category: searchParams?.category,
+			})
+		: sanityClientRead.fetch(allProducts)
 
 	try {
-		// Fetch products
-		const response: Product[] = await sanityClientRead.fetch(productUrl)
-		// Filter products
-		const fileredProducts = response
+		// Fetch products, passing in category if needed
+		const response: Product[] = await productQuery
+
+		// Filter and trim products
+		const filteredProducts = response
 			.map((product: Product) => ({
 				...product,
-				categoria: product.categoria.trim(),
+				categoria: product.categoria?.trim(),
 			}))
-			.filter((product: Product) => product.stock > 0)
+			.filter((product: Product) => product.stock && product.stock > 0)
 
 		return (
 			<section
@@ -60,7 +63,7 @@ const ProdcutsPage = async ({
 			>
 				<ProductsSidebar categoryPath={searchParams?.category} />
 				<article className='flex-[80%]'>
-					<ClientProductPage products={fileredProducts} />
+					<ClientProductPage products={filteredProducts} />
 				</article>
 			</section>
 		)
@@ -70,4 +73,4 @@ const ProdcutsPage = async ({
 	}
 }
 
-export default ProdcutsPage
+export default ProductsPage

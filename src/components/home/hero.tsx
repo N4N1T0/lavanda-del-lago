@@ -27,9 +27,9 @@ export const Hero = async ({
 	bentoFeaturedProducto: Product
 	bentofeaturedCategory: BentofeaturedCategory
 }) => {
-	const response: Product[] = await sanityClientRead.fetch(
-		productsByCategory(bentofeaturedCategory.title),
-	)
+	const response: Product[] = await sanityClientRead.fetch(productsByCategory, {
+		category: bentofeaturedCategory.title,
+	})
 	const featuredProducts = response.slice(0, 2).map((product) => {
 		return {
 			name: product.nombre,

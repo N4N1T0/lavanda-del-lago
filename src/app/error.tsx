@@ -17,7 +17,7 @@ import type { ErrorPage as ErrorPageSanity } from '@/types'
 import type { Metadata } from 'next'
 
 // Queries Imports
-import { errorPages } from '@/lib/queries'
+import { errorPage } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Data Imports
@@ -46,7 +46,7 @@ const ErrorPage = ({
 	useEffect(() => {
 		const getPageInfo = async () => {
 			try {
-				const response = await sanityClientRead.fetch(errorPages('error'))
+				const response = await sanityClientRead.fetch(errorPage)
 				setPageInfo(response)
 			} catch (err) {
 				console.error('Error fetching error page info:', err)

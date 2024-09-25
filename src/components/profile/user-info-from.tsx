@@ -34,7 +34,7 @@ import { Input } from '@/components/ui/input'
 import { Loader2, Pencil } from 'lucide-react'
 
 // Type Imports
-import type { User } from '@/types'
+import type { UserByIdResult } from '@/types/sanity'
 
 // Form Validation Schema
 const formSchema = z.object({
@@ -62,7 +62,7 @@ const formSchema = z.object({
 	}),
 })
 
-const UserProfileForm = ({ user }: { user: User }) => {
+const UserProfileForm = ({ user }: { user: UserByIdResult }) => {
 	// initialize the Router
 	const router = useRouter()
 
@@ -73,10 +73,10 @@ const UserProfileForm = ({ user }: { user: User }) => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: user.name || '',
-			email: user.email || '',
-			phone: user.phone || '',
-			address: user.address || '',
+			name: user?.name || '',
+			email: user?.email || '',
+			phone: user?.phone || '',
+			address: user?.address || '',
 		},
 	})
 
@@ -89,7 +89,7 @@ const UserProfileForm = ({ user }: { user: User }) => {
 			},
 			body: JSON.stringify({
 				...values,
-				id: user.id,
+				id: user?.id,
 			}),
 		})
 

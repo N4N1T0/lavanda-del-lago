@@ -1,5 +1,5 @@
 // Queries Imports
-import { policiesPages } from '@/lib/queries'
+import { privacyPolicy } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { PortableText } from 'next-sanity'
 
@@ -20,9 +20,7 @@ export const metadata: Metadata = {
  * @throws {Error} If there is an error fetching the policy.
  */
 const PrivacyPoliciesPage = async (): Promise<JSX.Element> => {
-	const response: Policies = await sanityClientRead.fetch(
-		policiesPages('privacy'),
-	)
+	const response: Policies = await sanityClientRead.fetch(privacyPolicy)
 
 	// Deconstructure of the response
 	const { title, content } = response

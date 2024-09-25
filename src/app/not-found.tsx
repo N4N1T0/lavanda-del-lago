@@ -17,7 +17,7 @@ import type { NotFoundPage } from '@/types'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { errorPages } from '@/lib/queries'
+import { notFoundPage } from '@/lib/queries'
 
 // Metadata for the error page
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default function NotFound() {
 	useEffect(() => {
 		const getPageInfo = async () => {
 			try {
-				const response = await sanityClientRead.fetch(errorPages('not-found'))
+				const response = await sanityClientRead.fetch(notFoundPage)
 				setPageInfo(response)
 			} catch (err) {
 				console.error('Error fetching error page info:', err)

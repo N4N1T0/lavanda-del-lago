@@ -7,7 +7,7 @@ import { ArticleListCard } from '@/components/blog/article-card'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { relatedArticulesByCategory } from '@/lib/queries'
+import { relatedArticlesByCategory } from '@/lib/queries'
 
 /**
  * Fetches and renders related articles based on the provided category.
@@ -19,9 +19,10 @@ const Related = async ({
 	category,
 }: { category: string }): Promise<JSX.Element> => {
 	try {
-		const posts = await sanityClientRead.fetch(
-			relatedArticulesByCategory(category),
-		)
+		const posts = await sanityClientRead.fetch(relatedArticlesByCategory, {
+			category,
+		})
+
 		return (
 			<section id='related-articles' className='w-full h-auto'>
 				<h2 className='text-3xl'>Articulos Relacionados</h2>

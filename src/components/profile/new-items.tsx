@@ -37,7 +37,10 @@ const NewItems = async ({
 }: { category: string }): Promise<JSX.Element> => {
 	try {
 		const response: Product[] = await sanityClientRead.fetch(
-			productsByCategory(category),
+			productsByCategory,
+			{
+				category,
+			},
 		)
 
 		return (
@@ -46,37 +49,44 @@ const NewItems = async ({
 					<CardTitle>Nuevos en Productos</CardTitle>
 				</CardHeader>
 				<CardContent>
-					{response && response.length > 0 ? (
+					{response?.length ? (
 						<ul className='space-y-2'>
-							{response.slice(0, 5).map((item) => (
-								<li key={item.id} className='group'>
-									<Link
-										href={
-											item.nombre && item.categoria
-												? `/products/${urlize(item.nombre)}?category=${item.categoria}`
-												: '/products'
-										}
-										className='flex justify-between items-center group-hover:text-accent transition-colors duration-200'
-									>
-										<span className='flex items-center'>
-											<ShoppingBag className='mr-2 h-4 w-4 shrink-0' />
-											<small>{item.nombre}</small>
-										</span>
-										<span className='font-semibold'>${item.precio}</span>
-									</Link>
-								</li>
-							))}
+							{response.slice(0, 5).map((item) => {
+								const { id, nombre, categoria, precio } = item
+								return (
+									<li key={id} className='group'>
+										<Link
+											href={
+												nombre && categoria
+													? `/products/${urlize(nombre)}?category=${categoria}`
+													: '/products'
+											}
+											className='flex justify-between items-center group-hover:text-accent transition-colors duration-200'
+											aria-label={`Ver producto ${nombre}`}
+										>
+											<span className='flex items-center'>
+												<ShoppingBag className='mr-2 h-4 w-4 shrink-0' />
+												<small>{nombre || 'Producto Desconocido'}</small>
+											</span>
+											<span className='font-semibold'>
+												${precio?.toFixed(2) || 'N/A'}
+											</span>
+										</Link>
+									</li>
+								)
+							})}
 						</ul>
 					) : (
 						<p>No items available in this category.</p>
 					)}
 				</CardContent>
 				<CardFooter className='text-sm text-center text-accent/70'>
-					Nuevos Productos de tu categoria mas comprada
+					Nuevos Productos de tu categoría más comprada
 				</CardFooter>
 			</Card>
 		)
 	} catch (error) {
+		console.error('Failed to fetch new items:', error)
 		return <ServerFetchError error={error} />
 	}
 }

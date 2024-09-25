@@ -1,13 +1,15 @@
 // Project Components Imports
 import UserInfoCard from '@/components/profile/info-card'
+import NewItems from '@/components/profile/new-items'
+import PastPurchasesCard from '@/components/profile/past-purchase'
 
 // Queries Imports
 import { userById } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
-import NewItems from '@/components/profile/new-items'
-import PastPurchasesCard from '@/components/profile/past-purchase'
+// Utils Imports
 import { getMostUsedCategory } from '@/lib/utils'
+
 // Types Imports
 import type { User } from '@/types'
 
@@ -22,7 +24,15 @@ const UserProfilePage = async ({
 	params,
 }: { params: { id: string } }): Promise<JSX.Element> => {
 	// Fetch user data
-	const response: User = await sanityClientRead.fetch(userById(params.id))
+	const response: User = await sanityClientRead.fetch(userById, {
+		id: params.id,
+	})
+
+	// Check if user exists
+	if (!response) {
+		// Handle error
+		return <h1 className='text-3xl text-accent'>User not found</h1>
+	}
 
 	// Get most used category for the reselling
 	const mostUsedCategory = getMostUsedCategory(response.pastPurchases)

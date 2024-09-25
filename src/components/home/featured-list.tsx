@@ -30,7 +30,10 @@ const FeaturedList = async ({
 }): Promise<JSX.Element> => {
 	try {
 		const response: Product[] = await sanityClientRead.fetch(
-			productsByCategory(itemCategory),
+			productsByCategory,
+			{
+				category: itemCategory,
+			},
 		)
 
 		return (

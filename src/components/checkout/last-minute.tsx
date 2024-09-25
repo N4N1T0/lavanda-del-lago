@@ -17,7 +17,10 @@ import type { Product } from '@/types'
 const LastMinute = async (): Promise<JSX.Element> => {
 	try {
 		const response: Product[] = await sanityClientRead.fetch(
-			productsByCategory('Bienestar'),
+			productsByCategory,
+			{
+				category: 'Bienestar',
+			},
 		)
 
 		return (

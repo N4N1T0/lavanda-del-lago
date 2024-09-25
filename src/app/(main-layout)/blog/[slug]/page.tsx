@@ -20,7 +20,9 @@ import { PortableText } from 'next-sanity'
 export async function generateMetadata({
 	params,
 }: { params: { slug: string } }): Promise<Metadata> {
-	const post: Posts = await sanityClientRead.fetch(blogArticleById(params.slug))
+	const post: Posts = await sanityClientRead.fetch(blogArticleById, {
+		slug: params.slug,
+	})
 
 	return {
 		title: post.title,
@@ -41,9 +43,9 @@ const BlogArticlePage = async ({
 	params,
 }: { params: { slug: string } }): Promise<JSX.Element> => {
 	try {
-		const post: Posts = await sanityClientRead.fetch(
-			blogArticleById(params.slug),
-		)
+		const post: Posts = await sanityClientRead.fetch(blogArticleById, {
+			slug: params.slug,
+		})
 
 		return (
 			<>

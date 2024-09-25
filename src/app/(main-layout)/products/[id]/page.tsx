@@ -29,13 +29,15 @@ export async function generateMetadata({
 	let response: Product | null = null
 
 	// ftist feth for the product with the given name
-	response = await sanityClientRead.fetch(productByName(desurlizedProductName))
+	response = await sanityClientRead.fetch(productByName, {
+		name: desurlizedProductName,
+	})
 
 	if (!response) {
 		// if not found, fetch for the product with the given name plus and space
-		response = await sanityClientRead.fetch(
-			productByName(`${desurlizedProductName} `),
-		)
+		response = await sanityClientRead.fetch(productByName, {
+			name: `${desurlizedProductName} `,
+		})
 	}
 
 	return {
@@ -73,13 +75,15 @@ const ProductPage = async ({
 	let response: Product | null = null
 
 	// ftist feth for the product with the given name
-	response = await sanityClientRead.fetch(productByName(desurlizedProductName))
+	response = await sanityClientRead.fetch(productByName, {
+		name: desurlizedProductName,
+	})
 
 	if (!response) {
 		// if not found, fetch for the product with the given name plus and space
-		response = await sanityClientRead.fetch(
-			productByName(`${desurlizedProductName} `),
-		)
+		response = await sanityClientRead.fetch(productByName, {
+			name: `${desurlizedProductName} `,
+		})
 	}
 
 	return (

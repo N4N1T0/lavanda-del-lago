@@ -27,7 +27,7 @@ const ResellerCheckout = ({
 	discount,
 }: {
 	productsToCheckout: CartItem[]
-	discount: number
+	discount: number | null | undefined
 }): JSX.Element => {
 	// Router Initialization
 	const router = useRouter()
