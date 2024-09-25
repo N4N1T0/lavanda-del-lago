@@ -1265,8 +1265,14 @@ export type JusAFLowerResult = {
 	title: string | null
 } | null
 // Variable: property
-// Query: *[_type == "property"]{  title,  content,  "product": product->{     nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,  }}[0]
+// Query: *[_type == "property"]{  title,  content,  "product": featuredProduct->{     nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,    usabilidad,  },  "featuredImage": featuredImage.asset->url}[0]
 export type PropertyResult = null
+// Variable: remedies
+// Query: *[_type == "remedies"]{  title,  firstDescription,  "dualImage": dualImage[].asset->url,  secodDescription,  benefits[]{    "image": image.asset->url,    description  }}[0]
+export type RemediesResult = null
+// Variable: certifications
+// Query: *[_type == 'certifications']{  title,  certificationsBlocks[]{    title,     description  }}[0]
+export type CertificationsResult = null
 // Variable: featuredBlogArticles
 // Query: *[_type == "blog-articles" && featured]{  categories,  "image": mainImage.asset->url,  title,  description,  author->{    name  },  "id":_id,  "slug": slug.current,  "createdAt":_createdAt}
 export type FeaturedBlogArticlesResult = Array<{
@@ -1469,8 +1475,8 @@ export type EventsResult = Array<{
 }>
 
 // Query TypeMap
-import '@sanity/client'
-declare module '@sanity/client' {
+import '@sanity-studio/lib/client'
+declare module '@sanity-studio/lib/client' {
 	interface SanityQueries {
 		'\n*[_type == "aboutPage"][0]{\n  title,\n  description,\n  stats,\n  "statImage":stats_image.asset->url,\n  second_section_title,\n  second_section_description,\n  teams_section_title,\n  teams_section_description,\n  teams[]->{\n    name,\n    description,\n    "image": image.asset->url,\n    role,\n    links,\n    "id": _id\n  }\n}\n': AboutUsPageResult
 		'\n*[_type == "homePage"]{\n  bentoThreeImages[]{\n    "image": asset->url\n  },\n  featuredEvent->{\n    date,\n    title,\n    "image": image.asset->url,\n    description,\n    urls[]{\n      "id": _key,\n      calendarName,\n      calendarUrl\n    }\n  },\n  carousel1,\n  carousel2,\n  InfoCards[][]{\n    "id": _key,\n    title,\n    description,\n    "icon": icon.asset->url\n },\n mainListCategories,\n  bentofeaturedCategory,\n  bentoFeaturedProducto->{\n    nombre,\n    descripcion,\n    categoria,\n    "id": _id,\n    "image": fotoPrincipal.asset->url,\n  }\n}[0]\n': HomePageResult
@@ -1483,7 +1489,9 @@ declare module '@sanity/client' {
 		'*[_type == "prefooter"]{\n  title,\n  description,\n  "imageUrl": image.asset->url,\n  link\n}[0]': PrefooterResult
 		'*[_type == "seoMetatags"]{\n  titleTemplate,\n  defaultTitle,\n  description,\n  keywords[],\n  dominio,\n  "openGraph": {\n    url,\n    images[]{\n      "imageUrl": asset->url,\n      alt,\n      width,\n      height\n    }\n  },\n  "twitter": {\n    images[]{\n      "imageUrl": asset->url,\n      alt\n    }\n  }\n}[0]\n': SeoResult
 		'*[_type == "justAFlower"]{\n   "mainImage": mainImage.asset->url,\n   "secondaryImage": secondaryImage.asset->url,\n   text,\n   secondaryText,\n   quote,\n   title\n }[0]\n': JusAFLowerResult
-		'*[_type == "property"]{\n  title,\n  content,\n  "product": product->{\n     nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n  }\n}[0]': PropertyResult
+		'*[_type == "property"]{\n  title,\n  content,\n  "product": featuredProduct->{\n     nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    usabilidad,\n  },\n  "featuredImage": featuredImage.asset->url\n}[0]\n': PropertyResult
+		'*[_type == "remedies"]{\n  title,\n  firstDescription,\n  "dualImage": dualImage[].asset->url,\n  secodDescription,\n  benefits[]{\n    "image": image.asset->url,\n    description\n  }\n}[0]\n': RemediesResult
+		"*[_type == 'certifications']{\n  title,\n  certificationsBlocks[]{\n    title, \n    description\n  }\n}[0]": CertificationsResult
 		'\n*[_type == "blog-articles" && featured]{\n  categories,\n  "image": mainImage.asset->url,\n  title,\n  description,\n  author->{\n    name\n  },\n  "id":_id,\n  "slug": slug.current,\n  "createdAt":_createdAt\n}': FeaturedBlogArticlesResult
 		'\n*[_type == "blog-articles"]{\n  categories,\n  "image": mainImage.asset->url,\n  title,\n  description,\n  author->{\n    name\n  },\n  "id":_id,\n  "slug": slug.current,\n  "createdAt":_createdAt\n}': AllBlogArticlesResult
 		'\n  *[_type == "blog-articles" && slug.current == $slug][0]{\n    categories,\n    "image": mainImage.asset->url,\n    title,\n    description,\n    author->{\n      name\n    },\n    content,\n    "createdAt":_createdAt\n  }\n': BlogArticleByIdResult
