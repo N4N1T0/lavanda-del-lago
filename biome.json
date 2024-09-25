@@ -12,6 +12,9 @@
 			"correctness": {
 				"noUnusedImports": {
 					"level": "error"
+				},
+				"noInvalidUseBeforeDeclaration": {
+					"level": "off"
 				}
 			}
 		}
@@ -29,5 +32,8 @@
 		"clientKind": "git",
 		"useIgnoreFile": true,
 		"defaultBranch": "main"
+	},
+	"files": {
+		"ignore": ["sanity/schemas/*.ts"]
 	}
 }
