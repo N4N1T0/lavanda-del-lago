@@ -26,7 +26,7 @@ export const navItems = [
 			},
 			{
 				label: 'Certificaciones',
-				href: '/we-make-all',
+				href: '/certifications',
 			},
 			{
 				label: 'Propiedad',
