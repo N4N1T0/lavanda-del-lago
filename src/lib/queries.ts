@@ -169,6 +169,7 @@ export const property = groq`*[_type == "property"]{
     "image": fotoPrincipal.asset->url,
     categoria,
     stock,
+    usabilidad,
   },
   "featuredImage": featuredImage.asset->url
 }[0]
