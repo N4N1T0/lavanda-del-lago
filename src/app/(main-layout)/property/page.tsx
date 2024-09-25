@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /**
  * Fetches data from
  *
- * @return {Promise<JSX.Element>} The JSX element representing the.
+ * @return {Promise<JSX.Element>} The JSX element representing the property page.
  */
 const ProperyPage = async (): Promise<JSX.Element> => {
 	const response: Property = await sanityClientRead.fetch(property)
