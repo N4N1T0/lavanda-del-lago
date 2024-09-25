@@ -175,6 +175,18 @@ export const property = groq`*[_type == "property"]{
 }[0]
 `
 
+export const remedies = groq`*[_type == "remedies"]{
+  title,
+  firstDescription,
+  "dualImage": dualImage[].asset->url,
+  secodDescription,
+  benefits[]{
+    "image": image.asset->url,
+    description
+  }
+}[0]
+`
+
 // BLOG
 export const featuredBlogArticles = groq`
 *[_type == "blog-articles" && featured]{
