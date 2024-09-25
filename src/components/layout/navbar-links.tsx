@@ -1,9 +1,6 @@
-'use client'
-
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 // Data Imports
 import { navItems } from '@/constants/site-data'
@@ -44,43 +41,47 @@ const NavbarLinks = ({
 }: {
 	categories: string[]
 }): JSX.Element => {
-	// Get current path
-	const path = usePathname()
-
 	return (
 		<nav className='md:inline-flex items-start gap-12 flex-[0_0_auto] hidden'>
 			{navItems.map((item) => {
-				if (item.label === 'Productos') {
+				if (typeof item.children !== 'string') {
 					return (
 						<Popover key={uuidv4()}>
-							<PopoverTrigger
-								className={`w-fit -mt-1 flex font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer ${
-									path === item.href ? 'text-accent' : 'opacity-60'
-								}`}
-							>
+							<PopoverTrigger className='w-fit -mt-1 flex font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer'>
 								{item.label} <ChevronDown />
 							</PopoverTrigger>
 							<PopoverContent>
-								<ul>
-									{categories.map((category) => (
-										<li key={uuidv4()}>
-											<Link
-												href={
-													category === 'Todos'
-														? '/products'
-														: `/products?category=${category}`
-												}
-												className={`w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer ${
-													path === `/products/${category}`
-														? 'text-accent'
-														: 'opacity-60'
-												}`}
-											>
-												{capitalizeFirstLetter(category)}
-											</Link>
-										</li>
-									))}
-								</ul>
+								{item.label === 'Productos' ? (
+									<ul>
+										{categories.map((category) => (
+											<li key={uuidv4()}>
+												<Link
+													href={
+														category === 'Todos'
+															? '/products'
+															: `/products?category=${category}`
+													}
+													className='w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer'
+												>
+													{capitalizeFirstLetter(category)}
+												</Link>
+											</li>
+										))}
+									</ul>
+								) : (
+									<ul>
+										{item.children?.map((item) => (
+											<li key={uuidv4()}>
+												<Link
+													href={item.href}
+													className='w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer'
+												>
+													{item.label}
+												</Link>
+											</li>
+										))}
+									</ul>
+								)}
 							</PopoverContent>
 						</Popover>
 					)
@@ -89,10 +90,8 @@ const NavbarLinks = ({
 				return (
 					<Link
 						key={uuidv4()}
-						href={item.href}
-						className={`w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer ${
-							path === item.href ? 'text-accent' : 'opacity-60'
-						}`}
+						href={item.children as string}
+						className='w-fit -mt-1 font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer'
 					>
 						{item.label}
 					</Link>
@@ -109,10 +108,9 @@ const NavbarLinks = ({
  */
 const NavbarLinksMobile = ({
 	categories,
-}: { categories: string[] }): JSX.Element => {
-	// Get current path
-	const path = usePathname()
-
+}: {
+	categories: string[]
+}): JSX.Element => {
 	return (
 		<Sheet>
 			<SheetTrigger className='md:hidden block'>
@@ -131,32 +129,51 @@ const NavbarLinksMobile = ({
 						que se basa son sólidos, verdaderos, de otros tiempos.
 					</SheetDescription>
 				</SheetHeader>
-				<nav className='inline-flex items-start gap-2 flex-col pt-4'>
+				<nav className='flex flex-col gap-4 py-4'>
 					{navItems.map((item) => {
-						if (item.label === 'Productos') {
+						if (typeof item.children !== 'string') {
 							return (
-								<div key={uuidv4()}>
+								<div key={uuidv4()} className='space-y-2'>
 									<SheetClose asChild>
-										<Link
-											href={item.href}
-											className={`w-fit font-medium text-gray-950 text-xl ${
-												path === item.href ? 'text-accent' : 'opacity-80'
-											}`}
-										>
-											{item.label}
-										</Link>
+										<Popover>
+											<PopoverTrigger className='w-fit flex font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer'>
+												{item.label} <ChevronDown />
+											</PopoverTrigger>
+											<PopoverContent>
+												{item.label === 'Productos' ? (
+													<ul>
+														{categories.map((category) => (
+															<li key={uuidv4()}>
+																<SheetClose asChild>
+																	<Link
+																		href={`/products?category=${category}`}
+																		className='font-medium text-gray-600 hover:text-accent duration-150 transition-colors'
+																	>
+																		{capitalizeFirstLetter(category)}
+																	</Link>
+																</SheetClose>
+															</li>
+														))}
+													</ul>
+												) : (
+													<ul>
+														{item.children?.map((child) => (
+															<li key={uuidv4()}>
+																<SheetClose asChild>
+																	<Link
+																		href={child.href}
+																		className='font-medium text-gray-600 hover:text-accent duration-150 transition-colors'
+																	>
+																		{child.label}
+																	</Link>
+																</SheetClose>
+															</li>
+														))}
+													</ul>
+												)}
+											</PopoverContent>
+										</Popover>
 									</SheetClose>
-									<ul className='space-y-1'>
-										{categories.map((category) => (
-											<li key={uuidv4()} className='pl-2 text-gray-600'>
-												<SheetClose asChild>
-													<Link href={`/products?category=${category}`}>
-														{capitalizeFirstLetter(category)}
-													</Link>
-												</SheetClose>
-											</li>
-										))}
-									</ul>
 								</div>
 							)
 						}
@@ -164,10 +181,8 @@ const NavbarLinksMobile = ({
 						return (
 							<SheetClose key={uuidv4()} asChild>
 								<Link
-									href={item.href}
-									className={`w-fit font-medium text-gray-950 text-xl ${
-										path === item.href ? 'text-accent' : 'opacity-80'
-									}`}
+									href={item.children as string}
+									className='w-fit font-medium text-gray-900 hover:text-accent duration-150 transition-colors cursor-pointer'
 								>
 									{item.label}
 								</Link>

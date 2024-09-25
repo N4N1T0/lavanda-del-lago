@@ -11,19 +11,40 @@ import {
 export const navItems = [
 	{
 		label: 'Productos',
-		href: '/products',
+		children: null,
 	},
 	{
-		label: 'Nosotros',
-		href: '/about',
+		label: 'Lavanda',
+		children: [
+			{
+				label: 'Con una Flor',
+				href: '/just-a-flower',
+			},
+			{
+				label: 'Nosotros',
+				href: '/about-us',
+			},
+			{
+				label: 'Certificaciones',
+				href: '/we-make-all',
+			},
+			{
+				label: 'Propiedad',
+				href: '/property',
+			},
+			{
+				label: 'Remedios',
+				href: '/remedies',
+			},
+		],
 	},
 	{
 		label: 'Eventos',
-		href: '/events',
+		children: '/events',
 	},
 	{
 		label: 'Blog',
-		href: '/blog',
+		children: '/blog',
 	},
 ]
 
