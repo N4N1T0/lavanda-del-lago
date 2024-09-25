@@ -4,6 +4,7 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import esLocale from '@fullcalendar/core/locales/es'
 
 // Types Imports
 import type { Event, URL } from '@/types'
@@ -18,12 +19,14 @@ import {
 } from '@/components/ui/dialog'
 
 // React Imports
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
+import { Skeleton } from '../ui/skeleton'
 
 const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
+	const [loading, setLoading] = useState(true)
 	// Current Event State for the Modal
 	const [currentEvent, setCurrentEvent] = useState<Event>(events[0])
 	// Modal State to make it manual
@@ -35,6 +38,27 @@ const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
 		setCurrentEvent(arg.event)
 	}
 
+	useEffect(() => {
+		setTimeout(() => {
+			setLoading(false)
+		}, 300) // Simulate loading time
+	}, [])
+
+	if (loading) {
+		return (
+			<div className='space-y-4'>
+				<div className='w-full flex justify-between items-center'>
+					<Skeleton className='w-1/4 h-12' />
+					<Skeleton className='w-1/5 h-12' />
+				</div>
+				<Skeleton className='w-full h-16' />
+				<Skeleton className='w-full h-16' />
+				<Skeleton className='w-full h-16' />
+				<Skeleton className='w-full h-16' />
+			</div>
+		)
+	}
+
 	return (
 		<>
 			<FullCalendar
@@ -43,6 +67,7 @@ const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
 				eventClick={handleDateClick}
 				events={events}
 				eventContent={EventContent}
+				locale={esLocale}
 			/>
 			<EventModal
 				event={currentEvent}
