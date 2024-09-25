@@ -1,1 +1,3 @@
-pnpm lint; pnpm format; echo "Done linting and formatting"
+pnpm biome lint --staged --write
+pnpm biome format --staged --write
+echo "Done linting and formatting"

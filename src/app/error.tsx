@@ -66,6 +66,7 @@ const ErrorPage = ({
 					<h1 className='mt-3 text-xl md:text-2xl font-bold text-gray-800'>
 						Error Interno
 					</h1>
+					<small>{error.message}</small>
 					<h2 className='mt-3'>{pageInfo?.digest}</h2>
 					<ul className='mt-3 space-y-1'>
 						{pageInfo === null
