@@ -285,3 +285,16 @@ export interface Property {
 	product: Product
 	featuredImage: string
 }
+
+export interface Remedies {
+	title: string
+	firstDescription: string
+	dualImage: string[]
+	secodDescription: string
+	benefits: Benefit[]
+}
+
+export interface Benefit {
+	image: string
+	description: string
+}
