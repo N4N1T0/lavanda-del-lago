@@ -14,3 +14,13 @@
 	--fc-button-active-bg-color: #a89ac6;
 	--fc-button-active-border-color: #a89ac6;
 }
+
+@media (max-width: 768px) {
+	.fc-toolbar-chunk:has(> .fc-button-group) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		gap: 5px;
+	}
+}
