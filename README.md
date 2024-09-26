@@ -102,14 +102,17 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Create Page "Nuestros Remedios"
 - [x] Create Page "Certificaciones"
 - [x] Favicon and OpenGraph
+- [x] Blog Style fix
+- [x] Add Sanity Plugins
+- [ ] Cron Job for Orama Index Deploy [Free Cron Job](https://cron-job.org/en/)
+- [ ] Webhook for Completed Purchase
+- [ ] React Email Template for Completed Purchase [React Email](https://react.email/)
 - [ ] Redsys Configuration
 - [ ] VPS Configuration and Github Actions Link
+- [ ] Resend Configuration
 
 ## TODOS After Deploy
 
-- [x] Add Sanity Plugins
 - [ ] Hidration Error (Navbar)
 - [ ] Style and Performance Review (Static Pages)
-- [ ] Resend Configuration
-- [ ] React Email Template for Reseller [React Email](https://react.email/)
 - [ ] Sanity Handoff

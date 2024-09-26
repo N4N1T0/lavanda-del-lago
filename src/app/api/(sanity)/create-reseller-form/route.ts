@@ -13,13 +13,12 @@ import { sanityClientWrite } from '@sanity-studio/lib/client'
  * @return {Promise<NextResponse>} A JSON response indicating the success or failure of the operation.
  */
 export async function POST(
-	request: NextRequest,
 	req: NextRequest,
 ): Promise<NextResponse> {
 	try {
 		// Get Data from the request and from the user
 		const user = await currentUser()
-		const data = await request.json()
+		const data = await req.json()
 
 		if (!user) {
 			// If no user is found, redirect to the sign-in page
