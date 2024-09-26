@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server'
 const publicRoutes = createRouteMatcher([
 	'/',
 	'/about',
-	'/blog',
+	'/blog(.*)',
 	'/search',
 	'/privacy-policy',
 	'/cookies-policy',
@@ -19,6 +19,9 @@ const publicRoutes = createRouteMatcher([
 	'/products(.*)',
 	'/just-a-flower',
 	'/property',
+	'about-us',
+	'certifications',
+	'remedies',
 ])
 
 // Define reseller-protected routes
