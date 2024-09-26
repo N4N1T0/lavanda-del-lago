@@ -30,7 +30,6 @@ export default async function Home({
 }): Promise<JSX.Element> {
 	const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage)
 
-	// TODO
 	const {
 		bentoFeaturedProducto,
 		bentoThreeImages,

@@ -28,7 +28,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { productsFilers } from '@/constants/site-data'
 
 const ClientProductPage = ({ products }: { products: Product[] }) => {
-	// TODO: Add Filter Logic
 	const [filter, setfilter] = useState('')
 
 	const filteredProducts = useMemo(() => {
