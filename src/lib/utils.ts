@@ -63,7 +63,7 @@ export function breakUrlToBreadcrumb(url: string): Breadcrumbs {
 	for (const part of parts) {
 		currentPath += `/${part}`
 		breadcrumb.push({
-			name: part,
+			name: part === 'products' ? 'productos' : part,
 			path: currentPath,
 		})
 	}
@@ -161,13 +161,40 @@ export function urlize(name: string): string {
  * @param {string} url - The URL-friendly string to be converted.
  * @return {string} The converted string with spaces and proper capitalization.
  */
-export function desurlize(url: string): string {
+export function desurlizeForBreadcrumbs(url: string): string {
 	return decodeURIComponent(url)
 		.replace(/-/g, ' ') // Reemplaza guiones por espacios
 		.normalize('NFC')
 		.split(' ')
-		.map(capitalizeFirstLetter)
-		.join(' ') // Convierte la primera letra de cada palabra a mayúscula
+		.map((word) => {
+			if (word.toLowerCase() === 'ml') {
+				return word.toLowerCase() // Mantén "ml" en minúsculas
+			}
+			// Capitaliza la primera letra de las demás palabras
+			return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+		})
+		.join(' ')
+}
+
+/**
+ * Converts a URL-friendly string back to its original format.
+ *
+ * @param {string} url - The URL-friendly string to be converted.
+ * @return {string} The converted string with spaces and proper capitalization.
+ */
+export function desurlizeForQuery(url: string): string {
+	return decodeURIComponent(url)
+		.replace(/-/g, ' ') // Reemplaza guiones por espacios
+		.normalize('NFC')
+		.split(' ')
+		.map((word) => {
+			if (word.toLowerCase() === 'ml') {
+				return word.toLowerCase() // Mantén "ml" en minúsculas
+			}
+			// Capitaliza la palabra completa
+			return word.toUpperCase()
+		})
+		.join(' ')
 }
 
 /**

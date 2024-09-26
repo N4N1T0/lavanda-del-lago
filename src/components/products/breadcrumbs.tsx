@@ -20,7 +20,7 @@ import {
 import {
 	breakUrlToBreadcrumb,
 	capitalizeFirstLetter,
-	desurlize,
+	desurlizeForBreadcrumbs,
 } from '@/lib/utils'
 
 // External Libraries Imports
@@ -82,7 +82,7 @@ const Breadcrumbs = (): JSX.Element => {
 								{/* If this is the last breadcrumb, display it as a BreadcrumbPage */}
 								{index === breadcrumbsArray.length - 1 ? (
 									<BreadcrumbPage className='text-accent font-medium'>
-										{capitalizeFirstLetter(desurlize(breadcrumb.name))}
+										{desurlizeForBreadcrumbs(breadcrumb.name)}
 									</BreadcrumbPage>
 								) : (
 									<BreadcrumbLink

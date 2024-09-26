@@ -5,7 +5,7 @@ import ProductDetails from '@/components/products/product-details'
 import Newsletter from '@/components/shared/newsletter'
 
 // Utils Imports
-import { desurlize } from '@/lib/utils'
+import { desurlizeForQuery } from '@/lib/utils'
 
 // Queries imports
 import { productByName } from '@/lib/queries'
@@ -24,7 +24,7 @@ export async function generateMetadata({
 }: {
 	params: { id: string }
 }): Promise<Metadata> {
-	const desurlizedProductName = desurlize(params.id).toUpperCase()
+	const desurlizedProductName = desurlizeForQuery(params.id)
 
 	let response: Product | null = null
 
@@ -70,7 +70,7 @@ const ProductPage = async ({
 	params: { id: string }
 	searchParams?: { category?: string }
 }): Promise<JSX.Element> => {
-	const desurlizedProductName = desurlize(params.id).toUpperCase()
+	const desurlizedProductName = desurlizeForQuery(params.id)
 
 	let response: Product | null = null
 
