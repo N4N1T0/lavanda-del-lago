@@ -196,20 +196,6 @@ export const certifications = groq`*[_type == 'certifications']{
 }[0]`
 
 // BLOG
-export const featuredBlogArticles = groq`
-*[_type == "blog-articles" && featured]{
-  categories,
-  "image": mainImage.asset->url,
-  title,
-  description,
-  author->{
-    name
-  },
-  "id":_id,
-  "slug": slug.current,
-  "createdAt":_createdAt
-}`
-
 export const allBlogArticles = groq`
 *[_type == "blog-articles"]{
   categories,
@@ -221,7 +207,8 @@ export const allBlogArticles = groq`
   },
   "id":_id,
   "slug": slug.current,
-  "createdAt":_createdAt
+  "createdAt":_createdAt,
+  featured
 }`
 
 export const blogArticleById = groq`

@@ -51,6 +51,7 @@ export interface Posts {
 	author: Author
 	content: Content[]
 	createdAt: string
+	featured: boolean
 }
 
 export interface Author {
