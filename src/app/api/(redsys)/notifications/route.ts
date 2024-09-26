@@ -5,7 +5,7 @@ import { processRestNotification } from '@/lib/redsys'
 import type { ResponseJSONSuccess } from 'redsys-easy'
 import { type NextRequest, NextResponse } from 'next/server'
 
-export default async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) {
 	const notificationParams: ResponseJSONSuccess = {
 		Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
 		Ds_Signature: req.headers.get('Ds_Signature') as string,

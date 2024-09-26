@@ -13,7 +13,7 @@ import { type NextRequest, NextResponse } from 'next/server'
  * @param {NextRequest} req - The incoming request object.
  * @return {NextResponse} A redirect response to the sign-in page if the user is not authenticated, or a redirect to the original URL after creating the Sanity user.
  */
-export const GET = async (req: NextRequest): Promise<NextResponse<unknown>> => {
+export async function GET(req: NextRequest): Promise<NextResponse<unknown>> {
 	try {
 		// Get the current user
 		const user = await currentUser()

@@ -22,7 +22,7 @@ const merchantInfo = {
  * @param {NextRequest} req - The incoming request object.
  * @return {Promise<NextResponse>} The HTML response that redirects to the payment gateway.
  */
-export const GET = async (req: NextRequest): Promise<NextResponse> => {
+export async function POST(req: NextRequest): Promise<NextResponse> {
 	const { totalAmount, currency } = {
 		totalAmount: '49.99', // Simulation of total
 		currency: 'EUR',
