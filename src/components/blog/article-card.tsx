@@ -5,95 +5,78 @@ import type { Posts } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-// External Libraries Imports
-import { v4 as uuidv4 } from 'uuid'
-
 const ArticleCard = ({
 	article,
 	index = 1,
 }: { article: Posts; index?: number }): JSX.Element => {
 	return (
-		<li
-			className={`col-span-1 flex gap-3 ${
-				index === 0 ? 'row-span-2 flex-col' : 'row-span-1 flex-row'
+		<Link
+			key={article.id}
+			href={`/blog/${article.slug}`}
+			className={`group relative overflow-hidden rounded-lg ${
+				index === 0 ? 'md:col-span-2 md:row-span-2' : ''
 			}`}
 		>
-			<Link
-				href={`/blog/${article.slug}`}
-				className='group overflow-hidden rounded-md'
-			>
-				<Image
-					src={article.image}
-					alt={article.title}
-					title={article.title}
-					className={`${
-						index !== 0 ? 'aspect-square' : 'w-full h-full flex-1'
-					} group-hover:scale-110 transition-all duration-300 ease-in-out object-cover`}
-					width={300}
-					height={300}
-					priority
-				/>
-			</Link>
-			<div className='flex-1 space-y-3 flex flex-col justify-between items-start py-5 px-2'>
-				<small className='text-accent'>
-					{article.author.name} -{' '}
-					{new Date(article.createdAt).toLocaleDateString('es-ES')}
-				</small>
-				<Link
-					href={`/blog/${article.slug}`}
-					className='text-xl hover:text-accent transition-colors duration-200 ease-in-out'
-				>
-					{article.title}
-				</Link>
-				<p className='text-gray-600'>{article.description}</p>
-				<ul className='text-tertiary flex gap-2'>
-					{article.categories.map((category) => (
-						<li key={uuidv4()} className='text-sm'>
+			<Image
+				src={article.image}
+				alt={article.title}
+				width={index === 0 ? 600 : 400}
+				height={index === 0 ? 400 : 300}
+				className='object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105 opacity-95'
+			/>
+			<div className='absolute inset-0 bg-gradient-to-t from-accent/40 to-transparent' />
+			<div className='absolute bottom-0 left-0 right-0 p-6'>
+				{index === 0 &&
+					article.categories.map((category) => (
+						<span
+							key={category}
+							className='inline-block px-3 py-1 mb-2 text-xs font-semibold text-white bg-primary rounded-full'
+						>
 							{category}
-						</li>
+						</span>
 					))}
-				</ul>
+				<h3 className='text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-secondary transition-colors duration-200 ease-in-out'>
+					{article.title}
+				</h3>
+				<p className='text-sm text-gray-100 mb-2 line-clamp-2'>
+					{article.description}
+				</p>
+				<span className='text-xs text-gray-100'>
+					{index === 0 &&
+						new Date(article.createdAt).toLocaleDateString('es-ES')}
+				</span>
 			</div>
-		</li>
+		</Link>
 	)
 }
 
 const ArticleListCard = ({ article }: { article: Posts }) => {
 	return (
-		<article className='col-span-1 w-full h-auto'>
-			<Link
-				href={`/blog/${article.slug}`}
-				className='group overflow-hidden w-full h-full block rounded-md'
-			>
+		<article className='overflow-hidden group'>
+			<Link href={`/blog/${article.slug}`}>
 				<Image
 					src={article.image}
 					alt={article.title}
-					title={article.title}
-					className='group-hover:scale-110 transition-all duration-300 ease-in-out h-full min-w-full'
-					width={300}
+					width={500}
 					height={300}
+					className='object-cover aspect-video'
 				/>
+				<div className='p-2 mt-3 space-y-2'>
+					<h3 className='text-lg font-semibold leading-none tracking-tight text-accent'>
+						{article.title}
+					</h3>
+				</div>
+				<div>
+					<p className='text-sm text-muted-foreground line-clamp-2'>
+						{article.description}
+					</p>
+				</div>
+				<div>
+					<span className='text-sm font-semibold text-primary group-hover:text-accent transition-colors duration-200 ease-in-out'>
+						Leer Mas
+					</span>
+				</div>
 			</Link>
-			<div className='flex-1 space-y-3 flex flex-col justify-between items-start py-5 px-2'>
-				<small className='text-accent'>
-					{article.author.name} -{' '}
-					{new Date(article.createdAt).toLocaleDateString('es-ES')}
-				</small>
-				<Link
-					href={`/blog/${article.slug}`}
-					className='text-xl hover:text-accent transition-colors duration-200 ease-in-out'
-				>
-					<h1>{article.title}</h1>
-				</Link>
-				<p className='text-gray-600'>{article.description}</p>
-				<ul className='text-tertiary flex gap-2'>
-					{article.categories.map((category) => (
-						<li key={uuidv4()} className='text-sm'>
-							{category}
-						</li>
-					))}
-				</ul>
-			</div>
 		</article>
 	)
 }
