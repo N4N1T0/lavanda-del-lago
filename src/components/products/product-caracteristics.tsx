@@ -29,20 +29,6 @@ const ProductCaracteristics = ({
 	product,
 }: { product: Product }): JSX.Element => {
 	// Deconstruction with default values in Spanish
-	const {
-		certificacion = 'Certificación no disponible',
-		codigoBarras = 'Código de barras no disponible',
-		codigoReferencia = 'Código de referencia no disponible',
-		fichaTecnica,
-		slogan = 'No hay un slogan disponible',
-		subcategoria = 'Subcategoría no disponible',
-		medidas: {
-			alto = 'N/A',
-			ancho = 'N/A',
-			profundidad = 'N/A',
-			volumen = 'N/A',
-		} = {}, // Default object in case 'medidas' is undefined
-	} = product
 
 	return (
 		<section
@@ -54,14 +40,18 @@ const ProductCaracteristics = ({
 					<BarcodeIcon className='h-5 w-5 text-accent/80 shrink-0' />
 					<div>
 						<p className='text-sm font-medium'>Código de Barras</p>
-						<p className='text-sm text-gray-600'>{codigoBarras}</p>
+						<p className='text-sm text-gray-600'>
+							{product.codigoBarras || 'N/A'}
+						</p>
 					</div>
 				</div>
 				<div className='flex items-center gap-3 justify-self-end'>
 					<TagIcon className='h-5 w-5 text-accent/80 shrink-0' />
 					<div>
 						<p className='text-sm font-medium'>Código de Referencia</p>
-						<p className='text-sm text-gray-600'>{codigoReferencia}</p>
+						<p className='text-sm text-gray-600'>
+							{product.codigoReferencia || 'N/A'}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -72,7 +62,9 @@ const ProductCaracteristics = ({
 					<div>
 						<p className='text-sm font-medium'>Dimensiones</p>
 						<p className='text-sm text-gray-600'>
-							{ancho}cm x {alto}cm x {profundidad}cm
+							{product.medidas?.ancho || 'N/A'}cm x{' '}
+							{product.medidas?.alto || 'N/A'}cm x{' '}
+							{product.medidas?.profundidad || 'N/A'}cm
 						</p>
 					</div>
 				</div>
@@ -80,7 +72,9 @@ const ProductCaracteristics = ({
 					<PackageIcon className='h-5 w-5 text-accent/80 shrink-0' />
 					<div>
 						<p className='text-sm font-medium'>Peso y Volumen</p>
-						<p className='text-sm text-gray-600'>{volumen}m³</p>
+						<p className='text-sm text-gray-600'>
+							{product.medidas?.volumen || 'N/A'}m³
+						</p>
 					</div>
 				</div>
 			</div>
@@ -90,14 +84,18 @@ const ProductCaracteristics = ({
 					<AwardIcon className='h-5 w-5 text-accent/80 shrink-0' />
 					<div>
 						<p className='text-sm font-medium'>Certificación</p>
-						<p className='text-sm text-gray-600'>{certificacion}</p>
+						<p className='text-sm text-gray-600'>
+							{product.certificacion || 'N/A'}
+						</p>
 					</div>
 				</div>
 				<div className='flex items-center gap-3 justify-self-end'>
 					<FileIcon className='h-5 w-5 text-accent/80 shrink-0' />
 					<div>
 						<p className='text-sm font-medium'>Subcategoría</p>
-						<p className='text-sm text-gray-600'>{subcategoria}</p>
+						<p className='text-sm text-gray-600'>
+							{product.subcategoria || 'N/A'}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -105,15 +103,15 @@ const ProductCaracteristics = ({
 			<div className='flex items-start space-x-4 w-full'>
 				<QuoteIcon className='h-5 w-5 text-accent/80 shrink-0 mt-1' />
 				<div>
-					<p className='text-gray-600'>{slogan}</p>
+					<p className='text-gray-600'>{product.slogan || 'N/A'}</p>
 				</div>
 			</div>
 
-			{fichaTecnica && (
+			{product.fichaTecnica && (
 				<div className='grid place-items-center w-full border-t border-accent/30 pt-3'>
 					<Button
 						className='w-3/4 self-center'
-						onClick={() => window.open(fichaTecnica, '_blank')}
+						onClick={() => window.open(product.fichaTecnica, '_blank')}
 					>
 						<DownloadIcon className='mr-2 h-4 w-4' />
 						Descargar Hoja de Producto

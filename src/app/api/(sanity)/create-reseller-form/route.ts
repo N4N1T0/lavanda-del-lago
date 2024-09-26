@@ -12,9 +12,7 @@ import { sanityClientWrite } from '@sanity-studio/lib/client'
  * @param {NextRequest} req - The incoming request object (alias).
  * @return {Promise<NextResponse>} A JSON response indicating the success or failure of the operation.
  */
-export async function POST(
-	req: NextRequest,
-): Promise<NextResponse> {
+export async function POST(req: NextRequest): Promise<NextResponse> {
 	try {
 		// Get Data from the request and from the user
 		const user = await currentUser()

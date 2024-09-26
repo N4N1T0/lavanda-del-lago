@@ -42,6 +42,8 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
 		fotosVarias,
 	} = product
 
+	console.log(product)
+
 	const imageGallery =
 		fotosVarias !== null
 			? [{ image: image, key: uuidv4() }, ...fotosVarias]

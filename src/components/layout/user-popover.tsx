@@ -54,7 +54,7 @@ const UserPopover = async (): Promise<JSX.Element> => {
 						<Button>Iniciar Session</Button>
 					</SignInButton>
 					<Button asChild>
-						<Link href='/reseller'>Registrarse como Revendedor</Link>
+						<Link href='/reseller-form'>Registrarse como Revendedor</Link>
 					</Button>
 				</SignedOut>
 			</PopoverContent>
