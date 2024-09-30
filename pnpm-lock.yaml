@@ -98,6 +98,9 @@ importers:
       embla-carousel-react:
         specifier: ^8.3.0
         version: 8.3.0(react@19.0.0-rc-fb9a90fa48-20240614)
+      husky:
+        specifier: ^9.1.6
+        version: 9.1.6
       lucide-react:
         specifier: ^0.446.0
         version: 0.446.0(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -4346,6 +4349,11 @@ packages:
 
   humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
+
+  husky@9.1.6:
+    resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   i18next@23.11.5:
     resolution: {integrity: sha512-41pvpVbW9rhZPk5xjCX2TPJi2861LEig/YRhUkY+1FQ2IQPS0bKUDYnEqY8XPPbB48h1uIwLnP9iiEfuSl20CA==}
@@ -11664,6 +11672,8 @@ snapshots:
   humanize-ms@1.2.1:
     dependencies:
       ms: 2.1.2
+
+  husky@9.1.6: {}
 
   i18next@23.11.5:
     dependencies:

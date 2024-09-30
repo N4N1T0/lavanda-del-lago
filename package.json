@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "email": "email dev --dir src/emails --port 4000"
+    "email": "email dev --dir src/emails --port 4000",
+    "prepare": "husky"
   },
   "lint-staged": {
     "*/src/**/*": [
@@ -46,6 +47,7 @@
     "decimal.js": "^10.4.3",
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
+    "husky": "^9.1.6",
     "lucide-react": "^0.446.0",
     "next": "15.0.0-rc.0",
     "next-sanity": "9.5.0",
