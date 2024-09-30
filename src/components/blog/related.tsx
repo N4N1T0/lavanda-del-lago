@@ -15,30 +15,30 @@ import { relatedArticlesByCategory } from '@/lib/queries'
  * @param {string} category - The category of articles to fetch.
  * @return {Promise<JSX.Element>} A section containing a list of related article cards.
  */
-const Related = async ({
-	category,
-}: { category: string }): Promise<JSX.Element> => {
-	try {
-		const posts = await sanityClientRead.fetch(relatedArticlesByCategory, {
-			category,
-		})
+const Related = async (
+  { category }: { category: string }
+): Promise<JSX.Element> => {
+  try {
+    const posts = await sanityClientRead.fetch(relatedArticlesByCategory, {
+      category
+    })
 
-		return (
-			<section id='related-articles' className='w-full h-auto'>
-				<h2 className='text-3xl'>Articulos Relacionados</h2>
-				<ul className='gap-5 mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
-					{posts.slice(0, 3).map((post: Posts) => (
-						<li key={post.id}>
-							<ArticleListCard article={post} />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	} catch (error) {
-		console.error(error)
-		return <ServerFetchError error={error} />
-	}
+    return (
+      <section id='related-articles' className='h-auto w-full'>
+        <h2 className='text-3xl'>Articulos Relacionados</h2>
+        <ul className='mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
+          {posts.slice(0, 3).map((post: Posts) => (
+            <li key={post.id}>
+              <ArticleListCard article={post} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  } catch (error) {
+    console.error(error)
+    return <ServerFetchError error={error} />
+  }
 }
 
 export default Related

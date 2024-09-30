@@ -6,24 +6,24 @@ export default {
     {
       name: 'title',
       title: 'Título',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'firstDescription',
       title: 'Primera Descripción',
-      type: 'text',
+      type: 'text'
     },
     {
       name: 'dualImage',
       title: 'Imagen Duales',
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
-      validation: (Rule: any) => Rule.required().max(2),
+      validation: (Rule: any) => Rule.required().max(2)
     },
     {
       name: 'secodDescription',
       title: 'Segunda Descripción',
-      type: 'text',
+      type: 'text'
     },
     {
       name: 'benefits',
@@ -40,15 +40,15 @@ export default {
               title: 'Imagen',
               type: 'image',
               options: {
-                hotspot: true,
-              },
+                hotspot: true
+              }
             },
             {
               name: 'description',
               title: 'Descripción',
-              type: 'text',
-            },
-          ],
+              type: 'text'
+            }
+          ]
         }
       ]
     }

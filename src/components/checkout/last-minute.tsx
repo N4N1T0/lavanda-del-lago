@@ -15,28 +15,33 @@ import type { Product } from '@/types'
  * @return {JSX.Element} A JSX element containing the last-minute products.
  */
 const LastMinute = async (): Promise<JSX.Element> => {
-	try {
-		const response: Product[] = await sanityClientRead.fetch(
-			productsByCategory,
-			{
-				category: 'Bienestar',
-			},
-		)
+  try {
+    const response: Product[] = await sanityClientRead.fetch(
+      productsByCategory,
+      {
+        category: 'Bienestar'
+      }
+    )
 
-		return (
-			<article className='mt-10'>
-				<h2 className='text-2xl mb-4'>Última Oportunidad</h2>
-				<ul className='flex gap-3'>
-					{response.slice(0, 2).map((product: Product, index: number) => (
-						<ProductCard key={product.id} product={product} index={index} />
-					))}
-				</ul>
-			</article>
-		)
-	} catch (error) {
-		console.error(error)
-		return <ServerFetchError error={error} />
-	}
+    return (
+      <article className='mt-10'>
+        <h2 className='mb-4 text-2xl'>Última Oportunidad</h2>
+        <ul className='grid grid-cols-2 gap-3'>
+          {response.slice(0, 2).map((product: Product, index: number) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={index}
+              lastMinute
+            />
+          ))}
+        </ul>
+      </article>
+    )
+  } catch (error) {
+    console.error(error)
+    return <ServerFetchError error={error} />
+  }
 }
 
 export default LastMinute

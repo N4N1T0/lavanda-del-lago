@@ -1,10 +1,12 @@
+'use client'
+
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { eurilize, urlize } from '@/lib/utils'
 // Type imports
-import type { Product } from '@/types'
+import type { CartItem, Product } from '@/types'
 
 // UI Import
 import { Skeleton } from '@/components/ui/skeleton'
@@ -14,6 +16,8 @@ import WishlistBtn from '@/components/shared/wishlist-btn'
 
 // Assets Imports
 import { MainLogo } from '@/assets'
+import useShoppingCart from '@/stores/shopping-cart-store'
+import { Button } from '../ui/button'
 
 /**
  * Renders a product card component with details such as title, price, description, and image.
@@ -21,63 +25,106 @@ import { MainLogo } from '@/assets'
  * @param {Product} product - The product object containing title, price, description, image, and id.
  * @return {JSX.Element} The rendered product card component.
  */
-const ProductCard = ({
-	product,
-	index,
-}: { product: Product; index: number }): JSX.Element => {
-	const { nombre, precio, descripcion, image, categoria } = product
+const ProductCard = (
+  {
+    product,
+    index,
+    lastMinute = false
+  }: {
+    product: Product
+    index: number
+    lastMinute?: boolean
+  }
+): JSX.Element => {
+  // Get the cart items and a function to update the cart items from the shopping cart store
+  const [count, setCount] = useShoppingCart()
 
-	return (
-		<li className='col-span-1 px-4 py-6 bg-neutral-100 rounded-lg flex-col justify-start items-center gap-4 inline-flex text-black relative'>
-			<div className='aspect-square'>
-				<Image
-					src={image || MainLogo}
-					alt={nombre || 'Logo Principal de Lavanda del Lago'}
-					title={nombre || 'Logo Principal de Lavanda del Lago'}
-					width={200}
-					height={200}
-					priority={index < 8}
-					className='object-cover aspect-square'
-				/>
-			</div>
-			<div className='self-stretch flex-col justify-start items-center gap-6 flex'>
-				<div className='self-stretch flex-col justify-start items-start gap-4 flex'>
-					<Link
-						prefetch
-						href={
-							nombre && categoria
-								? `/products/${urlize(nombre)}?category=${categoria}`
-								: '/products'
-						}
-						className='self-stretch text-center text-accent font-medium leading-bold text-sm lg:text-base hover:text-black transition-colors duration-200'
-					>
-						{nombre?.split(' ').slice(0, 3).join(' ') ||
-							'Estamos trabajando en una nombre'}
-					</Link>
-					<div className='self-stretch text-center text-gray-600 tracking-wide text-xs md:text-base'>
-						{descripcion?.split(' ').slice(0, 10).join(' ') ||
-							'Estamos trabajando en una descripcion detallada para usted'}
-						{'...'}
-					</div>
-					<div className='self-stretch text-center text-2xl font-bold leading-normal tracking-wide'>
-						{eurilize(Number(precio || '0'))}
-					</div>
-				</div>
-				<Link
-					prefetch
-					href={
-						nombre && categoria
-							? `/products/${urlize(nombre)}?category=${categoria}`
-							: '/products'
-					}
-					className='px-6 py-3 text-sm md:text-base bg-accent rounded-lg text-white hover:bg-white hover:text-accent transition-colors duration-200'
-				>
-					Comprar <span className='hidden md:inline'>Ahora</span>
-				</Link>
-			</div>
-			<WishlistBtn product={product} className='absolute top-5 right-5' />
-		</li>
-	)
+  // Create a new cart item object with the selected quantity and the product details
+  const cartItem: CartItem = {
+    quantity: 1,
+    ...product
+  }
+
+  // Function to add to the Cart and show a toast with a message of completed
+  const addToCart = () => {
+    // Find if the product is already in the cart
+    const existingProduct = count.find(
+      (productItem) => productItem.id === product.id
+    )
+
+    if (existingProduct) {
+      // If the product is already in the cart, update its quantity
+      const updatedCart = count.map((productItem) =>
+        productItem.id === product.id
+          ? { ...productItem, quantity: productItem.quantity + 1 }
+          : productItem
+      )
+      setCount(updatedCart)
+    } else {
+      // If the product is not in the cart, add it with an initial quantity of 1
+      setCount([...count, { ...product, quantity: 1 }])
+    }
+  }
+
+  const { nombre, precio, descripcion, image, categoria } = product
+
+  return (
+    <li className='relative col-span-1 inline-flex flex-col items-center justify-start gap-4 rounded-lg bg-neutral-100 px-4 py-6 text-black'>
+      <div className='aspect-square'>
+        <Image
+          src={image || MainLogo}
+          alt={nombre || 'Logo Principal de Lavanda del Lago'}
+          title={nombre || 'Logo Principal de Lavanda del Lago'}
+          width={200}
+          height={200}
+          priority={index < 8}
+          className='aspect-square object-cover'
+        />
+      </div>
+      <div className='flex flex-col items-center justify-start gap-6 self-stretch'>
+        <div className='flex flex-col items-start justify-start gap-4 self-stretch'>
+          <Link
+            prefetch
+            href={
+              nombre && categoria
+                ? `/products/${urlize(nombre)}?category=${categoria}`
+                : '/products'
+            }
+            className='leading-bold self-stretch text-center text-sm font-medium text-accent transition-colors duration-200 hover:text-black lg:text-base'
+          >
+            {nombre?.split(' ').slice(0, 3).join(' ') ||
+              'Estamos trabajando en una nombre'}
+          </Link>
+          <div className='self-stretch text-center text-xs tracking-wide text-gray-600 md:text-base'>
+            {descripcion?.split(' ').slice(0, 10).join(' ') ||
+              'Estamos trabajando en una descripcion detallada para usted'}
+            {'...'}
+          </div>
+          <div className='self-stretch text-center text-2xl font-bold leading-normal tracking-wide'>
+            {eurilize(Number(precio || '0'))}
+          </div>
+        </div>
+        {lastMinute ? (
+          <Button variant='secondary' onClick={() => addToCart()}>
+            Añadir <span className='ml-1 hidden md:inline'>Ahora</span>
+          </Button>
+        ) : (
+          <Link
+            prefetch
+            href={
+              nombre && categoria
+                ? `/products/${urlize(nombre)}?category=${categoria}`
+                : '/products'
+            }
+            className='rounded-lg bg-accent px-6 py-3 text-sm text-white transition-colors duration-200 hover:bg-white hover:text-accent md:text-base'
+          >
+            Comprar <span className='hidden md:inline'>Ahora</span>
+          </Link>
+        )}
+      </div>
+      <WishlistBtn product={product} className='absolute right-5 top-5' />
+    </li>
+  )
 }
 
 /**
@@ -86,11 +133,11 @@ const ProductCard = ({
  * @return {JSX.Element} The skeleton component for the product card.
  */
 const ProductCardSkeleton = (): JSX.Element => {
-	return (
-		<li className='rounded-md col-span-1 h-[500px] w-full'>
-			<Skeleton className='w-full h-full' />
-		</li>
-	)
+  return (
+    <li className='col-span-1 h-[500px] w-full rounded-md'>
+      <Skeleton className='h-full w-full' />
+    </li>
+  )
 }
 
 export { ProductCard, ProductCardSkeleton }

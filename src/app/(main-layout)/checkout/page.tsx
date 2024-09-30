@@ -1,35 +1,49 @@
 // Project Components Imports
 import Address from '@/components/checkout/address'
 import LastMinute from '@/components/checkout/last-minute'
-import Summary from '@/components/checkout/summary'
+
+// Auth Imports
+import { currentUser } from '@clerk/nextjs/server'
+
+// Queries Imports
+import { userById } from '@/lib/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Type Imports
 import type { Metadata } from 'next'
+import type { User } from '@/types'
 
+// Metadata for the Page
 export const metadata: Metadata = {
-	title: 'Checkout',
-	description:
-		'Esta es la página de checkout para la tienda en linea de Lavanda del lago.',
+  title: 'Checkout Info',
+  description:
+    'Esta es la página de checkout para la tienda en linea de Lavanda del lago. Puedes realizar cambios en la informacion del usuario y compras de ultima hora'
 }
 
 /**
- * Renders the checkout page component.
+ * Fetches the current user's information and renders the checkout page with the user's address and last-minute purchase options.
  *
- * @return {JSX.Element} The rendered checkout page.
+ * @return {Promise<JSX.Element>} The JSX element representing the checkout page content.
  */
-const CheckoutPage = (): JSX.Element => {
-	return (
-		<section
-			id='checkout'
-			className='mx-auto max-w-screen-2xl px-4 py-12 lg:py-20 sm:px-6 lg:px-8 gap-12 grid grid-cols-1 md:grid-cols-2'
-		>
-			<Summary />
-			<div className='col-span-1'>
-				<Address />
-				<LastMinute />
-			</div>
-		</section>
-	)
+const CheckoutInfoPage = async (): Promise<JSX.Element> => {
+  const user = await currentUser()
+  let response: User | null = null
+
+  if (user !== null) {
+    response = await sanityClientRead.fetch(userById, {
+      id: user.id
+    })
+  }
+
+  return (
+    <section
+      id='checkout info'
+      className='mx-auto grid max-w-screen-lg grid-cols-1 gap-12 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8 lg:py-20'
+    >
+      <Address user={response} />
+      <LastMinute />
+    </section>
+  )
 }
 
-export default CheckoutPage
+export default CheckoutInfoPage

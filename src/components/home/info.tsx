@@ -12,19 +12,19 @@ import type { InfoCard as InfoCardProps } from '@/types'
  *
  * @return {JSX.Element} The rendered Info section.
  */
-export const Info = ({
-	infoCards,
-}: { infoCards: InfoCardProps[] }): JSX.Element => (
-	<section
-		id='info'
-		className='flex flex-col items-center justify-center gap-2.5 py-10 2xl:py-20 bg-accent text-white'
-	>
-		<div className='h-full flex flex-col md:flex-row justify-center items-center w-[80%] gap-5'>
-			{infoCards.map((infoCard: InfoCardProps) => (
-				<InfoCard key={infoCard.id} {...infoCard} />
-			))}
-		</div>
-	</section>
+export const Info = (
+  { infoCards }: { infoCards: InfoCardProps[] }
+): JSX.Element => (
+  <section
+    id='info'
+    className='flex flex-col items-center justify-center gap-2.5 bg-accent py-10 text-white 2xl:py-20'
+  >
+    <div className='flex h-full w-[80%] flex-col items-center justify-center gap-5 md:flex-row'>
+      {infoCards.map((infoCard: InfoCardProps) => (
+        <InfoCard key={infoCard.id} {...infoCard} />
+      ))}
+    </div>
+  </section>
 )
 
 /**
@@ -36,18 +36,18 @@ export const Info = ({
  * @return {JSX.Element} The rendered InfoCard component.
  */
 const InfoCard = ({ description, icon, title }: InfoCardProps): JSX.Element => (
-	<div className='space-y-5 flex-1 px-5'>
-		<Image
-			alt={title}
-			title={title}
-			src={icon || Puzzle}
-			width={35}
-			height={35}
-			className='aspect-square'
-		/>
-		<h3 className='text-xl uppercase'>{title}</h3>
-		<p className='font-light'>{description}</p>
-	</div>
+  <div className='flex-1 space-y-5 px-5'>
+    <Image
+      alt={title}
+      title={title}
+      src={icon || Puzzle}
+      width={35}
+      height={35}
+      className='aspect-square'
+    />
+    <h3 className='text-xl uppercase'>{title}</h3>
+    <p className='font-light'>{description}</p>
+  </div>
 )
 
 export default Info

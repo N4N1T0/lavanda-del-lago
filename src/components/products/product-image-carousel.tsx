@@ -1,40 +1,40 @@
 import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
 } from '@/components/ui/carousel'
 import type { FotosVarias } from '@/types'
 import Image from 'next/image'
 
 const ProductImageCarousel = ({ images }: { images: FotosVarias[] }) => {
-	return (
-		<Carousel
-			className='w-[90%]'
-			opts={{
-				loop: true,
-			}}
-		>
-			<CarouselContent>
-				{images.map((image) => (
-					<CarouselItem
-						key={image.key}
-						className='w-full aspect-square flex justify-center items-center'
-					>
-						<Image
-							src={image.image}
-							alt={image.key}
-							width={500}
-							height={500}
-							className='object-cover aspect-square'
-						/>
-					</CarouselItem>
-				))}
-			</CarouselContent>
-			<CarouselPrevious className='bg-accent text-white hover:bg-white hover:text-accent transition-colors duration-150 hidden md:flex' />
-			<CarouselNext className='bg-accent text-white hover:bg-white hover:text-accent transition-colors duration-150 hidden md:flex' />
-		</Carousel>
-	)
+  return (
+    <Carousel
+      className='w-[90%]'
+      opts={{
+        loop: true
+      }}
+    >
+      <CarouselContent>
+        {images.map((image) => (
+          <CarouselItem
+            key={image.key}
+            className='flex aspect-square w-full items-center justify-center'
+          >
+            <Image
+              src={image.image}
+              alt={image.key}
+              width={500}
+              height={500}
+              className='aspect-square object-cover'
+            />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className='hidden bg-accent text-white transition-colors duration-150 hover:bg-white hover:text-accent md:flex' />
+      <CarouselNext className='hidden bg-accent text-white transition-colors duration-150 hover:bg-white hover:text-accent md:flex' />
+    </Carousel>
+  )
 }
 export default ProductImageCarousel

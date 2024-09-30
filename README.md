@@ -36,11 +36,11 @@ Follow the standard steps to set up a Next.js project:
 
 2. Install the dependencies:
 
-  ```bash  
-  npm install
-  # or
-  yarn install
-  ```
+```bash
+npm install
+# or
+yarn install
+```
 
 ## Usage
 
@@ -50,10 +50,10 @@ The usage of the project follows a typical Next.js application. Once installed, 
 
 No special configuration is required beyond the standard Next.js setup. Ensure environment variables for services like Clerk and Sanity are correctly configured in a .env.local file:
 
-  ```bash  
-  NEXT_PUBLIC_SANITY_PROJECT_ID=your_sanity_project_id
-  CLERK_API_KEY=your_clerk_api_key
-  ```
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_sanity_project_id
+CLERK_API_KEY=your_clerk_api_key
+```
 
 ## Dependencies
 
@@ -104,15 +104,23 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Favicon and OpenGraph
 - [x] Blog Style fix
 - [x] Add Sanity Plugins
-- [ ] Cron Job for Orama Index Deploy [Free Cron Job](https://cron-job.org/en/)
-- [ ] Webhook for Completed Purchase
-- [ ] React Email Template for Completed Purchase [React Email](https://react.email/)
+- [x] Cron Job for Orama Index Deploy [Free Cron Job](https://cron-job.org/en/)
+- [ ] Webhook for Completed Purchase & Purchase Confirmation
+- [ ] User Checkout Configuration
 - [ ] Redsys Configuration
-- [ ] VPS Configuration and Github Actions Link
+- [ ] VPS Configuration and Github Actions
 - [ ] Resend Configuration
+- [ ] Check UI Components (idea for a npm package)
 
 ## TODOS After Deploy
 
 - [ ] Hidration Error (Navbar)
 - [ ] Style and Performance Review (Static Pages)
 - [ ] Sanity Handoff
+
+## Reactemail Template TODOs
+
+- [ ] React Email Template for Completed Purchase (for User & Admins)
+- [ ] React Email Template for Reseller Form
+- [ ] React Email Template for User Auth
+- [ ] React Email Template for Newsletter

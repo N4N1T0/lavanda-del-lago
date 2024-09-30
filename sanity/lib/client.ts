@@ -5,17 +5,17 @@ import { apiVersion, dataset, projectId, useCdn } from '../env'
 const token = process.env.SANITY_TOKEN
 
 export const sanityClientRead = createClient({
-	projectId,
-	dataset,
-	apiVersion,
-	useCdn,
-	perspective: 'published',
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn,
+  perspective: 'published'
 })
 
 export const sanityClientWrite = createClient({
-	projectId,
-	dataset,
-	apiVersion,
-	token,
-	useCdn,
+  projectId,
+  dataset,
+  apiVersion,
+  token,
+  useCdn
 })

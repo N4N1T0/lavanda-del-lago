@@ -22,58 +22,60 @@ import type { User } from '@/types'
  * @return {JSX.Element} The UserInfoCard component.
  */
 const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
-	return (
-		<Card className='border-accent/70 border'>
-			<CardHeader>
-				<CardTitle>Información Personal</CardTitle>
-			</CardHeader>
-			<CardContent className='flex flex-col items-center'>
-				<Avatar
-					className={`w-24 h-24 mb-4 border-2 ${user.reseller ? 'border-green-600' : 'border-accent/70'}`}
-				>
-					<AvatarImage
-						src={user.image}
-						alt={user.name || 'Imagen de usuario'}
-					/>
-					<AvatarFallback>
-						{user.name
-							.split(' ')
-							.map((n) => n[0])
-							.join('')}
-					</AvatarFallback>
-				</Avatar>
-				<h2 className='text-xl font-semibold mb-2'>
-					{user.name || 'Usuario sin nombre'}
-				</h2>
-				<div className='flex flex-col items-start w-full'>
-					<div className='flex items-center mb-2'>
-						<Mail className='mr-2 h-4 w-4' />
-						<span>{user.email || 'Sin correo'}</span>
-					</div>
-					<div className='flex items-center mb-2'>
-						<Phone className='mr-2 h-4 w-4' />
-						<span>{user.phone || 'Sin telefono'}</span>
-					</div>
-					<div className='flex items-center'>
-						<MapPin className='mr-2 h-4 w-4' />
-						<span>{user.address || 'Sin dirección'}</span>
-					</div>
-				</div>
-				<UserProfileForm user={user} />
-				{!user.reseller && (
-					<Button asChild className='w-full mt-4' variant='cart'>
-						<Link
-							href='/reseller'
-							className='flex items-center justify-center gap-2'
-						>
-							<ReceiptEuro className='w-4 h-4' />
-							Formulario de Revenedor
-						</Link>
-					</Button>
-				)}
-			</CardContent>
-		</Card>
-	)
+  return (
+    <Card className='border border-accent/70'>
+      <CardHeader>
+        <CardTitle>Información Personal</CardTitle>
+      </CardHeader>
+      <CardContent className='flex flex-col items-center'>
+        <Avatar
+          className={`mb-4 h-24 w-24 border-2 ${
+            user.reseller ? 'border-green-600' : 'border-accent/70'
+          }`}
+        >
+          <AvatarImage
+            src={user.image}
+            alt={user.name || 'Imagen de usuario'}
+          />
+          <AvatarFallback>
+            {user.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('')}
+          </AvatarFallback>
+        </Avatar>
+        <h2 className='mb-2 text-xl font-semibold'>
+          {user.name || 'Usuario sin nombre'}
+        </h2>
+        <div className='flex w-full flex-col items-start'>
+          <div className='mb-2 flex items-center'>
+            <Mail className='mr-2 h-4 w-4' />
+            <span>{user.email || 'Sin correo'}</span>
+          </div>
+          <div className='mb-2 flex items-center'>
+            <Phone className='mr-2 h-4 w-4' />
+            <span>{user.phone || 'Sin telefono'}</span>
+          </div>
+          <div className='flex items-center'>
+            <MapPin className='mr-2 h-4 w-4' />
+            <span>{user.address || 'Sin dirección'}</span>
+          </div>
+        </div>
+        <UserProfileForm user={user} />
+        {!user.reseller && (
+          <Button asChild className='mt-4 w-full' variant='cart'>
+            <Link
+              href='/reseller'
+              className='flex items-center justify-center gap-2'
+            >
+              <ReceiptEuro className='h-4 w-4' />
+              Formulario de Revenedor
+            </Link>
+          </Button>
+        )}
+      </CardContent>
+    </Card>
+  )
 }
 
 export default UserInfoCard

@@ -19,7 +19,7 @@ export default {
       name: 'featuredImage',
       title: 'Image Destacada',
       type: 'image',
-      options: { hotspot: true },
+      options: { hotspot: true }
     },
     {
       name: 'content',

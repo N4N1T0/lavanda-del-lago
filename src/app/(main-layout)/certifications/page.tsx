@@ -7,9 +7,9 @@ import { PortableText } from 'next-sanity'
 
 // Metadata for this page
 export const metadata: Metadata = {
-	title: 'Certificaciones',
-	description:
-		'Las Certificaciones obtenidas por nuestra marca a lo largo de una exitosa carrera',
+  title: 'Certificaciones',
+  description:
+    'Las Certificaciones obtenidas por nuestra marca a lo largo de una exitosa carrera'
 }
 
 /**
@@ -18,43 +18,43 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the.
  */
 const CertificationsPage = async (): Promise<JSX.Element> => {
-	const response: Certifications = await sanityClientRead.fetch(certifications)
+  const response: Certifications = await sanityClientRead.fetch(certifications)
 
-	return (
-		<section
-			id='CertificationsPage'
-			className='mx-auto max-w-screen-lg px-4 py-12 lg:py-20 sm:px-6 lg:px-8 flex flex-col gap-12 text-balance items-center'
-		>
-			<h1 className='text-xl md:text-5xl text-accent'>{response.title}</h1>
-			<section id='certifications index' className='w-full'>
-				<h2 className='text-2xl'>Indice de Certificaciones</h2>
-				<ol className='w-full mt-5'>
-					{response.certificationsBlocks.map((certification, index) => (
-						<li key={certification.title}>
-							<a
-								href={`#${certification.title}`}
-								className='text-accent text-lg hover:text-black transition-colors duration-150 ease-out mt-1'
-							>
-								{index + 1}. {certification.title}
-							</a>
-						</li>
-					))}
-				</ol>
-			</section>
-			{response.certificationsBlocks.map((certification) => (
-				<section
-					id={certification.title}
-					key={certification.title}
-					className='w-full mt-5'
-				>
-					<h2 className='text-2xl text-accent'>{certification.title}</h2>
-					<div className='[&>p]:text-lg [&>p]:mt-5 [&>p:first-child]:mt-0'>
-						<PortableText value={certification.description} />
-					</div>
-				</section>
-			))}
-		</section>
-	)
+  return (
+    <section
+      id='CertificationsPage'
+      className='mx-auto flex max-w-screen-lg flex-col items-center gap-12 text-balance px-4 py-12 sm:px-6 lg:px-8 lg:py-20'
+    >
+      <h1 className='text-xl text-accent md:text-5xl'>{response.title}</h1>
+      <section id='certifications index' className='w-full'>
+        <h2 className='text-2xl'>Indice de Certificaciones</h2>
+        <ol className='mt-5 w-full'>
+          {response.certificationsBlocks.map((certification, index) => (
+            <li key={certification.title}>
+              <a
+                href={`#${certification.title}`}
+                className='mt-1 text-lg text-accent transition-colors duration-150 ease-out hover:text-black'
+              >
+                {index + 1}. {certification.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+      {response.certificationsBlocks.map((certification) => (
+        <section
+          id={certification.title}
+          key={certification.title}
+          className='mt-5 w-full'
+        >
+          <h2 className='text-2xl text-accent'>{certification.title}</h2>
+          <div className='[&>p:first-child]:mt-0 [&>p]:mt-5 [&>p]:text-lg'>
+            <PortableText value={certification.description} />
+          </div>
+        </section>
+      ))}
+    </section>
+  )
 }
 
 export default CertificationsPage

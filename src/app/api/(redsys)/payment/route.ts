@@ -9,8 +9,8 @@ import Decimal from 'decimal.js'
 import { type NextRequest, NextResponse } from 'next/server'
 
 const merchantInfo = {
-	DS_MERCHANT_MERCHANTCODE: process.env.REDSYS_MERCHANT_CODE!, // Merchant code
-	DS_MERCHANT_TERMINAL: process.env.REDSYS_TERMINAL!, // Terminal number
+  DS_MERCHANT_MERCHANTCODE: process.env.REDSYS_MERCHANT_CODE!, // Merchant code
+  DS_MERCHANT_TERMINAL: process.env.REDSYS_TERMINAL! // Terminal number
 }
 
 /**
@@ -23,36 +23,36 @@ const merchantInfo = {
  * @return {Promise<NextResponse>} The HTML response that redirects to the payment gateway.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
-	const { totalAmount, currency } = {
-		totalAmount: '49.99', // Simulation of total
-		currency: 'EUR',
-	} as const
+  const { totalAmount, currency } = {
+    totalAmount: '49.99', // Simulation of total
+    currency: 'EUR'
+  } as const
 
-	const orderId = randomTransactionId() // Random ID for the transaction
+  const orderId = randomTransactionId() // Random ID for the transaction
 
-	const currencyInfo = CURRENCIES[currency]
-	const redsysAmount = new Decimal(totalAmount)
-		.mul(10 ** currencyInfo.decimals)
-		.toFixed(0)
-	const redsysCurrency = currencyInfo.num
+  const currencyInfo = CURRENCIES[currency]
+  const redsysAmount = new Decimal(totalAmount)
+    .mul(10 ** currencyInfo.decimals)
+    .toFixed(0)
+  const redsysCurrency = currencyInfo.num
 
-	// Generate the RedSys redirect form
-	const form = createRedirectForm({
-		...merchantInfo,
-		DS_MERCHANT_TRANSACTIONTYPE: TRANSACTION_TYPES.AUTHORIZATION, // '0' = Authorization
-		DS_MERCHANT_ORDER: orderId,
-		DS_MERCHANT_AMOUNT: redsysAmount,
-		DS_MERCHANT_CURRENCY: redsysCurrency,
-		DS_MERCHANT_MERCHANTNAME: 'MY SHOP',
-		DS_MERCHANT_MERCHANTURL: `${req.url}/api/notifications`, // Notification URL
-		DS_MERCHANT_URLOK: `${req.url}/api/success`, // Success URL
-		DS_MERCHANT_URLKO: `${req.url}/api/error`, // Error URL
-		DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
-		DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE,
-	})
+  // Generate the RedSys redirect form
+  const form = createRedirectForm({
+    ...merchantInfo,
+    DS_MERCHANT_TRANSACTIONTYPE: TRANSACTION_TYPES.AUTHORIZATION, // '0' = Authorization
+    DS_MERCHANT_ORDER: orderId,
+    DS_MERCHANT_AMOUNT: redsysAmount,
+    DS_MERCHANT_CURRENCY: redsysCurrency,
+    DS_MERCHANT_MERCHANTNAME: 'MY SHOP',
+    DS_MERCHANT_MERCHANTURL: `${req.url}/api/notifications`, // Notification URL
+    DS_MERCHANT_URLOK: `${req.url}/api/success`, // Success URL
+    DS_MERCHANT_URLKO: `${req.url}/api/error`, // Error URL
+    DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
+    DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE
+  })
 
-	// Create the HTML form with automatic submission via JavaScript
-	const autoSubmitForm = `
+  // Create the HTML form with automatic submission via JavaScript
+  const autoSubmitForm = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -73,10 +73,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     </html>
   `
 
-	// Send the HTML response that redirects automatically
-	return new NextResponse(autoSubmitForm, {
-		headers: {
-			'Content-Type': 'text/html',
-		},
-	})
+  // Send the HTML response that redirects automatically
+  return new NextResponse(autoSubmitForm, {
+    headers: {
+      'Content-Type': 'text/html'
+    }
+  })
 }

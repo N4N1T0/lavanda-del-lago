@@ -1,7 +1,7 @@
 import ResellerForm from '@/components/auth/reseller-form'
 
 const ResellerPage = () => {
-	return <ResellerForm />
+  return <ResellerForm />
 }
 
 export default ResellerPage

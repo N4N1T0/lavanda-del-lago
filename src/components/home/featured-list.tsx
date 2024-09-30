@@ -19,43 +19,45 @@ import type { Product } from '@/types'
  * @return {Promise<JSX.Element>} A promise that resolves to a JSX element representing the featured list section.
  * @throws {Error} If there is an error fetching the items from the API.
  */
-const FeaturedList = async ({
-	itemCategory,
-	featuredTitle,
-	direction = 'left',
-}: {
-	itemCategory: string
-	featuredTitle: string
-	direction?: 'left' | 'right'
-}): Promise<JSX.Element> => {
-	try {
-		const response: Product[] = await sanityClientRead.fetch(
-			productsByCategory,
-			{
-				category: itemCategory,
-			},
-		)
+const FeaturedList = async (
+  {
+    itemCategory,
+    featuredTitle,
+    direction = 'left'
+  }: {
+    itemCategory: string
+    featuredTitle: string
+    direction?: 'left' | 'right'
+  }
+): Promise<JSX.Element> => {
+  try {
+    const response: Product[] = await sanityClientRead.fetch(
+      productsByCategory,
+      {
+        category: itemCategory
+      }
+    )
 
-		return (
-			<section id={itemCategory}>
-				<div className='mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 space-y-5'>
-					<h2
-						className={`text-4xl font-bold text-accent uppercase ${
-							direction === 'right' ? 'text-right' : 'text-left'
-						}`}
-					>
-						{featuredTitle}
-					</h2>
-					<div className='flex gap-5 w-[93%] mx-auto'>
-						<ProductCarousel productList={response} />
-					</div>
-				</div>
-			</section>
-		)
-	} catch (error) {
-		console.error(error)
-		return <ServerFetchError error={error} />
-	}
+    return (
+      <section id={itemCategory}>
+        <div className='mx-auto max-w-screen-2xl space-y-5 px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
+          <h2
+            className={`text-4xl font-bold uppercase text-accent ${
+              direction === 'right' ? 'text-right' : 'text-left'
+            }`}
+          >
+            {featuredTitle}
+          </h2>
+          <div className='mx-auto flex w-[93%] gap-5'>
+            <ProductCarousel productList={response} />
+          </div>
+        </div>
+      </section>
+    )
+  } catch (error) {
+    console.error(error)
+    return <ServerFetchError error={error} />
+  }
 }
 
 export default FeaturedList

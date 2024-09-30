@@ -1,10 +1,10 @@
 // Type imports
 import type {
-	Breadcrumbs,
-	CartItem,
-	CategoriesList,
-	Product,
-	User,
+  Breadcrumbs,
+  CartItem,
+  CategoriesList,
+  Product,
+  User
 } from '@/types'
 
 // Package imports
@@ -23,7 +23,7 @@ import { twMerge } from 'tailwind-merge'
  * cn('bg-red-500', [], 'rounded-full', 'p-2') // 'bg-red-500 rounded-full p-2'
  */
 export function cn(...inputs: Array<string | undefined>): string | undefined {
-	return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs))
 }
 
 export const fetcher = (url: string) => fetch(url).then((r) => r.json())
@@ -40,10 +40,10 @@ export const fetcher = (url: string) => fetch(url).then((r) => r.json())
  * eurilize(12345.6789) // "€12,345.68"
  */
 export function eurilize(number: number): string {
-	return number.toLocaleString('de-DE', {
-		style: 'currency',
-		currency: 'EUR',
-	})
+  return number.toLocaleString('de-DE', {
+    style: 'currency',
+    currency: 'EUR'
+  })
 }
 
 /**
@@ -57,17 +57,17 @@ export function eurilize(number: number): string {
  * breakUrlToBreadcrumb('/products/clothes/jackets?category=coats') // [{ name: 'products', path: '/products' }, { name: 'clothes', path: '/products/clothes' }, { name: 'jackets', path: '/products/clothes/jackets' }, { name: 'coats', path: '/products/clothes/jackets?category=coats' }]
  */
 export function breakUrlToBreadcrumb(url: string): Breadcrumbs {
-	const parts = url.split('/').filter(Boolean)
-	const breadcrumb: Breadcrumbs = []
-	let currentPath = ''
-	for (const part of parts) {
-		currentPath += `/${part}`
-		breadcrumb.push({
-			name: part === 'products' ? 'productos' : part,
-			path: currentPath,
-		})
-	}
-	return breadcrumb
+  const parts = url.split('/').filter(Boolean)
+  const breadcrumb: Breadcrumbs = []
+  let currentPath = ''
+  for (const part of parts) {
+    currentPath += `/${part}`
+    breadcrumb.push({
+      name: part === 'products' ? 'productos' : part,
+      path: currentPath
+    })
+  }
+  return breadcrumb
 }
 
 /**
@@ -82,7 +82,7 @@ export function breakUrlToBreadcrumb(url: string): Breadcrumbs {
  * capitalizeFirstLetter('javascript') // 'Javascript'
  */
 export function capitalizeFirstLetter(str: string): string {
-	return str.charAt(0).toUpperCase() + str.slice(1)
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 /**
@@ -102,18 +102,18 @@ export function capitalizeFirstLetter(str: string): string {
  *
  */
 export function calculateTotal(
-	count: CartItem[],
-	shipping = 0,
+  count: CartItem[],
+  shipping = 0
 ): [string, string, string] {
-	let subTotal = 0
-	for (const item of count) {
-		subTotal += Number(item.precio) * item.quantity
-	}
-	return [
-		eurilize(subTotal),
-		eurilize(subTotal * 1.21 + shipping),
-		eurilize(subTotal * 0.21),
-	]
+  let subTotal = 0
+  for (const item of count) {
+    subTotal += Number(item.precio) * item.quantity
+  }
+  return [
+    eurilize(subTotal),
+    eurilize(subTotal * 1.21 + shipping),
+    eurilize(subTotal * 0.21)
+  ]
 }
 
 /**
@@ -128,7 +128,7 @@ export function calculateTotal(
  * removeFromWishlist([{ id: 3, name: 'Product 3' }], '2') // [{ id: 3, name: 'Product 3' }]
  */
 export const removeFromWishlist = (count: Product[], id: string): Product[] => {
-	return count.filter((item) => item.id !== id)
+  return count.filter((item) => item.id !== id)
 }
 
 /**
@@ -138,8 +138,8 @@ export const removeFromWishlist = (count: Product[], id: string): Product[] => {
  * @return {string[]} - The filtered and sorted array of categories.
  */
 export const categoriesFilter = (categories: CategoriesList[]): string[] => {
-	const tempCategories = categories.map((category) => category.categoria.trim())
-	return ['Todos', ...Array.from(new Set(tempCategories)).sort()]
+  const tempCategories = categories.map((category) => category.categoria.trim())
+  return ['Todos', ...Array.from(new Set(tempCategories)).sort()]
 }
 
 /**
@@ -149,10 +149,10 @@ export const categoriesFilter = (categories: CategoriesList[]): string[] => {
  * @return {string} The converted string.
  */
 export function urlize(name: string): string {
-	return name
-		.trim() // Elimina los espacios al principio y al final
-		.toLowerCase() // Convierte a minúsculas
-		.replace(/\s+/g, '-') // Reemplaza los espacios por guiones
+  return name
+    .trim() // Elimina los espacios al principio y al final
+    .toLowerCase() // Convierte a minúsculas
+    .replace(/\s+/g, '-') // Reemplaza los espacios por guiones
 }
 
 /**
@@ -162,18 +162,18 @@ export function urlize(name: string): string {
  * @return {string} The converted string with spaces and proper capitalization.
  */
 export function desurlizeForBreadcrumbs(url: string): string {
-	return decodeURIComponent(url)
-		.replace(/-/g, ' ') // Reemplaza guiones por espacios
-		.normalize('NFC')
-		.split(' ')
-		.map((word) => {
-			if (word.toLowerCase() === 'ml') {
-				return word.toLowerCase() // Mantén "ml" en minúsculas
-			}
-			// Capitaliza la primera letra de las demás palabras
-			return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-		})
-		.join(' ')
+  return decodeURIComponent(url)
+    .replace(/-/g, ' ') // Reemplaza guiones por espacios
+    .normalize('NFC')
+    .split(' ')
+    .map((word) => {
+      if (word.toLowerCase() === 'ml') {
+        return word.toLowerCase() // Mantén "ml" en minúsculas
+      }
+      // Capitaliza la primera letra de las demás palabras
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    })
+    .join(' ')
 }
 
 /**
@@ -183,18 +183,18 @@ export function desurlizeForBreadcrumbs(url: string): string {
  * @return {string} The converted string with spaces and proper capitalization.
  */
 export function desurlizeForQuery(url: string): string {
-	return decodeURIComponent(url)
-		.replace(/-/g, ' ') // Reemplaza guiones por espacios
-		.normalize('NFC')
-		.split(' ')
-		.map((word) => {
-			if (word.toLowerCase() === 'ml') {
-				return word.toLowerCase() // Mantén "ml" en minúsculas
-			}
-			// Capitaliza la palabra completa
-			return word.toUpperCase()
-		})
-		.join(' ')
+  return decodeURIComponent(url)
+    .replace(/-/g, ' ') // Reemplaza guiones por espacios
+    .normalize('NFC')
+    .split(' ')
+    .map((word) => {
+      if (word.toLowerCase() === 'ml') {
+        return word.toLowerCase() // Mantén "ml" en minúsculas
+      }
+      // Capitaliza la palabra completa
+      return word.toUpperCase()
+    })
+    .join(' ')
 }
 
 /**
@@ -204,9 +204,9 @@ export function desurlizeForQuery(url: string): string {
  * @return {boolean} Whether the difference is less than a week.
  */
 export function isNew(date: string): boolean {
-	const today = new Date()
-	const difference = today.getTime() - new Date(date).getTime()
-	return difference < 7 * 24 * 60 * 60 * 1000
+  const today = new Date()
+  const difference = today.getTime() - new Date(date).getTime()
+  return difference < 7 * 24 * 60 * 60 * 1000
 }
 
 /**
@@ -216,40 +216,40 @@ export function isNew(date: string): boolean {
  * @return {string | null} The most used category, or null if no purchases are found.
  */
 export function getMostUsedCategory(
-	pastPurchases: User['pastPurchases'] | null,
+  pastPurchases: User['pastPurchases'] | null
 ): string | null {
-	const categoryCount: Record<string, number> = {}
+  const categoryCount: Record<string, number> = {}
 
-	if (!pastPurchases) {
-		return null
-	}
+  if (!pastPurchases) {
+    return null
+  }
 
-	// Loop through past purchases
-	for (const purchase of pastPurchases) {
-		for (const product of purchase.products) {
-			const category = product.categoria
+  // Loop through past purchases
+  for (const purchase of pastPurchases) {
+    for (const product of purchase.products) {
+      const category = product.categoria
 
-			// Count occurrences of each category
-			if (categoryCount[category]) {
-				categoryCount[category]++
-			} else {
-				categoryCount[category] = 1
-			}
-		}
-	}
+      // Count occurrences of each category
+      if (categoryCount[category]) {
+        categoryCount[category]++
+      } else {
+        categoryCount[category] = 1
+      }
+    }
+  }
 
-	// Find the most used category
-	let mostUsedCategory: string | null = null
-	let maxCount = 0
+  // Find the most used category
+  let mostUsedCategory: string | null = null
+  let maxCount = 0
 
-	for (const category in categoryCount) {
-		if (categoryCount[category] > maxCount) {
-			mostUsedCategory = category
-			maxCount = categoryCount[category]
-		}
-	}
+  for (const category in categoryCount) {
+    if (categoryCount[category] > maxCount) {
+      mostUsedCategory = category
+      maxCount = categoryCount[category]
+    }
+  }
 
-	return mostUsedCategory
+  return mostUsedCategory
 }
 
 /**
@@ -259,16 +259,16 @@ export function getMostUsedCategory(
  * @return {string} The color code corresponding to the status.
  */
 export function getStatusColor(status: string): string {
-	switch (status) {
-		case 'pendiente':
-			return '#F59E0B' // Yellow (for Pending)
-		case 'completado':
-			return '#10B981' // Green (for Completed)
-		case 'cancelado':
-			return '#EF4444' // Red (for Canceled)
-		default:
-			return '#6B7280' // Gray (for default/fallback)
-	}
+  switch (status) {
+    case 'pendiente':
+      return '#F59E0B' // Yellow (for Pending)
+    case 'completado':
+      return '#10B981' // Green (for Completed)
+    case 'cancelado':
+      return '#EF4444' // Red (for Canceled)
+    default:
+      return '#6B7280' // Gray (for default/fallback)
+  }
 }
 
 /**
@@ -278,38 +278,38 @@ export function getStatusColor(status: string): string {
  * @return {{title: string, description: string}} An object containing a title and description for the security information.
  */
 export function handlingSecurityInfo(security: string): {
-	title: string
-	description: string
+  title: string
+  description: string
 } {
-	switch (security) {
-		case 'reseller_access_denied':
-			return {
-				title: 'Acceso denegado',
-				description:
-					'No tienes permisos para acceder a esta sección. debes rellenar el formulario de revendedor',
-			}
-		case 'already_reseller':
-			return {
-				title: 'Ya eres revendedor',
-				description:
-					'No nececitas volver a rellenar el formulario de revendedor, si deseas crear un perfil de revendedor para otra persona puedes hacer que se autentifique en el sistema y rellene el formulario.',
-			}
-		case 'form_already-ok':
-			return {
-				title: 'Ya tiened un Formulario',
-				description:
-					'No nececitas volver a rellenar el formulario. pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico',
-			}
-		case 'form_send-ok':
-			return {
-				title: 'El Formulario ha sido enviado correctamente',
-				description:
-					'pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico',
-			}
-		default:
-			return {
-				title: 'Problemas de Seguridad',
-				description: 'Hubo un problema al procesar tu solicitud.',
-			}
-	}
+  switch (security) {
+    case 'reseller_access_denied':
+      return {
+        title: 'Acceso denegado',
+        description:
+          'No tienes permisos para acceder a esta sección. debes rellenar el formulario de revendedor'
+      }
+    case 'already_reseller':
+      return {
+        title: 'Ya eres revendedor',
+        description:
+          'No nececitas volver a rellenar el formulario de revendedor, si deseas crear un perfil de revendedor para otra persona puedes hacer que se autentifique en el sistema y rellene el formulario.'
+      }
+    case 'form_already-ok':
+      return {
+        title: 'Ya tiened un Formulario',
+        description:
+          'No nececitas volver a rellenar el formulario. pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico'
+      }
+    case 'form_send-ok':
+      return {
+        title: 'El Formulario ha sido enviado correctamente',
+        description:
+          'pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico'
+      }
+    default:
+      return {
+        title: 'Problemas de Seguridad',
+        description: 'Hubo un problema al procesar tu solicitud.'
+      }
+  }
 }

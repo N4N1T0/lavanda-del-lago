@@ -6,7 +6,7 @@ export default {
     {
       name: 'title',
       title: 'Título',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'certificationsBlocks',
@@ -21,17 +21,17 @@ export default {
             {
               name: 'title',
               title: 'Título',
-              type: 'string',
+              type: 'string'
             },
             {
               name: 'description',
               title: 'Descripción',
               type: 'array',
-              of: [{ type: 'block' }],
-            },
-          ],
+              of: [{ type: 'block' }]
+            }
+          ]
         }
-      ],
+      ]
     }
-  ], 
+  ]
 }

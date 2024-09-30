@@ -31,107 +31,105 @@ import ImageGallery from './image-gallery'
  * @return {JSX.Element} The JSX element representing the product details
  */
 const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
-	const {
-		nombre,
-		precio,
-		descripcion,
-		image,
-		usabilidad,
-		categoria,
-		createdAt,
-		fotosVarias,
-	} = product
+  const {
+    nombre,
+    precio,
+    descripcion,
+    image,
+    usabilidad,
+    categoria,
+    createdAt,
+    fotosVarias
+  } = product
 
-	console.log(product)
+  const imageGallery =
+    fotosVarias !== null
+      ? [{ image: image, key: uuidv4() }, ...fotosVarias]
+      : []
 
-	const imageGallery =
-		fotosVarias !== null
-			? [{ image: image, key: uuidv4() }, ...fotosVarias]
-			: []
-
-	return (
-		<article className='flex-[80%] grid grid-cols-1 md:grid-cols-2 mt-7 gap-10'>
-			{imageGallery.length > 0 ? (
-				<ImageGallery images={imageGallery} />
-			) : (
-				<Image
-					src={image || MainLogo}
-					alt={nombre || 'Logo Principal de Lavanda del Lago'}
-					title={nombre || 'Logo Principal de Lavanda del Lago'}
-					width={500}
-					height={500}
-					priority
-					className='object-cover aspect-square'
-				/>
-			)}
-			<section id='product-details' className='space-y-4'>
-				<div className='w-full flex justify-between items-center'>
-					<h1 className='text-xl md:text-4xl text-accent'>
-						{nombre || 'Estamos trabajando en una nombre'}
-					</h1>
-					{isNew(createdAt) && (
-						<span className='bg-tertiary px-3 md:px-5 py-1 md:py-2 text-sm md:text-base rounded-md text-white'>
-							Nuevo
-						</span>
-					)}
-				</div>
-				<h2 className='uppercase text-lg !-mt-1'>{categoria || 'Bienestar'}</h2>
-				<p className='text-3xl font-bold'>{eurilize(Number(precio || '0'))}</p>
-				<Tabs defaultValue='description' className='w-full mt-2'>
-					<TabsList className='w-full bg-transparent flex justify-between items-center gap-5 md:gap-10 mb-3'>
-						<TabsTrigger
-							value='description'
-							className='flex-1 border border-accent/50 rounded-lg py-3 text-xs md:text-base'
-						>
-							Descripción
-						</TabsTrigger>
-						<TabsTrigger
-							value='use'
-							className='flex-1 border border-accent/50 rounded-lg py-3 text-xs md:text-base'
-						>
-							<span className='hidden md:inline'>Sustancias y Uso</span>
-							<span className='inline md:hidden'>Sustancias</span>
-						</TabsTrigger>
-						<TabsTrigger
-							value='caracteristics'
-							className='flex-1 border border-accent/50 rounded-lg py-3 text-xs md:text-base'
-						>
-							Caracteristicas
-						</TabsTrigger>
-					</TabsList>
-					<TabsContent value='description' className='text-center px-5 py-3'>
-						<p className='text-lg text-gray-600'>
-							{descripcion ||
-								'Estamos trabajando en una descripcion detallada para usted'}
-						</p>{' '}
-					</TabsContent>
-					<TabsContent value='use' className='text-center px-5 py-3'>
-						<p className='text-lg text-gray-600'>
-							{usabilidad ||
-								'Estamos trabajando en una usabilidad detallada para usted'}
-						</p>{' '}
-					</TabsContent>
-					<TabsContent value='caracteristics' className='text-center px-5 py-3'>
-						<ProductCaracteristics product={product} />
-					</TabsContent>
-				</Tabs>
-				<Quantity prduct={product} />
-				<div className='flex w-full justify-between items-center'>
-					{badges.map((badge) => (
-						<Image
-							key={uuidv4()}
-							src={badge.src}
-							alt={badge.alt}
-							title={badge.title}
-							width={100}
-							height={100}
-							className='w-24 h-auto'
-						/>
-					))}
-				</div>
-			</section>
-		</article>
-	)
+  return (
+    <article className='mt-7 grid flex-[80%] grid-cols-1 gap-10 md:grid-cols-2'>
+      {imageGallery.length > 0 ? (
+        <ImageGallery images={imageGallery} />
+      ) : (
+        <Image
+          src={image || MainLogo}
+          alt={nombre || 'Logo Principal de Lavanda del Lago'}
+          title={nombre || 'Logo Principal de Lavanda del Lago'}
+          width={500}
+          height={500}
+          priority
+          className='aspect-square object-cover'
+        />
+      )}
+      <section id='product-details' className='space-y-4'>
+        <div className='flex w-full items-center justify-between'>
+          <h1 className='text-xl text-accent md:text-4xl'>
+            {nombre || 'Estamos trabajando en una nombre'}
+          </h1>
+          {isNew(createdAt) && (
+            <span className='rounded-md bg-tertiary px-3 py-1 text-sm text-white md:px-5 md:py-2 md:text-base'>
+              Nuevo
+            </span>
+          )}
+        </div>
+        <h2 className='!-mt-1 text-lg uppercase'>{categoria || 'Bienestar'}</h2>
+        <p className='text-3xl font-bold'>{eurilize(Number(precio || '0'))}</p>
+        <Tabs defaultValue='description' className='mt-2 w-full'>
+          <TabsList className='mb-3 flex w-full items-center justify-between gap-5 bg-transparent md:gap-10'>
+            <TabsTrigger
+              value='description'
+              className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
+            >
+              Descripción
+            </TabsTrigger>
+            <TabsTrigger
+              value='use'
+              className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
+            >
+              <span className='hidden md:inline'>Sustancias y Uso</span>
+              <span className='inline md:hidden'>Sustancias</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value='caracteristics'
+              className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
+            >
+              Caracteristicas
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value='description' className='px-5 py-3 text-center'>
+            <p className='text-lg text-gray-600'>
+              {descripcion ||
+                'Estamos trabajando en una descripcion detallada para usted'}
+            </p>{' '}
+          </TabsContent>
+          <TabsContent value='use' className='px-5 py-3 text-center'>
+            <p className='text-lg text-gray-600'>
+              {usabilidad ||
+                'Estamos trabajando en una usabilidad detallada para usted'}
+            </p>{' '}
+          </TabsContent>
+          <TabsContent value='caracteristics' className='px-5 py-3 text-center'>
+            <ProductCaracteristics product={product} />
+          </TabsContent>
+        </Tabs>
+        <Quantity prduct={product} />
+        <div className='flex w-full items-center justify-between'>
+          {badges.map((badge) => (
+            <Image
+              key={uuidv4()}
+              src={badge.src}
+              alt={badge.alt}
+              title={badge.title}
+              width={100}
+              height={100}
+              className='h-auto w-24'
+            />
+          ))}
+        </div>
+      </section>
+    </article>
+  )
 }
 
 export default ProductDetails

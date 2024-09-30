@@ -16,41 +16,40 @@ import { useRouter } from 'next/navigation'
  * @param {boolean} reseller - Whether the user is a reseller or not. Defaults to false.
  * @return {JSX.Element} The user profile button component.
  */
-const UserProfile = ({
-	userId,
-	reseller = false,
-}: { userId: string; reseller: boolean }): JSX.Element => {
-	// initialize of the router
-	const router = useRouter()
+const UserProfile = (
+  { userId, reseller = false }: { userId: string; reseller: boolean }
+): JSX.Element => {
+  // initialize of the router
+  const router = useRouter()
 
-	return (
-		<SignedIn>
-			<UserButton>
-				{!reseller ? (
-					<UserButton.MenuItems>
-						<UserButton.Action
-							label='Perfil de Usuario'
-							labelIcon={<ContactRound className='w-4 h-4' />}
-							onClick={() => router.push(`/profile/${userId}`)}
-						/>
-						<UserButton.Action
-							label='Formulario de Revenedor'
-							labelIcon={<ReceiptEuro className='w-4 h-4' />}
-							onClick={() => router.push('/reseller-form')}
-						/>
-					</UserButton.MenuItems>
-				) : (
-					<UserButton.MenuItems>
-						<UserButton.Action
-							label='Perfil de Revenedor'
-							labelIcon={<ReceiptEuro className='w-4 h-4' />}
-							onClick={() => router.push(`/reseller/${userId}`)}
-						/>
-					</UserButton.MenuItems>
-				)}
-			</UserButton>
-		</SignedIn>
-	)
+  return (
+    <SignedIn>
+      <UserButton>
+        {!reseller ? (
+          <UserButton.MenuItems>
+            <UserButton.Action
+              label='Perfil de Usuario'
+              labelIcon={<ContactRound className='h-4 w-4' />}
+              onClick={() => router.push(`/profile/${userId}`)}
+            />
+            <UserButton.Action
+              label='Formulario de Revenedor'
+              labelIcon={<ReceiptEuro className='h-4 w-4' />}
+              onClick={() => router.push('/reseller-form')}
+            />
+          </UserButton.MenuItems>
+        ) : (
+          <UserButton.MenuItems>
+            <UserButton.Action
+              label='Perfil de Revenedor'
+              labelIcon={<ReceiptEuro className='h-4 w-4' />}
+              onClick={() => router.push(`/reseller/${userId}`)}
+            />
+          </UserButton.MenuItems>
+        )}
+      </UserButton>
+    </SignedIn>
+  )
 }
 
 export default UserProfile

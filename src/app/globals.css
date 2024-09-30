@@ -3,48 +3,48 @@
 @tailwind utilities;
 
 :root {
-	--fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
-	--fc-border-color: #a89ac6;
+  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+  --fc-border-color: #a89ac6;
 
-	--fc-button-text-color: #fff;
-	--fc-button-bg-color: #694dab;
-	--fc-button-border-color: #694dab;
-	--fc-button-hover-bg-color: #a89ac6;
-	--fc-button-hover-border-color: #a89ac6;
-	--fc-button-active-bg-color: #a89ac6;
-	--fc-button-active-border-color: #a89ac6;
+  --fc-button-text-color: #fff;
+  --fc-button-bg-color: #694dab;
+  --fc-button-border-color: #694dab;
+  --fc-button-hover-bg-color: #a89ac6;
+  --fc-button-hover-border-color: #a89ac6;
+  --fc-button-active-bg-color: #a89ac6;
+  --fc-button-active-border-color: #a89ac6;
 }
 
 *,
 html,
 body {
-	scroll-behavior: smooth;
-	scrollbar-color: #694dab #ffffff;
+  scroll-behavior: smooth;
+  scrollbar-color: #694dab #ffffff;
 }
 
 @media (max-width: 768px) {
-	.fc-toolbar-chunk:has(> .fc-button-group) {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		gap: 5px;
-	}
+  .fc-toolbar-chunk:has(> .fc-button-group) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+  }
 }
 
 blockquote {
-	position: relative;
-	padding-left: 20px;
-	margin: 20px 0;
-	border-left: 4px solid #694dab;
+  position: relative;
+  padding-left: 20px;
+  margin: 20px 0;
+  border-left: 4px solid #694dab;
 }
 
 blockquote::before {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 4px;
-	background-color: #694dab;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: #694dab;
 }

@@ -23,47 +23,45 @@ import SecurityHandling from '@/components/layout/security-handling'
  *
  * @return {Promise<JSX.Element>} The rendered Home component.
  */
-export default async function Home({
-	searchParams,
-}: {
-	searchParams?: { security?: string }
-}): Promise<JSX.Element> {
-	const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage)
+export default async function Home(
+  { searchParams }: { searchParams?: { security?: string } }
+): Promise<JSX.Element> {
+  const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage)
 
-	const {
-		bentoFeaturedProducto,
-		bentoThreeImages,
-		bentofeaturedCategory,
-		InfoCards,
-		carousel1,
-		carousel2,
-		featuredEvent,
-		mainListCategories,
-	} = homePageResponse
+  const {
+    bentoFeaturedProducto,
+    bentoThreeImages,
+    bentofeaturedCategory,
+    InfoCards,
+    carousel1,
+    carousel2,
+    featuredEvent,
+    mainListCategories
+  } = homePageResponse
 
-	return (
-		<>
-			<Hero
-				bentoThreeImages={bentoThreeImages}
-				bentoFeaturedProducto={bentoFeaturedProducto}
-				bentofeaturedCategory={bentofeaturedCategory}
-			/>
-			<Categories />
-			<HomeProductsList categories={mainListCategories} />
-			<Info infoCards={InfoCards} />
-			<FeaturedList
-				itemCategory={carousel1.category}
-				featuredTitle={carousel1.title}
-			/>
-			<FeaturedList
-				itemCategory={carousel2.category}
-				featuredTitle={carousel2.title}
-				direction='right'
-			/>
-			<FeaturedEvent event={featuredEvent} />
-			<Newsletter />
-			<Prefooter />
-			<SecurityHandling security={searchParams?.security} />
-		</>
-	)
+  return (
+    <>
+      <Hero
+        bentoThreeImages={bentoThreeImages}
+        bentoFeaturedProducto={bentoFeaturedProducto}
+        bentofeaturedCategory={bentofeaturedCategory}
+      />
+      <Categories />
+      <HomeProductsList categories={mainListCategories} />
+      <Info infoCards={InfoCards} />
+      <FeaturedList
+        itemCategory={carousel1.category}
+        featuredTitle={carousel1.title}
+      />
+      <FeaturedList
+        itemCategory={carousel2.category}
+        featuredTitle={carousel2.title}
+        direction='right'
+      />
+      <FeaturedEvent event={featuredEvent} />
+      <Newsletter />
+      <Prefooter />
+      <SecurityHandling security={searchParams?.security} />
+    </>
+  )
 }

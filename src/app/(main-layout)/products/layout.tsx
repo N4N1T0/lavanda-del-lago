@@ -8,15 +8,17 @@ import Breadcrumbs from '@/components/products/breadcrumbs'
  * @param {React.ReactNode} props.children - The children to be rendered within the layout.
  * @return {JSX.Element} The rendered layout component.
  */
-export default function ProductsLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode
-}>): JSX.Element {
-	return (
-		<section id='products-layout' className='w-full relative'>
-			<Breadcrumbs />
-			{children}
-		</section>
-	)
+export default function ProductsLayout(
+  {
+    children
+  }: Readonly<{
+    children: React.ReactNode
+  }>
+): JSX.Element {
+  return (
+    <section id='products-layout' className='relative w-full'>
+      <Breadcrumbs />
+      {children}
+    </section>
+  )
 }

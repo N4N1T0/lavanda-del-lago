@@ -10,9 +10,9 @@ import { User } from '@/assets'
 
 // UI Imports
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger
 } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 
@@ -26,40 +26,40 @@ import { currentUser } from '@clerk/nextjs/server'
  * @return {Promise<JSX.Element>} The user popover component.
  */
 const UserPopover = async (): Promise<JSX.Element> => {
-	const user = await currentUser()
+  const user = await currentUser()
 
-	if (user)
-		return (
-			<UserProfile
-				userId={user.id}
-				reseller={user.publicMetadata.reseller as boolean}
-			/>
-		)
+  if (user)
+    return (
+      <UserProfile
+        userId={user.id}
+        reseller={user.publicMetadata.reseller as boolean}
+      />
+    )
 
-	return (
-		<Popover>
-			<PopoverTrigger>
-				<Image
-					className=' w-8 h-8 hover:opacity-50 duration-150 transition-opacity cursor-pointer'
-					alt='Icon user'
-					src={User}
-				/>
-			</PopoverTrigger>
-			<PopoverContent className='w-fit flex flex-col gap-2'>
-				<SignedOut>
-					<SignInButton
-						forceRedirectUrl='/api/create-sanity-user'
-						signUpForceRedirectUrl='/api/create-sanity-user'
-					>
-						<Button>Iniciar Session</Button>
-					</SignInButton>
-					<Button asChild>
-						<Link href='/reseller-form'>Registrarse como Revendedor</Link>
-					</Button>
-				</SignedOut>
-			</PopoverContent>
-		</Popover>
-	)
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <Image
+          className='h-8 w-8 cursor-pointer transition-opacity duration-150 hover:opacity-50'
+          alt='Icon user'
+          src={User}
+        />
+      </PopoverTrigger>
+      <PopoverContent className='flex w-fit flex-col gap-2'>
+        <SignedOut>
+          <SignInButton
+            forceRedirectUrl='/api/create-sanity-user-from-clerk'
+            signUpForceRedirectUrl='/api/create-sanity-user-from-clerk'
+          >
+            <Button>Iniciar Session</Button>
+          </SignInButton>
+          <Button asChild>
+            <Link href='/reseller-form'>Registrarse como Revendedor</Link>
+          </Button>
+        </SignedOut>
+      </PopoverContent>
+    </Popover>
+  )
 }
 
 export default UserPopover

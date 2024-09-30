@@ -21,170 +21,207 @@ import { useState } from 'react'
  * @return {JSX.Element} The rendered quantity component.
  */
 const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
-	// State to hold the selected quantity
-	const [quantity, setQuantity] = useState(1)
-	// Get the cart items and a function to update the cart items from the shopping cart store
-	const [count, setCount] = useShoppingCart()
-	// initialize toast
-	const { toast } = useToast()
+  // State to hold the selected quantity
+  const [quantity, setQuantity] = useState(1)
+  // Get the cart items and a function to update the cart items from the shopping cart store
+  const [count, setCount] = useShoppingCart()
+  // initialize toast
+  const { toast } = useToast()
 
-	// Function to increment the quantity state
-	const increment = () => {
-		setQuantity(quantity + 1)
-	}
+  // Function to increment the quantity state
+  const increment = () => {
+    setQuantity(quantity + 1)
+  }
 
-	// Function to decrement the quantity state
-	const decrement = () => {
-		if (quantity <= 1) return
-		setQuantity(quantity - 1)
-	}
+  // Function to decrement the quantity state
+  const decrement = () => {
+    if (quantity <= 1) return
+    setQuantity(quantity - 1)
+  }
 
-	// Create a new cart item object with the selected quantity and the product details
-	const cartItem: CartItem = {
-		quantity: quantity,
-		...prduct,
-	}
+  // Create a new cart item object with the selected quantity and the product details
+  const cartItem: CartItem = {
+    quantity: quantity,
+    ...prduct
+  }
 
-	// Function to add to the Cart and show a toast with a meesage of completed
-	const addToCart = () => {
-		setCount([...count, cartItem])
-		toast({
-			title: 'Se agrego correctamente al carrito',
-			description:
-				'Puedes Seguir comprando o ir al checkout desde el carrito de compras',
-		})
-	}
+  // Function to add to the Cart and show a toast with a meesage of completed
+  const addToCart = () => {
+    // Find if the product is already in the cart
+    const existingProduct = count.find(
+      (productItem) => productItem.id === cartItem.id
+    )
 
-	return (
-		<div className='w-full flex justify-between items-center px-2 md:px-10 border-t border-b border-accent/50 py-5'>
-			<p className='font-bold text-lg hidden md:block'>Cantidad</p>
-			<label htmlFor='Quantity' className='sr-only'>
-				{' '}
-				Quantity{' '}
-			</label>
+    if (existingProduct) {
+      // If the product is already in the cart, update its quantity
+      const updatedCart = count.map((productItem) =>
+        productItem.id === cartItem.id
+          ? { ...productItem, quantity: productItem.quantity + 1 }
+          : productItem
+      )
+      setCount(updatedCart)
+    } else {
+      // If the product is not in the cart, add it with an initial quantity of 1
+      setCount([...count, { ...cartItem, quantity: 1 }])
+    }
 
-			{/* Quantity input field with increment and decrement buttons */}
-			<div className='flex items-center rounded border border-accent/70 w-fit'>
-				<button
-					type='button'
-					aria-label='Disminuir cantidad'
-					className='size-10 leading-10 text-gray-600 transition hover:opacity-75'
-					onClick={decrement}
-				>
-					&minus;
-				</button>
+    toast({
+      title: 'Se agrego correctamente al carrito',
+      description:
+        'Puedes Seguir comprando o ir al checkout desde el carrito de compras'
+    })
+  }
 
-				<input
-					type='number'
-					id='Quantity'
-					defaultValue={quantity}
-					className='h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none'
-				/>
+  return (
+    <div className='flex w-full items-center justify-between border-b border-t border-accent/50 px-2 py-5 md:px-10'>
+      <p className='hidden text-lg font-bold md:block'>Cantidad</p>
+      <label htmlFor='Quantity' className='sr-only'>
+        {' '}
+        Quantity{' '}
+      </label>
 
-				<button
-					type='button'
-					aria-label='Incrementar cantidad'
-					className='size-10 leading-10 text-gray-600 transition hover:opacity-75'
-					onClick={increment}
-				>
-					&#43;
-				</button>
-			</div>
+      {/* Quantity input field with increment and decrement buttons */}
+      <div className='flex w-fit items-center rounded border border-accent/70'>
+        <button
+          type='button'
+          aria-label='Disminuir cantidad'
+          className='size-10 leading-10 text-gray-600 transition hover:opacity-75'
+          onClick={decrement}
+        >
+          &minus;
+        </button>
 
-			{/* Button to add the selected quantity of the product to the cart */}
-			<Button variant='cart' onClick={() => addToCart()}>
-				<span className='hidden md:block'>Añadir al carrito</span>
-				<span className='block md:hidden'>Añadir</span>
-			</Button>
-		</div>
-	)
+        <input
+          type='number'
+          id='Quantity'
+          defaultValue={quantity}
+          className='h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none'
+        />
+
+        <button
+          type='button'
+          aria-label='Incrementar cantidad'
+          className='size-10 leading-10 text-gray-600 transition hover:opacity-75'
+          onClick={increment}
+        >
+          &#43;
+        </button>
+      </div>
+
+      {/* Button to add the selected quantity of the product to the cart */}
+      <Button variant='cart' onClick={() => addToCart()}>
+        <span className='hidden md:block'>Añadir al carrito</span>
+        <span className='block md:hidden'>Añadir</span>
+      </Button>
+    </div>
+  )
 }
 
-const QuantitySmall = ({
-	prduct,
-	removeFromWishlist,
-}: {
-	prduct: Product
-	removeFromWishlist: (id: string) => void
-}): JSX.Element => {
-	// State to hold the selected quantity
-	const [quantity, setQuantity] = useState(1)
-	// Get the cart items and a function to update the cart items from the shopping cart store
-	const [count, setCount] = useShoppingCart()
-	// initialize toast
-	const { toast } = useToast()
+const QuantitySmall = (
+  {
+    prduct,
+    removeFromWishlist
+  }: {
+    prduct: Product
+    removeFromWishlist: (id: string) => void
+  }
+): JSX.Element => {
+  // State to hold the selected quantity
+  const [quantity, setQuantity] = useState(1)
+  // Get the cart items and a function to update the cart items from the shopping cart store
+  const [count, setCount] = useShoppingCart()
+  // initialize toast
+  const { toast } = useToast()
 
-	// Function to increment the quantity state
-	const increment = () => {
-		setQuantity(quantity + 1)
-	}
+  // Function to increment the quantity state
+  const increment = () => {
+    setQuantity(quantity + 1)
+  }
 
-	// Function to decrement the quantity state
-	const decrement = () => {
-		if (quantity <= 1) return
-		setQuantity(quantity - 1)
-	}
+  // Function to decrement the quantity state
+  const decrement = () => {
+    if (quantity <= 1) return
+    setQuantity(quantity - 1)
+  }
 
-	// Create a new cart item object with the selected quantity and the product details
-	const cartItem: CartItem = {
-		quantity: quantity,
-		...prduct,
-	}
+  // Create a new cart item object with the selected quantity and the product details
+  const cartItem: CartItem = {
+    quantity: quantity,
+    ...prduct
+  }
 
-	const handleAddToCartFromWishlist = () => {
-		setCount([...count, cartItem])
-		removeFromWishlist(prduct.id)
-		toast({
-			title: 'Se agrego correctamente al carrito',
-			description:
-				'Se elimino del la lsita de Favoritos y se agrego al carrito de compras',
-		})
-	}
+  const handleAddToCartFromWishlist = () => {
+    // Find if the product is already in the cart
+    const existingProduct = count.find(
+      (productItem) => productItem.id === cartItem.id
+    )
 
-	return (
-		<div className='w-fit flex justify-between items-center gap-3 px-3'>
-			<label htmlFor='Quantity' className='sr-only'>
-				{' '}
-				Quantity{' '}
-			</label>
+    if (existingProduct) {
+      // If the product is already in the cart, update its quantity
+      const updatedCart = count.map((productItem) =>
+        productItem.id === cartItem.id
+          ? { ...productItem, quantity: productItem.quantity + 1 }
+          : productItem
+      )
+      setCount(updatedCart)
+    } else {
+      // If the product is not in the cart, add it with an initial quantity of 1
+      setCount([...count, { ...cartItem, quantity: 1 }])
+    }
 
-			{/* Quantity input field with increment and decrement buttons */}
-			<div className='flex items-center rounded border border-white w-fit'>
-				<button
-					type='button'
-					aria-label='Disminuir cantidad'
-					className='size-10 text-gray-100 transition hover:opacity-75'
-					onClick={decrement}
-				>
-					&minus;
-				</button>
+    removeFromWishlist(prduct.id)
+    toast({
+      title: 'Se agrego correctamente al carrito',
+      description:
+        'Se elimino del la lsita de Favoritos y se agrego al carrito de compras'
+    })
+  }
 
-				<input
-					type='number'
-					id='Quantity'
-					value={quantity}
-					className='h-5 w-10 rounded-md border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none'
-				/>
+  return (
+    <div className='flex w-fit items-center justify-between gap-3 px-3'>
+      <label htmlFor='Quantity' className='sr-only'>
+        {' '}
+        Quantity{' '}
+      </label>
 
-				<button
-					type='button'
-					aria-label='Incrementar cantidad'
-					className='size-10 text-gray-100 transition hover:opacity-75'
-					onClick={increment}
-				>
-					&#43;
-				</button>
-			</div>
+      {/* Quantity input field with increment and decrement buttons */}
+      <div className='flex w-fit items-center rounded border border-accent'>
+        <button
+          type='button'
+          aria-label='Disminuir cantidad'
+          className='size-10 text-gray-700 transition hover:opacity-75'
+          onClick={decrement}
+        >
+          &minus;
+        </button>
 
-			{/* Button to add the selected quantity of the product to the cart */}
-			<Button
-				onClick={() => handleAddToCartFromWishlist()}
-				className='text-sm px-3 py-0 hover:bg-transparent hover:text-white border border-white'
-			>
-				Añadir al carrito
-			</Button>
-		</div>
-	)
+        <input
+          type='number'
+          id='Quantity'
+          value={quantity}
+          className='h-5 w-10 rounded-md border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none'
+        />
+
+        <button
+          type='button'
+          aria-label='Incrementar cantidad'
+          className='size-10 text-gray-700 transition hover:opacity-75'
+          onClick={increment}
+        >
+          &#43;
+        </button>
+      </div>
+
+      {/* Button to add the selected quantity of the product to the cart */}
+      <Button
+        onClick={() => handleAddToCartFromWishlist()}
+        variant='default'
+        size='sm'
+      >
+        Añadir al carrito
+      </Button>
+    </div>
+  )
 }
 
 export { Quantity, QuantitySmall }

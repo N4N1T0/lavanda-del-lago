@@ -11,40 +11,44 @@ import { type NextRequest, NextResponse } from 'next/server'
  * @return {NextResponse} A response indicating the result of the subscription attempt.
  */
 export async function POST(
-	request: NextRequest,
+  request: NextRequest
 ): Promise<NextResponse<unknown>> {
-	try {
-		// Get Email from the request and Sanitize it
-		const { email } = await request.json()
-		const sanitizedEmail = email.replace(/[@.]/g, '-')
+  try {
+    // Get Email from the request and Sanitize it
+    const { email } = await request.json()
+    const sanitizedEmail = email.replace(/[@.]/g, '-')
 
-		// Get the current date
-		const date = new Date().toISOString()
+    // Get the current date
+    const date = new Date().toISOString()
 
-		// Create or update the newsletter in Sanity
-		const response = await sanityClientWrite.createIfNotExists({
-			_type: 'newsletter',
-			email,
-			date,
-			_id: `newsletter-${sanitizedEmail}`,
-		})
+    // Create or update the newsletter in Sanity
+    const response = await sanityClientWrite.createIfNotExists({
+      _type: 'newsletter',
+      email,
+      date,
+      _id: `newsletter-${sanitizedEmail}`
+    })
 
-		// if the response matches the date, the subscription was successful
-		if (response.date === date) {
-			return NextResponse.json({
-				success: true,
-				message: 'Subscription successful',
-			})
-		}
-		return NextResponse.json({
-			success: false,
-			message: 'Already subscribed',
-		})
-	} catch (error) {
-		console.error('Error subscribing to newsletter:', error)
-		return NextResponse.json(
-			{ success: false, message: 'Internal server error' },
-			{ status: 500 },
-		)
-	}
+    // if the response matches the date, the subscription was successful
+    if (response.date === date) {
+      return NextResponse.json({
+        success: true,
+        message: 'Subscription successful'
+      })
+    }
+
+    // TODO Send Email to the Admin
+
+    // if the response does not match the date, the subscription was unsuccessful
+    return NextResponse.json({
+      success: false,
+      message: 'Already subscribed'
+    })
+  } catch (error) {
+    console.error('Error subscribing to newsletter:', error)
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    )
+  }
 }

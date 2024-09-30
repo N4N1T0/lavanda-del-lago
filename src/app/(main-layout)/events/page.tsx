@@ -10,9 +10,9 @@ import type { Metadata } from 'next'
 
 // Metadata for this page
 export const metadata: Metadata = {
-	title: 'Eventos',
-	description:
-		'Eventos de la tienda en linea de Lavanda del lago. estos eventos son parte del esfuerzo de Lavanda del Lago españa para promover el el uso de prodcutos naturales apartir de lavanda.',
+  title: 'Eventos',
+  description:
+    'Eventos de la tienda en linea de Lavanda del lago. estos eventos son parte del esfuerzo de Lavanda del Lago españa para promover el el uso de prodcutos naturales apartir de lavanda.'
 }
 
 /**
@@ -21,24 +21,24 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the Events page content.
  */
 const EventsPage = async (): Promise<JSX.Element> => {
-	const response = await sanityClientRead.fetch(eventsFetch)
+  const response = await sanityClientRead.fetch(eventsFetch)
 
-	return (
-		<section
-			id='blog'
-			className='mx-auto max-w-screen-2xl px-4 py-12 lg:py-20 sm:px-6 lg:px-8 flex flex-col gap-12'
-		>
-			<div className='w-full space-y-3'>
-				<h1 className='text-3xl font-bold'>Nuestros EVENTOS</h1>
-				<p className='text-gray-600'>
-					En esta sección encontraras todos los eventos que tenemos para ti.
-					estos eventos son parte del esfuerzo de Lavanda del Lago españa para
-					promover el el uso de prodcutos naturales apartir de lavanda.
-				</p>
-			</div>
-			<ClientFullCalendar events={response} />
-		</section>
-	)
+  return (
+    <section
+      id='blog'
+      className='mx-auto flex max-w-screen-2xl flex-col gap-12 px-4 py-12 sm:px-6 lg:px-8 lg:py-20'
+    >
+      <div className='w-full space-y-3'>
+        <h1 className='text-3xl font-bold'>Nuestros EVENTOS</h1>
+        <p className='text-gray-600'>
+          En esta sección encontraras todos los eventos que tenemos para ti.
+          estos eventos son parte del esfuerzo de Lavanda del Lago españa para
+          promover el el uso de prodcutos naturales apartir de lavanda.
+        </p>
+      </div>
+      <ClientFullCalendar events={response} />
+    </section>
+  )
 }
 
 export default EventsPage

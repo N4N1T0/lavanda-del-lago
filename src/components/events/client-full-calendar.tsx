@@ -11,11 +11,11 @@ import type { Event, URL } from '@/types'
 
 // UI Imports
 import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
 } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -26,56 +26,56 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import Link from 'next/link'
 
 const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
-	const [loading, setLoading] = useState(true)
-	// Current Event State for the Modal
-	const [currentEvent, setCurrentEvent] = useState<Event>(events[0])
-	// Modal State to make it manual
-	const [modalOpen, setModalOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
+  // Current Event State for the Modal
+  const [currentEvent, setCurrentEvent] = useState<Event>(events[0])
+  // Modal State to make it manual
+  const [modalOpen, setModalOpen] = useState(false)
 
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	const handleDateClick = (arg: any) => {
-		setModalOpen(true)
-		setCurrentEvent(arg.event)
-	}
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const handleDateClick = (arg: any) => {
+    setModalOpen(true)
+    setCurrentEvent(arg.event)
+  }
 
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false)
-		}, 300) // Simulate loading time
-	}, [])
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 300) // Simulate loading time
+  }, [])
 
-	if (loading) {
-		return (
-			<div className='space-y-4'>
-				<div className='w-full flex justify-between items-center'>
-					<Skeleton className='w-1/4 h-12' />
-					<Skeleton className='w-1/5 h-12' />
-				</div>
-				<Skeleton className='w-full h-16' />
-				<Skeleton className='w-full h-16' />
-				<Skeleton className='w-full h-16' />
-				<Skeleton className='w-full h-16' />
-			</div>
-		)
-	}
+  if (loading) {
+    return (
+      <div className='space-y-4'>
+        <div className='flex w-full items-center justify-between'>
+          <Skeleton className='h-12 w-1/4' />
+          <Skeleton className='h-12 w-1/5' />
+        </div>
+        <Skeleton className='h-16 w-full' />
+        <Skeleton className='h-16 w-full' />
+        <Skeleton className='h-16 w-full' />
+        <Skeleton className='h-16 w-full' />
+      </div>
+    )
+  }
 
-	return (
-		<>
-			<FullCalendar
-				plugins={[dayGridPlugin, interactionPlugin]}
-				initialView='dayGridMonth'
-				eventClick={handleDateClick}
-				events={events}
-				eventContent={EventContent}
-				locale={esLocale}
-			/>
-			<EventModal
-				event={currentEvent}
-				setModalOpen={setModalOpen}
-				modalOpen={modalOpen}
-			/>
-		</>
-	)
+  return (
+    <>
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView='dayGridMonth'
+        eventClick={handleDateClick}
+        events={events}
+        eventContent={EventContent}
+        locale={esLocale}
+      />
+      <EventModal
+        event={currentEvent}
+        setModalOpen={setModalOpen}
+        modalOpen={modalOpen}
+      />
+    </>
+  )
 }
 
 /**
@@ -87,50 +87,52 @@ const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
 + * @param {boolean} props.modalOpen - The current modal open state.
 + * @return {JSX.Element} The rendered modal dialog.
 + */
-const EventModal = ({
-	event,
-	setModalOpen,
-	modalOpen,
-}: {
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	event: any
-	setModalOpen: Dispatch<SetStateAction<boolean>>
-	modalOpen: boolean
-}): JSX.Element => {
-	return (
-		<Dialog open={modalOpen} onOpenChange={setModalOpen}>
-			<DialogContent className='p-5 text-left'>
-				{/* DialogHeader */}
-				<DialogHeader className='space-y-3'>
-					<DialogTitle className='font-bold text-accent text-3xl'>
-						{event.title}
-					</DialogTitle>
-					<DialogDescription className='text-lg font-light'>
-						{event?._def?.extendedProps?.description}
-					</DialogDescription>
-				</DialogHeader>
-				{/* Additional information */}
-				<p className='italic test-xs'>
-					Puedes agregar a tu calendarios este evento usando estos enlances
-				</p>
-				<ul className='flex gap-3'>
-					{/* URLs */}
-					{event?._def?.extendedProps?.urls.map(
-						({ calendarName, calendarUrl, id }: URL) => (
-							<li
-								key={id}
-								className='text-lg font-bold text-accent hover:text-accent/70 transition-colors duration-150 ease-in-out'
-							>
-								<Link href={calendarUrl as string} target='_blank'>
-									{calendarName}
-								</Link>
-							</li>
-						),
-					)}
-				</ul>
-			</DialogContent>
-		</Dialog>
-	)
+const EventModal = (
+  {
+    event,
+    setModalOpen,
+    modalOpen
+  }: {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    event: any
+    setModalOpen: Dispatch<SetStateAction<boolean>>
+    modalOpen: boolean
+  }
+): JSX.Element => {
+  return (
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+      <DialogContent className='p-5 text-left'>
+        {/* DialogHeader */}
+        <DialogHeader className='space-y-3'>
+          <DialogTitle className='text-3xl font-bold text-accent'>
+            {event.title}
+          </DialogTitle>
+          <DialogDescription className='text-lg font-light'>
+            {event?._def?.extendedProps?.description}
+          </DialogDescription>
+        </DialogHeader>
+        {/* Additional information */}
+        <p className='test-xs italic'>
+          Puedes agregar a tu calendarios este evento usando estos enlances
+        </p>
+        <ul className='flex gap-3'>
+          {/* URLs */}
+          {event?._def?.extendedProps?.urls.map(
+            ({ calendarName, calendarUrl, id }: URL) => (
+              <li
+                key={id}
+                className='text-lg font-bold text-accent transition-colors duration-150 ease-in-out hover:text-accent/70'
+              >
+                <Link href={calendarUrl as string} target='_blank'>
+                  {calendarName}
+                </Link>
+              </li>
+            )
+          )}
+        </ul>
+      </DialogContent>
+    </Dialog>
+  )
 }
 
 /**
@@ -140,11 +142,11 @@ const EventModal = ({
 + * @return {JSX.Element} The JSX element representing the event content
 + */
 const EventContent = ({ event }: { event: Event }): JSX.Element => {
-	return (
-		<div className='text-wrap bg-accent border-none pl-2 py-3 cursor-pointer'>
-			{event.title}
-		</div>
-	)
+  return (
+    <div className='cursor-pointer text-wrap border-none bg-accent py-3 pl-2'>
+      {event.title}
+    </div>
+  )
 }
 
 export default ClientFullCalendar

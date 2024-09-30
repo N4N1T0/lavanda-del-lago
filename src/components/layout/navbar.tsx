@@ -8,8 +8,8 @@ import Link from 'next/link'
 // Project components
 import CartSheet from '@/components/layout/cart-sheet'
 import {
-	NavbarLinks,
-	NavbarLinksMobile,
+  NavbarLinks,
+  NavbarLinksMobile
 } from '@/components/layout/navbar-links'
 import { Search, SearchMobile } from '@/components/layout/search'
 import UserPopover from '@/components/layout/user-popover'
@@ -31,35 +31,35 @@ import { categoriesFilter } from '@/lib/utils'
  * @return {JSX.Element} The rendered Navbar component.
  */
 const Navbar = async (): Promise<JSX.Element> => {
-	const response: CategoriesList[] = await sanityClientRead.fetch(categories)
-	const filterCategories = categoriesFilter(response)
+  const response: CategoriesList[] = await sanityClientRead.fetch(categories)
+  const filterCategories = categoriesFilter(response)
 
-	return (
-		<header className='flex items-center justify-between px-5 md:px-10 2xl:px-20 py-4 border-b border-accent/50'>
-			<div className='inline-flex flex-col items-center flex-[0_0_auto]'>
-				<div className='inline-flex items-center flex-[0_0_auto]'>
-					<Link href='/'>
-						<Image
-							className='w-[50px] h-[50px] object-cover hover:opacity-50 duration-150 transition-opacity cursor-pointer hidden md:block'
-							alt='Lavanda del lago'
-							src={MainLogo}
-						/>
-					</Link>
-					<NavbarLinksMobile categories={filterCategories} />
-				</div>
-			</div>
-			<Search />
+  return (
+    <header className='flex items-center justify-between border-b border-accent/50 px-5 py-4 md:px-10 2xl:px-20'>
+      <div className='inline-flex flex-[0_0_auto] flex-col items-center'>
+        <div className='inline-flex flex-[0_0_auto] items-center'>
+          <Link href='/'>
+            <Image
+              className='hidden h-[50px] w-[50px] cursor-pointer object-cover transition-opacity duration-150 hover:opacity-50 md:block'
+              alt='Lavanda del lago'
+              src={MainLogo}
+            />
+          </Link>
+          <NavbarLinksMobile categories={filterCategories} />
+        </div>
+      </div>
+      <Search />
 
-			<NavbarLinks categories={filterCategories} />
+      <NavbarLinks categories={filterCategories} />
 
-			<div className='inline-flex items-center justify-center gap-6 flex-[0_0_auto]'>
-				<SearchMobile />
-				<WishlistCart />
-				<CartSheet />
-				<UserPopover />
-			</div>
-		</header>
-	)
+      <div className='inline-flex flex-[0_0_auto] items-center justify-center gap-6'>
+        <SearchMobile />
+        <WishlistCart />
+        <CartSheet />
+        <UserPopover />
+      </div>
+    </header>
+  )
 }
 
 export default Navbar

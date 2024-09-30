@@ -298,6 +298,31 @@ export const productsByCategory = groq`
   }
 `
 
+export const oramaIndexDeployUpdatedProducts = groq`
+*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60*60*24] {
+    "id": _id,
+    nombre,
+    descripcion,
+    precio,
+    "image": fotoPrincipal.asset->url,
+    categoria,
+    stock,
+    "createdAt": _createdAt,
+    usabilidad,
+    subcategoria,
+    codigoReferencia,
+    certificacion,
+    medidas,
+    codigoBarras,
+    slogan,
+    "fichaTecnica": fichaTecnica.asset->url,
+    fotosVarias[] {
+      "image": asset->url,
+      "key": _key
+    }
+}
+`
+
 // AUTH
 export const userById = groq`
   *[_type == "user" && _id == $id][0] {
@@ -309,20 +334,25 @@ export const userById = groq`
     address,
     reseller,
     discount,
+    "document": {
+      "type": document.type,
+      "value": document.value
+    },
     "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {
       "id": _id,
-      products[]{
-        product->{
-        "id": _id,
-        nombre,
-        "image": fotoPrincipal.asset->url,
-        categoria
-      },
+      products[] {
+        product-> {
+          "id": _id,
+          nombre,
+          "image": fotoPrincipal.asset->url,
+          categoria
+        },
         quantity
       },
       totalAmount,
       purchaseDate,
       paymentMethod,
+      password
       status,
       reseller
     }
