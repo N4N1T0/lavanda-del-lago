@@ -24,6 +24,7 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
+import { EventClickArg } from '@fullcalendar/core/index.js'
 
 const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
   const [loading, setLoading] = useState(true)
@@ -32,10 +33,9 @@ const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
   // Modal State to make it manual
   const [modalOpen, setModalOpen] = useState(false)
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const handleDateClick = (arg: any) => {
+  const handleDateClick = (arg: EventClickArg) => {
     setModalOpen(true)
-    setCurrentEvent(arg.event)
+    setCurrentEvent(arg.event as unknown as Event)
   }
 
   useEffect(() => {
@@ -87,18 +87,16 @@ const ClientFullCalendar = ({ events }: { events: Event[] }): JSX.Element => {
 + * @param {boolean} props.modalOpen - The current modal open state.
 + * @return {JSX.Element} The rendered modal dialog.
 + */
-const EventModal = (
-  {
-    event,
-    setModalOpen,
-    modalOpen
-  }: {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    event: any
-    setModalOpen: Dispatch<SetStateAction<boolean>>
-    modalOpen: boolean
-  }
-): JSX.Element => {
+const EventModal = ({
+  event,
+  setModalOpen,
+  modalOpen
+}: {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  event: Event
+  setModalOpen: Dispatch<SetStateAction<boolean>>
+  modalOpen: boolean
+}): JSX.Element => {
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogContent className='p-5 text-left'>
@@ -112,24 +110,28 @@ const EventModal = (
           </DialogDescription>
         </DialogHeader>
         {/* Additional information */}
-        <p className='test-xs italic'>
-          Puedes agregar a tu calendarios este evento usando estos enlances
-        </p>
-        <ul className='flex gap-3'>
-          {/* URLs */}
-          {event?._def?.extendedProps?.urls.map(
-            ({ calendarName, calendarUrl, id }: URL) => (
-              <li
-                key={id}
-                className='text-lg font-bold text-accent transition-colors duration-150 ease-in-out hover:text-accent/70'
-              >
-                <Link href={calendarUrl as string} target='_blank'>
-                  {calendarName}
-                </Link>
-              </li>
-            )
-          )}
-        </ul>
+        {event?._def?.extendedProps?.urls && (
+          <>
+            <p className='test-xs italic'>
+              Puedes agregar a tu calendarios este evento usando estos enlances
+            </p>
+            <ul className='flex gap-3'>
+              {/* URLs */}
+              {event?._def?.extendedProps?.urls.map(
+                ({ calendarName, calendarUrl, id }: URL) => (
+                  <li
+                    key={id}
+                    className='text-lg font-bold text-accent transition-colors duration-150 ease-in-out hover:text-accent/70'
+                  >
+                    <Link href={calendarUrl as string} target='_blank'>
+                      {calendarName}
+                    </Link>
+                  </li>
+                )
+              )}
+            </ul>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   )

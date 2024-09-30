@@ -16,7 +16,7 @@ import { useToast } from '@/components/ui/use-toast'
  *
  * @return {JSX.Element} This returns a JSX element.
  */
-const Newsletter = React.memo(() => {
+const Newsletter = React.memo(function Newsletter() {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const { toast } = useToast()
 

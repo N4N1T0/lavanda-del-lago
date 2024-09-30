@@ -59,7 +59,7 @@ export interface Author {
 }
 
 export interface Policies {
-  _id: string // Assuming the document has an ID
+  _id: string
   _type: 'cookiePolicy'
   title: string
   description: string
@@ -71,8 +71,7 @@ export interface Content {
   _type: ContentType
   style: Style
   _key: string
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  markDefs: any[]
+  markDefs: unknown[]
   listItem?: ListItem
   level?: number
 }
@@ -161,6 +160,7 @@ export interface InfoCard {
 }
 
 export interface Event {
+  _def: unknown
   description: string
   urls: URL[]
   id: string
@@ -235,7 +235,7 @@ export interface SeoMetaTags {
   openGraph: {
     url: string
     images: {
-      imageUrl: string // URL of the OpenGraph image
+      imageUrl: string
       alt: string
       width?: number
       height?: number
@@ -243,7 +243,7 @@ export interface SeoMetaTags {
   }
   twitter: {
     images: {
-      imageUrl: string // URL of the Twitter image
+      imageUrl: string
       alt: string
     }[]
   }

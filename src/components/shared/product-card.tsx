@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import { eurilize, urlize } from '@/lib/utils'
 // Type imports
-import type { CartItem, Product } from '@/types'
+import type { Product } from '@/types'
 
 // UI Import
 import { Skeleton } from '@/components/ui/skeleton'
@@ -17,7 +17,7 @@ import WishlistBtn from '@/components/shared/wishlist-btn'
 // Assets Imports
 import { MainLogo } from '@/assets'
 import useShoppingCart from '@/stores/shopping-cart-store'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 
 /**
  * Renders a product card component with details such as title, price, description, and image.
@@ -25,25 +25,17 @@ import { Button } from '../ui/button'
  * @param {Product} product - The product object containing title, price, description, image, and id.
  * @return {JSX.Element} The rendered product card component.
  */
-const ProductCard = (
-  {
-    product,
-    index,
-    lastMinute = false
-  }: {
-    product: Product
-    index: number
-    lastMinute?: boolean
-  }
-): JSX.Element => {
+const ProductCard = ({
+  product,
+  index,
+  lastMinute = false
+}: {
+  product: Product
+  index: number
+  lastMinute?: boolean
+}): JSX.Element => {
   // Get the cart items and a function to update the cart items from the shopping cart store
   const [count, setCount] = useShoppingCart()
-
-  // Create a new cart item object with the selected quantity and the product details
-  const cartItem: CartItem = {
-    quantity: 1,
-    ...product
-  }
 
   // Function to add to the Cart and show a toast with a message of completed
   const addToCart = () => {

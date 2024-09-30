@@ -27,9 +27,11 @@ import { allProducts } from '@/lib/queries'
  *
  * @return {JSX.Element} The JSX element containing the list of products.
  */
-const HomeProductsList = (
-  { categories }: { categories: string[] }
-): JSX.Element => {
+const HomeProductsList = ({
+  categories
+}: {
+  categories: string[]
+}): JSX.Element => {
   // products: The list of products that will be rendered & activeCategory: The currently selected category.
   const [products, setProducts] = useState<Product[] | null>(null)
   const [activeCategory, setActiveCategory] = useState<string | undefined>(
@@ -87,38 +89,32 @@ const HomeProductsList = (
  *
  * @return {JSX.Element} the Header Component with the filter logic
  */
-const HomeProductsListHeader = React.memo(
-  (
-    {
-      setActiveCategory,
-      categories,
-      activeCategory
-    }: {
-      setActiveCategory: React.Dispatch<
-        React.SetStateAction<string | undefined>
-      >
-      categories: string[]
-      activeCategory: string | undefined
-    }
-  ) => {
-    return (
-      <div className='flex flex-wrap items-center justify-center gap-10 lg:justify-start'>
-        {categories.map((category) => (
-          <button
-            type='button'
-            key={uuidv4()}
-            className={`text-base leading-normal transition-colors duration-150 hover:text-accent ${
-              category === activeCategory ? 'text-accent' : 'text-accent/70'
-            }`}
-            onClick={() => setActiveCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-    )
-  }
-)
+const HomeProductsListHeader = React.memo(function HomeProductsListHeader({
+  setActiveCategory,
+  categories,
+  activeCategory
+}: {
+  setActiveCategory: React.Dispatch<React.SetStateAction<string | undefined>>
+  categories: string[]
+  activeCategory: string | undefined
+}) {
+  return (
+    <div className='flex flex-wrap items-center justify-center gap-10 lg:justify-start'>
+      {categories.map((category) => (
+        <button
+          type='button'
+          key={uuidv4()}
+          className={`text-base leading-normal transition-colors duration-150 hover:text-accent ${
+            category === activeCategory ? 'text-accent' : 'text-accent/70'
+          }`}
+          onClick={() => setActiveCategory(category)}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  )
+})
 
 /**
  * Renders a skeleton component for the home products list.
@@ -134,12 +130,12 @@ const HomeProductsListSkeleton = (): JSX.Element => {
       <div className='flex flex-wrap items-center justify-center gap-10 lg:justify-start'>
         {Array(5)
           .fill('categories')
-          .map((_) => (
+          .map(() => (
             <Skeleton key={uuidv4()} className='h-4 w-24 rounded-md' />
           ))}
       </div>
       <ul className='grid w-full grid-cols-2 content-center gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6 2xl:gap-10'>
-        {Array.from({ length: 8 }).map((_, _i) => (
+        {Array.from({ length: 8 }).map(() => (
           <ProductCardSkeleton key={uuidv4()} />
         ))}
       </ul>

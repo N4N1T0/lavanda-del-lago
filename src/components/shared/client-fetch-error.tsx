@@ -8,7 +8,11 @@ import React from 'react'
  *
  * @return {JSX.Element} The error component for the home products list.
  */
-export const ClientFetchError = React.memo(({ error }: { error: unknown }) => {
+export const ClientFetchError = React.memo(function ClientFetchError({
+  error
+}: {
+  error: unknown
+}) {
   const router = useRouter()
   const handleClick = React.useCallback(() => router.refresh(), [router])
 

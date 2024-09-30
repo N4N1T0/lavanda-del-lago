@@ -21,12 +21,16 @@ import { useToast } from '../ui/use-toast'
  * @param {string} className - The class name to be applied to the heart component.
  * @return {JSX.Element} The heart component with dynamic color and click functionality.
  */
-const WishlistBtn = (
-  { product, className }: { product: Product; className?: string }
-): JSX.Element => {
+const WishlistBtn = ({
+  product,
+  className
+}: {
+  product: Product
+  className?: string
+}): JSX.Element => {
   // State hook to access and update the wishlist items
   const [count, setCount] = useWishlist()
-  const [shoppingCart, _] = useShoppingCart()
+  const [shoppingCart] = useShoppingCart()
   const { toast } = useToast()
   // Check if the product is already in the wishlist
   const isWishlisted = count.some((obj) => obj.id === product.id)

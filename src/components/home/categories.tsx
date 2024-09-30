@@ -60,8 +60,12 @@ export const Categories = async (): Promise<JSX.Element> => {
  * @param {string} props.category - The category name.
  * @return {JSX.Element} A React component that renders a category link.
  */
-const CategoryLink = React.memo(
-  ({ category }: { category: string }): JSX.Element => (
+const CategoryLink = React.memo(function CategoryLink({
+  category
+}: {
+  category: string
+}) {
+  return (
     <Link
       prefetch
       href={`/products?category=${category}`}
@@ -70,6 +74,6 @@ const CategoryLink = React.memo(
       {category}
     </Link>
   )
-)
+})
 
 export default Categories

@@ -19,17 +19,15 @@ import type { Product } from '@/types'
  * @return {Promise<JSX.Element>} A promise that resolves to a JSX element representing the featured list section.
  * @throws {Error} If there is an error fetching the items from the API.
  */
-const FeaturedList = async (
-  {
-    itemCategory,
-    featuredTitle,
-    direction = 'left'
-  }: {
-    itemCategory: string
-    featuredTitle: string
-    direction?: 'left' | 'right'
-  }
-): Promise<JSX.Element> => {
+const FeaturedList = async ({
+  itemCategory,
+  featuredTitle,
+  direction = 'left'
+}: {
+  itemCategory: string | undefined
+  featuredTitle: string
+  direction?: 'left' | 'right'
+}): Promise<JSX.Element> => {
   try {
     const response: Product[] = await sanityClientRead.fetch(
       productsByCategory,

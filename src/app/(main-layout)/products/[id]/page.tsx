@@ -19,9 +19,11 @@ import type { Metadata } from 'next'
 import { MainLogo } from '@/assets'
 
 // function to generate metadata
-export async function generateMetadata(
-  { params }: { params: { id: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  params
+}: {
+  params: { id: string }
+}): Promise<Metadata> {
   const desurlizedProductName = desurlizeForQuery(params.id)
 
   let response: Product | null = null
@@ -61,15 +63,13 @@ export async function generateMetadata(
  * @param {{ category?: string }} searchParams - Optional search parameters object with a category.
  * @return {Promise<JSX.Element>} A React component representing the main products section.
  */
-const ProductPage = async (
-  {
-    params,
-    searchParams
-  }: {
-    params: { id: string }
-    searchParams?: { category?: string }
-  }
-): Promise<JSX.Element> => {
+const ProductPage = async ({
+  params,
+  searchParams
+}: {
+  params: { id: string }
+  searchParams?: { category?: string }
+}): Promise<JSX.Element> => {
   const desurlizedProductName = desurlizeForQuery(params.id)
 
   let response: Product | null = null
@@ -96,7 +96,7 @@ const ProductPage = async (
         <FeaturedList
           featuredTitle='Productos Relacionados'
           direction='left'
-          itemCategory={searchParams?.category!}
+          itemCategory={searchParams?.category}
         />
         <FeaturedList
           featuredTitle='Mas Vendidos'

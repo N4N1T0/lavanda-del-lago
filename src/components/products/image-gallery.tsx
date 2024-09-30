@@ -33,8 +33,10 @@ const ImageGallery = ({ images }: { images: FotosVarias[] }): JSX.Element => {
   return (
     <div className='h-full w-full space-y-4'>
       <Dialog>
-        <DialogTitle>Product Image Carousel</DialogTitle>
-        <DialogDescription>Product Image Carousel</DialogDescription>
+        <DialogTitle className='sr-only'>Product Image Carousel</DialogTitle>
+        <DialogDescription className='sr-only'>
+          Product Image Carousel
+        </DialogDescription>
         <DialogTrigger asChild>
           <div className='relative aspect-square w-full cursor-pointer'>
             <Image
