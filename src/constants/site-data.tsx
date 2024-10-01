@@ -22,7 +22,7 @@ export const navItems = [
       },
       {
         label: 'Nosotros',
-        href: '/about-us'
+        href: '/about'
       },
       {
         label: 'Certificaciones',

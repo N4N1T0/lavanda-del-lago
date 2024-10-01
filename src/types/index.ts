@@ -258,17 +258,17 @@ export interface User {
     postal_code: string | null
     locality: string | null
   } | null
-  reseller: boolean | null
-  document: {
+  reseller?: boolean | null
+  idDocument: {
     type: 'dni' | 'nie'
     value: string | null
   } | null
-  pastPurchases: PastPurchase[]
-  id: string
+  pastPurchases?: PastPurchase[]
+  id?: string
   email: string
-  password: string | null
-  image: string
-  discount: number
+  password?: string | null
+  image?: string
+  discount?: number
 }
 
 export interface PastPurchase {
