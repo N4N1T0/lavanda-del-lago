@@ -1,5 +1,5 @@
 // Project Components Imports
-import UserProfileForm from '@/components/profile/user-info-from'
+import { UserProfileFormDialog } from '@/components/profile/user-info-from'
 
 // Next Imports
 import Link from 'next/link'
@@ -14,6 +14,7 @@ import { Mail, MapPin, Phone, ReceiptEuro } from 'lucide-react'
 
 // Types Imports
 import type { User } from '@/types'
+import { formatAddress } from '@/lib/utils'
 
 /**
  * A reusable card component for displaying user information.
@@ -58,14 +59,14 @@ const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
           </div>
           <div className='flex items-center'>
             <MapPin className='mr-2 h-4 w-4' />
-            <span>{user.address || 'Sin dirección'}</span>
+            <span>{formatAddress(user.address)}</span>
           </div>
         </div>
-        <UserProfileForm user={user} />
+        <UserProfileFormDialog user={user} />
         {!user.reseller && (
           <Button asChild className='mt-4 w-full' variant='cart'>
             <Link
-              href='/reseller'
+              href='/reseller-form'
               className='flex items-center justify-center gap-2'
             >
               <ReceiptEuro className='h-4 w-4' />

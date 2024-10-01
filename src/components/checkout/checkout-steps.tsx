@@ -35,7 +35,8 @@ const CheckoutSteps = () => {
 
   useEffect(() => {
     // Encuentra el valor correspondiente según el path
-    const currentValue = values.find((step) => path.startsWith(step.label))
+    const currentValue = values.find((step) => path === step.label)
+    console.log('currentVale', currentValue)
     if (currentValue) {
       setProgress(currentValue.value)
       setCurrentPage(currentValue.label)

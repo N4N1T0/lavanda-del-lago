@@ -1,9 +1,5 @@
 // Project Components Imports
-import Address from '@/components/checkout/address'
 import LastMinute from '@/components/checkout/last-minute'
-
-// Auth Imports
-import { currentUser } from '@clerk/nextjs/server'
 
 // Queries Imports
 import { userById } from '@/lib/queries'
@@ -11,7 +7,6 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Type Imports
 import type { Metadata } from 'next'
-import type { User } from '@/types'
 
 // Metadata for the Page
 export const metadata: Metadata = {
@@ -25,22 +20,22 @@ export const metadata: Metadata = {
  *
  * @return {Promise<JSX.Element>} The JSX element representing the checkout page content.
  */
-const CheckoutReviewPage = async (): Promise<JSX.Element> => {
-  const user = await currentUser()
-  let response: User | null = null
-
-  if (user !== null) {
-    response = await sanityClientRead.fetch(userById, {
-      id: user.id
-    })
-  }
-
+const CheckoutReviewPage = async ({
+  searchParams
+}: {
+  searchParams: { userId: string }
+}): Promise<JSX.Element> => {
+  console.log(searchParams.userId)
+  const response: User = await sanityClientRead.fetch(userById, {
+    id: searchParams.userId
+  })
   return (
     <section
       id='checkout info'
       className='mx-auto grid max-w-screen-lg grid-cols-1 gap-12 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8 lg:py-20'
     >
-      <Address user={response} />
+      <h1>{searchParams.userId}</h1>
+      <h3>{response.nombre}</h3>
       <LastMinute />
     </section>
   )

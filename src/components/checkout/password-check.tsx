@@ -15,13 +15,9 @@ import { Eye, EyeOff } from 'lucide-react'
 
 // React Hook Form Imports
 import type { UseFormReturn } from 'react-hook-form'
-import type { CheckoutSchemaType } from '@/lib/form-schemas'
+import type { UserSchemaType } from '@/lib/form-schemas'
 
-const PasswordCheck = ({
-  form
-}: {
-  form: UseFormReturn<CheckoutSchemaType>
-}) => {
+const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
   // Estado para mostrar u ocultar la contraseña
   const [showPassword, setShowPassword] = useState(false)
 
@@ -43,8 +39,10 @@ const PasswordCheck = ({
                   type={showPassword ? 'text' : 'password'} // Cambiamos entre 'text' y 'password'
                   placeholder='Contraseña...'
                   {...field}
-                  className='rounded-md border border-accent/50 pr-10 group-disabled:cursor-not-allowed group-disabled:opacity-50'
+                  className='rounded-md border border-accent/50 pr-10'
                   autoComplete='new-password'
+                  id='password'
+                  disabled={form.formState.isSubmitting}
                 />
                 <button
                   type='button'
@@ -75,8 +73,10 @@ const PasswordCheck = ({
                   type={showPassword ? 'text' : 'password'}
                   placeholder='Repite Contraseña...'
                   {...field}
-                  className='rounded-md border border-accent/50 pr-10 group-disabled:cursor-not-allowed group-disabled:opacity-50'
+                  className='rounded-md border border-accent/50 pr-10'
                   autoComplete='new-password'
+                  id='confirmPassword'
+                  disabled={form.formState.isSubmitting}
                 />
                 <button
                   type='button'

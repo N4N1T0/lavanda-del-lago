@@ -32,6 +32,7 @@ import {
   type ResellerFormSchemaType,
   resellerFormSchema
 } from '@/lib/form-schemas'
+import { Loader2 } from 'lucide-react'
 
 const ResellerForm = () => {
   // initialize of the router
@@ -91,7 +92,11 @@ const ResellerForm = () => {
             <FormItem>
               <FormLabel className='font-bold text-accent'>Nombre</FormLabel>
               <FormControl>
-                <Input placeholder='Juan' {...field} />
+                <Input
+                  placeholder='Juan'
+                  {...field}
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -106,7 +111,11 @@ const ResellerForm = () => {
             <FormItem>
               <FormLabel className='font-bold text-accent'>Apellido</FormLabel>
               <FormControl>
-                <Input placeholder='Perez' {...field} />
+                <Input
+                  placeholder='Perez'
+                  {...field}
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,7 +132,11 @@ const ResellerForm = () => {
                 Correo Electrónico
               </FormLabel>
               <FormControl>
-                <Input placeholder='juan@perez.es' {...field} />
+                <Input
+                  placeholder='juan@perez.es'
+                  {...field}
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -138,7 +151,11 @@ const ResellerForm = () => {
             <FormItem>
               <FormLabel className='font-bold text-accent'>NIE</FormLabel>
               <FormControl>
-                <Input placeholder='Z1186708F' {...field} />
+                <Input
+                  placeholder='Z1186708F'
+                  {...field}
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -154,7 +171,11 @@ const ResellerForm = () => {
               <FormLabel className='font-bold text-accent'>
                 Provincia de Residencia
               </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={form.formState.isSubmitting}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue
@@ -233,7 +254,11 @@ const ResellerForm = () => {
             <FormItem>
               <FormLabel className='font-bold text-accent'>Teléfono</FormLabel>
               <FormControl>
-                <Input placeholder='+34 123 456 789' {...field} />
+                <Input
+                  placeholder='+34 123 456 789'
+                  {...field}
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -250,7 +275,11 @@ const ResellerForm = () => {
                 Fecha de Nacimiento
               </FormLabel>
               <FormControl>
-                <Input type='date' {...field} />
+                <Input
+                  type='date'
+                  {...field}
+                  disabled={form.formState.isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -266,7 +295,11 @@ const ResellerForm = () => {
               <FormLabel className='font-bold text-accent'>
                 Lugar de Nacimiento
               </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={form.formState.isSubmitting}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue
@@ -347,6 +380,7 @@ const ResellerForm = () => {
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  disabled={form.formState.isSubmitting}
                 />
               </FormControl>
               <FormLabel className='ml-3 font-bold text-accent'>
@@ -357,8 +391,12 @@ const ResellerForm = () => {
           )}
         />
 
-        <Button type='submit' variant={'cart'}>
-          Enviar
+        <Button type='submit' disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? (
+            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+          ) : (
+            'Enviar'
+          )}
         </Button>
       </form>
     </Form>

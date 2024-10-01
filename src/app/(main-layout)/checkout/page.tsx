@@ -1,5 +1,4 @@
 // Project Components Imports
-import Address from '@/components/checkout/address'
 import LastMinute from '@/components/checkout/last-minute'
 
 // Auth Imports
@@ -12,6 +11,7 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 // Type Imports
 import type { Metadata } from 'next'
 import type { User } from '@/types'
+import { UserProfileForm } from '@/components/profile/user-info-from'
 
 // Metadata for the Page
 export const metadata: Metadata = {
@@ -38,10 +38,12 @@ const CheckoutInfoPage = async (): Promise<JSX.Element> => {
   return (
     <section
       id='checkout info'
-      className='mx-auto grid max-w-screen-lg grid-cols-1 gap-12 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8 lg:py-20'
+      className='relative mx-auto grid max-w-screen-lg grid-cols-1 gap-12 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8 lg:py-20'
     >
-      <Address user={response} />
-      <LastMinute />
+      <UserProfileForm user={response} />
+      <article className='sticky top-0 h-fit'>
+        <LastMinute />
+      </article>
     </section>
   )
 }
