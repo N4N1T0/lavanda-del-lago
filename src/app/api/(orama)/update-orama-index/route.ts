@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Next.js Imports
 import { type NextRequest, NextResponse } from 'next/server'
 
@@ -11,6 +12,10 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 // Types Imports
 import type { Product } from '@/types'
 
+// Resend Imports
+import { resend } from '@/lib/resend'
+import DailyIndexingEmail from '@/emails/daily-orama-index'
+
 // Environment Variables for API Key
 const cronJobApiKey = process.env.CRON_JOB_API_KEY
 
@@ -22,10 +27,9 @@ const cronJobApiKey = process.env.CRON_JOB_API_KEY
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const apiKey = req.headers.get('x-api-key') || ''
-
     // Validate API Key
-    if (!apiKey || apiKey !== cronJobApiKey) {
+    const apiKey = req.headers.get('x-api-key') || ''
+    if (!isValidApiKey(apiKey)) {
       console.warn('Invalid API key')
       return NextResponse.json(
         { success: false, message: 'Invalid API key' },
@@ -33,16 +37,22 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       )
     }
 
-    // Fetch all the updated products
-    const sanityProducts: Product[] = await sanityClientRead.fetch(
-      oramaIndexDeployUpdatedProducts
-    )
+    // Fetch and update products
+    const sanityProducts: Product[] = await fetchUpdatedProducts()
 
-    // Insert documents
-    await indexManager.update(sanityProducts)
+    // Insert documents and trigger deployment
+    await updateAndDeployProducts(sanityProducts)
 
-    // Trigger a new deployment
-    await indexManager.deploy()
+    // Send email to admin
+    resend.emails.send({
+      from: 'lavandadellago.es',
+      to: 'info@lavandadellago.es',
+      subject: 'Informe diario de indexación de productos',
+      react: DailyIndexingEmail({
+        fecha: new Date().toLocaleDateString(),
+        productosActualizados: sanityProducts.length
+      })
+    })
 
     // Log success and return response
     console.info('Deployment triggered successfully')
@@ -50,14 +60,46 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       success: true,
       message: 'Deployment triggered'
     })
-  } catch (error) {
+  } catch (error: any) {
     // Log the error for debugging purposes
     console.error('Error processing request:', error)
 
     // Return a 500 Internal Server Error response
     return NextResponse.json(
-      { success: false, message: 'Internal server error' },
+      { success: false, message: error?.message || 'Internal server error' },
       { status: 500 }
     )
   }
+}
+
+// * HELPER FUNCTIONS ↓↓↓
+
+/**
+ * Validates the provided API key.
+ *
+ * @param {string} apiKey - The API key to validate.
+ * @return {boolean} True if the API key is valid, false otherwise.
+ */
+function isValidApiKey(apiKey: string): boolean {
+  return apiKey === cronJobApiKey
+}
+
+/**
+ * Fetches updated products from Sanity.
+ *
+ * @return {Promise<Product[]>} A promise that resolves to an array of updated products.
+ */
+async function fetchUpdatedProducts(): Promise<Product[]> {
+  return await sanityClientRead.fetch(oramaIndexDeployUpdatedProducts)
+}
+
+/**
+ * Updates the index with new products and triggers deployment.
+ *
+ * @param {Product[]} products - The products to update in the index.
+ * @return {Promise<void>} A promise that resolves when the update and deployment are complete.
+ */
+async function updateAndDeployProducts(products: Product[]): Promise<void> {
+  await indexManager.update(products)
+  await indexManager.deploy()
 }

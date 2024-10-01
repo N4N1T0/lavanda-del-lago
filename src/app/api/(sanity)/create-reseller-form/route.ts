@@ -4,6 +4,11 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 // Sanity Client Imports
 import { sanityClientWrite } from '@sanity-studio/lib/client'
+import { resellerFormSchema } from '@/lib/form-schemas'
+
+// Resend Imports
+import { resend } from '@/lib/resend'
+import NewResellerApplicationEmail from '@/emails/new-reseller-form-application'
 
 /**
  * Handles the creation of a reseller form in Sanity.
@@ -23,6 +28,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.redirect('/sign-in')
     }
 
+    // Validate the request body
+    const parsedBody = resellerFormSchema.safeParse(data)
+    if (!parsedBody.success) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid request body' },
+        { status: 400 }
+      )
+    }
+
     // Deconstructio of the data
     const { id } = user
     const {
@@ -35,7 +49,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       birthDate,
       birthPlace,
       privacyPolicy
-    } = data
+    } = parsedBody.data
 
     // Create the reseller form in Sanity
     const response = await sanityClientWrite.createIfNotExists({
@@ -61,7 +75,18 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       })
     }
 
-    // TODO Send Email to the Admin
+    // Send email to admin
+    resend.emails.send({
+      from: 'lavandadellago.es',
+      to: 'info@lavandadellago.es',
+      subject: 'Nueva solicitud de reseller',
+      react: NewResellerApplicationEmail({
+        fecha: new Date().toLocaleDateString('es-ES'),
+        nombre: `${firstName} ${lastName}`,
+        email: email,
+        link: `https://lavandadellago.es/studio/structure/usuariosYVentas;resellerForm;resellerForm-${id}`
+      })
+    })
 
     // Return a success message
     return NextResponse.json({
