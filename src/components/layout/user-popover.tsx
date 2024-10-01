@@ -31,7 +31,7 @@ const UserPopover = async (): Promise<JSX.Element> => {
   if (user)
     return (
       <UserProfile
-        userId={user.id}
+        userId={user?.id}
         reseller={user.publicMetadata.reseller as boolean}
       />
     )

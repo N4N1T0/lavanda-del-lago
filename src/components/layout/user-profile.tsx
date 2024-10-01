@@ -16,9 +16,13 @@ import { useRouter } from 'next/navigation'
  * @param {boolean} reseller - Whether the user is a reseller or not. Defaults to false.
  * @return {JSX.Element} The user profile button component.
  */
-const UserProfile = (
-  { userId, reseller = false }: { userId: string; reseller: boolean }
-): JSX.Element => {
+const UserProfile = ({
+  userId,
+  reseller = false
+}: {
+  userId: string
+  reseller: boolean
+}): JSX.Element => {
   // initialize of the router
   const router = useRouter()
 

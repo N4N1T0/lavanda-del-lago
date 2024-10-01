@@ -105,11 +105,11 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Blog Style fix
 - [x] Add Sanity Plugins
 - [x] Cron Job for Orama Index Deploy [Free Cron Job](https://cron-job.org/en/)
+- [x] Resend Configuration
 - [ ] Webhook for Completed Purchase & Purchase Confirmation
 - [ ] User Checkout Configuration
 - [ ] Redsys Configuration
 - [ ] VPS Configuration and Github Actions
-- [ ] Resend Configuration
 - [ ] Check UI Components (idea for a npm package)
 
 ## TODOS After Deploy
@@ -121,6 +121,6 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 ## Reactemail Template TODOs
 
 - [ ] React Email Template for Completed Purchase (for User & Admins)
-- [ ] React Email Template for Reseller Form
-- [ ] React Email Template for User Auth
-- [ ] React Email Template for Newsletter
+- [x] React Email Template for Reseller Form
+- [x] React Email Template for User Auth
+- [x] React Email Template for Newsletter

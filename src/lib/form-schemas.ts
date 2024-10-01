@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 // Checkout Validation Schema with New User
-export const checkoutSchema = z
+export const userSchema = z
   .object({
     name: z.string().min(2, { message: 'El nombre es necesario' }),
     email: z.string().email({ message: 'El email es inválido' }),
@@ -14,19 +14,18 @@ export const checkoutSchema = z
       })
       .optional(),
     confirmPassword: z.string().optional(),
-    Calle: z.string().min(2, { message: 'La Calle es necesaria' }),
-    Piso: z.string().min(2, { message: 'El Piso es necesario' }),
-    Codigo_Postal: z
+    street: z.string().min(2, { message: 'La Calle es necesaria' }),
+    floor: z.string().min(2, { message: 'El Piso es necesario' }),
+    postal_code: z
       .string()
       .min(2, { message: 'El Código Postal es necesario' }),
-    Localidad: z.string().min(2, { message: 'La Localidad es necesaria' }),
+    locality: z.string().min(2, { message: 'La Localidad es necesaria' }),
     documentType: z.enum(['dni', 'nie'], {
       message: 'Seleccione un tipo de documento'
     }),
     documentNumber: z
       .string()
-      .min(1, { message: 'El número del documento es necesario' }),
-    updateInfo: z.boolean()
+      .min(1, { message: 'El número del documento es necesario' })
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -38,7 +37,7 @@ export const checkoutSchema = z
     }
   })
 
-export type CheckoutSchemaType = z.infer<typeof checkoutSchema>
+export type UserSchemaType = z.infer<typeof userSchema>
 
 // Reseller Form Validation Schema
 export const resellerFormSchema = z.object({
@@ -56,31 +55,3 @@ export const resellerFormSchema = z.object({
 })
 
 export type ResellerFormSchemaType = z.infer<typeof resellerFormSchema>
-
-// User Info Card Validation Schema
-export const userInfoCard = z.object({
-  name: z.string().min(2, {
-    message: 'El nombre debe tener al menos 2 caracteres'
-  }),
-  email: z
-    .string()
-    .min(2, {
-      message: 'El correo electrónico es obligatorio'
-    })
-    .email({
-      message: 'Correo electrónico no válido'
-    }),
-  phone: z
-    .string()
-    .min(10, {
-      message: 'El teléfono debe tener al menos 10 dígitos'
-    })
-    .regex(/^\d+$/, {
-      message: 'El teléfono solo debe contener números'
-    }),
-  address: z.string().min(5, {
-    message: 'La dirección debe tener al menos 5 caracteres'
-  })
-})
-
-export type UserInfoCardType = z.infer<typeof userInfoCard>
