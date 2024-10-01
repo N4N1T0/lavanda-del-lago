@@ -1,7 +1,7 @@
 'use client'
 
 // Next.js Imports
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 // UI Imports
@@ -23,14 +23,14 @@ import { handlingSecurityInfo } from '@/lib/utils'
  * @param {string} security - The security status to handle.
  * @return {JSX.Element | null} A dialog component displaying security information or null if security status is undefined.
  */
-const SecurityHandling = (
-  { security }: { security?: string | undefined }
-): JSX.Element | null => {
-  // Router instance initialization
+const SecurityHandling = (): JSX.Element | null => {
+  // Router instance initialization, Pathname & SearchParams
   const router = useRouter()
+  const path = usePathname()
+  const security = useSearchParams().get('security')
 
   // not show the dialog if security is undefined
-  if (security === undefined) {
+  if (security === undefined || security === null) {
     return null
   }
 
@@ -38,9 +38,9 @@ const SecurityHandling = (
   const splitArray = security.split('-')
   const securityInfo = handlingSecurityInfo(security)
 
-  // redirection to home
+  // redirection to request page
   const handleAccept = () => {
-    router.push('/')
+    router.push(path.split('?')[0])
   }
 
   return (

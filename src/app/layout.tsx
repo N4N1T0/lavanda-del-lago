@@ -15,6 +15,7 @@ import { Toaster } from '@/components/ui/toaster'
 // Clerk Imports
 import { ClerkProvider } from '@clerk/nextjs'
 import { esES } from '@clerk/localizations'
+import SecurityHandling from '@/components/layout/security-handling'
 
 // Local Fonts Configuration
 const josefinSand = Josefin_Sans({
@@ -35,13 +36,11 @@ export async function generateMetadata() {
  * @param {Readonly<{ children: React.ReactNode }>} props - The props object containing the children.
  * @return {JSX.Element} The root layout JSX element.
  */
-export default function RootLayout(
-  {
-    children
-  }: Readonly<{
-    children: React.ReactNode
-  }>
-): JSX.Element {
+export default function RootLayout({
+  children
+}: Readonly<{
+  children: React.ReactNode
+}>): JSX.Element {
   return (
     <html lang='en'>
       <body
@@ -58,6 +57,7 @@ export default function RootLayout(
         >
           <main>{children}</main>
           <Toaster />
+          <SecurityHandling />
         </ClerkProvider>
       </body>
     </html>

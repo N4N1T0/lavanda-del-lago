@@ -306,10 +306,44 @@ export function handlingSecurityInfo(security: string): {
         description:
           'pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico'
       }
+    case 'unprocessable_entity':
+      return {
+        title: 'Problemas de Seguridad',
+        description:
+          'Hubo un problema con el Autentificador de Cuenta. Prube otra vez'
+      }
+    case 'form_password_pwned':
+      return {
+        title: 'Problemas de Seguridad en la Contraseña',
+        description:
+          'La contraseña proporcionada se ha encontrado en una filtración de datos en línea. Para la seguridad de tu cuenta, por favor, utiliza una contraseña diferente. Te recomendamos usar una contraseña segura que contenga al menos 8 caracteres, combinando letras mayúsculas y minúsculas, números y símbolos especiales.'
+      }
+    case 'form_identifier_exists':
+      return {
+        title: 'Correo Electrónico Ya Registrado',
+        description:
+          'El correo electrónico ingresado ya está registrado. Por favor, intenta con otro correo electrónico o inicia sesión si ya tienes una cuenta.'
+      }
+
     default:
       return {
         title: 'Problemas de Seguridad',
         description: 'Hubo un problema al procesar tu solicitud.'
       }
   }
+}
+
+/**
+ * Formats a given address by filtering out null or empty fields and joining them with commas.
+ *
+ * @param {User['address']} address - The address to be formatted.
+ * @return {string} The formatted address as a string.
+ */
+export function formatAddress(address: User['address']): string {
+  if (!address) return 'Sin Direccion'
+
+  const { street, floor, postal_code, locality } = address
+
+  // Filtra campos nulos o vacíos y únelos con una coma
+  return [street, floor, postal_code, locality].filter(Boolean).join(', ')
 }
