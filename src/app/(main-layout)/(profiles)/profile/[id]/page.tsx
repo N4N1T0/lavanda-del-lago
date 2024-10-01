@@ -20,18 +20,27 @@ import type { User } from '@/types'
  * @param {string} params.id - The ID of the user.
  * @return {Promise<JSX.Element>} The JSX element representing the user profile page.
  */
-const UserProfilePage = async (
-  { params }: { params: { id: string } }
-): Promise<JSX.Element> => {
+const UserProfilePage = async ({
+  params
+}: {
+  params: { id: string }
+}): Promise<JSX.Element> => {
   // Fetch user data
   const response: User = await sanityClientRead.fetch(userById, {
     id: params.id
   })
 
   // Check if user exists
-  if (!response) {
+  if (!response || params.id === 'no_user_id') {
     // Handle error
-    return <h1 className='text-3xl text-accent'>User not found</h1>
+    return (
+      <div className='flex h-screen w-full flex-col items-center justify-center'>
+        <h1 className='text-5xl text-accent'>Usuario no encontrado</h1>
+        <p className='text-lg'>
+          porfavor trate de cerrar session y vuelva a iniciarla
+        </p>
+      </div>
+    )
   }
 
   // Get most used category for the reselling

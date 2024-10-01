@@ -93,7 +93,7 @@ export default {
           description: 'El piso del usuario'
         },
         {
-          name: 'postalCode',
+          name: 'postal_code',
           title: 'Código Postal',
           type: 'string',
           description: 'El código postal del usuario',

@@ -14,7 +14,6 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { HomePageType } from '@/types'
-import SecurityHandling from '@/components/layout/security-handling'
 
 /**
  * Renders the Home component which displays a hero section, categories section,
@@ -23,9 +22,7 @@ import SecurityHandling from '@/components/layout/security-handling'
  *
  * @return {Promise<JSX.Element>} The rendered Home component.
  */
-export default async function Home(
-  { searchParams }: { searchParams?: { security?: string } }
-): Promise<JSX.Element> {
+export default async function Home(): Promise<JSX.Element> {
   const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage)
 
   const {
@@ -61,7 +58,6 @@ export default async function Home(
       <FeaturedEvent event={featuredEvent} />
       <Newsletter />
       <Prefooter />
-      <SecurityHandling security={searchParams?.security} />
     </>
   )
 }

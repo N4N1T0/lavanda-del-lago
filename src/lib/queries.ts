@@ -326,37 +326,36 @@ export const oramaIndexDeployUpdatedProducts = groq`
 // AUTH
 export const userById = groq`
   *[_type == "user" && _id == $id][0] {
+  "id": _id,
+  email,
+  image,
+  name,
+  phone,
+  address,
+  reseller,
+  discount,
+  "document": {
+    "type": document.type,
+    "value": document.value
+  },
+  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {
     "id": _id,
-    email,
-    image,
-    name,
-    phone,
-    address,
-    reseller,
-    discount,
-    "document": {
-      "type": document.type,
-      "value": document.value
-    },
-    "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {
-      "id": _id,
-      products[] {
-        product-> {
-          "id": _id,
-          nombre,
-          "image": fotoPrincipal.asset->url,
-          categoria
-        },
-        quantity
+    products[] {
+      product-> {
+        "id": _id,
+        nombre,
+        "image": fotoPrincipal.asset->url,
+        categoria
       },
-      totalAmount,
-      purchaseDate,
-      paymentMethod,
-      password
-      status,
-      reseller
-    }
+      quantity
+    },
+    totalAmount,
+    purchaseDate,
+    paymentMethod,
+    status,
+    reseller
   }
+}
 `
 
 // MISC
