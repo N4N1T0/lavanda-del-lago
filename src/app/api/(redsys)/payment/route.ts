@@ -1,12 +1,17 @@
+// Next.js Imports
+import { type NextRequest, NextResponse } from 'next/server'
 // Redsys Payment Gateway Imports
-import { CURRENCIES, TRANSACTION_TYPES, randomTransactionId } from 'redsys-easy'
+import {
+  CURRENCIES,
+  TRANSACTION_TYPES,
+  randomTransactionId,
+  LANGUAGES
+} from 'redsys-easy'
 import { createRedirectForm } from '@/lib/redsys'
 
 // External Libraries Imports
 import Decimal from 'decimal.js'
-
-// Next.js Imports/**
-import { type NextRequest, NextResponse } from 'next/server'
+import { User } from '@/types'
 
 const merchantInfo = {
   DS_MERCHANT_MERCHANTCODE: process.env.REDSYS_MERCHANT_CODE!, // Merchant code
@@ -23,10 +28,16 @@ const merchantInfo = {
  * @return {Promise<NextResponse>} The HTML response that redirects to the payment gateway.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  const { totalAmount, currency } = {
-    totalAmount: '49.99', // Simulation of total
-    currency: 'EUR'
-  } as const
+  const {
+    totalAmount,
+    user
+  }: {
+    totalAmount: number
+    user: User
+  } = await req.json()
+
+  const { name, id, reseller, email } = user
+  const currency = 'EUR'
 
   const orderId = randomTransactionId() // Random ID for the transaction
 
@@ -43,40 +54,21 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     DS_MERCHANT_ORDER: orderId,
     DS_MERCHANT_AMOUNT: redsysAmount,
     DS_MERCHANT_CURRENCY: redsysCurrency,
-    DS_MERCHANT_MERCHANTNAME: 'MY SHOP',
-    DS_MERCHANT_MERCHANTURL: `${req.url}/api/notifications`, // Notification URL
-    DS_MERCHANT_URLOK: `${req.url}/api/success`, // Success URL
-    DS_MERCHANT_URLKO: `${req.url}/api/error`, // Error URL
+    DS_MERCHANT_MERCHANTNAME: 'Lavanda del Lago.es',
+    DS_MERCHANT_MERCHANTURL: `${process.env.CI ? 'http://www.lavandadellago.es' : 'https://immune-coyote-rested.ngrok-free.app'}/api/notifications`, // Notification URL
+    DS_MERCHANT_URLOK: `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Success URL
+    DS_MERCHANT_URLKO: `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/failed?userId=${id}&userName.normalize('NFC')=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Error URL
     DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
-    DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE
+    DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE,
+    DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
+    DS_MERCHANT_CONSUMERLANGUAGE: LANGUAGES.es,
+    DS_MERCHANT_SHIPPINGADDRESSPYP: 'S',
+    DS_MERCHANT_TITULAR: name
   })
 
-  // Create the HTML form with automatic submission via JavaScript
-  const autoSubmitForm = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title>Redirecting to payment gateway...</title>
-    </head>
-    <body>
-      <p>Redirecting to payment gateway...</p>
-      <form id="paymentForm" action="${form.url}" method="POST">
-        <input type="hidden" name="Ds_SignatureVersion" value="${form.body.Ds_SignatureVersion}" />
-        <input type="hidden" name="Ds_MerchantParameters" value="${form.body.Ds_MerchantParameters}" />
-        <input type="hidden" name="Ds_Signature" value="${form.body.Ds_Signature}" />
-      </form>
-      <script type="text/javascript">
-        document.getElementById('paymentForm').submit();
-      </script>
-    </body>
-    </html>
-  `
-
-  // Send the HTML response that redirects automatically
-  return new NextResponse(autoSubmitForm, {
-    headers: {
-      'Content-Type': 'text/html'
-    }
+  // Return the HTML response
+  return NextResponse.json({
+    success: true,
+    data: form
   })
 }
