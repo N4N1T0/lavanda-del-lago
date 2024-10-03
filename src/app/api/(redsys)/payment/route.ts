@@ -55,7 +55,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     DS_MERCHANT_AMOUNT: redsysAmount,
     DS_MERCHANT_CURRENCY: redsysCurrency,
     DS_MERCHANT_MERCHANTNAME: 'Lavanda del Lago.es',
-    DS_MERCHANT_MERCHANTURL: `${process.env.CI ? 'http://www.lavandadellago.es' : 'https://immune-coyote-rested.ngrok-free.app'}/api/notifications`, // Notification URL
+    DS_MERCHANT_MERCHANTURL: `${process.env.CI ? 'http://www.lavandadellago.es' : 'https://lavanda-del-lago.vercel.app'}/api/notifications`, // Notification URL
     DS_MERCHANT_URLOK: `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Success URL
     DS_MERCHANT_URLKO: `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/failed?userId=${id}&userName.normalize('NFC')=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Error URL
     DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
