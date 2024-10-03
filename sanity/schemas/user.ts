@@ -117,7 +117,8 @@ export default {
       title: 'Perfil de Revendedor',
       type: 'boolean',
       description:
-        'Indica si el usuario es un revendedor (IMPORTANTE SOLO ACTIVAR DESPUES DE REVISAR LA INFO DEL FORMULARIO DE REVENDEDOR CON EL MISMO EMAIL QUE ESTE USANDO EN LA APP)'
+        'Indica si el usuario es un revendedor (IMPORTANTE SOLO ACTIVAR DESPUES DE REVISAR LA INFO DEL FORMULARIO DE REVENDEDOR CON EL MISMO EMAIL QUE ESTE USANDO EN LA APP)',
+      initialValue: false
     },
     {
       name: 'discount',
@@ -126,9 +127,6 @@ export default {
       description: 'El descuento del revendedor'
     }
   ],
-  initialValue: {
-    reseller: false
-  },
   preview: {
     select: {
       title: 'name',

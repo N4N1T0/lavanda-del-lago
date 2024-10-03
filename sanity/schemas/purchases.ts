@@ -1,6 +1,6 @@
 export default {
   name: 'purchase',
-  title: 'Compras',
+  title: 'Ventas',
   type: 'document',
   fields: [
     {
@@ -15,7 +15,8 @@ export default {
       name: 'reseller',
       title: 'Revendedor',
       type: 'boolean',
-      description: 'Indica si el usuario es un revendedor.'
+      description: 'Indica si el usuario es un revendedor.',
+      readonly: true
     },
     {
       name: 'products',
@@ -44,7 +45,12 @@ export default {
         }
       ],
       description:
-        'Lista de productos comprados y sus cantidades en esta transacción.'
+        'Lista de productos comprados y sus cantidades en esta transacción.',
+      preview: {
+        select: {
+          title: 'product.name'
+        }
+      }
     },
     {
       name: 'totalAmount',
