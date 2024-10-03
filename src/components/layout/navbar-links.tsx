@@ -9,7 +9,8 @@ import { navItems } from '@/constants/site-data'
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
+  PopoverClose
 } from '@/components/ui/popover'
 import {
   Sheet,
@@ -20,6 +21,12 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion'
 
 // Uitility Imports
 import { capitalizeFirstLetter } from '@/lib/utils'
@@ -51,16 +58,18 @@ const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
                   <ul>
                     {categories.map((category) => (
                       <li key={uuidv4()}>
-                        <Link
-                          href={
-                            category === 'Todos'
-                              ? '/products'
-                              : `/products?category=${category}`
-                          }
-                          className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
-                        >
-                          {capitalizeFirstLetter(category)}
-                        </Link>
+                        <PopoverClose asChild>
+                          <Link
+                            href={
+                              category === 'Todos'
+                                ? '/products'
+                                : `/products?category=${category}`
+                            }
+                            className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
+                          >
+                            {capitalizeFirstLetter(category)}
+                          </Link>
+                        </PopoverClose>
                       </li>
                     ))}
                   </ul>
@@ -68,12 +77,14 @@ const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
                   <ul>
                     {item.children?.map((item) => (
                       <li key={uuidv4()}>
-                        <Link
-                          href={item.href}
-                          className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
-                        >
-                          {item.label}
-                        </Link>
+                        <PopoverClose asChild>
+                          <Link
+                            href={item.href}
+                            className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
+                          >
+                            {item.label}
+                          </Link>
+                        </PopoverClose>
                       </li>
                     ))}
                   </ul>
@@ -102,9 +113,11 @@ const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
  *
  * @return {JSX.Element} The mobile navigation bar component.
  */
-const NavbarLinksMobile = (
-  { categories }: { categories: string[] }
-): JSX.Element => {
+const NavbarLinksMobile = ({
+  categories
+}: {
+  categories: string[]
+}): JSX.Element => {
   return (
     <Sheet>
       <SheetTrigger className='block md:hidden'>
@@ -124,65 +137,63 @@ const NavbarLinksMobile = (
           </SheetDescription>
         </SheetHeader>
         <nav className='flex flex-col gap-4 py-4'>
-          {navItems.map((item) => {
-            if (typeof item.children !== 'string') {
-              return (
-                <div key={uuidv4()} className='space-y-2'>
-                  <SheetClose asChild>
-                    <Popover>
-                      <PopoverTrigger className='flex w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'>
-                        {item.label} <ChevronDown />
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        {item.label === 'Productos' ? (
-                          <ul>
-                            {categories.map((category) => (
-                              <li key={uuidv4()}>
-                                <SheetClose asChild>
-                                  <Link
-                                    href={`/products?category=${category}`}
-                                    className='font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
-                                  >
-                                    {capitalizeFirstLetter(category)}
-                                  </Link>
-                                </SheetClose>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <ul>
-                            {item.children?.map((child) => (
-                              <li key={uuidv4()}>
-                                <SheetClose asChild>
-                                  <Link
-                                    href={child.href}
-                                    className='font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
-                                  >
-                                    {child.label}
-                                  </Link>
-                                </SheetClose>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </PopoverContent>
-                    </Popover>
-                  </SheetClose>
-                </div>
-              )
-            }
+          <Accordion type='single' collapsible>
+            {navItems.map((item) => {
+              if (typeof item.children !== 'string') {
+                return (
+                  <AccordionItem key={uuidv4()} value={`item-${uuidv4()}`}>
+                    <AccordionTrigger className='flex w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'>
+                      {item.label}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      {item.label === 'Productos' ? (
+                        <ul>
+                          {categories.map((category) => (
+                            <li key={uuidv4()}>
+                              <SheetClose asChild>
+                                <Link
+                                  href={`/products?category=${category}`}
+                                  className='font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
+                                >
+                                  {capitalizeFirstLetter(category)}
+                                </Link>
+                              </SheetClose>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <ul>
+                          {item.children?.map((child) => (
+                            <li key={uuidv4()}>
+                              <SheetClose asChild>
+                                <Link
+                                  href={child.href}
+                                  className='font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
+                                >
+                                  {child.label}
+                                </Link>
+                              </SheetClose>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              }
 
-            return (
-              <SheetClose key={uuidv4()} asChild>
-                <Link
-                  href={item.children as string}
-                  className='w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
-                >
-                  {item.label}
-                </Link>
-              </SheetClose>
-            )
-          })}
+              return (
+                <SheetClose key={uuidv4()} asChild>
+                  <Link
+                    href={item.children as string}
+                    className='block w-full cursor-pointer border-b border-gray-200 py-3 font-medium'
+                  >
+                    {item.label}
+                  </Link>
+                </SheetClose>
+              )
+            })}
+          </Accordion>
         </nav>
       </SheetContent>
     </Sheet>
