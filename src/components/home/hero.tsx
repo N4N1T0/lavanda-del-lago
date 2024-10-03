@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
+import { urlize } from '@/lib/utils'
 
 // Assets Imports
 import { Condimento1, Hero1, Sapone } from '@/assets'
@@ -18,17 +19,15 @@ import type { BentoThreeImage, BentofeaturedCategory, Product } from '@/types'
 import { productsByCategory } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
-export const Hero = async (
-  {
-    bentoThreeImages,
-    bentoFeaturedProducto,
-    bentofeaturedCategory
-  }: {
-    bentoThreeImages: BentoThreeImage[]
-    bentoFeaturedProducto: Product
-    bentofeaturedCategory: BentofeaturedCategory
-  }
-) => {
+export const Hero = async ({
+  bentoThreeImages,
+  bentoFeaturedProducto,
+  bentofeaturedCategory
+}: {
+  bentoThreeImages: BentoThreeImage[]
+  bentoFeaturedProducto: Product
+  bentofeaturedCategory: BentofeaturedCategory
+}) => {
   const response: Product[] = await sanityClientRead.fetch(productsByCategory, {
     category: bentofeaturedCategory.title
   })
@@ -79,8 +78,12 @@ export const Hero = async (
                 key={product.id}
               >
                 <Link
-                  href={`/products/${product.id}?category=${product.categoria}`}
                   prefetch
+                  href={
+                    product.name && product.categoria
+                      ? `/products/${urlize(product.name)}?category=${product.categoria}`
+                      : '/products'
+                  }
                 >
                   <Image
                     src={product.image || Condimento1}

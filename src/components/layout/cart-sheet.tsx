@@ -73,7 +73,7 @@ const CartSheet = (): JSX.Element => {
           />
         </div>
       </SheetTrigger>
-      <SheetContent className='flex flex-col items-start justify-between pb-2'>
+      <SheetContent className='flex flex-col items-start justify-between overflow-y-scroll pb-2'>
         <SheetHeader>
           <SheetTitle className='text-2xl'>Carrito de la Compra</SheetTitle>
           <SheetDescription className='sr-only'>
@@ -168,15 +168,13 @@ const CartSheet = (): JSX.Element => {
  * @param {function} props.removeFromCart - The function to remove the product from the cart.
  * @return {JSX.Element} The rendered cart sheet card component.
  */
-const CartSheetCard = (
-  {
-    product,
-    removeFromCart
-  }: {
-    product: CartItem
-    removeFromCart: (id: string) => void
-  }
-): JSX.Element => {
+const CartSheetCard = ({
+  product,
+  removeFromCart
+}: {
+  product: CartItem
+  removeFromCart: (id: string) => void
+}): JSX.Element => {
   // Render a card for each product in the cart
   return (
     <li className='flex rounded-lg bg-neutral-100 px-3 py-6'>

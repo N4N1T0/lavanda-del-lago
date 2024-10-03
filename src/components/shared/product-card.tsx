@@ -76,7 +76,7 @@ const ProductCard = ({
       <div className='flex flex-col items-center justify-start gap-6 self-stretch'>
         <div className='flex flex-col items-start justify-start gap-4 self-stretch'>
           <Link
-            prefetch
+            prefetch={index < 8}
             href={
               nombre && categoria
                 ? `/products/${urlize(nombre)}?category=${categoria}`

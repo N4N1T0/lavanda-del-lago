@@ -334,9 +334,9 @@ export const userById = groq`
   address,
   reseller,
   discount,
-  "document": {
-    "type": document.type,
-    "value": document.value
+  "idDocument": {
+    "type": idDocument.type,
+    "value": idDocument.value
   },
   "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {
     "id": _id,
@@ -345,7 +345,8 @@ export const userById = groq`
         "id": _id,
         nombre,
         "image": fotoPrincipal.asset->url,
-        categoria
+        categoria,
+        precio
       },
       quantity
     },

@@ -319,13 +319,3 @@ export interface CertificationsBlock {
   title: string
   description: Content[]
 }
-
-export interface PurchaseConfirmationEmailProps {
-  customerName: string
-  orderNumber: string
-  totalAmount: string
-  purchaseDate: string
-  id: string
-  reseller: boolean
-  products: Product[]
-}
