@@ -84,7 +84,8 @@ export async function POST(
 
       return NextResponse.json({
         success: true,
-        message: 'The profile has been updated successfully.'
+        message: 'The profile has been updated successfully.',
+        data: id
       })
     } else {
       // Create a new user
@@ -126,7 +127,7 @@ export async function POST(
 
       // Send email to admin
       resend.emails.send({
-        from: 'lavandadellago.es',
+        from: 'info@lavandadellago.es',
         to: 'info@lavandadellago.es',
         subject: 'Nueva Usuario',
         react: NewUserCreatedEmail({

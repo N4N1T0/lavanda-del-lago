@@ -45,7 +45,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     // Send email to admin
     resend.emails.send({
-      from: 'lavandadellago.es',
+      from: 'info@lavandadellago.es',
       to: 'info@lavandadellago.es',
       subject: 'Informe diario de indexación de productos',
       react: DailyIndexingEmail({

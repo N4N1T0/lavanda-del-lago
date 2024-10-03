@@ -77,7 +77,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // Send email to admin
     resend.emails.send({
-      from: 'lavandadellago.es',
+      from: 'info@lavandadellago.es',
       to: 'info@lavandadellago.es',
       subject: 'Nueva solicitud de reseller',
       react: NewResellerApplicationEmail({

@@ -42,7 +42,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // Send email to user
     resend.emails.send({
-      from: 'lavandadellago.es',
+      from: 'info@lavandadellago.es',
       to: jsonBody.email,
       subject: 'Felicidades, eres un reseller',
       react: ResellerWelcomeEmail({
