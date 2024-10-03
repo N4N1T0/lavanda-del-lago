@@ -1,5 +1,9 @@
 # Lavanda del Lago Ecommerce
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-4.0.0-yellow.svg)
+
 Lavanda del Lago is an eCommerce platform built using **Next.js** with a focus on performance, user experience, and simplicity. The project utilizes **Tailwind CSS** and **Shadcn UI** for a custom, responsive UI. It also incorporates **Clerk** for user management and **Sanity** as the CMS, making it a robust solution for modern web commerce.
 
 ## Table of Contents
@@ -106,16 +110,17 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Add Sanity Plugins
 - [x] Cron Job for Orama Index Deploy [Free Cron Job](https://cron-job.org/en/)
 - [x] Resend Configuration
-- [ ] Webhook for Completed Purchase & Purchase Confirmation
-- [ ] User Checkout Configuration
+- [x] User Checkout Configuration
+- [ ] Reseller Profile Improvement (Checkout - Search)
 - [ ] Redsys Configuration
+- [ ] Paypal Configuration
 - [ ] VPS Configuration and Github Actions
 - [ ] Check UI Components (idea for a npm package)
 
 ## TODOS After Deploy
 
 - [ ] Hidration Error (Navbar)
-- [ ] Style and Performance Review (Static Pages)
+- [ ] Performance Review (Queries)
 - [ ] Sanity Handoff
 
 ## Reactemail Template TODOs

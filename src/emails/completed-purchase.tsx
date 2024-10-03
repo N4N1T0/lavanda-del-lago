@@ -1,5 +1,6 @@
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
@@ -8,24 +9,37 @@ import {
   Img,
   Link,
   Preview,
+  Row,
   Section,
   Text
 } from '@react-email/components'
 import { TailwindWrapper } from './email-utils'
-import type { PurchaseConfirmationEmailProps } from '@/types'
+import { Product } from '@/types'
+import { eurilize } from '@/lib/utils'
 
-const baseUrl = 'https://localhost:3000'
+const baseUrl = process.env.CI
+  ? 'http://www.lavandadellago.es'
+  : 'http://localhost:3000'
 
-export const CompletedPurchase = (
-  {
-    customerName = 'Cliente Valorado',
-    orderNumber = '12345',
-    totalAmount = 'N/A',
-    purchaseDate = new Date().toLocaleString('es-ES'),
-    id = '1q2w3e4r5t',
-    reseller = false
-  }: PurchaseConfirmationEmailProps
-) => (
+export interface PurchaseConfirmationEmailProps {
+  customerName: string
+  orderNumber: string
+  totalAmount: number | undefined | string
+  purchaseDate: string | undefined
+  id: string | undefined
+  reseller: boolean | undefined
+  products: { product: Product; quantity: number }[] | []
+}
+
+export const CompletedPurchase = ({
+  customerName = 'Cliente Valorado',
+  orderNumber = '12345',
+  totalAmount = 'N/A',
+  purchaseDate = new Date().toLocaleString('es-ES'),
+  id = '1q2w3e4r5t',
+  reseller = false,
+  products = []
+}: PurchaseConfirmationEmailProps) => (
   <TailwindWrapper>
     <Html>
       <Head />
@@ -51,19 +65,40 @@ export const CompletedPurchase = (
           </Text>
           <Section className='mb-6 rounded-lg bg-gray-100 p-6'>
             <Text className='mb-2 text-sm text-gray-700'>
-              <strong>Número de pedido:</strong> {orderNumber}
+              <strong>Número de pedido:</strong> #{orderNumber}
             </Text>
             <Text className='mb-2 text-sm text-gray-700'>
-              <strong>Total:</strong> {totalAmount}
+              <strong>Total:</strong> {eurilize(Number(totalAmount))}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Fecha de compra:</strong> {purchaseDate}
+              <strong>Fecha de compra:</strong>{' '}
+              {new Date(purchaseDate).toLocaleDateString('es-ES')}
             </Text>
           </Section>
           <Section className='mb-6 mt-3 rounded-lg bg-gray-100 p-6'>
             <Text className='mb-2 text-xl text-gray-700'>
               <strong>Productos:</strong>
             </Text>
+            {products.map(({ product }, quantity) => (
+              <Row
+                key={product.id}
+                className='flex w-full items-center justify-between'
+              >
+                <Column>
+                  <Img
+                    src={product.image}
+                    alt={product.nombre}
+                    title={product.nombre}
+                    width={50}
+                    height={50}
+                    className='aspect-square size-12'
+                  />
+                </Column>
+                <Column>{product.nombre}</Column>
+                <Column>{quantity}</Column>
+                <Column>{eurilize(quantity * product.precio)}</Column>
+              </Row>
+            ))}
           </Section>
           <Text className='mb-6 text-base text-gray-700'>
             Puedes ver los detalles de tu pedido y seguir tu envío haciendo clic
