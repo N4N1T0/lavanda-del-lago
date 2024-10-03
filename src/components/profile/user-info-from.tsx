@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 // UI Imports
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -42,6 +42,7 @@ import type { User } from '@/types'
 import { userSchema, type UserSchemaType } from '@/lib/form-schemas'
 import PasswordCheck from '../checkout/password-check'
 import { useEffect, useMemo } from 'react'
+import Link from 'next/link'
 
 export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
   // TODO OPEN and CLOSE Dialog
@@ -91,6 +92,8 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
       confirmPassword: user?.password || ''
     }
   })
+
+  const isDirty = Object.values(form.formState.dirtyFields).length > 0
 
   // UseEffect para actualizar valores cuando newUser cambie
   useEffect(() => {
@@ -404,14 +407,26 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
             <PasswordCheck form={form} />
           </fieldset>
         )}
-
-        <Button type='submit' disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? (
-            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-          ) : (
-            'Guardar Cambios'
-          )}
-        </Button>
+        {isDirty ? (
+          <Button
+            type='submit'
+            variant='cart'
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+            ) : (
+              'Guardar Cambios'
+            )}
+          </Button>
+        ) : (
+          <Link
+            className={buttonVariants({ variant: 'cart' })}
+            href={`/checkout/review?userId=${user?.id}`}
+          >
+            Continuar
+          </Link>
+        )}
       </form>
     </Form>
   )

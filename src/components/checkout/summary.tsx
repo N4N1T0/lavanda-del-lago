@@ -7,28 +7,68 @@ import { calculateTotal, eurilize } from '@/lib/utils'
 import useShoppingCart from '@/stores/shopping-cart-store'
 
 // Types Imports
-import type { CartItem } from '@/types'
+import type { CartItem, User } from '@/types'
 
 // Next.js Imports
 import Image from 'next/image'
+import Link from 'next/link'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
+
+// UI Imports
+import { Button, buttonVariants } from '@/components/ui/button'
+
+// Assets Imports
+import { Loader2 } from 'lucide-react'
+import { RedirectForm } from 'redsys-easy'
 
 /**
  * Calculate the total price of the items in the shopping cart.
  *
  * @return {JSX.Element} An array containing the subtotal, total, and tax.
  */
-const Summary = (): JSX.Element => {
+const Summary = ({ user }: { user: User | null }): JSX.Element => {
   // Get the shopping cart items and a function to update the cart items
   const [count, setCount] = useShoppingCart()
+  const [isLoading, setIsLoading] = useState(false)
+  const [paymentForm, setPaymentForm] = useState(null)
 
   // Function to remove an item from the shopping cart
   const removeFromCart = (id: string) => {
-    // Filter out the item with the given id
     setCount(count.filter((item) => item.id !== id))
   }
 
   // Calculate the total price of the items in the shopping cart
   const [subTotal, total, iva] = calculateTotal(count)
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          totalAmount: Number(total.split(' ')[0].replace(',', '.')),
+          user: user
+        })
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setPaymentForm(data.data)
+      }
+
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Payment error:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className='col-span-1 h-fit rounded-md border border-accent/50 p-5'>
@@ -64,13 +104,31 @@ const Summary = (): JSX.Element => {
           <h3>Total</h3>
           <p>{total}</p>
         </div>
-        <button
-          type='button'
-          className='flex w-full items-center justify-center rounded-md border border-accent bg-accent px-6 py-3 text-base font-medium text-white shadow-sm transition-colors duration-200 hover:bg-accent/30 hover:text-accent'
-        >
-          Checkout
-        </button>
+        {total === '0,00 €' ? (
+          <Link
+            href='/products'
+            className={`${buttonVariants({ variant: 'cart' })} w-full`}
+          >
+            Comprar ahora
+          </Link>
+        ) : (
+          <form onSubmit={onSubmit}>
+            <Button
+              type='submit'
+              variant='cart'
+              className='w-full'
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              ) : (
+                'Proceder al Pago'
+              )}
+            </Button>
+          </form>
+        )}
       </div>
+      <PaymentForm form={paymentForm} />
     </div>
   )
 }
@@ -83,15 +141,13 @@ const Summary = (): JSX.Element => {
  * @param {function} props.removeFromCart - The function to remove the product from the cart.
  * @return {JSX.Element} The rendered cart card component.
  */
-const SummaryCard = (
-  {
-    product,
-    removeFromCart
-  }: {
-    product: CartItem
-    removeFromCart: (id: string) => void
-  }
-): JSX.Element => {
+const SummaryCard = ({
+  product,
+  removeFromCart
+}: {
+  product: CartItem
+  removeFromCart: (id: string) => void
+}): JSX.Element => {
   // Render a card for each product in the cart
   return (
     <li className='flex rounded-lg bg-neutral-100 px-3 py-6'>
@@ -133,6 +189,41 @@ const SummaryCard = (
         </div>
       </div>
     </li>
+  )
+}
+
+const PaymentForm = ({ form }: { form: RedirectForm | null }) => {
+  const formRef: MutableRefObject<HTMLFormElement | null> = useRef(null)
+
+  useEffect(() => {
+    // Enviar automáticamente el formulario cuando el componente se monta
+    if (formRef.current && form !== null) {
+      formRef.current.submit()
+    }
+  }, [form])
+
+  if (!form) {
+    return null
+  }
+
+  return (
+    <form id='paymentForm' ref={formRef} action={form?.url} method='POST'>
+      <input
+        type='hidden'
+        name='Ds_SignatureVersion'
+        value={form?.body.Ds_SignatureVersion}
+      />
+      <input
+        type='hidden'
+        name='Ds_MerchantParameters'
+        value={form?.body.Ds_MerchantParameters}
+      />
+      <input
+        type='hidden'
+        name='Ds_Signature'
+        value={form?.body.Ds_Signature}
+      />
+    </form>
   )
 }
 

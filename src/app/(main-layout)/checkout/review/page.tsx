@@ -1,12 +1,14 @@
 // Project Components Imports
 import LastMinute from '@/components/checkout/last-minute'
-
-// Queries Imports
-import { userById } from '@/lib/queries'
-import { sanityClientRead } from '@sanity-studio/lib/client'
+import Summary from '@/components/checkout/summary'
 
 // Type Imports
 import type { Metadata } from 'next'
+import { User } from '@/types'
+
+// Queries Imports
+import { sanityClientRead } from '@sanity-studio/lib/client'
+import { userById } from '@/lib/queries'
 
 // Metadata for the Page
 export const metadata: Metadata = {
@@ -25,18 +27,21 @@ const CheckoutReviewPage = async ({
 }: {
   searchParams: { userId: string }
 }): Promise<JSX.Element> => {
-  console.log(searchParams.userId)
   const response: User = await sanityClientRead.fetch(userById, {
     id: searchParams.userId
   })
+
   return (
     <section
       id='checkout info'
-      className='mx-auto grid max-w-screen-lg grid-cols-1 gap-12 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8 lg:py-20'
+      className='relative mx-auto grid max-w-screen-lg grid-cols-1 gap-12 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8 lg:py-20'
     >
-      <h1>{searchParams.userId}</h1>
-      <h3>{response.nombre}</h3>
-      <LastMinute />
+      <div>
+        <Summary user={response} />
+      </div>
+      <article className='sticky top-0 h-fit'>
+        <LastMinute category='Higiene personal' />
+      </article>
     </section>
   )
 }

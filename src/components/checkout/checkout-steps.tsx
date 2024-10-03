@@ -5,6 +5,7 @@ import { Progress } from '@/components/ui/progress'
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
@@ -36,7 +37,6 @@ const CheckoutSteps = () => {
   useEffect(() => {
     // Encuentra el valor correspondiente según el path
     const currentValue = values.find((step) => path === step.label)
-    console.log('currentVale', currentValue)
     if (currentValue) {
       setProgress(currentValue.value)
       setCurrentPage(currentValue.label)
@@ -51,13 +51,17 @@ const CheckoutSteps = () => {
       <div className='mt-5 flex w-full items-end justify-end'>
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem
-              className={
-                currentPage === '/checkout' ? 'font-semibold text-accent' : ''
-              }
-            >
-              Información
-            </BreadcrumbItem>
+            {currentPage === '/checkout' ? (
+              <BreadcrumbItem
+                className={
+                  currentPage === '/checkout' ? 'font-semibold text-accent' : ''
+                }
+              >
+                Información
+              </BreadcrumbItem>
+            ) : (
+              <BreadcrumbLink href='/checkout'>Información</BreadcrumbLink>
+            )}
             <BreadcrumbSeparator />
             <BreadcrumbItem
               className={
