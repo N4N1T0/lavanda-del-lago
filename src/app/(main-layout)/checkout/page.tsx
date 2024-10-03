@@ -42,7 +42,7 @@ const CheckoutInfoPage = async (): Promise<JSX.Element> => {
     >
       <UserProfileForm user={response} />
       <article className='sticky top-0 h-fit'>
-        <LastMinute />
+        <LastMinute category='Bienestar' />
       </article>
     </section>
   )

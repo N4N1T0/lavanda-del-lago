@@ -14,12 +14,16 @@ import type { Product } from '@/types'
  *
  * @return {JSX.Element} A JSX element containing the last-minute products.
  */
-const LastMinute = async (): Promise<JSX.Element> => {
+const LastMinute = async ({
+  category
+}: {
+  category: string
+}): Promise<JSX.Element> => {
   try {
     const response: Product[] = await sanityClientRead.fetch(
       productsByCategory,
       {
-        category: 'Bienestar'
+        category
       }
     )
 
