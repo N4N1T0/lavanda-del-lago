@@ -112,16 +112,19 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Resend Configuration
 - [x] User Checkout Configuration
 - [ ] Reseller Profile Improvement (Checkout - Search)
+- [ ] Performance Improvements (ISR, Dynamic Imports, Hooks)
 - [ ] Redsys Configuration
 - [ ] Paypal Configuration
 - [ ] VPS Configuration and Github Actions
-- [ ] Check UI Components (idea for a npm package)
+- [ ] Check Unused Dependencies and Components
+- [ ] Performance Review (Queries)
 
 ## TODOS After Deploy
 
 - [ ] Hidration Error (Navbar)
-- [ ] Performance Review (Queries)
 - [ ] Sanity Handoff
+- [ ] SEO Improvement (Jld)
+- [ ] Analytics Improvement (PartyTown)
 
 ## Reactemail Template TODOs
 
