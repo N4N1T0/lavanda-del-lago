@@ -160,7 +160,8 @@ export interface InfoCard {
 }
 
 export interface Event {
-  _def: unknown
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _def: any
   description: string
   urls: URL[]
   id: string
