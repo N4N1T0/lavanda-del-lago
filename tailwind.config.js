@@ -10,7 +10,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var defaultTheme_1 = require("tailwindcss/defaultTheme");
-var tailwindcss_animate_1 = require("tailwindcss-animate");
 var config = {
     darkMode: ['class'],
     content: [
@@ -61,6 +60,7 @@ var config = {
             }
         }
     },
-    plugins: [tailwindcss_animate_1.default]
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    plugins: [require('tailwindcss-animate')]
 };
 exports.default = config;
