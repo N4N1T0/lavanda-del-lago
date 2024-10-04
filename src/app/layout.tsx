@@ -42,24 +42,24 @@ export default function RootLayout({
   children: React.ReactNode
 }>): JSX.Element {
   return (
-    <html lang='en'>
-      <body
-        className={cn(
-          'bg-background min-h-screen overflow-x-hidden font-sans antialiased',
-          josefinSand.variable
-        )}
-      >
-        <ClerkProvider
-          localization={esES}
-          appearance={{
-            variables: { colorPrimary: '#694DAB', colorInputText: '#694DAB' }
-          }}
+    <ClerkProvider
+      localization={esES}
+      appearance={{
+        variables: { colorPrimary: '#694DAB', colorInputText: '#694DAB' }
+      }}
+    >
+      <html lang='es' suppressHydrationWarning>
+        <body
+          className={cn(
+            'bg-background min-h-screen overflow-x-hidden font-sans antialiased',
+            josefinSand.variable
+          )}
         >
-          <main>{children}</main>
+          {children}
           <Toaster />
           <SecurityHandling />
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

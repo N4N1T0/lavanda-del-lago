@@ -103,7 +103,7 @@ const SuccesPaymentPage = (): JSX.Element => {
   }, [searchParams, cart])
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-green-100 p-4'>
+    <main className='flex min-h-screen items-center justify-center bg-green-100 p-4'>
       <Card className='w-full max-w-lg border-accent'>
         <CardHeader className='text-center'>
           <CheckCircle2Icon className='mx-auto mb-4 h-16 w-16 text-green-500' />
@@ -161,7 +161,7 @@ const SuccesPaymentPage = (): JSX.Element => {
           </Button>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 

@@ -14,7 +14,7 @@ const ClerkLayout = (
   { children }: { children: React.ReactNode }
 ): JSX.Element => {
   return (
-    <section className='bg-white lg:grid lg:min-h-screen lg:grid-cols-12'>
+    <main className='bg-white lg:grid lg:min-h-screen lg:grid-cols-12'>
       <aside className='bottom-0 left-1/2 right-0 top-0 hidden md:fixed md:block'>
         <Image
           alt='Sign up image'
@@ -27,7 +27,7 @@ const ClerkLayout = (
       <article className='flex h-full items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6'>
         {children}
       </article>
-    </section>
+    </main>
   )
 }
 

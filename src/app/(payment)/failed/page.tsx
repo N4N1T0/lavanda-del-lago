@@ -39,7 +39,7 @@ const FailedPaymentPage = ({
   }
 }): JSX.Element => {
   return (
-    <div className='flex min-h-screen items-center justify-center bg-red-100 p-4'>
+    <main className='flex min-h-screen items-center justify-center bg-red-100 p-4'>
       <Card className='w-full max-w-lg border-accent'>
         <CardHeader className='text-center'>
           <AlertCircle className='mx-auto mb-4 h-16 w-16 text-red-500' />
@@ -108,7 +108,7 @@ const FailedPaymentPage = ({
           </Button>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 
