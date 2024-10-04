@@ -1,5 +1,8 @@
 'use client'
 
+// Project Components Imports
+import PaypalButton from '@/components/checkout/paypal-button'
+
 // Utilitys Imports
 import { calculateTotal, eurilize } from '@/lib/utils'
 
@@ -127,6 +130,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
             </Button>
           </form>
         )}
+        <PaypalButton />
       </div>
       <PaymentForm form={paymentForm} />
     </div>

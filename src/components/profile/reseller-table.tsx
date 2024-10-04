@@ -16,29 +16,27 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Dispatch, SetStateAction } from 'react'
 
-const ResellerTable = (
-  {
-    products,
-    selectedProducts,
-    toggleProductSelection,
-    discount,
-    updateQuantity,
-    setQuantities,
-    quantities
-  }: {
-    products: Product[]
-    selectedProducts: Set<string>
-    toggleProductSelection: (id: string) => void
-    discount: number | null
-    updateQuantity: (id: string, delta: number) => void
-    setQuantities: Dispatch<
-      SetStateAction<{
-        [key: string]: number
-      }>
-    >
-    quantities: { [key: string]: number }
-  }
-) => {
+const ResellerTable = ({
+  products,
+  selectedProducts,
+  toggleProductSelection,
+  discount,
+  updateQuantity,
+  setQuantities,
+  quantities
+}: {
+  products: Product[]
+  selectedProducts: Set<string>
+  toggleProductSelection: (id: string) => void
+  discount: number | null | undefined
+  updateQuantity: (id: string, delta: number) => void
+  setQuantities: Dispatch<
+    SetStateAction<{
+      [key: string]: number
+    }>
+  >
+  quantities: { [key: string]: number }
+}) => {
   discount = discount ?? 10
 
   return (

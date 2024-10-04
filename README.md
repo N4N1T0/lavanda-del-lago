@@ -125,7 +125,7 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 
 ## Reactemail Template TODOs
 
-- [ ] React Email Template for Completed Purchase (for User & Admins)
+- [x] React Email Template for Completed Purchase (for User & Admins)
 - [x] React Email Template for Reseller Form
 - [x] React Email Template for User Auth
 - [x] React Email Template for Newsletter
