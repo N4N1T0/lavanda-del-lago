@@ -37,6 +37,11 @@ export async function seoMetatags(): Promise<Metadata> {
       'nextjs',
       'boilerplate'
     ],
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon-16x16.png',
+      apple: '/apple-touch-icon.png'
+    },
     creator: 'Adrian Alvarez',
     publisher: 'Lavanda del Lago',
     category: 'E-commerce, Productos de Lavanda, Salud y Belleza',
