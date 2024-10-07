@@ -67,15 +67,13 @@ const ClientProductPage = ({ products }: { products: Product[] }) => {
   )
 }
 
-const ProductPageHeader = (
-  {
-    productsLength,
-    setFilter
-  }: {
-    productsLength: number
-    setFilter: React.Dispatch<React.SetStateAction<string>>
-  }
-): JSX.Element => {
+const ProductPageHeader = ({
+  productsLength,
+  setFilter
+}: {
+  productsLength: number
+  setFilter: React.Dispatch<React.SetStateAction<string>>
+}): JSX.Element => {
   return (
     <header className='flex w-full flex-row-reverse items-center justify-between px-2 py-4 md:flex-row'>
       <p className='text-sm text-gray-600 md:text-base'>

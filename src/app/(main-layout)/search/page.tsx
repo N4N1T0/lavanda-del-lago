@@ -3,13 +3,11 @@ import { oramaClient } from '@/lib/orama'
 import type { Metadata } from 'next'
 
 // function to generate metadata
-export async function generateMetadata(
-  {
-    searchParams
-  }: {
-    searchParams?: Record<string, string | string[] | undefined>
-  }
-): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Record<string, string | string[] | undefined>
+}): Promise<Metadata> {
   return {
     title: `${searchParams?.q || 'Busqueda'}`,
     description: `Busqueda dentro de los productos de Lavanda del lago para: ${
@@ -24,13 +22,11 @@ export async function generateMetadata(
  * @param {Record<string, string | string[] | undefined>} searchParams - An object containing search parameters.
  * @return {Promise<JSX.Element | null>} A JSX element representing the search page, or null if no results are found.
  */
-const SearchPage = async (
-  {
-    searchParams
-  }: {
-    searchParams?: Record<string, string | string[] | undefined>
-  }
-): Promise<JSX.Element | null> => {
+const SearchPage = async ({
+  searchParams
+}: {
+  searchParams?: Record<string, string | string[] | undefined>
+}): Promise<JSX.Element | null> => {
   // Extract search value from search parameters
   const { q: searchValue } = searchParams as Record<string, string>
 

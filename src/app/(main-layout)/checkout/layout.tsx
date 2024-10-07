@@ -7,9 +7,11 @@ import CheckoutSteps from '@/components/checkout/checkout-steps'
  * @param {React.ReactNode} props.children - The children to be rendered inside the main content area.
  * @return {JSX.Element} The main layout JSX element.
  */
-const CheckoutLayout = (
-  { children }: { children: React.ReactNode }
-): JSX.Element => {
+const CheckoutLayout = ({
+  children
+}: {
+  children: React.ReactNode
+}): JSX.Element => {
   return (
     <>
       <CheckoutSteps />

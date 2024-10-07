@@ -18,9 +18,13 @@ import ResellerTable from '@/components/profile/reseller-table'
  * @param {Product[]} products - An array of product objects.
  * @return {JSX.Element} The ResellerLayout component.
  */
-const ResellerLayout = (
-  { user, products }: { user: User; products: Product[] }
-): JSX.Element => {
+const ResellerLayout = ({
+  user,
+  products
+}: {
+  user: User
+  products: Product[]
+}): JSX.Element => {
   // State Variables for Quantities using the product id as the key
   const [quantities, setQuantities] = useState<{ [key: string]: number }>(
     Object.fromEntries(products.map((p) => [p.id, 0]))

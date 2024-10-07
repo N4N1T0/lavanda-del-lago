@@ -90,15 +90,13 @@ const WishlistCart = (): JSX.Element => {
  * @param {Function} props.removeFromWishlist - The function to remove the product from the wishlist.
  * @return {JSX.Element} The rendered card component.
  */
-const WishlistCartSheetCard = (
-  {
-    product,
-    removeFromWishlist
-  }: {
-    product: Product
-    removeFromWishlist: (id: string) => void
-  }
-): JSX.Element => {
+const WishlistCartSheetCard = ({
+  product,
+  removeFromWishlist
+}: {
+  product: Product
+  removeFromWishlist: (id: string) => void
+}): JSX.Element => {
   return (
     <li className='relative flex items-center rounded-lg bg-neutral-100 px-3 py-6'>
       {/* Image of the product */}
@@ -151,15 +149,13 @@ const WishlistCartSheetCard = (
  * @param {Function} props.removeFromWishlist - The function to remove the product from the wishlist.
  * @return {JSX.Element} The rendered footer component.
  */
-const WishlistCartSheetCardFooter = (
-  {
-    product,
-    removeFromWishlist
-  }: {
-    product: Product
-    removeFromWishlist: (id: string) => void
-  }
-): JSX.Element => {
+const WishlistCartSheetCardFooter = ({
+  product,
+  removeFromWishlist
+}: {
+  product: Product
+  removeFromWishlist: (id: string) => void
+}): JSX.Element => {
   return (
     <div className='mt-2 w-full border-t border-accent/70 pt-2'>
       <QuantitySmall prduct={product} removeFromWishlist={removeFromWishlist} />

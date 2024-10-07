@@ -11,9 +11,11 @@ import type { Posts } from '@/types'
  * @param {Posts[]} props.articles - An array of blog articles to be rendered.
  * @return {JSX.Element} A section containing a grid of featured blog articles.
  */
-const FeaturedBlogArticles = (
-  { articles }: { articles: Posts[] }
-): JSX.Element => {
+const FeaturedBlogArticles = ({
+  articles
+}: {
+  articles: Posts[]
+}): JSX.Element => {
   return (
     <section id='featured' className='container mx-auto px-4 py-12'>
       <h2 className='mb-8 text-center text-3xl font-bold'>

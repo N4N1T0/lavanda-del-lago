@@ -12,9 +12,11 @@ import type { InfoCard as InfoCardProps } from '@/types'
  *
  * @return {JSX.Element} The rendered Info section.
  */
-export const Info = (
-  { infoCards }: { infoCards: InfoCardProps[] }
-): JSX.Element => (
+export const Info = ({
+  infoCards
+}: {
+  infoCards: InfoCardProps[]
+}): JSX.Element => (
   <section
     id='info'
     className='flex flex-col items-center justify-center gap-2.5 bg-accent py-10 text-white 2xl:py-20'

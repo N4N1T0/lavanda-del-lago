@@ -101,7 +101,7 @@ export default {
         }
       ],
       description: 'La lista de equipos'
-    },
+    }
   ],
   preview: {
     select: {

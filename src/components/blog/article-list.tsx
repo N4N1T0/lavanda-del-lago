@@ -9,9 +9,11 @@ import { ArticleListCard } from '@/components/blog/article-card'
  *
  * @return {Promise<JSX.Element>} A JSX element containing the list of articles.
  */
-const ArticleList = async (
-  { articles }: { articles: Posts[] }
-): Promise<JSX.Element> => {
+const ArticleList = async ({
+  articles
+}: {
+  articles: Posts[]
+}): Promise<JSX.Element> => {
   return (
     <section id='article-list' className='container mx-auto px-4 py-12'>
       <h2 className='mb-8 text-center text-3xl font-bold'>

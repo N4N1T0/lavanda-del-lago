@@ -25,9 +25,11 @@ import {
  * @param {Product} props.product - The product data.
  * @return {JSX.Element} The product characteristics section.
  */
-const ProductCaracteristics = (
-  { product }: { product: Product }
-): JSX.Element => {
+const ProductCaracteristics = ({
+  product
+}: {
+  product: Product
+}): JSX.Element => {
   // Deconstruction with default values in Spanish
 
   return (

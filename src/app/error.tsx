@@ -29,9 +29,13 @@ export const metadata: Metadata = {
   description: 'Error Interno'
 }
 
-const ErrorPage = (
-  { error, reset }: { error: Error & { digest?: string }; reset: () => void }
-) => {
+const ErrorPage = ({
+  error,
+  reset
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) => {
   // Router initialitation
   const router = useRouter()
 

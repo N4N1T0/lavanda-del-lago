@@ -5,9 +5,13 @@ import type { Posts } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const ArticleCard = (
-  { article, index = 1 }: { article: Posts; index?: number }
-): JSX.Element => {
+const ArticleCard = ({
+  article,
+  index = 1
+}: {
+  article: Posts
+  index?: number
+}): JSX.Element => {
   return (
     <Link
       key={article.id}

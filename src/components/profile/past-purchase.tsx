@@ -20,9 +20,11 @@ import { Package } from 'lucide-react'
  * @param {User['pastPurchases']} purchases - A list of past purchases made by the user.
  * @return {JSX.Element} A JSX element representing the PastPurchasesCard component.
  */
-const PastPurchasesCard = (
-  { purchases }: { purchases: User['pastPurchases'] }
-): JSX.Element => {
+const PastPurchasesCard = ({
+  purchases
+}: {
+  purchases: User['pastPurchases']
+}): JSX.Element => {
   return (
     <Card className='border border-accent/70'>
       <CardHeader>

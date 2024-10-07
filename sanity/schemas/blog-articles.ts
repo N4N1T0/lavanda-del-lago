@@ -86,7 +86,7 @@ export default {
       title: 'Destacado',
       type: 'boolean',
       description: 'Si el artículo debe ser destacado en la página principal.'
-    },
+    }
   ],
   preview: {
     select: {

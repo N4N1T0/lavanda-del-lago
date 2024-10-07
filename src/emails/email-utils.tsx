@@ -1,9 +1,11 @@
 import { Tailwind } from '@react-email/components'
 import { fontFamily } from 'tailwindcss/defaultTheme'
 
-export const TailwindWrapper = (
-  { children }: { children: React.ReactNode }
-) => {
+export const TailwindWrapper = ({
+  children
+}: {
+  children: React.ReactNode
+}) => {
   return (
     <Tailwind
       config={{
