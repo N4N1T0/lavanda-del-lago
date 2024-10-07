@@ -1,4 +1,11 @@
-import { Button } from '@/components/ui/button'
+'use client'
+
+// Next.js Imports
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState, type Dispatch, type SetStateAction, useEffect } from 'react'
+
+// UI Imports
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import {
@@ -9,12 +16,19 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+
+// External Packages Imports
+import { useDebounce } from 'use-debounce'
+
+// Utils Imports
 import { eurilize, urlize } from '@/lib/utils'
+
+// Type Imports
 import type { Product } from '@/types'
-import { MinusCircle, PlusCircle } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import type { Dispatch, SetStateAction } from 'react'
+
+// Store Importss
+import useShoppingCart from '@/stores/shopping-cart-store'
+import { ResellerTableQuantity } from '@/components/shared/quantity'
 
 const ResellerTable = ({
   products,
@@ -37,11 +51,78 @@ const ResellerTable = ({
   >
   quantities: { [key: string]: number }
 }) => {
-  discount = discount ?? 10
+  // Search input state
+  const [searchValue, setSearchValue] = useState('')
+  // Filtered products based on search
+  const [filteredProducts, setFilteredProducts] = useState(products)
+  // Debounced search value to prevent excessive filtering
+  const [debouncedSearchValue] = useDebounce(searchValue, 300)
+  // Already Items in the Checkout
+  const [count] = useShoppingCart()
+  // Flag to avoid setting state on every render
+  const [initialized, setInitialized] = useState(false)
+
+  // Use effect to filter products when debounced search value changes
+  useEffect(() => {
+    const filtered = products.filter((product) =>
+      product.nombre.toLowerCase().includes(debouncedSearchValue.toLowerCase())
+    )
+    setFilteredProducts(filtered)
+  }, [debouncedSearchValue, products])
+
+  // Pre-select items that are already in the shopping cart
+  useEffect(() => {
+    if (!initialized && count && count.length > 0) {
+      count.forEach((item) => {
+        toggleProductSelection(item.id)
+        setQuantities((prev) => ({
+          ...prev,
+          [item.id]: item.quantity // assuming each cart item has a quantity property
+        }))
+      })
+      setInitialized(true) // Set initialized to true after setting quantities
+    }
+  }, [count, toggleProductSelection, setQuantities, initialized])
+
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value)
+  }
+
+  // Handle quantity input change
+  const handleQuantityChange =
+    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      // Get new quantity from input
+      const newQuantity = Number.parseInt(e.target.value) || 0
+      // Update quantities object with new quantity
+      setQuantities((prev) => ({
+        ...prev,
+        [id]: Math.max(0, newQuantity) // Prevent negative quantities
+      }))
+    }
+
+  // Render description with truncated text
+  const renderDescription = (description: string) => {
+    return description
+      ? `${description.split(' ').slice(0, 10).join(' ')} ...`
+      : 'Estamos trabajando en una descripci&oacute;n'
+  }
 
   return (
     <section id='reseller-products' className='container mx-auto p-4'>
-      <h1 className='mb-6 text-3xl font-bold'>Lista de Productos</h1>
+      <div className='mb-6 flex w-full items-center justify-between'>
+        <h1 className='text-3xl font-bold'>Lista de Productos</h1>
+        <label htmlFor='product-search' className='sr-only'>
+          Buscar productos:
+        </label>
+        <Input
+          id='product-search'
+          type='search'
+          placeholder='Buscar productos...'
+          className='max-w-xs'
+          onChange={handleSearchChange}
+        />
+      </div>
       <Table>
         <TableHeader className='hidden md:table-header-group'>
           <TableRow className='border-accent/50 text-accent/60 hover:bg-white'>
@@ -55,95 +136,67 @@ const ResellerTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
-            <TableRow key={product.id} className='border-accent/50'>
-              <TableCell>
-                <Checkbox
-                  checked={selectedProducts.has(product.id)}
-                  onCheckedChange={() => toggleProductSelection(product.id)}
-                />
-              </TableCell>
-              <TableCell className='w-[100px]'>
-                <Link
-                  href={
-                    product.nombre && product.categoria
-                      ? `/products/${urlize(product.nombre)}?category=${
-                          product.categoria
-                        }`
-                      : '/products'
-                  }
-                  target='_blank'
-                  className='group'
-                >
-                  <Image
-                    src={product.image}
-                    alt={product.nombre}
-                    width={50}
-                    height={50}
-                    className='duration-200: rounded-md transition-opacity group-hover:opacity-70'
+          {filteredProducts.map(
+            ({ id, nombre, categoria, image, descripcion, precio }) => (
+              <TableRow key={id} className='border-accent/50'>
+                <TableCell>
+                  <Checkbox
+                    checked={selectedProducts.has(id)}
+                    onCheckedChange={() => toggleProductSelection(id)}
                   />
-                </Link>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>
-                <Link
-                  href={
-                    product.nombre && product.categoria
-                      ? `/products/${urlize(product.nombre)}?category=${
-                          product.categoria
-                        }`
-                      : '/products'
-                  }
-                  target='_blank'
-                  className='transition-colors duration-200 hover:text-accent'
-                >
-                  {product.nombre}
-                </Link>
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>
-                {`${product.descripcion
-                  ?.split(' ')
-                  .slice(0, 10)
-                  .join(' ')} ...` ||
-                  'Estamos trabajando en una descripci&oacute;n'}
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>
-                {eurilize(product.precio)}
-              </TableCell>
-              <TableCell className='hidden md:table-cell'>
-                {eurilize(product.precio - product.precio * (discount / 100))}
-              </TableCell>
-              <TableCell>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => updateQuantity(product.id, -1)}
+                </TableCell>
+                <TableCell className='w-[100px]'>
+                  <Link
+                    href={
+                      nombre && categoria
+                        ? `/products/${urlize(nombre)}?category=${categoria}`
+                        : '/products'
+                    }
+                    target='_blank'
+                    className='group'
                   >
-                    <MinusCircle className='h-4 w-4' />
-                  </Button>
-                  <Input
-                    type='number'
-                    value={quantities[product.id]}
-                    onChange={(e) => {
-                      const newQuantity = Number.parseInt(e.target.value) || 0
-                      setQuantities((prev) => ({
-                        ...prev,
-                        [product.id]: Math.max(0, newQuantity)
-                      }))
-                    }}
-                    className='w-16 text-center'
+                    <Image
+                      src={image}
+                      alt={nombre}
+                      width={50}
+                      height={50}
+                      className='duration-200: h-auto w-auto rounded-md transition-opacity group-hover:opacity-70'
+                    />
+                  </Link>
+                </TableCell>
+                <TableCell className='hidden md:table-cell'>
+                  <Link
+                    href={
+                      nombre && categoria
+                        ? `/products/${urlize(nombre)}?category=${categoria}`
+                        : '/products'
+                    }
+                    target='_blank'
+                    className='transition-colors duration-200 hover:text-accent'
+                  >
+                    {nombre}
+                  </Link>
+                </TableCell>
+                <TableCell className='hidden md:table-cell'>
+                  {renderDescription(descripcion)}
+                </TableCell>
+                <TableCell className='hidden md:table-cell'>
+                  {eurilize(precio)}
+                </TableCell>
+                <TableCell className='hidden md:table-cell'>
+                  {eurilize(precio - precio * (discount = discount ?? 0.1))}
+                </TableCell>
+                <TableCell>
+                  <ResellerTableQuantity
+                    id={id}
+                    quantities={quantities}
+                    setQuantities={handleQuantityChange}
+                    updateQuantity={updateQuantity}
                   />
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => updateQuantity(product.id, 1)}
-                  >
-                    <PlusCircle className='h-4 w-4' />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
       </Table>
     </section>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Server Functions Imports
 import { type NextRequest, NextResponse } from 'next/server'
 
@@ -22,6 +23,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // Get the current user
     const user = await currentUser()
 
+    // Get the current date in ISO format
+    const date = new Date().toISOString()
+
     // If no user is found, redirect to the sign-in page
     if (!user) {
       return NextResponse.redirect('/sign-in')
@@ -31,7 +35,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const { id, fullName, emailAddresses, imageUrl } = user
 
     // Create the user document in Sanity if it doesn't already exist
-    await sanityClientWrite.createIfNotExists({
+    const response: any = await sanityClientWrite.createIfNotExists({
       _type: 'user',
       _id: id,
       name: fullName,
@@ -39,18 +43,20 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       image: imageUrl
     })
 
-    // Send email to admin
-    resend.emails.send({
-      from: 'info@lavandadellago.es',
-      to: 'info@lavandadellago.es',
-      subject: 'Nueva Usuario',
-      react: NewUserCreatedEmail({
-        nombre: fullName || '',
-        email: emailAddresses[0].emailAddress,
-        fecha: new Date().toLocaleDateString('es-ES'),
-        link: `https://lavandadellago.es/studio/structure/usuariosYVentas;user;${id}`
+    if (response._createdAt === date) {
+      // Send email to admin
+      resend.emails.send({
+        from: 'info@lavandadellago.es',
+        to: 'info@lavandadellago.es',
+        subject: 'Nueva Usuario',
+        react: NewUserCreatedEmail({
+          nombre: fullName || '',
+          email: emailAddresses[0].emailAddress,
+          fecha: new Date().toLocaleDateString('es-ES'),
+          link: `https://lavandadellago.es/studio/structure/usuariosYVentas;user;${id}`
+        })
       })
-    })
+    }
 
     // Redirect to the main URL after successful operation
     const baseUrl =

@@ -12,6 +12,8 @@ import useShoppingCart from '@/stores/shopping-cart-store'
 
 // Store Imports
 import { useState } from 'react'
+import { MinusCircle, PlusCircle } from 'lucide-react'
+import { Input } from '../ui/input'
 
 /**
  * Renders a quantity input field with increment and decrement buttons, and a button to add the selected quantity to the cart.
@@ -117,15 +119,13 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
   )
 }
 
-const QuantitySmall = (
-  {
-    prduct,
-    removeFromWishlist
-  }: {
-    prduct: Product
-    removeFromWishlist: (id: string) => void
-  }
-): JSX.Element => {
+const QuantitySmall = ({
+  prduct,
+  removeFromWishlist
+}: {
+  prduct: Product
+  removeFromWishlist: (id: string) => void
+}): JSX.Element => {
   // State to hold the selected quantity
   const [quantity, setQuantity] = useState(1)
   // Get the cart items and a function to update the cart items from the shopping cart store
@@ -224,4 +224,50 @@ const QuantitySmall = (
   )
 }
 
-export { Quantity, QuantitySmall }
+const ResellerTableQuantity = ({
+  updateQuantity,
+  quantities,
+  id,
+  setQuantities
+}: {
+  updateQuantity: (id: string, delta: number) => void
+  quantities: { [key: string]: number }
+  id: string
+  setQuantities: (
+    id: string
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void
+}) => {
+  return (
+    <div className='flex items-center space-x-2'>
+      <label htmlFor='Quantity' className='sr-only'>
+        Quantity
+      </label>
+      <Button
+        variant='outline'
+        size='icon'
+        onClick={() => updateQuantity(id, -1)}
+        disabled={quantities[id] <= 0}
+        aria-label='Disminuir cantidad'
+      >
+        <MinusCircle className='h-4 w-4' />
+      </Button>
+      <Input
+        type='number'
+        id='Quantity'
+        value={quantities[id] || 0}
+        onChange={setQuantities(id)}
+        className='w-16 text-center'
+      />
+      <Button
+        variant='outline'
+        size='icon'
+        onClick={() => updateQuantity(id, 1)}
+        aria-label='Incrementar cantidad'
+      >
+        <PlusCircle className='h-4 w-4' />
+      </Button>
+    </div>
+  )
+}
+
+export { Quantity, QuantitySmall, ResellerTableQuantity }

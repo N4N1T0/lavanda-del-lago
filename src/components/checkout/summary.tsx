@@ -55,7 +55,11 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         },
         body: JSON.stringify({
           totalAmount: Number(total.split(' ')[0].replace(',', '.')),
-          user: user
+          user: user,
+          products: count.map((item) => ({
+            id: item.id,
+            quantity: item.quantity
+          }))
         })
       })
 

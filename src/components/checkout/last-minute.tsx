@@ -1,6 +1,8 @@
 // Project component imports
 import { ProductCard } from '@/components/shared/product-card'
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
+import ServerFetchError from '@/components/shared/server-fetch-error'
+
+import NoData from '@/components/shared/no-data'
 
 // Queries imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
@@ -10,9 +12,11 @@ import { productsByCategory } from '@/lib/queries'
 import type { Product } from '@/types'
 
 /**
- * Fetches and renders a list of last-minute products from the Fake Store API.
+ * Fetches and renders a list of last-minute products from the Sanity API.
  *
- * @return {JSX.Element} A JSX element containing the last-minute products.
+ * @param {Object} params - Component props
+ * @param {string} params.category - The category of products to fetch
+ * @return {Promise<JSX.Element>} A JSX element containing the last-minute products.
  */
 const LastMinute = async ({
   category
@@ -20,18 +24,22 @@ const LastMinute = async ({
   category: string
 }): Promise<JSX.Element> => {
   try {
-    const response: Product[] = await sanityClientRead.fetch(
+    const response = await sanityClientRead.fetch<Product[]>(
       productsByCategory,
       {
         category
       }
     )
 
+    if (response.length === 0) {
+      return <NoData data='No hay Articulosde ultimo minuto' />
+    }
+
     return (
       <article className='mt-10'>
-        <h2 className='mb-4 text-2xl'>Última Oportunidad</h2>
+        <h2 className='mb-4 text-2xl'>Última Oportunidad</h2>
         <ul className='grid grid-cols-2 gap-3'>
-          {response.slice(0, 2).map((product: Product, index: number) => (
+          {response.slice(0, 2).map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -43,7 +51,7 @@ const LastMinute = async ({
       </article>
     )
   } catch (error) {
-    console.error(error)
+    console.error('Error fetching last-minute products:', error)
     return <ServerFetchError error={error} />
   }
 }

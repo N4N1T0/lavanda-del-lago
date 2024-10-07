@@ -40,7 +40,11 @@ const PaypalButton = () => {
   }
   return (
     <PayPalScriptProvider options={{ clientId: 'test' }}>
-      <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
+      <PayPalButtons
+        createOrder={createOrder}
+        onApprove={onApprove}
+        style={{ layout: 'horizontal', color: 'blue', tagline: false }}
+      />
     </PayPalScriptProvider>
   )
 }
