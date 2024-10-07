@@ -3,16 +3,25 @@ import { processRestNotification } from '@/lib/redsys'
 
 // Queries Imports
 import { sanityClientWrite } from '@sanity-studio/lib/client'
+import { userByIdCompleted } from '@/lib/queries'
 
 // Type imports
 import type { ResponseJSONSuccess } from 'redsys-easy'
-import { type NextRequest, NextResponse } from 'next/server'
-import { resend } from '@/lib/resend'
-import CompletedPurchase from '@/emails/completed-purchase'
 import { Purchase } from '@/types/sanity'
 import { Product, User } from '@/types'
-import { userById } from '@/lib/queries'
 
+// Next.js Imports
+import { type NextRequest, NextResponse } from 'next/server'
+
+// Resend Imports
+import { resend } from '@/lib/resend'
+import CompletedPurchase from '@/emails/completed-purchase'
+
+/**
+ * Procesa la notificación de pago de Redsys.
+ * @param req Solicitud de Next.js.
+ * @returns Respuesta de Next.js con el estado de la solicitud.
+ */
 export async function POST(req: NextRequest) {
   console.log('Notification received')
 
@@ -37,19 +46,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false }, { status: 500 })
     }
 
-    const userResponse: User = await sanityClientWrite.fetch(userById, {
-      id: response.userEmail?._ref
-    })
+    const userResponse: User = await sanityClientWrite.fetch(
+      userByIdCompleted,
+      {
+        id: response.userEmail?._ref
+      }
+    )
 
     if (!userResponse) {
       console.log('No se pudo obtener el usuario')
       return NextResponse.json({ success: false }, { status: 500 })
     }
-
-    console.log(
-      'User response =>',
-      userResponse.pastPurchases?.find((p) => p.id === orderId)?.products
-    )
 
     // Send email to user
     await resend.emails.send({

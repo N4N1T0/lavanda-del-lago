@@ -1,8 +1,5 @@
-'use client'
-
 // Next.js Imports
-import { useEffect, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
+import React from 'react'
 import Link from 'next/link'
 
 // UI Imports
@@ -26,81 +23,69 @@ import {
 // Types Imports
 import { Purchase } from '@/types/sanity'
 import { eurilize } from '@/lib/utils'
+import { redirect } from 'next/navigation'
+import { sanityClientWrite } from '@sanity-studio/lib/client'
 
-// Queries Imports
-import { useSearchParams } from 'next/navigation'
-import useShoppingCart from '@/stores/shopping-cart-store'
+// Define the Server Component
+const SuccesPaymentPage = async ({
+  searchParams
+}: {
+  searchParams: {
+    userId: string
+    userName: string
+    orderId: string
+    totalAmount: number
+    reseller: string
+    userEmail: string
+    products: string
+  }
+}): Promise<JSX.Element> => {
+  // Destructure search parameters
+  const {
+    userId,
+    userName,
+    orderId,
+    totalAmount,
+    reseller,
+    userEmail,
+    products: productsParam
+  } = searchParams
 
-const SuccesPaymentPage = (): JSX.Element => {
-  const [cart] = useShoppingCart() // Obtener productos del carrito
-  const searchParamsRaw = useSearchParams()
-  const router = useRouter() // Usar el enrutador de Next.js
+  // Verify the presence of required parameters
+  if (
+    !orderId ||
+    !totalAmount ||
+    !reseller ||
+    !userId ||
+    !userName ||
+    !userEmail
+  ) {
+    redirect('/')
+  }
 
-  const searchParams = useMemo(() => {
-    const params = {} as Record<string, string>
-    searchParamsRaw.forEach((value, key) => {
-      params[key] = value
-    })
-    return params
-  }, [searchParamsRaw])
+  // Parse products from the URL parameter
+  const products: Purchase['products'] = productsParam
+    ? JSON.parse(decodeURIComponent(productsParam))
+    : []
 
-  // Verificar si los parámetros de búsqueda son válidos
-  useEffect(() => {
-    if (
-      !searchParams.orderId ||
-      !searchParams.userEmail ||
-      !searchParams.totalAmount ||
-      !searchParams.reseller ||
-      !searchParams.userId
-    ) {
-      // Redirigir a la página principal si falta algún valor
-      router.push('/')
-    }
-  }, [searchParams, router])
-
-  // Create purchase on component mount
-  useEffect(() => {
-    const createPurchase = async () => {
-      const products: Purchase['products'] = cart.map((item) => ({
-        product: {
-          _ref: item.id,
-          _type: 'reference'
-        },
-        quantity: item.quantity,
-        _key: item.id
-      }))
-
-      if (products.length === 0) return
-
-      // Create purchase
-      try {
-        const response = await fetch('/api/create-purchase', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            orderId: searchParams.orderId,
-            userEmail: searchParams.userEmail,
-            totalAmount: searchParams.totalAmount,
-            reseller: searchParams.reseller === 'true',
-            userId: searchParams.userId,
-            products
-          })
-        })
-
-        const resopnseData = await response.json()
-
-        if (!resopnseData.success) {
-          throw new Error('Failed to create purchase')
-        }
-      } catch (error) {
-        console.error('Error creating purchase:', error)
-      }
-    }
-
-    createPurchase()
-  }, [searchParams, cart])
+  // create the Purchase Order
+  await sanityClientWrite.createIfNotExists<Purchase>({
+    _type: 'purchase',
+    _id: orderId,
+    purchaseDate: new Date().toISOString(),
+    userEmail: {
+      _ref: userId,
+      _type: 'reference'
+    },
+    totalAmount: Number(totalAmount),
+    status: 'pendiente',
+    reseller: reseller === 'true',
+    paymentMethod: 'tarjeta_credito',
+    products,
+    _createdAt: new Date().toISOString(),
+    _updatedAt: new Date().toISOString(),
+    _rev: orderId
+  })
 
   return (
     <main className='flex min-h-screen items-center justify-center bg-green-100 p-4'>
@@ -114,7 +99,7 @@ const SuccesPaymentPage = (): JSX.Element => {
         <CardContent className='space-y-4'>
           <p className='text-center text-gray-600'>
             <span className='block text-lg font-bold text-accent'>
-              {decodeURIComponent(searchParams.userName)}
+              {decodeURIComponent(userName)}
             </span>
             Gracias por tu compra. Tu pedido ha sido procesado con éxito.
           </p>
@@ -125,11 +110,11 @@ const SuccesPaymentPage = (): JSX.Element => {
           <div className='space-y-2 rounded-lg bg-[#694DAB10] p-4'>
             <div className='flex items-center justify-between'>
               <span className='font-semibold'>Número de Pedido:</span>
-              <span>#{searchParams.orderId}</span>
+              <span>#{orderId}</span>
             </div>
             <div className='flex items-center justify-between'>
               <span className='font-semibold'>Monto Total:</span>
-              <span>{eurilize(Number(searchParams.totalAmount || '0'))}</span>
+              <span>{eurilize(Number(totalAmount || '0'))}</span>
             </div>
           </div>
           <div className='flex items-center justify-center space-x-2 text-sm text-gray-600'>
@@ -148,10 +133,9 @@ const SuccesPaymentPage = (): JSX.Element => {
           <Button variant='default'>
             <Link
               href={
-                searchParams.reseller === 'true' ||
-                searchParams.reseller !== 'null'
-                  ? `/reseller/${searchParams.userId}`
-                  : `/profile/${searchParams.userId}`
+                reseller === 'true' || reseller !== 'null'
+                  ? `/reseller/${userId}`
+                  : `/profile/${userId}`
               }
               className='flex items-center'
             >
