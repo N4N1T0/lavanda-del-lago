@@ -2,6 +2,8 @@
 
 // Next.js Imports
 import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useEffect } from 'react'
 
 // Forms Imports
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,22 +19,9 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
+import { Form } from '@/components/ui/form'
+import PasswordCheck from '@/components/checkout/password-check'
+import FormFieldComponent from '@/components/shared/form-fields'
 
 // Assets Imports
 import { Loader2, Pencil } from 'lucide-react'
@@ -40,9 +29,9 @@ import { Loader2, Pencil } from 'lucide-react'
 // Types Imports
 import type { User } from '@/types'
 import { userSchema, type UserSchemaType } from '@/lib/form-schemas'
-import PasswordCheck from '../checkout/password-check'
-import { useEffect, useMemo } from 'react'
-import Link from 'next/link'
+
+// Data Imports
+import { localities } from '@/constants/site-data'
 
 export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
   // TODO OPEN and CLOSE Dialog
@@ -129,64 +118,9 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
     }
   }
 
-  // Memoized localities
-  const localities = useMemo(
-    () => [
-      'Álava',
-      'Albacete',
-      'Alicante',
-      'Almería',
-      'Asturias',
-      'Ávila',
-      'Badajoz',
-      'Baleares',
-      'Barcelona',
-      'Burgos',
-      'Cáceres',
-      'Cádiz',
-      'Cantabria',
-      'Castellón',
-      'Ceuta',
-      'Ciudad Real',
-      'Córdoba',
-      'Cuenca',
-      'Gerona',
-      'Granada',
-      'Guadalajara',
-      'Guipúzcoa',
-      'Huelva',
-      'Huesca',
-      'Jaén',
-      'La Coruña',
-      'La Rioja',
-      'Las Palmas',
-      'León',
-      'Lérida',
-      'Lugo',
-      'Madrid',
-      'Málaga',
-      'Melilla',
-      'Murcia',
-      'Navarra',
-      'Orense',
-      'Palencia',
-      'Pontevedra',
-      'Salamanca',
-      'Santa Cruz de Tenerife',
-      'Segovia',
-      'Sevilla',
-      'Soria',
-      'Tarragona',
-      'Teruel',
-      'Toledo',
-      'Valencia',
-      'Valladolid',
-      'Vizcaya',
-      'Zamora',
-      'Zaragoza'
-    ],
-    []
-  )
+  const {
+    formState: { isSubmitting }
+  } = form
 
   return (
     <Form {...form}>
@@ -195,111 +129,46 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
           <legend className='w-full border-b text-lg text-accent'>
             Informacio Personal
           </legend>
-          <FormField
+          <FormFieldComponent
             control={form.control}
             name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nombre</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Juan Perez'
-                    {...field}
-                    disabled={form.formState.isSubmitting}
-                    className='border border-accent/50'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label='Nombre'
+            placeholder='Juan Perez'
+            isSubmitting={isSubmitting}
           />
-          <FormField
+          <FormFieldComponent
             control={form.control}
             name='email'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Correo Electrónico</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='juan.perez@example.com'
-                    {...field}
-                    disabled={form.formState.isSubmitting}
-                    className='border border-accent/50'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            type='email'
+            label='Correo Electrónico'
+            placeholder='juan.perez@example.com'
+            isSubmitting={isSubmitting}
           />
-          <FormField
+          <FormFieldComponent
             control={form.control}
             name='phone'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Teléfono</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='+34 123456789'
-                    {...field}
-                    disabled={form.formState.isSubmitting}
-                    className='border border-accent/50'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label='Teléfono'
+            placeholder='+34 123456789'
+            isSubmitting={isSubmitting}
           />
           <div className='grid w-full grid-cols-4 space-x-4 pt-2'>
-            <FormField
+            <FormFieldComponent
               control={form.control}
               name='documentType'
-              render={({ field }) => (
-                <FormItem className='col-span-1'>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    disabled={form.formState.isSubmitting}
-                  >
-                    <FormControl>
-                      {/* Input for document type */}
-                      <SelectTrigger className='border border-accent/50'>
-                        <SelectValue
-                          placeholder='Selecciona un lugar'
-                          className='rounded-md font-normal text-gray-600'
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value='dni' className='focus:bg-accent/30'>
-                        DNI
-                      </SelectItem>
-                      <SelectItem value='nie' className='focus:bg-accent/30'>
-                        NIE
-                      </SelectItem>
-                    </SelectContent>
-                    <FormMessage />
-                  </Select>
-                </FormItem>
-              )}
+              type='select'
+              label=''
+              placeholder='DNI'
+              isSubmitting={isSubmitting}
+              options={['DNI', 'NIE']}
+              className='col-span-1'
             />
-            <FormField
+            <FormFieldComponent
               control={form.control}
               name='documentNumber'
-              render={({ field }) => (
-                <FormItem className='col-span-3'>
-                  <FormControl>
-                    {/* Input for document number */}
-                    <Input
-                      placeholder='Número del Documento...'
-                      {...field}
-                      autoComplete='ID'
-                      disabled={form.formState.isSubmitting}
-                      className='border border-accent/50'
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label=''
+              placeholder='Número del Documento...'
+              isSubmitting={isSubmitting}
+              className='col-span-3'
             />
           </div>
         </fieldset>
@@ -308,101 +177,44 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
           <legend className='w-full border-b text-lg text-accent'>
             Direccion
           </legend>
-          <FormField
+          <FormFieldComponent
             control={form.control}
             name='street'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Calle</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Calle Falsa 123'
-                    {...field}
-                    disabled={form.formState.isSubmitting}
-                    className='border border-accent/50'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label='Calle'
+            placeholder='Calle Falsa 123'
+            isSubmitting={isSubmitting}
           />
-          <FormField
+          <FormFieldComponent
             control={form.control}
             name='floor'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Piso</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Piso 1, 1zq'
-                    {...field}
-                    disabled={form.formState.isSubmitting}
-                    className='border border-accent/50'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label='Piso'
+            placeholder='Piso 1, 1zq'
+            isSubmitting={isSubmitting}
           />
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
-            <FormField
+            <FormFieldComponent
               control={form.control}
               name='postal_code'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Codigo Postal</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='22345'
-                      {...field}
-                      disabled={form.formState.isSubmitting}
-                      autoComplete='postal-code'
-                      className='border border-accent/50'
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label='Codigo Postal'
+              placeholder='22345'
+              isSubmitting={isSubmitting}
             />
-            <FormField
+            <FormFieldComponent
               control={form.control}
               name='locality'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Localidad</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    disabled={form.formState.isSubmitting}
-                  >
-                    <FormControl>
-                      <SelectTrigger className='border border-accent/50'>
-                        <SelectValue />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {localities.map((locality) => (
-                        <SelectItem
-                          key={locality}
-                          value={locality}
-                          className='focus:bg-accent/30'
-                        >
-                          {locality}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label='Localidad'
+              placeholder=''
+              type='select'
+              options={localities}
+              isSubmitting={isSubmitting}
             />
           </div>
         </fieldset>
 
         {!user && (
           <fieldset className='space-y-4'>
-            <legend className='w-full border-b text-lg text-accent'>
-              Contraseña
+            <legend className='w-full border-b text-sm text-accent'>
+              Crea tu contraseña y date de alta en Lavanda del Lago España.
             </legend>
             <PasswordCheck form={form} />
           </fieldset>
