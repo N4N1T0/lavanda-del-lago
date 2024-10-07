@@ -194,7 +194,7 @@ export type Purchase = {
 
 export type User = {
   _id: string
-  _type: 'user'
+  _type: string
   _createdAt: string
   _updatedAt: string
   _rev: string
@@ -1415,9 +1415,9 @@ export type ProductsByCategoryResult = Array<{
 // Variable: oramaIndexDeployUpdatedProducts
 // Query: *[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60*60*24] {    "id": _id,    nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,    "createdAt": _createdAt,    usabilidad,    subcategoria,    codigoReferencia,    certificacion,    medidas,    codigoBarras,    slogan,    "fichaTecnica": fichaTecnica.asset->url,    fotosVarias[] {      "image": asset->url,      "key": _key    }}
 export type OramaIndexDeployUpdatedProductsResult = Array<never>
-// Variable: userById
+// Variable: userByIdCompleted
 // Query: *[_type == "user" && _id == $id][0] {  "id": _id,  email,  image,  name,  phone,  address,  reseller,  discount,  "idDocument": {    "type": idDocument.type,    "value": idDocument.value  },  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {    "id": _id,    products[] {      product-> {        "id": _id,        nombre,        "image": fotoPrincipal.asset->url,        categoria      },      quantity    },    totalAmount,    purchaseDate,    paymentMethod,    status,    reseller  }}
-export type UserByIdResult = {
+export type userByIdCompletedResult = {
   id: string
   email: string | null
   image: string | null
@@ -1493,7 +1493,7 @@ declare module '@sanity-studio/lib/client' {
     '\n  *[_type == "product" && nombre == $name]{\n    "id": _id,\n    nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    "createdAt": _createdAt,\n    usabilidad,\n    subcategoria,\n    codigoReferencia,\n    certificacion,\n    medidas,\n    codigoBarras,\n    slogan,\n    "fichaTecnica": fichaTecnica.asset->url,\n    fotosVarias[] {\n      "image": asset->url,\n      "key": _key\n    }\n  }[0]\n': ProductByNameResult
     '\n  *[_type == "product" && categoria == $category]{\n    "id": _id,\n    nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    "createdAt": _createdAt\n  }\n': ProductsByCategoryResult
     '\n*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60*60*24] {\n    "id": _id,\n    nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    "createdAt": _createdAt,\n    usabilidad,\n    subcategoria,\n    codigoReferencia,\n    certificacion,\n    medidas,\n    codigoBarras,\n    slogan,\n    "fichaTecnica": fichaTecnica.asset->url,\n    fotosVarias[] {\n      "image": asset->url,\n      "key": _key\n    }\n}\n': OramaIndexDeployUpdatedProductsResult
-    '\n  *[_type == "user" && _id == $id][0] {\n  "id": _id,\n  email,\n  image,\n  name,\n  phone,\n  address,\n  reseller,\n  discount,\n  "idDocument": {\n    "type": idDocument.type,\n    "value": idDocument.value\n  },\n  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {\n    "id": _id,\n    products[] {\n      product-> {\n        "id": _id,\n        nombre,\n        "image": fotoPrincipal.asset->url,\n        categoria\n      },\n      quantity\n    },\n    totalAmount,\n    purchaseDate,\n    paymentMethod,\n    status,\n    reseller\n  }\n}\n': UserByIdResult
+    '\n  *[_type == "user" && _id == $id][0] {\n  "id": _id,\n  email,\n  image,\n  name,\n  phone,\n  address,\n  reseller,\n  discount,\n  "idDocument": {\n    "type": idDocument.type,\n    "value": idDocument.value\n  },\n  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {\n    "id": _id,\n    products[] {\n      product-> {\n        "id": _id,\n        nombre,\n        "image": fotoPrincipal.asset->url,\n        categoria\n      },\n      quantity\n    },\n    totalAmount,\n    purchaseDate,\n    paymentMethod,\n    status,\n    reseller\n  }\n}\n': userByIdCompletedResult
     '\n*[_type == "events"]{\n  "id": _id,\n  date,\n  title,\n  "image": image.asset->url,\n  description,\n  urls[]{\n    "id": _key,\n    calendarName,\n    calendarUrl\n  }\n}\n': EventsResult
   }
 }

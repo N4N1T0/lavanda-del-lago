@@ -111,19 +111,19 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 - [x] Cron Job for Orama Index Deploy [Free Cron Job](https://cron-job.org/en/)
 - [x] Resend Configuration
 - [x] User Checkout Configuration
-- [ ] Reseller Profile Improvement (Checkout - Search)
-- [ ] Performance Improvements (ISR, Dynamic Imports, Hooks)
+- [x] Performance Improvements (ISR, Dynamic Imports, Hooks)
+- [x] Check Unused Dependencies and Components
+- [x] Reseller Profile Improvement (Checkout - Search)
+- [x] Performance Review (Queries)
 - [ ] Redsys Configuration
 - [ ] Paypal Configuration
 - [ ] VPS Configuration and Github Actions
-- [ ] Check Unused Dependencies and Components
-- [ ] Performance Review (Queries)
 
 ## TODOS After Deploy
 
 - [ ] Hidration Error (Navbar)
 - [ ] Sanity Handoff
-- [ ] SEO Improvement (Jld)
+- [x] SEO Improvement (Jld)
 - [ ] Analytics Improvement (PartyTown)
 
 ## Reactemail Template TODOs

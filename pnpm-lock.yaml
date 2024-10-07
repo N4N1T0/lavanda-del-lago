@@ -198,9 +198,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.13
         version: 3.4.13(ts-node@10.9.1(@types/node@22.7.0)(typescript@5.6.2))
-      tsc-files:
-        specifier: ^1.1.4
-        version: 1.1.4(typescript@5.6.2)
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -6522,12 +6519,6 @@ packages:
         optional: true
       '@swc/wasm':
         optional: true
-
-  tsc-files@1.1.4:
-    resolution: {integrity: sha512-RePsRsOLru3BPpnf237y1Xe1oCGta8rmSYzM76kYo5tLGsv5R2r3s64yapYorGTPuuLyfS9NVbh9ydzmvNie2w==}
-    hasBin: true
-    peerDependencies:
-      typescript: '>=3'
 
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
@@ -14117,10 +14108,6 @@ snapshots:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optional: true
-
-  tsc-files@1.1.4(typescript@5.6.2):
-    dependencies:
-      typescript: 5.6.2
 
   tsconfig-paths@3.15.0:
     dependencies:

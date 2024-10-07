@@ -26,8 +26,6 @@ export function cn(...inputs: Array<string | undefined>): string | undefined {
   return twMerge(clsx(inputs))
 }
 
-export const fetcher = (url: string) => fetch(url).then((r) => r.json())
-
 /**
  * A utility function that formats a number as a Euro currency string.
  *
@@ -103,7 +101,7 @@ export function capitalizeFirstLetter(str: string): string {
  */
 export function calculateTotal(
   count: CartItem[],
-  shipping = 0
+  shipping: number = 0
 ): [string, string, string] {
   let subTotal = 0
   for (const item of count) {

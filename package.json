@@ -14,8 +14,7 @@
     "*/src/**/*": [
       "next lint --fix",
       "prettier --write"
-    ],
-    "**/*.ts": "tsc --pretty"
+    ]
   },
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
@@ -83,7 +82,6 @@
     "prettier-plugin-tailwindcss": "^0.6.8",
     "react-email": "3.0.1",
     "tailwindcss": "^3.4.13",
-    "tsc-files": "^1.1.4",
     "typescript": "^5.6.2"
   },
   "packageManager": "pnpm@9.11.0"
