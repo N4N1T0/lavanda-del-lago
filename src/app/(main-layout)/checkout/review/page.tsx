@@ -8,7 +8,7 @@ import { User } from '@/types'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { userById } from '@/lib/queries'
+import { userByIdPartial } from '@/lib/queries'
 
 // Metadata for the Page
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ const CheckoutReviewPage = async ({
 }: {
   searchParams: { userId: string }
 }): Promise<JSX.Element> => {
-  const response: User = await sanityClientRead.fetch(userById, {
+  const response: User = await sanityClientRead.fetch(userByIdPartial, {
     id: searchParams.userId
   })
 

@@ -74,7 +74,6 @@ export const footer = groq`
 export const cookiePolicy = groq`
   *[_type == "cookiePolicy"]{
     title,
-    description,
     content
   }[0]
 `
@@ -82,7 +81,6 @@ export const cookiePolicy = groq`
 export const privacyPolicy = groq`
   *[_type == "privacyPolicy"]{
     title,
-    description,
     content
   }[0]
 `
@@ -90,15 +88,12 @@ export const privacyPolicy = groq`
 export const salesPolicy = groq`
   *[_type == "salesPolicy"]{
     title,
-    description,
     content
   }[0]
 `
 
 export const errorPage = groq`
   *[_type == "errorPage"]{
-    title,
-    description,
     digest,
     "imageUrl": image.asset->url,
     contacts[] {
@@ -110,8 +105,7 @@ export const errorPage = groq`
 
 export const notFoundPage = groq`
   *[_type == "notFoundPage"]{
-    title,
-    description,
+
     digest,
     "imageUrl": image.asset->url,
     links
@@ -119,8 +113,6 @@ export const notFoundPage = groq`
 `
 
 export const prefooter = groq`*[_type == "prefooter"]{
-  title,
-  description,
   "imageUrl": image.asset->url,
   link
 }[0]`
@@ -202,9 +194,6 @@ export const allBlogArticles = groq`
   "image": mainImage.asset->url,
   title,
   description,
-  author->{
-    name
-  },
   "id":_id,
   "slug": slug.current,
   "createdAt":_createdAt,
@@ -248,7 +237,7 @@ export const categories = groq`
 `
 
 export const allProducts = groq`
-*[_type == "product"]{
+*[_type == "product" && stock > 0] {
   "id": _id,
   nombre,
   descripcion,
@@ -286,7 +275,7 @@ export const productByName = groq`
 `
 
 export const productsByCategory = groq`
-  *[_type == "product" && categoria == $category]{
+  *[_type == "product" && categoria == $category && stock > 0]{
     "id": _id,
     nombre,
     descripcion,
@@ -324,7 +313,7 @@ export const oramaIndexDeployUpdatedProducts = groq`
 `
 
 // AUTH
-export const userById = groq`
+export const userByIdCompleted = groq`
   *[_type == "user" && _id == $id][0] {
   "id": _id,
   email,
@@ -356,6 +345,22 @@ export const userById = groq`
     status,
     reseller
   }
+}
+`
+
+export const userByIdPartial = groq`
+  *[_type == "user" && _id == $id][0] {
+  "id": _id,
+  email,
+  image,
+  name,
+  phone,
+  address,
+  reseller,
+  "idDocument": {
+    "type": idDocument.type,
+    "value": idDocument.value
+  },
 }
 `
 

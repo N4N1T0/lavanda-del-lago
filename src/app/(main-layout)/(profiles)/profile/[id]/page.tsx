@@ -4,7 +4,7 @@ import NewItems from '@/components/profile/new-items'
 import PastPurchasesCard from '@/components/profile/past-purchase'
 
 // Queries Imports
-import { userById } from '@/lib/queries'
+import { userByIdCompleted } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Utils Imports
@@ -26,7 +26,7 @@ const UserProfilePage = async ({
   params: { id: string }
 }): Promise<JSX.Element> => {
   // Fetch user data
-  const response: User = await sanityClientRead.fetch(userById, {
+  const response: User = await sanityClientRead.fetch(userByIdCompleted, {
     id: params.id
   })
 

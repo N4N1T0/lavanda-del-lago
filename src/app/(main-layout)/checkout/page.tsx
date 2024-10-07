@@ -5,7 +5,7 @@ import LastMinute from '@/components/checkout/last-minute'
 import { currentUser } from '@clerk/nextjs/server'
 
 // Queries Imports
-import { userById } from '@/lib/queries'
+import { userByIdPartial } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Type Imports
@@ -30,7 +30,7 @@ const CheckoutInfoPage = async (): Promise<JSX.Element> => {
   let response: User | null = null
 
   if (user !== null) {
-    response = await sanityClientRead.fetch(userById, {
+    response = await sanityClientRead.fetch(userByIdPartial, {
       id: user.id
     })
   }
