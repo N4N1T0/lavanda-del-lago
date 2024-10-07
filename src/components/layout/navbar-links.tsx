@@ -46,15 +46,15 @@ import { v4 as uuidv4 } from 'uuid'
 const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
   return (
     <nav className='hidden flex-[0_0_auto] items-start gap-12 md:inline-flex'>
-      {navItems.map((item) => {
-        if (typeof item.children !== 'string') {
+      {navItems.map(({ label, children }) => {
+        if (typeof children !== 'string') {
           return (
             <Popover key={uuidv4()}>
               <PopoverTrigger className='-mt-1 flex w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'>
-                {item.label} <ChevronDown />
+                {label} <ChevronDown />
               </PopoverTrigger>
               <PopoverContent>
-                {item.label === 'Productos' ? (
+                {label === 'Productos' ? (
                   <ul>
                     {categories.map((category) => (
                       <li key={uuidv4()}>
@@ -75,14 +75,14 @@ const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
                   </ul>
                 ) : (
                   <ul>
-                    {item.children?.map((item) => (
+                    {children?.map(({ label: subLabel, href: subHref }) => (
                       <li key={uuidv4()}>
                         <PopoverClose asChild>
                           <Link
-                            href={item.href}
+                            href={subHref}
                             className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
                           >
-                            {item.label}
+                            {subLabel}
                           </Link>
                         </PopoverClose>
                       </li>
@@ -97,10 +97,10 @@ const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
         return (
           <Link
             key={uuidv4()}
-            href={item.children as string}
+            href={children as string}
             className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
           >
-            {item.label}
+            {label}
           </Link>
         )
       })}

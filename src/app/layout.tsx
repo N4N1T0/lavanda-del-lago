@@ -15,6 +15,8 @@ import { Toaster } from '@/components/ui/toaster'
 // Clerk Imports
 import { ClerkProvider } from '@clerk/nextjs'
 import { esES } from '@clerk/localizations'
+
+// Security
 import SecurityHandling from '@/components/layout/security-handling'
 
 // Local Fonts Configuration

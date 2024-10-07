@@ -1,6 +1,8 @@
 // Project component imports
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
+import ServerFetchError from '@/components/shared/server-fetch-error'
+
 import ProductCarousel from '@/components/shared/product-carousel'
+import NoData from '@/components/shared/no-data'
 
 // Queries imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
@@ -35,6 +37,10 @@ const FeaturedList = async ({
         category: itemCategory
       }
     )
+
+    if (response.length === 0) {
+      return <NoData data='No hay Productos' />
+    }
 
     return (
       <section id={itemCategory}>

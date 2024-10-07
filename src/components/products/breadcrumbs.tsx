@@ -100,5 +100,4 @@ const Breadcrumbs = (): JSX.Element => {
     </section>
   )
 }
-
 export default Breadcrumbs

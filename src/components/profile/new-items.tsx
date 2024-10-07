@@ -2,7 +2,8 @@
 import Link from 'next/link'
 
 // Project Component Imports
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
+import ServerFetchError from '@/components/shared/server-fetch-error'
+import NoData from '@/components/shared/no-data'
 
 // UI Imports
 import {
@@ -32,9 +33,11 @@ import { ShoppingBag } from 'lucide-react'
  * @param {string} category - The category of products to fetch.
  * @return {Promise<JSX.Element>} A Card component containing a list of new items, or an error message if the fetch fails.
  */
-const NewItems = async (
-  { category }: { category: string }
-): Promise<JSX.Element> => {
+const NewItems = async ({
+  category
+}: {
+  category: string
+}): Promise<JSX.Element> => {
   try {
     const response: Product[] = await sanityClientRead.fetch(
       productsByCategory,
@@ -42,6 +45,10 @@ const NewItems = async (
         category
       }
     )
+
+    if (response.length === 0) {
+      return <NoData data='No hay Productos' />
+    }
 
     return (
       <Card className='border border-accent/70'>
@@ -86,7 +93,6 @@ const NewItems = async (
       </Card>
     )
   } catch (error) {
-    console.error('Failed to fetch new items:', error)
     return <ServerFetchError error={error} />
   }
 }

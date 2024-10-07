@@ -7,16 +7,19 @@ import type { Product } from '@/types'
 // Project component imports
 import ClientProductPage from '@/components/products/client-product-page'
 import ProductsSidebar from '@/components/products/sidebar'
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
+import ServerFetchError from '@/components/shared/server-fetch-error'
+import { jldProductList } from '@/components/layout/seo'
 
 // Types Imports
 import { allProducts, productsByCategory } from '@/lib/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // function to generate metadata
-export async function generateMetadata(
-  { searchParams }: { searchParams?: { category?: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { category?: string }
+}): Promise<Metadata> {
   return {
     title: `Productos | ${
       searchParams?.category ? searchParams?.category : 'Todos los productos'
@@ -34,9 +37,11 @@ export async function generateMetadata(
  * @param {string} searchParams.category - The category for which products are fetched.
  * @return {Promise<JSX.Element>} A React component representing the main products section.
  */
-const ProductsPage = async (
-  { searchParams }: { searchParams?: { category?: string } }
-): Promise<JSX.Element> => {
+const ProductsPage = async ({
+  searchParams
+}: {
+  searchParams?: { category?: string }
+}): Promise<JSX.Element> => {
   // Determine query based on the presence of a category
   const productQuery = searchParams?.category
     ? sanityClientRead.fetch(productsByCategory, {
@@ -65,6 +70,7 @@ const ProductsPage = async (
         <article className='flex-[80%]'>
           <ClientProductPage products={filteredProducts} />
         </article>
+        {jldProductList(filteredProducts)}
       </section>
     )
   } catch (error) {

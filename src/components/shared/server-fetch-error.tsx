@@ -6,7 +6,7 @@ import React, { type ReactNode } from 'react'
  *
  * @return {JSX.Element} The error component for the home products list.
  */
-export const ServerFetchError = React.memo(function ServerFetchError({
+const ServerFetchError = React.memo(function ServerFetchError({
   error
 }: {
   error: unknown
@@ -23,3 +23,5 @@ export const ServerFetchError = React.memo(function ServerFetchError({
     </section>
   )
 })
+
+export default ServerFetchError

@@ -15,6 +15,7 @@ import { AlertCircle, HelpCircle, RefreshCcw } from 'lucide-react'
 // Types Imports
 import type { Metadata } from 'next'
 import { eurilize } from '@/lib/utils'
+import { redirect } from 'next/navigation'
 
 // Metadata for this page
 export const metadata: Metadata = {
@@ -36,8 +37,24 @@ const FailedPaymentPage = ({
     orderId: string
     totalAmount: number
     reseller: string
+    userEmail: string
   }
 }): JSX.Element => {
+  const { userId, userName, orderId, totalAmount, reseller, userEmail } =
+    searchParams
+
+  // Verify the presence of required parameters
+  if (
+    !orderId ||
+    !totalAmount ||
+    !reseller ||
+    !userId ||
+    !userName ||
+    !userEmail
+  ) {
+    redirect('/')
+  }
+
   return (
     <main className='flex min-h-screen items-center justify-center bg-red-100 p-4'>
       <Card className='w-full max-w-lg border-accent'>

@@ -18,10 +18,10 @@ import type { UseFormReturn } from 'react-hook-form'
 import type { UserSchemaType } from '@/lib/form-schemas'
 
 const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
-  // Estado para mostrar u ocultar la contraseña
+  // State to show or hide the password
   const [showPassword, setShowPassword] = useState(false)
 
-  // Función para cambiar la visibilidad de la contraseña
+  // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev)
   }
@@ -36,18 +36,22 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
             <FormControl>
               <div className='relative'>
                 <Input
-                  type={showPassword ? 'text' : 'password'} // Cambiamos entre 'text' y 'password'
+                  type={showPassword ? 'text' : 'password'} // Toggle between 'text' and 'password'
                   placeholder='Contraseña...'
                   {...field}
                   className='rounded-md border border-accent/50 pr-10'
                   autoComplete='new-password'
                   id='password'
                   disabled={form.formState.isSubmitting}
+                  aria-label='Contraseña' // Accessibility label
                 />
                 <button
                   type='button'
                   onClick={togglePasswordVisibility}
                   className='absolute inset-y-0 right-0 flex items-center pr-3'
+                  aria-label={
+                    showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+                  } // Accessibility label
                 >
                   {showPassword ? (
                     <EyeOff className='h-5 w-5 text-gray-600' />
@@ -77,11 +81,15 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
                   autoComplete='new-password'
                   id='confirmPassword'
                   disabled={form.formState.isSubmitting}
+                  aria-label='Repite Contraseña' // Accessibility label
                 />
                 <button
                   type='button'
                   onClick={togglePasswordVisibility}
                   className='absolute inset-y-0 right-0 flex items-center pr-3'
+                  aria-label={
+                    showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+                  } // Accessibility label
                 >
                   {showPassword ? (
                     <EyeOff className='h-5 w-5 text-gray-600' />

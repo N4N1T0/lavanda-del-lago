@@ -73,14 +73,14 @@ const CartSheet = (): JSX.Element => {
           />
         </div>
       </SheetTrigger>
-      <SheetContent className='flex flex-col items-start justify-between overflow-y-scroll pb-2'>
+      <SheetContent className='flex flex-col items-start justify-between pb-2'>
         <SheetHeader>
           <SheetTitle className='text-2xl'>Carrito de la Compra</SheetTitle>
           <SheetDescription className='sr-only'>
             Carrito de la Compra
           </SheetDescription>
         </SheetHeader>
-        <ul className='h-full w-full space-y-2'>
+        <ul className='h-full w-full space-y-2 overflow-y-scroll'>
           {/* Render each item in the shopping cart */}
           {count.map((item) => (
             <CartSheetCard
@@ -159,7 +159,6 @@ const CartSheet = (): JSX.Element => {
     </Sheet>
   )
 }
-
 /**
  * Renders a card component for a product in the cart.
  *

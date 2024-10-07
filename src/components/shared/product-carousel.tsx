@@ -25,9 +25,11 @@ import Autoplay from 'embla-carousel-autoplay'
  * @param {Product[]} props.productList - The list of products to display in the carousel.
  * @return {JSX.Element} The rendered carousel component.
  */
-const ProductCarousel = (
-  { productList }: { productList: Product[] }
-): JSX.Element => {
+const ProductCarousel = ({
+  productList
+}: {
+  productList: Product[]
+}): JSX.Element => {
   return (
     <Carousel
       plugins={[

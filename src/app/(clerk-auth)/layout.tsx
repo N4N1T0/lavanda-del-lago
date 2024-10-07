@@ -10,9 +10,11 @@ import SignUpImage from '@/assets/baraa-jalahej-qfZGhapxoa4-unsplash.webp'
  * @param {React.ReactNode} children - The content to be rendered within the layout.
  * @return {JSX.Element} The JSX element representing the layout.
  */
-const ClerkLayout = (
-  { children }: { children: React.ReactNode }
-): JSX.Element => {
+const ClerkLayout = ({
+  children
+}: {
+  children: React.ReactNode
+}): JSX.Element => {
   return (
     <main className='bg-white lg:grid lg:min-h-screen lg:grid-cols-12'>
       <aside className='bottom-0 left-1/2 right-0 top-0 hidden md:fixed md:block'>

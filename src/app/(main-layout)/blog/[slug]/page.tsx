@@ -5,7 +5,8 @@ import Image from 'next/image'
 import Related from '@/components/blog/related'
 import Prefooter from '@/components/home/prefooter'
 import Newsletter from '@/components/shared/newsletter'
-import { ServerFetchError } from '@/components/shared/server-fetch-error'
+import ServerFetchError from '@/components/shared/server-fetch-error'
+import { jldBlogArticle } from '@/components/layout/seo'
 
 // Types imports
 import type { Posts } from '@/types'
@@ -17,9 +18,11 @@ import { blogArticleById } from '@/lib/queries'
 import { PortableText } from 'next-sanity'
 
 // function to generate metadata
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  params
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
   const post: Posts = await sanityClientRead.fetch(blogArticleById, {
     slug: params.slug
   })
@@ -39,9 +42,11 @@ export async function generateMetadata(
  * @param {{ params: { id: string } }} params - The ID of the blog article to fetch.
  * @return {Promise<JSX.Element>} The JSX element representing the blog article content.
  */
-const BlogArticlePage = async (
-  { params }: { params: { slug: string } }
-): Promise<JSX.Element> => {
+const BlogArticlePage = async ({
+  params
+}: {
+  params: { slug: string }
+}): Promise<JSX.Element> => {
   try {
     const post: Posts = await sanityClientRead.fetch(blogArticleById, {
       slug: params.slug
@@ -77,6 +82,7 @@ const BlogArticlePage = async (
         </section>
         <Newsletter />
         <Prefooter />
+        {jldBlogArticle(post)}
       </>
     )
   } catch (error) {

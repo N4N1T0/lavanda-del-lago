@@ -3,6 +3,7 @@ import FeaturedList from '@/components/home/featured-list'
 import Prefooter from '@/components/home/prefooter'
 import ProductDetails from '@/components/products/product-details'
 import Newsletter from '@/components/shared/newsletter'
+import { jldProduct } from '@/components/layout/seo'
 
 // Utils Imports
 import { desurlizeForQuery } from '@/lib/utils'
@@ -106,6 +107,7 @@ const ProductPage = async ({
       </section>
       <Newsletter />
       <Prefooter />
+      {jldProduct(response)}
     </>
   )
 }

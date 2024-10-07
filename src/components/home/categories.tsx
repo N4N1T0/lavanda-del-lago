@@ -3,12 +3,18 @@ import Link from 'next/link'
 import React from 'react'
 
 // Project component imports
-import { ServerFetchError } from '../shared/server-fetch-error'
+import ServerFetchError from '@/components/shared/server-fetch-error'
+
+import NoData from '@/components/shared/no-data'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
+
+// Queries
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { categories } from '@/lib/queries'
+
+// Types Imports
 import type { CategoriesList } from '@/types'
 
 /**
@@ -19,12 +25,17 @@ import type { CategoriesList } from '@/types'
 export const Categories = async (): Promise<JSX.Element> => {
   try {
     const response: CategoriesList[] = await sanityClientRead.fetch(categories)
+
     const filterCategories = response
       .map((category) => category.categoria)
       .filter(
         (category, index, array) =>
           category && array.indexOf(category) === index
       )
+
+    if (response.length === 0) {
+      return <NoData data='No hay Categorias' />
+    }
 
     return (
       <section

@@ -1,6 +1,9 @@
 // Next.js Imports
 import Image from 'next/image'
 
+// Project Components Imports
+import { jldAboutUs } from '@/components/layout/seo'
+
 // Sanity Imports
 import { PortableText } from 'next-sanity'
 
@@ -131,6 +134,7 @@ const AboutUsPage = async (): Promise<JSX.Element> => {
           ))}
         </ul>
       </div>
+      {jldAboutUs()}
     </section>
   )
 }

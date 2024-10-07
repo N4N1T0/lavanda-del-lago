@@ -2,13 +2,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-// Project components
-import UserProfile from './user-profile'
+// Project Components Imports
+import UserProfile from '@/components/layout/user-profile'
 
 // Assets Imports
-import { User } from '@/assets'
+import { User as UserIcon } from '@/assets'
 
-// UI Imports
+// Ui imports
 import {
   Popover,
   PopoverContent,
@@ -18,23 +18,17 @@ import { Button } from '@/components/ui/button'
 
 // Auth Imports
 import { SignInButton, SignedOut } from '@clerk/nextjs'
-import { currentUser } from '@clerk/nextjs/server'
+import { User } from '@clerk/backend'
 
-/**
- * A component that renders a user popover with different content based on whether the user is signed in or not.
- *
- * @return {Promise<JSX.Element>} The user popover component.
- */
-const UserPopover = async (): Promise<JSX.Element> => {
-  const user = await currentUser()
-
-  if (user)
+const UserPopover = ({ user }: { user: User | null }): JSX.Element => {
+  if (user !== null) {
     return (
       <UserProfile
         userId={user?.id}
-        reseller={user.publicMetadata.reseller as boolean}
+        reseller={user?.publicMetadata.reseller as boolean}
       />
     )
+  }
 
   return (
     <Popover>
@@ -42,7 +36,9 @@ const UserPopover = async (): Promise<JSX.Element> => {
         <Image
           className='h-8 w-8 cursor-pointer transition-opacity duration-150 hover:opacity-50'
           alt='Icon user'
-          src={User}
+          src={UserIcon}
+          placeholder='blur'
+          blurDataURL='data:image/svg+xml;base64,...' // Optional: add a blur data URL for a better loading experience
         />
       </PopoverTrigger>
       <PopoverContent className='flex w-fit flex-col gap-2'>
@@ -51,7 +47,7 @@ const UserPopover = async (): Promise<JSX.Element> => {
             forceRedirectUrl='/api/create-sanity-user-from-clerk'
             signUpForceRedirectUrl='/api/create-sanity-user-from-clerk'
           >
-            <Button>Iniciar Session</Button>
+            <Button>Iniciar Sesión</Button>
           </SignInButton>
           <Button asChild>
             <Link href='/reseller-form'>Registrarse como Revendedor</Link>

@@ -2,6 +2,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+// Project components imports
+import NoData from '@/components/shared/no-data'
+
 // UI Imports
 import { Button } from '@/components/ui/button'
 
@@ -70,32 +73,36 @@ export const Hero = async ({
             </p>
           </div>
           <div className='grid grid-cols-2'>
-            {featuredProducts.map((product, index) => (
-              <div
-                className={`group col-span-1 flex items-center justify-center overflow-hidden p-10 ${
-                  index > 0 ? 'bg-secondary' : 'bg-gray-200'
-                }`}
-                key={product.id}
-              >
-                <Link
-                  prefetch
-                  href={
-                    product.name && product.categoria
-                      ? `/products/${urlize(product.name)}?category=${product.categoria}`
-                      : '/products'
-                  }
+            {featuredProducts.length > 0 ? (
+              featuredProducts.map((product, index) => (
+                <div
+                  className={`group col-span-1 flex items-center justify-center overflow-hidden p-10 ${
+                    index > 0 ? 'bg-secondary' : 'bg-gray-200'
+                  }`}
+                  key={product.id}
                 >
-                  <Image
-                    src={product.image || Condimento1}
-                    alt={product.name}
-                    width={200}
-                    height={200}
-                    priority
-                    className='h-auto w-auto transition-transform duration-200 group-hover:scale-110'
-                  />
-                </Link>
-              </div>
-            ))}
+                  <Link
+                    prefetch
+                    href={
+                      product.name && product.categoria
+                        ? `/products/${urlize(product.name)}?category=${product.categoria}`
+                        : '/products'
+                    }
+                  >
+                    <Image
+                      src={product.image || Condimento1}
+                      alt={product.name}
+                      width={200}
+                      height={200}
+                      priority
+                      className='h-auto w-auto transition-transform duration-200 group-hover:scale-110'
+                    />
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <NoData data='No hay Productos' />
+            )}
           </div>
         </div>
         <div className='col-span-1 hidden grid-cols-2 overflow-hidden bg-accent text-white md:grid'>

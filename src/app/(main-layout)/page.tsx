@@ -1,12 +1,13 @@
+// Project component imports
 import Categories from '@/components/home/categories'
 import FeaturedEvent from '@/components/home/featured-event'
 import FeaturedList from '@/components/home/featured-list'
 import Hero from '@/components/home/hero'
 import HomeProductsList from '@/components/home/home-products-list'
-// Project component imports
 import Info from '@/components/home/info'
 import Prefooter from '@/components/home/prefooter'
 import Newsletter from '@/components/shared/newsletter'
+import { jldHomePage } from '@/components/layout/seo'
 
 // Queries Imports
 import { homePage } from '@/lib/queries'
@@ -58,6 +59,7 @@ export default async function Home(): Promise<JSX.Element> {
       <FeaturedEvent event={featuredEvent} />
       <Newsletter />
       <Prefooter />
+      {jldHomePage()}
     </>
   )
 }

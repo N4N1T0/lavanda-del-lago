@@ -14,6 +14,7 @@ import {
   ProductCard,
   ProductCardSkeleton
 } from '@/components/shared/product-card'
+import NoData from '@/components/shared/no-data'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
@@ -55,6 +56,10 @@ const HomeProductsList = ({
   // Rendering of the list of products based on the selected category
   if (!products) {
     return <HomeProductsListSkeleton />
+  }
+
+  if (products.length === 0) {
+    return <NoData data='No hay Articulos' />
   }
 
   return (
