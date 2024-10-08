@@ -134,7 +134,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
             </Button>
           </form>
         )}
-        <PaypalButton />
+        <PaypalButton products={count} total={total} user={user} />
       </div>
       <PaymentForm form={paymentForm} />
     </div>
