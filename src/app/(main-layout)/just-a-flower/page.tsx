@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import type { JustAFlower } from '@/types'
 
 // Queries Imports
-import { jusAFLower } from '@/lib/queries'
+import { jusAFLower } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import Image from 'next/image'
 import { QuoteIcon } from 'lucide-react'

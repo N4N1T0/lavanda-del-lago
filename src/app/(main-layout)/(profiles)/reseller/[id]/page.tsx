@@ -3,7 +3,7 @@ import ResellerLayout from '@/components/profile/reseller-layout'
 import CountdownRedirect from '@/components/shared/redirect-countdown'
 
 // Queries Imports
-import { allProducts, userByIdCompleted } from '@/lib/queries'
+import { allProducts, userByIdCompleted } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports

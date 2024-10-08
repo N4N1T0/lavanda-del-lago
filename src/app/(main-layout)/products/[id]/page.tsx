@@ -9,7 +9,7 @@ import { jldProduct } from '@/components/layout/seo'
 import { desurlizeForQuery } from '@/lib/utils'
 
 // Queries imports
-import { productByName } from '@/lib/queries'
+import { productByName } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports

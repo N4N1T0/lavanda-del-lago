@@ -7,7 +7,7 @@ import {
   randomTransactionId,
   LANGUAGES
 } from 'redsys-easy'
-import { createRedirectForm } from '@/lib/redsys'
+import { createRedirectForm } from '@/lib/clients'
 
 // External Libraries Imports
 import Decimal from 'decimal.js'

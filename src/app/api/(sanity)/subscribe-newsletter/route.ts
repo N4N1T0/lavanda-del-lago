@@ -6,7 +6,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 // Resend Imports
 import NewsletterSubscriptionEmail from '@/emails/newsletter-subs-created'
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 
 /**
  * Handles the POST request to subscribe to the newsletter.

@@ -2,7 +2,7 @@
 import ClientFullCalendar from '@/components/events/client-full-calendar'
 
 // Queries Imports
-import { events as eventsFetch } from '@/lib/queries'
+import { events as eventsFetch } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports

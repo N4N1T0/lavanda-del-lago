@@ -9,7 +9,7 @@ import { PrefooterImage } from '@/assets'
 import type { Prefooter as PrefooterProps } from '@/types'
 
 // Queries Imports
-import { prefooter } from '@/lib/queries'
+import { prefooter } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 /**

@@ -10,7 +10,7 @@ import Newsletter from '@/components/shared/newsletter'
 import { jldHomePage } from '@/components/layout/seo'
 
 // Queries Imports
-import { homePage } from '@/lib/queries'
+import { homePage } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports

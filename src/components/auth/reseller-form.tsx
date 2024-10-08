@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 import {
   type ResellerFormSchemaType,
   resellerFormSchema
-} from '@/lib/form-schemas'
+} from '@/lib/forms/form-schemas'
 
 // Assets Imports
 import { Loader2 } from 'lucide-react'

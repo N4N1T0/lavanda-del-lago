@@ -10,7 +10,7 @@ import { sanityClientWrite } from '@sanity-studio/lib/client'
 
 // Resend Imports
 import NewUserCreatedEmail from '@/emails/new-user-created'
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 
 /**
  * Handles GET requests for creating a Sanity user.

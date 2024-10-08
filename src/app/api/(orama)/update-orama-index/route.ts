@@ -3,17 +3,17 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
 // Orama Index Imports
-import { indexManager } from '@/lib/orama'
+import { indexManager } from '@/lib/clients'
 
 // Queries Imports
-import { oramaIndexDeployUpdatedProducts } from '@/lib/queries'
+import { oramaIndexDeployUpdatedProducts } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { Product } from '@/types'
 
 // Resend Imports
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 import DailyIndexingEmail from '@/emails/daily-orama-index'
 
 // Environment Variables for API Key

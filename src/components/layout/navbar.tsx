@@ -16,7 +16,7 @@ import UserPopover from '@/components/layout/user-popover'
 import WishlistCart from '@/components/layout/wishlist-sheet'
 
 // Quries Imports
-import { categories } from '@/lib/queries'
+import { categories } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports

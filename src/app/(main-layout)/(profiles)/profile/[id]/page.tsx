@@ -4,7 +4,7 @@ import NewItems from '@/components/profile/new-items'
 import PastPurchasesCard from '@/components/profile/past-purchase'
 
 // Queries Imports
-import { userByIdCompleted } from '@/lib/queries'
+import { userByIdCompleted } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Utils Imports

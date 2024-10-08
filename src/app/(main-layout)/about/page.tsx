@@ -9,7 +9,7 @@ import { PortableText } from 'next-sanity'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { aboutUsPage } from '@/lib/queries'
+import { aboutUsPage } from '@sanity-studio/queries'
 
 // Types Imports
 import type { AboutsPageType } from '@/types'

@@ -8,7 +8,7 @@ import { User } from '@/types'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { userByIdPartial } from '@/lib/queries'
+import { userByIdPartial } from '@sanity-studio/queries'
 
 // Metadata for the Page
 export const metadata: Metadata = {

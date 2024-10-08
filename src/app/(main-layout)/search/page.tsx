@@ -1,5 +1,5 @@
 import { ProductCard } from '@/components/shared/product-card'
-import { oramaClient } from '@/lib/orama'
+import { oramaClient } from '@/lib/clients'
 import type { Metadata } from 'next'
 
 // function to generate metadata

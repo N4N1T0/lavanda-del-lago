@@ -1,5 +1,5 @@
 // Queries Imports
-import { salesPolicy } from '@/lib/queries'
+import { salesPolicy } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { PortableText } from 'next-sanity'
 

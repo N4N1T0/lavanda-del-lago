@@ -1,5 +1,5 @@
 // Queries Imports
-import { cookiePolicy } from '@/lib/queries'
+import { cookiePolicy } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { PortableText } from 'next-sanity'
 

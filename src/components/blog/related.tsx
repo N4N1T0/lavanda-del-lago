@@ -9,7 +9,7 @@ import NoData from '@/components/shared/no-data'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { relatedArticlesByCategory } from '@/lib/queries'
+import { relatedArticlesByCategory } from '@sanity-studio/queries'
 
 /**
  * Fetches and renders related articles based on the provided category.

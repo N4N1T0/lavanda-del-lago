@@ -14,7 +14,7 @@ import type { Metadata } from 'next'
 
 // Sanity Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { blogArticleById } from '@/lib/queries'
+import { blogArticleById } from '@sanity-studio/queries'
 import { PortableText } from 'next-sanity'
 
 // function to generate metadata

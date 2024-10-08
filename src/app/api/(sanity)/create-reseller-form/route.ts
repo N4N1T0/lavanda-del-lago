@@ -4,10 +4,10 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 // Sanity Client Imports
 import { sanityClientWrite } from '@sanity-studio/lib/client'
-import { resellerFormSchema } from '@/lib/form-schemas'
+import { resellerFormSchema } from '@/lib/forms/form-schemas'
 
 // Resend Imports
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 import NewResellerApplicationEmail from '@/emails/new-reseller-form-application'
 
 /**

@@ -15,7 +15,7 @@ import { Eye, EyeOff } from 'lucide-react'
 
 // React Hook Form Imports
 import type { UseFormReturn } from 'react-hook-form'
-import type { UserSchemaType } from '@/lib/form-schemas'
+import type { UserSchemaType } from '@/lib/forms/form-schemas'
 
 const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
   // State to show or hide the password

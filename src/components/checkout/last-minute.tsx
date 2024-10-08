@@ -6,7 +6,7 @@ import NoData from '@/components/shared/no-data'
 
 // Queries imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { productsByCategory } from '@/lib/queries'
+import { productsByCategory } from '@sanity-studio/queries'
 
 // Types imports
 import type { Product } from '@/types'

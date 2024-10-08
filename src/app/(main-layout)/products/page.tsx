@@ -11,7 +11,7 @@ import ServerFetchError from '@/components/shared/server-fetch-error'
 import { jldProductList } from '@/components/layout/seo'
 
 // Types Imports
-import { allProducts, productsByCategory } from '@/lib/queries'
+import { allProducts, productsByCategory } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // function to generate metadata

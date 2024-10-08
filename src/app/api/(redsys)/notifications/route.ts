@@ -1,9 +1,9 @@
 // Redsys Payment Gateway Imports
-import { processRestNotification } from '@/lib/redsys'
+import { processRestNotification } from '@/lib/clients'
 
 // Queries Imports
 import { sanityClientWrite } from '@sanity-studio/lib/client'
-import { userByIdCompleted } from '@/lib/queries'
+import { userByIdCompleted } from '@sanity-studio/queries'
 
 // Type imports
 import type { ResponseJSONSuccess } from 'redsys-easy'
@@ -14,7 +14,7 @@ import { Product, User } from '@/types'
 import { type NextRequest, NextResponse } from 'next/server'
 
 // Resend Imports
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 import CompletedPurchase from '@/emails/completed-purchase'
 
 /**

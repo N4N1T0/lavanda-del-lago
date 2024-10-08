@@ -17,7 +17,7 @@ import type { ErrorPage as ErrorPageSanity } from '@/types'
 import type { Metadata } from 'next'
 
 // Queries Imports
-import { errorPage } from '@/lib/queries'
+import { errorPage } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Data Imports

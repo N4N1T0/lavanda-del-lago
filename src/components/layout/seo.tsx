@@ -3,7 +3,7 @@ import type { Posts, Product, SeoMetaTags } from '@/types'
 import type { Metadata } from 'next'
 
 // Queries Imports
-import { seo } from '@/lib/queries'
+import { seo } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Assets Imports

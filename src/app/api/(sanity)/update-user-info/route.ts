@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // auth imports
-import { clerkClient } from '@/auth'
-import { userSchema } from '@/lib/form-schemas'
+import { clerkClient } from '@/lib/clients'
+import { userSchema } from '@/lib/forms/form-schemas'
 import { User } from '@/types'
 import { currentUser } from '@clerk/nextjs/server'
 
@@ -14,7 +14,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 // Resend Imports
 import NewUserCreatedEmail from '@/emails/new-user-created'
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 
 /**
  * Handles the POST request to update or create user information.

@@ -19,7 +19,7 @@ import { Condimento1, Hero1, Sapone } from '@/assets'
 import type { BentoThreeImage, BentofeaturedCategory, Product } from '@/types'
 
 // Queries Imports
-import { productsByCategory } from '@/lib/queries'
+import { productsByCategory } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 export const Hero = async ({

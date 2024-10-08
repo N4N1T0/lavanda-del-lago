@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { FooterLogo } from '@/assets'
 
 // Queries Imports
-import { footer } from '@/lib/queries'
+import { footer } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports

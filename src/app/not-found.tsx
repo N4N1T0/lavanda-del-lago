@@ -17,7 +17,7 @@ import type { NotFoundPage } from '@/types'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { notFoundPage } from '@/lib/queries'
+import { notFoundPage } from '@sanity-studio/queries'
 
 // Metadata for the error page
 export const metadata: Metadata = {

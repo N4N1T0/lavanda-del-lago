@@ -3,7 +3,7 @@ import type { Remedies } from '@/types'
 import type { Metadata } from 'next'
 
 // Queries Imports
-import { remedies } from '@/lib/queries'
+import { remedies } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import Image from 'next/image'
 

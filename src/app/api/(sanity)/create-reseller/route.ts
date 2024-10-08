@@ -6,11 +6,11 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 
 // Auth Imports
-import { clerkClient } from '@/auth'
+import { clerkClient } from '@/lib/clients'
 import { readBody } from '@sanity-studio/lib/utils'
 
 // Resend Imports
-import { resend } from '@/lib/resend'
+import { resend } from '@/lib/clients'
 import ResellerWelcomeEmail from '@/emails/reseller-welcome'
 
 // Get the Secret Sanity Webhook from the Environment Variables

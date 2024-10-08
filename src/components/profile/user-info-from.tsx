@@ -28,7 +28,7 @@ import { Loader2, Pencil } from 'lucide-react'
 
 // Types Imports
 import type { User } from '@/types'
-import { userSchema, type UserSchemaType } from '@/lib/form-schemas'
+import { userSchema, type UserSchemaType } from '@/lib/forms/form-schemas'
 
 // Data Imports
 import { localities } from '@/constants/site-data'

@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { property } from '@/lib/queries'
+import { property } from '@sanity-studio/queries'
 import Image from 'next/image'
 import { badges } from '@/constants/site-data'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'

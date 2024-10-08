@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 // Queries
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { categories } from '@/lib/queries'
+import { categories } from '@sanity-studio/queries'
 
 // Types Imports
 import type { CategoriesList } from '@/types'

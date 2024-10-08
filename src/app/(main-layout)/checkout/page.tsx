@@ -5,7 +5,7 @@ import LastMinute from '@/components/checkout/last-minute'
 import { currentUser } from '@clerk/nextjs/server'
 
 // Queries Imports
-import { userByIdPartial } from '@/lib/queries'
+import { userByIdPartial } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Type Imports

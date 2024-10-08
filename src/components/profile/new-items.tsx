@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/card'
 
 // Queries Imports
-import { productsByCategory } from '@/lib/queries'
+import { productsByCategory } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Utils Imports

@@ -21,7 +21,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
-import { allProducts } from '@/lib/queries'
+import { allProducts } from '@sanity-studio/queries'
 
 /**
  * Renders a list of products based on the selected category.

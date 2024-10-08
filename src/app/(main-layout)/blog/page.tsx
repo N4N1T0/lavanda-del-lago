@@ -1,7 +1,7 @@
 // Project Components Imports
 import ArticleList from '@/components/blog/article-list'
 import FeaturedBlogArticles from '@/components/blog/featured'
-import { allBlogArticles } from '@/lib/queries'
+import { allBlogArticles } from '@sanity-studio/queries'
 import type { Posts } from '@/types'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
