@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 // Next.js Imports
@@ -65,7 +66,6 @@ const PaypalButton = ({
         buyerCountry: 'ES'
       }}
     >
-      // This is the button itself
       <PayPalButtons
         createOrder={(_data, actions) =>
           actions.order.create({
@@ -85,7 +85,7 @@ const PaypalButton = ({
                       currency_code: 'EUR',
                       value: product.precio.toString()
                     },
-                    category: 'PHYSICAL_GOODS' as 'PHYSICAL_GOODS'
+                    category: 'PHYSICAL_GOODS' as const
                   }))
                 ]
               }

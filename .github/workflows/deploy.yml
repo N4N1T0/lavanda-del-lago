@@ -23,12 +23,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Prune Unused Dependencies
-        run: pnpm prune
-
-      - name: Update dependencies
-        run: pnpm update
-
       - name: Run ESLint
         run: pnpm lint
 
@@ -40,9 +34,6 @@ jobs:
     needs: lint
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
