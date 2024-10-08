@@ -40,12 +40,8 @@ jobs:
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
-      - name: Get version from package.json
-        id: version
-        run: echo "VERSION=$(jq -r '.version' < package.json)" >> $GITHUB_ENV
-
       - name: Build Docker image
-        run: docker build -t ghcr.io/n4n1t0/lavanda-del-lago:${{ env.VERSION }} .
+        run: docker build -t ghcr.io/n4n1t0/lavanda-del-lago:4.5.0 .
 
       - name: Push Docker image to GitHub Packages
-        run: docker push ghcr.io/n4n1t0/lavanda-del-lago:${{ env.VERSION }}
+        run: docker push ghcr.io/n4n1t0/lavanda-del-lago:4.5.0
