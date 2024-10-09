@@ -16,6 +16,8 @@ import { type NextRequest, NextResponse } from 'next/server'
 import NewUserCreatedEmail from '@/emails/new-user-created'
 import { resend } from '@/lib/clients'
 
+export const runtime = 'nodejs'
+
 /**
  * Handles the POST request to update or create user information.
  *
