@@ -25,9 +25,6 @@ import type { CategoriesList } from '@/types'
 // Utils Imports
 import { categoriesFilter } from '@/lib/utils'
 
-// Auth Imports
-import { currentUser } from '@clerk/nextjs/server'
-
 /**
  * Renders the Navbar component.
  *
@@ -36,8 +33,6 @@ import { currentUser } from '@clerk/nextjs/server'
 const Navbar = async (): Promise<JSX.Element> => {
   const response: CategoriesList[] = await sanityClientRead.fetch(categories)
   const filterCategories = categoriesFilter(response)
-
-  const user = await currentUser()
 
   return (
     <header className='flex items-center justify-between border-b border-accent/50 px-5 py-4 md:px-10 2xl:px-20'>
@@ -61,7 +56,7 @@ const Navbar = async (): Promise<JSX.Element> => {
         <SearchMobile />
         <WishlistCart />
         <CartSheet />
-        <UserPopover user={user} />
+        <UserPopover />
       </div>
     </header>
   )
