@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - downgrade-14
 
 jobs:
   lint:
@@ -47,9 +48,7 @@ jobs:
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
       - name: Build multi-platform Docker image
-        run: |
-          docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/n4n1t0/lavanda-del-lago:4.5.0 --push .
+        run: docker build . --platform linux/amd64 -t ghcr.io/n4n1t0/lavanda-del-lago:4.5.6
 
       - name: Push Docker image to GitHub Packages
-        run: docker push ghcr.io/n4n1t0/lavanda-del-lago:4.5.0
+        run: docker push ghcr.io/n4n1t0/lavanda-del-lago:4.5.6
