@@ -31,6 +31,8 @@ const PaypalButton = ({
   const router = useRouter()
   const serializedProducts = encodeURIComponent(JSON.stringify(products))
 
+  console.log(Number(total.split(' ')[0].replace(',', '.')))
+
   // This function gets called when the user clicks on the PayPal button
   const handleApprove = async (_data: any, actions: any) => {
     if (actions.order) {
@@ -39,7 +41,7 @@ const PaypalButton = ({
 
       // Redirect the user to the success page
       router.push(
-        `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${total}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
+        `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}?gateway=Paypal`
       )
     } else {
       // If the order is null or undefined, log an error
@@ -52,7 +54,7 @@ const PaypalButton = ({
   const handleOnCancel = () => {
     // Redirect the user to the success page with an orderId of null
     router.push(
-      `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${total}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
+      `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
     )
   }
 
@@ -69,27 +71,23 @@ const PaypalButton = ({
       <PayPalButtons
         createOrder={(_data, actions) =>
           actions.order.create({
-            intent: 'CAPTURE',
-            purchase_units: [
+            'intent': 'CAPTURE',
+            'purchase_units': [
               {
-                amount: {
-                  value: total,
-                  currency_code: 'EUR'
-                },
-                items: [
-                  ...products.map((product) => ({
-                    name: product.nombre,
-                    quantity: product.quantity.toString(),
-                    description: product.descripcion,
-                    unit_amount: {
-                      currency_code: 'EUR',
-                      value: product.precio.toString()
-                    },
-                    category: 'PHYSICAL_GOODS' as const
-                  }))
-                ]
+                'reference_id': 'd9f80740-38f0-11e8-b467-0ed5f89f718b',
+                'amount': { 'currency_code': 'EUR', 'value': '100.00' }
               }
-            ]
+            ],
+            'payment_source': {
+              'paypal': {
+                'experience_context': {
+                  'payment_method_preference': 'IMMEDIATE_PAYMENT_REQUIRED',
+                  'brand_name': 'Lavanda del Lago',
+                  'locale': 'es-ES',
+                  'user_action': 'PAY_NOW'
+                }
+              }
+            }
           })
         }
         onApprove={handleApprove}
