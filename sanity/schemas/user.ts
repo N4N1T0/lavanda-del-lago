@@ -41,8 +41,8 @@ export default {
           type: 'string',
           options: {
             list: [
-              { title: 'DNI', value: 'dni' },
-              { title: 'NIE', value: 'nie' }
+              { title: 'DNI', value: 'DNI' },
+              { title: 'NIE', value: 'NIE' }
             ]
           }
         },
@@ -52,18 +52,20 @@ export default {
           type: 'string',
           description: 'El DNI o NIE del usuario',
           validation: (Rule: any) =>
-            Rule.custom((value: string, { document }: any) => {
-              if (!value) return true // Permite que el campo sea opcional
+            Rule.custom((value: string, context: any) => {
+              if (!value) return true // Allow field to be optional
+
+              const type = context.document.idDocument.type || {}
               const dniRegex = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/
               const nieRegex = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/
-              const type = document?.idDocument?.type
 
-              if (type === 'dni' && dniRegex.test(value)) {
-                return true // Valido como DNI
+              if (type === undefined) {
+                return 'Tipo de documento no especificado'
               }
-              if (type === 'nie' && nieRegex.test(value)) {
-                return true // Valido como NIE
-              }
+
+              if (type === 'DNI' && dniRegex.test(value)) return true
+              if (type === 'NIE' && nieRegex.test(value)) return true
+
               return 'Debe ser un DNI o un NIE válido'
             })
         }

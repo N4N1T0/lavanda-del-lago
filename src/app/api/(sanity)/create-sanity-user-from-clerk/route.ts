@@ -48,7 +48,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       resend.emails.send({
         from: 'info@lavandadellago.es',
         to: 'info@lavandadellago.es',
-        subject: 'Nueva Usuario',
+        subject: 'Nuevo Usuario',
         react: NewUserCreatedEmail({
           nombre: fullName || '',
           email: emailAddresses[0].emailAddress,

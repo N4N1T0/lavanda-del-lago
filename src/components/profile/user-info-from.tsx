@@ -71,7 +71,7 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
       name: user?.name || '',
       email: user?.email || '',
       phone: user?.phone || '',
-      documentType: user?.idDocument?.type || 'dni',
+      documentType: user?.idDocument?.type || 'DNI',
       documentNumber: user?.idDocument?.value || '',
       street: user?.address?.street || '',
       floor: user?.address?.floor || '',
@@ -109,7 +109,7 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
       if (path === '/checkout') {
         setTimeout(() => {
           router.push(`/checkout/review?userId=${data.data}`)
-        }, 500)
+        }, 200)
       } else {
         router.push(path)
       }

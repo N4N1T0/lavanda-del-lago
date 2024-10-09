@@ -20,7 +20,7 @@ export const userSchema = z
       .string()
       .min(2, { message: 'El Código Postal es necesario' }),
     locality: z.string().min(2, { message: 'La Localidad es necesaria' }),
-    documentType: z.enum(['dni', 'nie'], {
+    documentType: z.enum(['DNI', 'NIE'], {
       message: 'Seleccione un tipo de documento'
     }),
     documentNumber: z

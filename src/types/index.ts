@@ -261,7 +261,7 @@ export interface User {
   } | null
   reseller?: boolean | null
   idDocument: {
-    type: 'dni' | 'nie'
+    type: 'DNI' | 'NIE'
     value: string | null
   } | null
   pastPurchases?: PastPurchase[]
