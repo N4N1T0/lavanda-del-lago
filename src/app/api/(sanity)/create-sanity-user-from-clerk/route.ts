@@ -12,6 +12,8 @@ import { sanityClientWrite } from '@sanity-studio/lib/client'
 import NewUserCreatedEmail from '@/emails/new-user-created'
 import { resend } from '@/lib/clients'
 
+export const runtime = 'nodejs'
+
 /**
  * Handles GET requests for creating a Sanity user.
  *

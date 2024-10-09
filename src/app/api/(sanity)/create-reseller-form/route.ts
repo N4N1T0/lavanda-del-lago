@@ -10,6 +10,8 @@ import { resellerFormSchema } from '@/lib/forms/form-schemas'
 import { resend } from '@/lib/clients'
 import NewResellerApplicationEmail from '@/emails/new-reseller-form-application'
 
+export const runtime = 'nodejs'
+
 /**
  * Handles the creation of a reseller form in Sanity.
  *

@@ -13,6 +13,8 @@ import { readBody } from '@sanity-studio/lib/utils'
 import { resend } from '@/lib/clients'
 import ResellerWelcomeEmail from '@/emails/reseller-welcome'
 
+export const runtime = 'nodejs'
+
 // Get the Secret Sanity Webhook from the Environment Variables
 const secret = process.env.SANITY_WEBHOOK_SECRET
 

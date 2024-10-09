@@ -8,6 +8,8 @@ import { type NextRequest, NextResponse } from 'next/server'
 import NewsletterSubscriptionEmail from '@/emails/newsletter-subs-created'
 import { resend } from '@/lib/clients'
 
+export const runtime = 'nodejs'
+
 /**
  * Handles the POST request to subscribe to the newsletter.
  *

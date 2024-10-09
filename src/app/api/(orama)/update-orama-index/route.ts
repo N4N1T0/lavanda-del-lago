@@ -16,8 +16,7 @@ import type { Product } from '@/types'
 import { resend } from '@/lib/clients'
 import DailyIndexingEmail from '@/emails/daily-orama-index'
 
-// Environment Variables for API Key
-const cronJobApiKey = process.env.CRON_JOB_API_KEY
+export const runtime = 'nodejs'
 
 /**
  * Handles a GET request to update and deploy products.
@@ -81,7 +80,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
  * @return {boolean} True if the API key is valid, false otherwise.
  */
 function isValidApiKey(apiKey: string): boolean {
-  return apiKey === cronJobApiKey
+  return apiKey === '952930957f1b4216b5acaa3fd0b6fbbe'
 }
 
 /**

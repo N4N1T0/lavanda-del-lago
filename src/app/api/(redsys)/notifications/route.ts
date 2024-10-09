@@ -17,6 +17,8 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { resend } from '@/lib/clients'
 import CompletedPurchase from '@/emails/completed-purchase'
 
+export const runtime = 'nodejs'
+
 /**
  * Procesa la notificación de pago de Redsys.
  * @param req Solicitud de Next.js.

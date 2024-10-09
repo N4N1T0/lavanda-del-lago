@@ -18,6 +18,8 @@ const merchantInfo = {
   DS_MERCHANT_TERMINAL: process.env.REDSYS_TERMINAL! // Terminal number
 }
 
+export const runtime = 'nodejs'
+
 /**
  * Handles GET requests for RedSys payment gateway.
  *
