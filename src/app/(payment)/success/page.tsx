@@ -65,9 +65,6 @@ const SuccesPaymentPage = async ({
     redirect('/')
   }
 
-  console.log('products', searchParams.products)
-  console.log('total', searchParams.totalAmount)
-
   // Parse products from the URL parameter
   const products: Purchase['products'] = productsParam
     ? JSON.parse(decodeURIComponent(productsParam))

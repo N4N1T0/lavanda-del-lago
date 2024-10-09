@@ -122,7 +122,6 @@ export const jldProduct = (product: Product | null) => {
 }
 
 export const jldProductList = (products: Product[]) => {
-  console.log(products[0])
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
