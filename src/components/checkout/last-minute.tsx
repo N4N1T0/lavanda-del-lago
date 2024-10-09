@@ -1,5 +1,5 @@
 // Project component imports
-import { ProductCard } from '@/components/shared/product-card'
+import { ProductCard } from '@/components/products/product-card'
 import ServerFetchError from '@/components/shared/server-fetch-error'
 
 import NoData from '@/components/shared/no-data'

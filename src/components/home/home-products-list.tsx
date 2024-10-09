@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import {
   ProductCard,
   ProductCardSkeleton
-} from '@/components/shared/product-card'
+} from '@/components/products/product-card'
 import NoData from '@/components/shared/no-data'
 
 // External Libraries Imports

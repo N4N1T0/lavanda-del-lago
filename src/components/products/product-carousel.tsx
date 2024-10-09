@@ -13,7 +13,7 @@ import {
 import type { Product } from '@/types'
 
 // Project component imports
-import { ProductCard } from '@/components/shared/product-card'
+import { ProductCard } from '@/components/products/product-card'
 
 // Packages imports
 import Autoplay from 'embla-carousel-autoplay'

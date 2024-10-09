@@ -1,7 +1,7 @@
 // Project component imports
 import ServerFetchError from '@/components/shared/server-fetch-error'
 
-import ProductCarousel from '@/components/shared/product-carousel'
+import ProductCarousel from '@/components/products/product-carousel'
 import NoData from '@/components/shared/no-data'
 
 // Queries imports

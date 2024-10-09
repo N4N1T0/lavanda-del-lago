@@ -16,7 +16,7 @@ import {
 import {
   ProductCard,
   ProductCardSkeleton
-} from '@/components/shared/product-card'
+} from '@/components/products/product-card'
 
 // Types Imports
 import type { Product } from '@/types'
