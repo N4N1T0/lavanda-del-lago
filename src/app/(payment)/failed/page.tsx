@@ -1,8 +1,10 @@
 // Next.js Imports
-import Link from 'next/link'
+import { redirect } from 'next/navigation'
+
+// Project Components Imports
+import NotidicationsPageButton from '@/components/checkout/notification-pages-button'
 
 // UI Imports
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -10,12 +12,13 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { AlertCircle, HelpCircle, RefreshCcw } from 'lucide-react'
+import { AlertCircle, HelpCircle } from 'lucide-react'
 
 // Types Imports
 import type { Metadata } from 'next'
+
+// Utils Imports
 import { eurilize } from '@/lib/utils'
-import { redirect } from 'next/navigation'
 
 // Metadata for this page
 export const metadata: Metadata = {
@@ -112,17 +115,11 @@ const FailedPaymentPage = ({
           </div>
         </CardContent>
         <CardFooter className='flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
-          <Button variant='cart' className='w-fit'>
-            <RefreshCcw className='mr-2 h-4 w-4' />
-            <Link href={`/checkout/review?userId=${searchParams.userId}`}>
-              Reintentar Pago
-            </Link>
-          </Button>
-          <Button variant='link'>
-            <HelpCircle className='mr-2 h-4 w-4' />
-            {/* TODO: Link to support */}
-            <Link href='/support'>Contactar Soporte</Link>
-          </Button>
+          <NotidicationsPageButton
+            reseller={reseller}
+            userId={userId}
+            status='failed'
+          />
         </CardFooter>
       </Card>
     </main>

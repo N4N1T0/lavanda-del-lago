@@ -31,14 +31,17 @@ export async function POST(req: NextRequest) {
     Ds_MerchantParameters: req.headers.get('Ds_MerchantParameters') as string
   }
 
-  const { Ds_Order: orderId, Ds_Response: responseCode } =
-    processRestNotification(notificationParams)
+  const {
+    Ds_Order: orderId,
+    Ds_Response: responseCode,
+    Ds_ProcessedPayMethod
+  } = processRestNotification(notificationParams)
 
   if (responseCode === '0000') {
     // Verificar el código de respuesta (0000 es éxito)
     const response: Purchase = await sanityClientWrite
       .patch(orderId)
-      .set({ status: 'completado' })
+      .set({ status: 'completado', paymentMethod: Ds_ProcessedPayMethod })
       .commit()
 
     if (!response) {

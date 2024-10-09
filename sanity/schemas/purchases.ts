@@ -68,13 +68,6 @@ export default {
       name: 'paymentMethod',
       title: 'Método de Pago',
       type: 'string',
-      options: {
-        list: [
-          { title: 'Tarjeta de Crédito', value: 'tarjeta_credito' },
-          { title: 'PayPal', value: 'paypal' },
-          { title: 'Transferencia Bancaria', value: 'transferencia_bancaria' }
-        ]
-      },
       description: 'El método de pago utilizado para la compra.'
     },
     {
@@ -94,8 +87,7 @@ export default {
   preview: {
     select: {
       title: 'userEmail.name',
-      subtitle: 'purchaseDate',
-      media: 'products.0.image'
+      subtitle: 'purchaseDate'
     }
   }
 }

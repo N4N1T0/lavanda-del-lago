@@ -188,7 +188,7 @@ export type Purchase = {
   }>
   totalAmount?: number
   purchaseDate?: string
-  paymentMethod?: 'tarjeta_credito' | 'paypal' | 'transferencia_bancaria'
+  paymentMethod?: string
   status?: 'pendiente' | 'completado' | 'cancelado'
 }
 

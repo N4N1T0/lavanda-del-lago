@@ -1,4 +1,4 @@
-import { ProductCard } from '@/components/shared/product-card'
+import { ProductCard } from '@/components/products/product-card'
 import { oramaClient } from '@/lib/clients'
 import type { Metadata } from 'next'
 

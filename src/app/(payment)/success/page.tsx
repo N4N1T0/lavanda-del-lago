@@ -1,9 +1,11 @@
 // Next.js Imports
 import React from 'react'
-import Link from 'next/link'
+import { redirect } from 'next/navigation'
+
+// Project Components Imports
+import NotidicationsPageButton from '@/components/checkout/notification-pages-button'
 
 // UI Imports
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -13,17 +15,15 @@ import {
 } from '@/components/ui/card'
 
 // Assets Imports
-import {
-  CheckCircle2Icon,
-  PackageIcon,
-  TruckIcon,
-  UserIcon
-} from 'lucide-react'
+import { CheckCircle2Icon, PackageIcon, TruckIcon } from 'lucide-react'
 
 // Types Imports
 import { Purchase } from '@/types/sanity'
+
+// Utils imports
 import { eurilize } from '@/lib/utils'
-import { redirect } from 'next/navigation'
+
+// Query Imports
 import { sanityClientWrite } from '@sanity-studio/lib/client'
 
 // Define the Server Component
@@ -38,6 +38,7 @@ const SuccesPaymentPage = async ({
     reseller: string
     userEmail: string
     products: string
+    gateway: string
   }
 }): Promise<JSX.Element> => {
   // Destructure search parameters
@@ -48,6 +49,7 @@ const SuccesPaymentPage = async ({
     totalAmount,
     reseller,
     userEmail,
+    gateway,
     products: productsParam
   } = searchParams
 
@@ -62,6 +64,9 @@ const SuccesPaymentPage = async ({
   ) {
     redirect('/')
   }
+
+  console.log('products', searchParams.products)
+  console.log('total', searchParams.totalAmount)
 
   // Parse products from the URL parameter
   const products: Purchase['products'] = productsParam
@@ -78,9 +83,9 @@ const SuccesPaymentPage = async ({
       _type: 'reference'
     },
     totalAmount: Number(totalAmount),
-    status: 'pendiente',
+    status: gateway !== null ? 'completado' : 'pendiente',
     reseller: reseller === 'true',
-    paymentMethod: 'tarjeta_credito',
+    paymentMethod: gateway !== null ? gateway : 'redsys',
     products,
     _createdAt: new Date().toISOString(),
     _updatedAt: new Date().toISOString(),
@@ -127,22 +132,11 @@ const SuccesPaymentPage = async ({
           </div>
         </CardContent>
         <CardFooter className='flex justify-center space-x-4'>
-          <Button variant='cart'>
-            <Link href='/products'>Seguir Comprando</Link>
-          </Button>
-          <Button variant='default'>
-            <Link
-              href={
-                reseller === 'true' || reseller !== 'null'
-                  ? `/reseller/${userId}`
-                  : `/profile/${userId}`
-              }
-              className='flex items-center'
-            >
-              <UserIcon className='mr-2 h-4 w-4' />
-              Tu Perfil
-            </Link>
-          </Button>
+          <NotidicationsPageButton
+            reseller={reseller}
+            userId={userId}
+            status='success'
+          />
         </CardFooter>
       </Card>
     </main>
