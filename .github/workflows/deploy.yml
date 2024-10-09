@@ -38,6 +38,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: |
+          echo NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }} >> .env
+          echo NEXT_PUBLIC_SANITY_DATASET=${{ secrets.NEXT_PUBLIC_SANITY_DATASET }} >> .env
+          echo SANITY_TOKEN=${{ secrets.SANITY_TOKEN }} >> .env
+          echo SANITY_WEBHOOK_SECRET=${{ secrets.SANITY_WEBHOOK_SECRET }} >> .env
+          echo NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }} >> .env
+          echo CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} >> .env
+          echo NEXT_PUBLIC_CLERK_SIGN_IN_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_IN_URL }} >> .env
+          echo NEXT_PUBLIC_CLERK_SIGN_UP_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_UP_URL }} >> .env
+          echo ORAMA_PRIVATE_API_KEY=${{ secrets.ORAMA_PRIVATE_API_KEY }} >> .env
+          echo ORAMA_API_URL=${{ secrets.ORAMA_API_URL }} >> .env
+          echo ORAMA_PUBLIC_KEY=${{ secrets.ORAMA_PUBLIC_KEY }} >> .env
+          echo REDSYS_MERCHANT_CODE=${{ secrets.REDSYS_MERCHANT_CODE }} >> .env
+          echo REDSYS_TERMINAL=${{ secrets.REDSYS_TERMINAL }} >> .env
+          echo REDSYS_CURRENCY=${{ secrets.REDSYS_CURRENCY }} >> .env
+          echo REDSYS_SECRET_KEY=${{ secrets.REDSYS_SECRET_KEY }} >> .env
+          echo RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} >> .env
+          echo CRON_JOB_API_KEY=${{ secrets.CRON_JOB_API_KEY }} >> .env
+          echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
+          echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
+
       - name: Set up QEMU for cross-platform builds
         uses: docker/setup-qemu-action@v3
 
