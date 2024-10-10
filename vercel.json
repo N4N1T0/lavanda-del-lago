@@ -2,7 +2,9 @@
   "installCommand": "pnpm install",
   "git": {
     "deploymentEnabled": {
-      "main": false
+      "main": false,
+      "docker-deploy": false,
+      "vercel-preview": true
     }
   }
 }

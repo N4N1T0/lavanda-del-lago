@@ -31,8 +31,6 @@ const PaypalButton = ({
   const router = useRouter()
   const serializedProducts = encodeURIComponent(JSON.stringify(products))
 
-  console.log(Number(total.split(' ')[0].replace(',', '.')))
-
   // This function gets called when the user clicks on the PayPal button
   const handleApprove = async (_data: any, actions: any) => {
     if (actions.order) {

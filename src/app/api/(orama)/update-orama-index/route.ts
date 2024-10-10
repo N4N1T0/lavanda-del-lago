@@ -17,6 +17,7 @@ import { resend } from '@/lib/clients'
 import DailyIndexingEmail from '@/emails/daily-orama-index'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 /**
  * Handles a GET request to update and deploy products.

@@ -72,7 +72,7 @@ const Breadcrumbs = (): JSX.Element => {
               href='/'
               className='text-gray-500 transition-colors duration-150 hover:text-accent'
             >
-              Home
+              P. Principal
             </BreadcrumbLink>
           </BreadcrumbItem>
           {breadcrumbsArray.map((breadcrumb, index) => (
