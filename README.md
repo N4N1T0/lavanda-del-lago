@@ -1,5 +1,7 @@
 # Lavanda del Lago Ecommerce
 
+[![VPS](https://github.com/N4N1T0/lavanda-del-lago/actions/workflows/deploy.yml/badge.svg)](https://github.com/N4N1T0/lavanda-del-lago/actions/workflows/deploy.yml)
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![Version](https://img.shields.io/badge/version-4.0.0-yellow.svg)

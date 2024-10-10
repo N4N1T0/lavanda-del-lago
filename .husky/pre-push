@@ -1,0 +1,15 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Get the latest Git tag
+latest_tag=$(git describe --tags --abbrev=0)
+
+if [ -z "$latest_tag" ]; then
+  echo "No tags found. Exiting."
+  exit 1
+fi
+
+# Update package.json with the new version
+npm version "$latest_tag" --no-git-tag-version
+
+echo "Updated package.json version to $latest_tag"
