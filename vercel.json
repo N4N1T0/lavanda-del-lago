@@ -3,7 +3,8 @@
   "git": {
     "deploymentEnabled": {
       "main": false,
-      "downgrade-14": false
+      "docker-deploy": false,
+      "vercel-preview": true
     }
   }
 }
