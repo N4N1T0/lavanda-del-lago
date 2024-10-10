@@ -12,4 +12,11 @@ fi
 # Update package.json with the new version
 npm version "$latest_tag" --no-git-tag-version
 
-echo "Updated package.json version to $latest_tag"
+# Stage the updated package.json
+git add package.json
+
+# Commit the change (you may want to customize the commit message)
+git commit -m "Update package.json to version $last_tag"
+
+# Push the changes
+git push origin HEAD
