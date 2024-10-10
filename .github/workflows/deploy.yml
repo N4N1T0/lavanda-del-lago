@@ -122,7 +122,28 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            echo "SSH connection successful!"
-            mkdir -p apps/frontend && cd apps/frontend
+            mkdir -p apps/lavanda-del-lago && cd apps/lavanda-del-lago
+            
+            if [ -d ".git" ]; then
+              git stash
+              git pull origin main
+            else
+              git clone -b main {github_url} .
+            fi
+            
+            pnpm install --force
+            pnpm run build
+
+            pid=$(pm2 pid "lavanda-del-lago" 2>/dev/null)
+            if [ -n "$pid" ]; then
+              echo "Reloading application"
+              pm2 reload "lavanda-del-lago"
+              pm2 save
+            else
+              echo "New application"
+              pm2 start npm --name "lavanda-del-lago" -- start
+              pm2 startup
+              pm2 save
+            fi
 
 

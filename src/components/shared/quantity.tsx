@@ -69,8 +69,7 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
 
     toast({
       title: 'Se agrego correctamente al carrito',
-      description:
-        'Puedes Seguir comprando o ir al checkout desde el carrito de compras'
+      duration: 2000
     })
   }
 
@@ -78,36 +77,33 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
     <div className='flex w-full items-center justify-between border-b border-t border-accent/50 px-2 py-5 md:px-10'>
       <p className='hidden text-lg font-bold md:block'>Cantidad</p>
       <label htmlFor='Quantity' className='sr-only'>
-        {' '}
         Quantity{' '}
       </label>
 
-      {/* Quantity input field with increment and decrement buttons */}
-      <div className='flex w-fit items-center rounded border border-accent/70'>
-        <button
-          type='button'
-          aria-label='Disminuir cantidad'
-          className='size-10 leading-10 text-gray-600 transition hover:opacity-75'
+      <div className='flex items-center space-x-2 text-accent'>
+        <Button
+          variant='outline'
+          size='icon'
           onClick={decrement}
+          disabled={quantity === 1}
+          aria-label='Disminuir cantidad'
         >
-          &minus;
-        </button>
-
-        <input
+          <MinusCircle className='h-4 w-4' />
+        </Button>
+        <Input
           type='number'
           id='Quantity'
-          defaultValue={quantity}
-          className='h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none'
+          value={quantity || 0}
+          className='w-16 border-accent/50 text-center'
         />
-
-        <button
-          type='button'
-          aria-label='Incrementar cantidad'
-          className='size-10 leading-10 text-gray-600 transition hover:opacity-75'
+        <Button
+          variant='outline'
+          size='icon'
           onClick={increment}
+          aria-label='Incrementar cantidad'
         >
-          &#43;
-        </button>
+          <PlusCircle className='h-4 w-4' />
+        </Button>
       </div>
 
       {/* Button to add the selected quantity of the product to the cart */}
@@ -172,8 +168,7 @@ const QuantitySmall = ({
     removeFromWishlist(prduct.id)
     toast({
       title: 'Se agrego correctamente al carrito',
-      description:
-        'Se elimino del la lsita de Favoritos y se agrego al carrito de compras'
+      duration: 2000
     })
   }
 
@@ -184,32 +179,30 @@ const QuantitySmall = ({
         Quantity{' '}
       </label>
 
-      {/* Quantity input field with increment and decrement buttons */}
-      <div className='flex w-fit items-center rounded border border-accent'>
-        <button
-          type='button'
-          aria-label='Disminuir cantidad'
-          className='size-10 text-gray-700 transition hover:opacity-75'
+      <div className='flex items-center space-x-2 text-accent'>
+        <Button
+          variant='outline'
+          size='icon'
           onClick={decrement}
+          disabled={quantity === 1}
+          aria-label='Disminuir cantidad'
         >
-          &minus;
-        </button>
-
-        <input
+          <MinusCircle className='h-4 w-4' />
+        </Button>
+        <Input
           type='number'
           id='Quantity'
-          value={quantity}
-          className='h-5 w-10 rounded-md border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none'
+          value={quantity || 0}
+          className='w-16 border-accent/50 text-center'
         />
-
-        <button
-          type='button'
-          aria-label='Incrementar cantidad'
-          className='size-10 text-gray-700 transition hover:opacity-75'
+        <Button
+          variant='outline'
+          size='icon'
           onClick={increment}
+          aria-label='Incrementar cantidad'
         >
-          &#43;
-        </button>
+          <PlusCircle className='h-4 w-4' />
+        </Button>
       </div>
 
       {/* Button to add the selected quantity of the product to the cart */}

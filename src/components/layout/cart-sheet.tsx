@@ -111,20 +111,6 @@ const CartSheet = (): JSX.Element => {
                   </Link>
                 </SheetClose>
               </div>
-              <div className='mt-3 flex justify-center text-center text-sm text-gray-500'>
-                <p>
-                  o{' '}
-                  <SheetClose asChild>
-                    <Link
-                      href='/products'
-                      className='font-medium text-accent transition-colors duration-200 hover:text-accent/80'
-                    >
-                      Continua Comprando
-                      <span aria-hidden='true'> &rarr;</span>
-                    </Link>
-                  </SheetClose>
-                </p>
-              </div>
             </div>
           </SheetFooter>
         ) : (

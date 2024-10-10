@@ -50,7 +50,7 @@ const WishlistBtn = ({
     if (shoppingCart.some((cartProduct) => cartProduct.id === product.id)) {
       toast({
         title: 'Ya lo tienes en el carrito',
-        description: 'Puedes verlo, modificarlo y comprarlo.'
+        duration: 2000
       })
       return
     }

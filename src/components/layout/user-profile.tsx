@@ -35,7 +35,7 @@ const UserProfile = (): JSX.Element => {
 
   if (!isLoaded) {
     // Handle loading state however you like
-    return <Skeleton className='h-8 w-8' />
+    return <Skeleton className='h-8 w-8 rounded-full' />
   }
 
   const {
