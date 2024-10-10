@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Deployment
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
   docker-deploy:
     runs-on: ubuntu-latest
     needs: lint
-    if: github.ref == 'refs/heads/docker-build'
+    if: github.ref == 'refs/heads/docker-deploy'
 
     steps:
       - name: Checkout repository
@@ -112,17 +112,16 @@ jobs:
           echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
           echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
       
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      - name: Connect with VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "SSH connection successful!"
+            mkdir -p apps/frontend && cd apps/frontend
 
-          # Start ssh-agent
-          eval "$(ssh-agent -s)"
-          
-          # Add SSH key with passphrase
-          ssh-add <(echo "${{ secrets.SSH_PASSPHRASE }}")
-          
-          # Optional: Add your server to known_hosts to prevent prompts
-          ssh-keyscan -H 62.72.16.7 >> ~/.ssh/known_hosts
 
