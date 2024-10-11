@@ -15,7 +15,7 @@ import type { CartItem, User } from '@/types'
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, Suspense, useEffect, useRef, useState } from 'react'
 
 // UI Imports
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -134,7 +134,9 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
             </Button>
           </form>
         )}
-        <PaypalButton products={count} total={total} user={user} />
+        <Suspense fallback={<>loading</>}>
+          <PaypalButton products={count} total={total} user={user} />
+        </Suspense>
       </div>
       <PaymentForm form={paymentForm} />
     </div>

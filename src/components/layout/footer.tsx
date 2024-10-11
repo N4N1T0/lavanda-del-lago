@@ -90,10 +90,15 @@ const Footer = async (): Promise<JSX.Element> => {
                 <ul className='mt-8 space-y-4 text-sm'>
                   {Object.entries(contactInfo).map(([key, value]) => {
                     const link =
-                      key === 'email' ? `mailto:${value}` : `tel:${value}`
+                      key === 'email'
+                        ? `mailto:${value}`
+                        : key === 'address'
+                          ? `https://maps.google.com/?q=${value.split(' ').join('+')}`
+                          : `tel:${value}`
                     return (
                       <li key={uuidv4()}>
                         <Link
+                          target='_blank'
                           className='transition-colors duration-150 hover:text-gray-400'
                           href={link}
                         >

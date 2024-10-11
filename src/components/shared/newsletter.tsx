@@ -45,14 +45,14 @@ const Newsletter = React.memo(function Newsletter() {
               title: 'Se agrego correctamente al newsletter',
               description:
                 'Puedes seguir comprando o ir al checkout desde el carrito de compras',
-              duration: 2000
+              duration: 3000
             })
           } else {
             toast({
               title: 'Ya estas suscrito al newsletter',
               description:
                 'Puedes seguir comprando o ir al checkout desde el carrito de compras',
-              duration: 2000
+              duration: 3000
             })
           }
 

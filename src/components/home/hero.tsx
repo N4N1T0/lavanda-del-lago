@@ -6,7 +6,7 @@ import Link from 'next/link'
 import NoData from '@/components/shared/no-data'
 
 // UI Imports
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 
 // External Libraries Imports
 import { v4 as uuidv4 } from 'uuid'
@@ -116,7 +116,17 @@ export const Hero = async ({
                 .slice(0, 10)
                 .join(' ')}...`}
             </p>
-            <Button>Comprar</Button>
+            <Link
+              className={buttonVariants({ variant: 'default' })}
+              prefetch
+              href={
+                bentoFeaturedProducto.nombre && bentoFeaturedProducto.categoria
+                  ? `/products/${urlize(bentoFeaturedProducto.nombre)}?category=${bentoFeaturedProducto.categoria}`
+                  : '/products'
+              }
+            >
+              Comprar
+            </Link>
           </div>
           <div className='relative col-span-1'>
             <Image

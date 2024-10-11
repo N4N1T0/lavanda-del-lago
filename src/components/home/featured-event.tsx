@@ -5,6 +5,9 @@ import type { Event } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// UI imports
+import { buttonVariants } from '@/components/ui/button'
+
 /**
 + * Render the featured event section with event details.
 + *
@@ -47,6 +50,7 @@ const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
             {event.urls.map(({ id, calendarName, calendarUrl }) => (
               <li key={id}>
                 <Link
+                  target='_blank'
                   href={calendarUrl}
                   className='inline-flex h-10 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-white shadow transition-colors hover:bg-accent/70'
                 >
@@ -54,14 +58,13 @@ const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
                 </Link>
               </li>
             ))}
-            <li className='font-light text-tertiary'>
-              Guardalo en tus calendarios
-            </li>
+            <li className='ext-tertiary'>Guardalo en tus calendarios</li>
           </ul>
           {/* Link to events page */}
           <Link
+            target='_blank'
             href='/events'
-            className='inline-flex h-10 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-white shadow transition-colors hover:bg-accent/70'
+            className={buttonVariants({ variant: 'outline' })}
             prefetch={false}
           >
             Saber mas sobre los eventos
