@@ -19,12 +19,14 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react'
 
 // UI Imports
 import { Button, buttonVariants } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 // Assets Imports
 import { Loader2 } from 'lucide-react'
 import { RedirectForm } from 'redsys-easy'
+
+// Paypal Imports
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
-import { Skeleton } from '../ui/skeleton'
 
 /**
  * Calculate the total price of the items in the shopping cart.
