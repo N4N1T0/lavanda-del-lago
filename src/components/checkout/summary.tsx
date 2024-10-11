@@ -15,7 +15,7 @@ import type { CartItem, User } from '@/types'
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
-import { MutableRefObject, Suspense, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 
 // UI Imports
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -23,6 +23,8 @@ import { Button, buttonVariants } from '@/components/ui/button'
 // Assets Imports
 import { Loader2 } from 'lucide-react'
 import { RedirectForm } from 'redsys-easy'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { Skeleton } from '../ui/skeleton'
 
 /**
  * Calculate the total price of the items in the shopping cart.
@@ -31,7 +33,7 @@ import { RedirectForm } from 'redsys-easy'
  */
 const Summary = ({ user }: { user: User | null }): JSX.Element => {
   // Get the shopping cart items and a function to update the cart items
-  const [count, setCount] = useShoppingCart()
+  const [count, setCount, { isLoading: cartIsLoading }] = useShoppingCart()
   const [isLoading, setIsLoading] = useState(false)
   const [paymentForm, setPaymentForm] = useState(null)
 
@@ -80,13 +82,17 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
   return (
     <div className='col-span-1 h-fit rounded-md border border-accent/50 p-5'>
       <ul className='space-y-3 border-b border-accent/50 py-5'>
-        {count.map((item) => (
-          <SummaryCard
-            key={item.id}
-            product={item}
-            removeFromCart={removeFromCart}
-          />
-        ))}
+        {cartIsLoading
+          ? Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton key={index} className='h-16 w-full bg-neutral-200' />
+            ))
+          : count.map((item) => (
+              <SummaryCard
+                key={item.id}
+                product={item}
+                removeFromCart={removeFromCart}
+              />
+            ))}
       </ul>
       <div className='mt-3 space-y-3'>
         {/* shipping costs */}
@@ -123,7 +129,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
             <Button
               type='submit'
               variant='cart'
-              className='w-full'
+              className='h-12 w-full text-xl'
               disabled={isLoading}
             >
               {isLoading ? (
@@ -134,9 +140,16 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
             </Button>
           </form>
         )}
-        <Suspense fallback={<>loading</>}>
+        <PayPalScriptProvider
+          options={{
+            clientId:
+              'ARVFu5YwJzX47SVNwU5c9WlQ1zzfgjPoa6KCeenXoy1KL-kK5PyLUjiKzewOcnzm2uKEEWH3qTSJbrEM',
+            currency: 'EUR',
+            buyerCountry: 'ES'
+          }}
+        >
           <PaypalButton products={count} total={total} user={user} />
-        </Suspense>
+        </PayPalScriptProvider>
       </div>
       <PaymentForm form={paymentForm} />
     </div>
