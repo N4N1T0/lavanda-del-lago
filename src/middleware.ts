@@ -10,6 +10,7 @@ const publicRoutes = createRouteMatcher([
   '/search',
   '/privacy-policy',
   '/cookies-policy',
+  '/sales-policy',
   '/events',
   '/sitemap',
   '/studio(.*)',
