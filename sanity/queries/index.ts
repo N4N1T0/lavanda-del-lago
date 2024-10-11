@@ -191,7 +191,10 @@ export const certifications = groq`*[_type == 'certifications']{
 export const allBlogArticles = groq`
 *[_type == "blog-articles"]{
   categories,
-  "image": mainImage.asset->url,
+  "image": mainImage.asset->{
+    url,
+    "blur": metadata.lqip
+  },
   title,
   description,
   "id":_id,
@@ -203,7 +206,10 @@ export const allBlogArticles = groq`
 export const blogArticleById = groq`
   *[_type == "blog-articles" && slug.current == $slug][0]{
     categories,
-    "image": mainImage.asset->url,
+    "image": mainImage.asset->{
+    url,
+    "blur": metadata.lqip
+  },
     title,
     description,
     author->{
@@ -217,7 +223,10 @@ export const blogArticleById = groq`
 export const relatedArticlesByCategory = groq`
   *[_type == "blog-articles" && $category in categories]{
     categories,
-    "image": mainImage.asset->url,
+    "image": mainImage.asset->{
+    url,
+    "blur": metadata.lqip
+  },
     title,
     description,
     author->{

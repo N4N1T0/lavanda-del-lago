@@ -45,7 +45,10 @@ export interface Posts {
   id: string
   slug: string
   categories: string[]
-  image: string
+  image: {
+    url: string
+    blur: string
+  }
   title: string
   description: string
   author: Author
