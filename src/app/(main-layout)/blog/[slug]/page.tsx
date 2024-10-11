@@ -52,33 +52,37 @@ const BlogArticlePage = async ({
       slug: params.slug
     })
 
+    const { title, description, image, content, categories } = post
+
     return (
       <>
         <section
-          id={post.title}
+          id={title}
           className='mx-auto flex h-auto max-w-screen-2xl flex-col items-center gap-12 px-4 py-12 sm:px-6 lg:px-8 lg:py-20'
         >
           {/* Display the title of the blog post */}
           <div className='w-full space-y-5 text-center md:w-3/4'>
-            <h1 className='text-5xl'>{post.title}</h1>
+            <h1 className='text-5xl'>{title}</h1>
             {/* Display the first 20 words of the blog post's content */}
-            <p className='text-lg text-gray-600'>{post.description}</p>
+            <p className='text-lg text-gray-600'>{description}</p>
           </div>
           {/* Display the main image of the blog post */}
           <Image
-            src={post.image}
-            alt={post.title}
-            title={post.title}
-            width={1800}
-            height={1800}
+            src={image.url}
+            alt={title}
+            title={title}
+            width={1500}
+            height={1500}
             className='rounded-md shadow-md'
             priority
+            placeholder='blur'
+            blurDataURL={image.blur}
           />
           {/* Display the rest of the blog post's content */}
           <div className='w-full space-y-7 text-left md:w-3/4'>
-            <PortableText value={post.content} />
+            <PortableText value={content} />
           </div>
-          <Related category={post.categories[0]} />
+          <Related category={categories[0]} />
         </section>
         <Newsletter />
         <Prefooter />
