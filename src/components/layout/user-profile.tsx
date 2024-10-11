@@ -1,14 +1,15 @@
 'use client'
 
-// React Imports
-import { useState } from 'react'
+// Next.js Imports
+import Link from 'next/link'
 
 // UI imports
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
+  PopoverClose
 } from '@/components/ui/popover'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -17,6 +18,7 @@ import { useUser, useClerk } from '@clerk/nextjs'
 
 // Assets imports
 import { User, UserPlus, LogOut, Store } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 /**
  * A dropdown menu for the user to manage their profile, sign out, and (for
@@ -31,7 +33,8 @@ export default function UserPopover() {
   // Get the user from Clerk
   const { user } = useUser()
   const { signOut } = useClerk()
-  const [open, setOpen] = useState(false)
+
+  const path = usePathname()
 
   // If the user is not signed in, this component will not render anything.
   if (!user) return <></>
@@ -39,7 +42,7 @@ export default function UserPopover() {
   const isReseller = user.publicMetadata.reseller === true
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover>
       <PopoverTrigger asChild>
         <Button
           variant='outline'
@@ -77,46 +80,60 @@ export default function UserPopover() {
           </div>
           <div className='grid gap-2'>
             {isReseller ? (
-              <Button
-                variant='default'
-                className='w-full justify-start'
-                onClick={() => setOpen(false)}
-              >
-                {/* Reseller profile link */}
-                <Store className='mr-2 h-4 w-4' />
-                Perfil de Revendedor
-              </Button>
+              <PopoverClose asChild>
+                <Link
+                  className={buttonVariants({ variant: 'default' })}
+                  href={`/reseller/${user.id}`}
+                >
+                  {/* Reseller profile link */}
+                  <Store className='mr-2 h-4 w-4' />
+                  Perfil de Revendedor
+                </Link>
+              </PopoverClose>
             ) : (
               <>
-                <Button
-                  variant='default'
-                  className='w-full justify-start'
-                  onClick={() => setOpen(false)}
-                >
-                  {/* User profile link */}
-                  <User className='mr-2 h-4 w-4' />
-                  Perfil de Usuario
-                </Button>
-                <Button
-                  variant='default'
-                  className='w-full justify-start'
-                  onClick={() => setOpen(false)}
-                >
-                  {/* Reseller registration link */}
-                  <UserPlus className='mr-2 h-4 w-4' />
-                  Registro de Revendedor
-                </Button>
+                <PopoverClose asChild>
+                  <Link
+                    className={buttonVariants({ variant: 'default' })}
+                    href={`/profile/${user.id}`}
+                  >
+                    {/* User profile link */}
+                    <User className='mr-2 h-4 w-4' />
+                    Perfil de Usuario
+                  </Link>
+                </PopoverClose>
+                <PopoverClose asChild>
+                  <Link
+                    className={buttonVariants({ variant: 'default' })}
+                    href='reseller-form'
+                  >
+                    {/* Reseller registration link */}
+                    <UserPlus className='mr-2 h-4 w-4' />
+                    Registro de Revendedor
+                  </Link>
+                </PopoverClose>
               </>
             )}
-            <Button
-              variant='default'
-              className='w-full justify-start'
-              onClick={() => signOut()}
-            >
-              {/* Sign out link */}
-              <LogOut className='mr-2 h-4 w-4' />
-              Cerrar Sesión
-            </Button>
+            <PopoverClose asChild>
+              <Button
+                variant='default'
+                onClick={() =>
+                  signOut({
+                    redirectUrl:
+                      path.startsWith('/reseller') ||
+                      path.startsWith('/profile')
+                        ? '/'
+                        : path
+                          ? '/'
+                          : path
+                  })
+                }
+              >
+                {/* Sign out link */}
+                <LogOut className='mr-2 h-4 w-4' />
+                Cerrar Sesión
+              </Button>
+            </PopoverClose>
           </div>
         </div>
       </PopoverContent>
