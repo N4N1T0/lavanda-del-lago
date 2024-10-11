@@ -6,7 +6,10 @@ export const aboutUsPage = groq`
   title,
   description,
   stats,
-  "statImage":stats_image.asset->url,
+  "statImage":stats_image.asset->{
+    url,
+    "blur": metadata.lqip
+  },
   second_section_title,
   second_section_description,
   teams_section_title,
@@ -25,12 +28,18 @@ export const aboutUsPage = groq`
 export const homePage = groq`
 *[_type == "homePage"]{
   bentoThreeImages[]{
-    "image": asset->url
+    "image": asset->{
+      url,
+      "blur": metadata.lqip
+    }
   },
   featuredEvent->{
     date,
     title,
-    "image": image.asset->url,
+    "image": image.asset->{
+      url,
+      "blur": metadata.lqip
+    },
     description,
     urls[]{
       "id": _key,
@@ -142,8 +151,14 @@ export const seo = groq`*[_type == "seoMetatags"]{
 `
 
 export const jusAFLower = groq`*[_type == "justAFlower"]{
-   "mainImage": mainImage.asset->url,
-   "secondaryImage": secondaryImage.asset->url,
+   "mainImage": mainImage.asset->{
+     url,
+     "blur": metadata.lqip
+   },
+   "secondaryImage": secondaryImage.asset->{
+     url,
+     "blur": metadata.lqip
+   },
    text,
    secondaryText,
    quote,
@@ -163,14 +178,20 @@ export const property = groq`*[_type == "property"]{
     stock,
     usabilidad,
   },
-  "featuredImage": featuredImage.asset->url
+  "featuredImage": featuredImage.asset->{
+     url,
+     "blur": metadata.lqip
+   }
 }[0]
 `
 
 export const remedies = groq`*[_type == "remedies"]{
   title,
   firstDescription,
-  "dualImage": dualImage[].asset->url,
+  "dualImage": dualImage[].asset->{
+     url,
+     "blur": metadata.lqip
+   },
   secodDescription,
   benefits[]{
     "image": image.asset->url,
@@ -379,7 +400,10 @@ export const events = groq`
   "id": _id,
   date,
   title,
-  "image": image.asset->url,
+  "image": image.asset->{
+      url,
+      "blur": metadata.lqip
+    },
   description,
   urls[]{
     "id": _key,

@@ -1,8 +1,10 @@
 // Types Imports
-import { certifications } from '@sanity-studio/queries'
 import type { Certifications } from '@/types'
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import type { Metadata } from 'next'
+
+// Query Imports
+import { certifications } from '@sanity-studio/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { PortableText } from 'next-sanity'
 
 // Metadata for this page

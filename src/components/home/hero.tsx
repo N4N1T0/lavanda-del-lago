@@ -52,12 +52,14 @@ export const Hero = async ({
             className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''}`}
           >
             <Image
-              src={image || Hero1}
+              src={image.url || Hero1}
               alt='Lavanda Del Lago'
               className='aspect-square h-auto w-full object-cover'
               width={500}
               height={500}
               priority
+              placeholder={image.blur ? 'blur' : 'empty'}
+              blurDataURL={image.blur ? image.blur : undefined}
             />
           </div>
         ))}

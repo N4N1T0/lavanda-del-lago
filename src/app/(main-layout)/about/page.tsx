@@ -73,13 +73,15 @@ const AboutUsPage = async (): Promise<JSX.Element> => {
           ))}
         </ul>
         <Image
-          src={statImage}
+          src={statImage.url}
           alt='Stats Image'
           title='Stats Image'
           className='col-span-1 aspect-square object-cover'
-          width={1500}
-          height={1500}
+          width={700}
+          height={700}
           priority
+          placeholder='blur'
+          blurDataURL={statImage.blur}
         />
       </div>
 
