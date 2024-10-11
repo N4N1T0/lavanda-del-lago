@@ -26,9 +26,15 @@ const UserProfilePage = async ({
   params: { id: string }
 }): Promise<JSX.Element> => {
   // Fetch user data
-  const response: User = await sanityClientRead.fetch(userByIdCompleted, {
-    id: params.id
-  })
+  const response: User = await sanityClientRead.fetch(
+    userByIdCompleted,
+    {
+      id: params.id
+    },
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   // Check if user exists
   if (!response || params.id === 'no_user_id') {

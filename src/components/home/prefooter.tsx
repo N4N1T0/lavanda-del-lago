@@ -18,7 +18,13 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
  * @return {Promise<JSX.Element>} The rendered prefooter section.
  */
 const Prefooter = async (): Promise<JSX.Element> => {
-  const response: PrefooterProps = await sanityClientRead.fetch(prefooter)
+  const response: PrefooterProps = await sanityClientRead.fetch(
+    prefooter,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   const { imageUrl, link } = response
 

@@ -32,12 +32,16 @@ export async function generateMetadata({
   // ftist feth for the product with the given name
   response = await sanityClientRead.fetch(productByName, {
     name: desurlizedProductName
+  }, {
+    next:{ revalidate: 3600 }
   })
 
   if (!response) {
     // if not found, fetch for the product with the given name plus and space
     response = await sanityClientRead.fetch(productByName, {
       name: `${desurlizedProductName} `
+    }, {
+      next: { revalidate: 3600}
     })
   }
 
@@ -78,12 +82,16 @@ const ProductPage = async ({
   // ftist feth for the product with the given name
   response = await sanityClientRead.fetch(productByName, {
     name: desurlizedProductName
+  }, {
+    next: { revalidate: 3600}
   })
 
   if (!response) {
     // if not found, fetch for the product with the given name plus and space
     response = await sanityClientRead.fetch(productByName, {
       name: `${desurlizedProductName} `
+    }, {
+      next: { revalidate: 3600}
     })
   }
 

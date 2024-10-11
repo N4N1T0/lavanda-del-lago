@@ -21,7 +21,13 @@ export const metadata: Metadata = {
  * @throws {Error} If there is an error fetching the policy.
  */
 const CookiesPolicyPage = async (): Promise<JSX.Element> => {
-  const response: Policies = await sanityClientRead.fetch(cookiePolicy)
+  const response: Policies = await sanityClientRead.fetch(
+    cookiePolicy,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   // deconstructure of the data
   const { title, content } = response

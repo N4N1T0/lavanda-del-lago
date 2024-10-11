@@ -31,7 +31,13 @@ import { categoriesFilter } from '@/lib/utils'
  * @return {JSX.Element} The rendered Navbar component.
  */
 const Navbar = async (): Promise<JSX.Element> => {
-  const response: CategoriesList[] = await sanityClientRead.fetch(categories)
+  const response: CategoriesList[] = await sanityClientRead.fetch(
+    categories,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
   const filterCategories = categoriesFilter(response)
 
   return (

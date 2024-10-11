@@ -29,7 +29,13 @@ export const metadata: Metadata = {
  */
 const AboutUsPage = async (): Promise<JSX.Element> => {
   // Get About Us Page Data
-  const response: AboutsPageType = await sanityClientRead.fetch(aboutUsPage)
+  const response: AboutsPageType = await sanityClientRead.fetch(
+    aboutUsPage,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   // deconstruct data
   const {

@@ -23,9 +23,15 @@ const Related = async ({
   category: string
 }): Promise<JSX.Element> => {
   try {
-    const response = await sanityClientRead.fetch(relatedArticlesByCategory, {
-      category
-    })
+    const response = await sanityClientRead.fetch(
+      relatedArticlesByCategory,
+      {
+        category
+      },
+      {
+        next: { revalidate: 3600 }
+      }
+    )
 
     if (response.length === 0) {
       return <NoData data='No hay Articulos relacionados' />

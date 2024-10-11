@@ -22,7 +22,9 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the.
  */
 const RemediesPage = async (): Promise<JSX.Element> => {
-  const response: Remedies = await sanityClientRead.fetch(remedies)
+  const response: Remedies = await sanityClientRead.fetch(remedies, {}, {
+    next: {revalidate: 3600}
+  })
 
   const { firstDescription, dualImage, secodDescription, benefits, title } =
     response

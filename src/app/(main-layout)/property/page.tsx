@@ -23,7 +23,13 @@ import { urlize } from '@/lib/utils'
 
 // Function to genarte Metadata for this page
 export async function generateMetadata(): Promise<Metadata> {
-  const response: Property = await sanityClientRead.fetch(property)
+  const response: Property = await sanityClientRead.fetch(
+    property,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   return {
     title: response.title,

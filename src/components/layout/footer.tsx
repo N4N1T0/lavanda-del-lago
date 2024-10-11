@@ -19,7 +19,13 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 import type { Footer as FooterProps } from '@/types'
 
 const Footer = async (): Promise<JSX.Element> => {
-  const response: FooterProps = await sanityClientRead.fetch(footer)
+  const response: FooterProps = await sanityClientRead.fetch(
+    footer,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   const findSocialMedia = (name: string) => {
     return socialLinks.find((item) => item.name === name)?.svg

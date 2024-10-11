@@ -43,7 +43,13 @@ const HomeProductsList = ({
   useEffect(() => {
     const getAllProducts = async () => {
       try {
-        const response = await sanityClientRead.fetch(allProducts)
+        const response = await sanityClientRead.fetch(
+          allProducts,
+          {},
+          {
+            next: { revalidate: 3600 }
+          }
+        )
         setProducts(response)
       } catch (error) {
         console.error('Error fetching products:', error)
