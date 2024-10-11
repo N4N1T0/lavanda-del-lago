@@ -17,9 +17,7 @@ import { TailwindWrapper } from './email-utils'
 import { Product } from '@/types'
 import { eurilize } from '@/lib/utils'
 
-const baseUrl = process.env.CI
-  ? 'http://www.lavandadellago.es'
-  : 'http://localhost:3000'
+const baseUrl = process.env.NEXTAUTH_URL
 
 export interface PurchaseConfirmationEmailProps {
   customerName: string
