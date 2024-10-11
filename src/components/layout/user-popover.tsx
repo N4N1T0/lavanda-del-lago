@@ -7,6 +7,7 @@ import UserProfile from '@/components/layout/user-profile'
 
 // Assets Imports
 import { User as UserIcon } from '@/assets'
+import { LogIn, UserPlus } from 'lucide-react'
 
 // Ui imports
 import {
@@ -14,10 +15,10 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@/components/ui/popover'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 
 // Auth Imports
-import { SignInButton, SignedOut, SignedIn } from '@clerk/nextjs'
+import { SignInButton, SignedOut } from '@clerk/nextjs'
 
 const UserPopover = (): JSX.Element => {
   return (
@@ -36,17 +37,22 @@ const UserPopover = (): JSX.Element => {
               forceRedirectUrl='/api/create-sanity-user-from-clerk'
               signUpForceRedirectUrl='/api/create-sanity-user-from-clerk'
             >
-              <Button>Iniciar Sesión</Button>
+              <Button className='flex w-full items-center justify-center'>
+                <LogIn className='mr-2 h-4 w-4' />
+                Iniciar Sesión
+              </Button>
             </SignInButton>
-            <Button asChild>
-              <Link href='/reseller-form'>Registrarse como Revendedor</Link>
-            </Button>
+            <Link
+              className={`${buttonVariants({ variant: 'default' })} flex w-full items-center justify-center`}
+              href='/reseller-form'
+            >
+              <UserPlus className='mr-2 h-4 w-4' />
+              Formulario de Revendedor
+            </Link>
           </PopoverContent>
         </Popover>
       </SignedOut>
-      <SignedIn>
-        <UserProfile />
-      </SignedIn>
+      <UserProfile />
     </>
   )
 }
