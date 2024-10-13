@@ -1,6 +1,6 @@
 {
   "name": "lavanda-del-lago",
-  "version": "4.5.9",
+  "version": "4.5.10",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
-    "@clerk/backend": "^1.13.8",
+    "@clerk/backend": "^1.13.9",
     "@clerk/localizations": "^3.2.0",
-    "@clerk/nextjs": "^5.7.1",
+    "@clerk/nextjs": "^5.7.2",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
@@ -36,6 +36,7 @@
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-radio-group": "^1.2.1",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
@@ -50,7 +51,7 @@
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
     "husky": "^9.1.6",
-    "lucide-react": "^0.451.0",
+    "lucide-react": "^0.452.0",
     "next": "14.2.15",
     "next-sanity": "9.5.0",
     "react": "18.3.1",
@@ -66,14 +67,14 @@
     "swr-global-state": "^2.2.0",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.3",
+    "use-debounce": "^10.0.4",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
+    "@types/react-dom": "^18.3.1",
     "@types/uuid": "^10.0.0",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.15",
