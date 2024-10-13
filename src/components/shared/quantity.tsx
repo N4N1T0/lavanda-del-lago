@@ -74,7 +74,7 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
   }
 
   return (
-    <div className='flex w-full items-center justify-between border-b border-t border-accent/50 px-2 py-5 md:px-10'>
+    <div className='flex w-full items-center justify-between border-b border-t border-accent/50 px-2 py-5 xl:px-10'>
       <p className='hidden text-lg font-bold md:block'>Cantidad</p>
       <label htmlFor='Quantity' className='sr-only'>
         Quantity{' '}
@@ -94,7 +94,7 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
           type='number'
           id='Quantity'
           value={quantity || 0}
-          className='w-16 border-accent/50 text-center'
+          className='w-12 border-accent/50 text-center'
         />
         <Button
           variant='outline'
@@ -173,7 +173,7 @@ const QuantitySmall = ({
   }
 
   return (
-    <div className='flex w-fit items-center justify-between gap-3 px-3'>
+    <div className='flex w-full flex-wrap items-center justify-between gap-3'>
       <label htmlFor='Quantity' className='sr-only'>
         {' '}
         Quantity{' '}
@@ -182,7 +182,7 @@ const QuantitySmall = ({
       <div className='flex items-center space-x-2 text-accent'>
         <Button
           variant='outline'
-          size='icon'
+          size='sm'
           onClick={decrement}
           disabled={quantity === 1}
           aria-label='Disminuir cantidad'
@@ -193,11 +193,11 @@ const QuantitySmall = ({
           type='number'
           id='Quantity'
           value={quantity || 0}
-          className='w-16 border-accent/50 text-center'
+          className='w-12 border-accent/50 text-center'
         />
         <Button
           variant='outline'
-          size='icon'
+          size='sm'
           onClick={increment}
           aria-label='Incrementar cantidad'
         >
