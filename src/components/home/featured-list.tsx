@@ -55,9 +55,7 @@ const FeaturedList = async ({
           >
             {featuredTitle}
           </h2>
-          <div className='mx-auto flex w-[93%] gap-5'>
-            <ProductCarousel productList={response} />
-          </div>
+          <ProductCarousel productList={response} />
         </div>
       </section>
     )

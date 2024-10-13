@@ -61,7 +61,7 @@ const ProductCard = ({
   const { nombre, precio, descripcion, image, categoria } = product
 
   return (
-    <li className='relative col-span-1 inline-flex flex-col items-center justify-start gap-4 rounded-lg bg-neutral-100 px-4 py-6 text-black'>
+    <li className='relative col-span-1 inline-flex h-full flex-col items-center justify-start gap-4 rounded-lg bg-neutral-100 px-4 py-6 text-black'>
       <div className='aspect-square'>
         <Image
           src={image || MainLogo}
@@ -110,7 +110,7 @@ const ProductCard = ({
             }
             className='rounded-lg bg-accent px-6 py-3 text-sm text-white transition-colors duration-200 hover:bg-white hover:text-accent md:text-base'
           >
-            Comprar <span className='hidden md:inline'>Ahora</span>
+            Comprar <span className='hidden xl:inline'>Ahora</span>
           </Link>
         )}
       </div>
