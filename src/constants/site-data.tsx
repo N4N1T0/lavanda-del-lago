@@ -103,15 +103,15 @@ export const socialLinks = [
 
 export const footerLinks = [
   {
-    name: 'Politica de Cookies',
+    name: 'Política de Cookies',
     href: '/cookies-policy'
   },
   {
-    name: 'Politica de Privacidad',
+    name: 'Política de Privacidad',
     href: '/privacy-policy'
   },
   {
-    name: 'Politica de Compra y Ventas',
+    name: 'Política de Compra y Ventas',
     href: '/sales-policy'
   }
 ]
@@ -237,4 +237,12 @@ export const localities = [
   'Vizcaya',
   'Zamora',
   'Zaragoza'
+]
+
+export const jobType = [
+  'Centro de Estética',
+  'Freelance',
+  'Cabina Propia',
+  'Centro medico de Estética',
+  'Particular'
 ]

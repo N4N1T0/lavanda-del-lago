@@ -23,7 +23,7 @@ import {
 
 // Assets Imports
 import { Loader2 } from 'lucide-react'
-import { localities } from '@/constants/site-data'
+import { localities, jobType } from '@/constants/site-data'
 
 const ResellerForm = () => {
   // Initialize the router
@@ -41,7 +41,9 @@ const ResellerForm = () => {
       phone: '',
       birthDate: '',
       birthPlace: '',
-      privacyPolicy: false
+      privacyPolicy: false,
+      jobType: '',
+      companyFile: undefined,
     }
   })
 
@@ -86,6 +88,7 @@ const ResellerForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className='w-full space-y-4'>
+        {/* First Name */}
         <FormFieldComponent
           control={form.control}
           name='firstName'
@@ -93,6 +96,8 @@ const ResellerForm = () => {
           placeholder='Juan'
           isSubmitting={isSubmitting}
         />
+
+        {/* Last Name */}
         <FormFieldComponent
           control={form.control}
           name='lastName'
@@ -100,6 +105,8 @@ const ResellerForm = () => {
           placeholder='Perez'
           isSubmitting={isSubmitting}
         />
+
+        {/* Email */}
         <FormFieldComponent
           control={form.control}
           name='email'
@@ -107,6 +114,8 @@ const ResellerForm = () => {
           placeholder='juan@perez.es'
           isSubmitting={isSubmitting}
         />
+
+        {/* NIE */}
         <FormFieldComponent
           control={form.control}
           name='nie'
@@ -126,6 +135,7 @@ const ResellerForm = () => {
           isSubmitting={isSubmitting}
         />
 
+        {/* Phone */}
         <FormFieldComponent
           control={form.control}
           name='phone'
@@ -133,6 +143,8 @@ const ResellerForm = () => {
           placeholder='+34 123 456 789'
           isSubmitting={isSubmitting}
         />
+
+        {/* Birth Date */}
         <FormFieldComponent
           control={form.control}
           name='birthDate'
@@ -153,11 +165,32 @@ const ResellerForm = () => {
           isSubmitting={isSubmitting}
         />
 
+        {/* Job Type (Radio Group) */}
+        <FormFieldComponent
+          control={form.control}
+          name='jobType'
+          label='Tipo de Trabajo'
+          placeholder=''
+          type='radio'
+          options={jobType} // Using jobType from site-data
+          isSubmitting={isSubmitting}
+        />
+
+        {/* File Upload */}
+        <FormFieldComponent
+          control={form.control}
+          name='companyFile'
+          label='Adjuntar archivo que sustente la identificación de su empresa o su NIF en caso de autónomo'
+          placeholder=''
+          type='file'
+          isSubmitting={isSubmitting}
+        />
+
         {/* Privacy Policy Checkbox */}
         <FormFieldComponent
           control={form.control}
           name='privacyPolicy'
-          label='He visto el Privacy Policy'
+          label='He Leído las Privacy Policy'
           placeholder=''
           type='checkbox'
           isSubmitting={isSubmitting}
