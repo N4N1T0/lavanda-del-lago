@@ -23,6 +23,7 @@ import { MainLogo } from '@/assets'
 // External Libraies Imports
 import { v4 as uuidv4 } from 'uuid'
 import ImageGallery from './image-gallery'
+import IngredientsTable from './ingredients-table'
 
 /**
  * Renders the details of a product including title, price, description, and image.
@@ -39,7 +40,8 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
     usabilidad,
     categoria,
     createdAt,
-    fotosVarias
+    fotosVarias,
+    composicion
   } = product
 
   const imageGallery =
@@ -48,20 +50,22 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
       : []
 
   return (
-    <article className='mt-7 grid flex-[80%] grid-cols-1 gap-10 md:grid-cols-2'>
-      {imageGallery.length > 0 ? (
-        <ImageGallery images={imageGallery} />
-      ) : (
-        <Image
-          src={image || MainLogo}
-          alt={nombre || 'Logo Principal de Lavanda del Lago'}
-          title={nombre || 'Logo Principal de Lavanda del Lago'}
-          width={500}
-          height={500}
-          priority
-          className='aspect-square object-cover'
-        />
-      )}
+    <article className='relative mt-7 grid flex-[80%] grid-cols-1 gap-10 md:grid-cols-2'>
+      <div className='sticky top-2 flex h-fit items-center justify-center'>
+        {imageGallery.length > 0 ? (
+          <ImageGallery images={imageGallery} />
+        ) : (
+          <Image
+            src={image || MainLogo}
+            alt={nombre || 'Logo Principal de Lavanda del Lago'}
+            title={nombre || 'Logo Principal de Lavanda del Lago'}
+            width={500}
+            height={500}
+            priority
+            className='aspect-square object-contain'
+          />
+        )}
+      </div>
       <section id='product-details' className='space-y-4'>
         <div className='flex w-full items-center justify-between'>
           <h1 className='text-xl text-accent md:text-4xl'>
@@ -87,14 +91,14 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
               value='use'
               className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
             >
-              <span className='hidden md:inline'>Sustancias y Uso</span>
-              <span className='inline md:hidden'>Sustancias</span>
+              <span className='hidden md:inline'>Ingredientes y Uso</span>
+              <span className='inline md:hidden'>Ingredientes</span>
             </TabsTrigger>
             <TabsTrigger
               value='caracteristics'
               className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
             >
-              Caracteristicas
+              Características
             </TabsTrigger>
           </TabsList>
           <TabsContent value='description' className='px-5 py-3 text-center'>
@@ -105,9 +109,13 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
           </TabsContent>
           <TabsContent value='use' className='px-5 py-3 text-center'>
             <p className='text-lg text-gray-600'>
-              {usabilidad ||
-                'Estamos trabajando en una usabilidad detallada para usted'}
-            </p>{' '}
+              {composicion !== null ? (
+                <IngredientsTable composicion={composicion} />
+              ) : (
+                usabilidad ||
+                'Estamos trabajando en una usabilidad detallada para usted'
+              )}
+            </p>
           </TabsContent>
           <TabsContent value='caracteristics' className='px-5 py-3 text-center'>
             <ProductCaracteristics product={product} />

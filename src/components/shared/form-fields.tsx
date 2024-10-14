@@ -35,7 +35,6 @@ interface FormFieldComponentProps<T extends FieldValues> {
   className?: string | null
 }
 
-
 const FormFieldComponent = <T extends FieldValues>({
   control,
   name,
@@ -86,7 +85,11 @@ const FormFieldComponent = <T extends FieldValues>({
               </FormControl>
               <SelectContent>
                 {options.map((option) => (
-                  <SelectItem key={option} value={option}>
+                  <SelectItem
+                    key={option}
+                    value={option}
+                    className='font-medium'
+                  >
                     {option}
                   </SelectItem>
                 ))}

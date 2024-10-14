@@ -89,9 +89,15 @@ export default {
         },
         {
           name: 'floor',
-          title: 'Piso',
+          title: 'Numero',
           type: 'string',
           description: 'El piso del usuario'
+        },
+        {
+          name: 'reference',
+          title: 'Referencia',
+          type: 'string',
+          description: 'referencia de la dirección'
         },
         {
           name: 'postal_code',

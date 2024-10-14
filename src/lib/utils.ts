@@ -297,25 +297,25 @@ export function handlingSecurityInfo(security: string): {
       return {
         title: 'Ya eres revendedor',
         description:
-          'No nececitas volver a rellenar el formulario de revendedor, si deseas crear un perfil de revendedor para otra persona puedes hacer que se autentifique en el sistema y rellene el formulario.'
+          'No necesitas volver a rellenar el formulario de revendedor, si deseas crear un perfil de revendedor para otra persona puedes hacer que se autentifique en el sistema y rellene el formulario.'
       }
     case 'form_already-ok':
       return {
-        title: 'Ya tiened un Formulario',
+        title: 'Ya tienes un Formulario',
         description:
-          'No nececitas volver a rellenar el formulario. pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico'
+          'No necesitas volver a rellenar el formulario. pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automático'
       }
     case 'form_send-ok':
       return {
         title: 'El Formulario ha sido enviado correctamente',
         description:
-          'pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automatico'
+          'pronto uno de nuestros miembros del equipo revisara la info y le llegara un correo automático'
       }
     case 'unprocessable_entity':
       return {
         title: 'Problemas de Seguridad',
         description:
-          'Hubo un problema con el Autentificador de Cuenta. Prube otra vez'
+          'Hubo un problema con el Autentificador de Cuenta. Pruebe otra vez'
       }
     case 'form_password_pwned':
       return {
@@ -351,4 +351,11 @@ export function formatAddress(address: User['address']): string {
 
   // Filtra campos nulos o vacíos y únelos con una coma
   return [street, floor, postal_code, locality].filter(Boolean).join(', ')
+}
+
+export const formatComposicion = (composicion: string): string[] => {
+  return composicion
+    .toLocaleLowerCase()
+    .split(',')
+    .map((item) => capitalizeFirstLetter(item))
 }

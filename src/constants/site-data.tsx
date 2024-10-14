@@ -240,9 +240,8 @@ export const localities = [
 ]
 
 export const jobType = [
-  'Centro de Estética',
-  'Freelance',
-  'Cabina Propia',
-  'Centro medico de Estética',
-  'Particular'
+  'Autónomo',
+  'Tienda Online',
+  'Tienda Física',
+  'Distribuidor'
 ]

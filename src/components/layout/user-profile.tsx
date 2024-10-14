@@ -103,7 +103,7 @@ export default function UserPopover({ currentUser }: { currentUser: any }) {
                 <PopoverClose asChild>
                   <Link
                     className={buttonVariants({ variant: 'default' })}
-                    href='reseller-form'
+                    href='/reseller-form'
                   >
                     {/* Reseller registration link */}
                     <UserPlus className='mr-2 h-4 w-4' />

@@ -17,6 +17,7 @@ export const userSchema = z
     confirmPassword: z.string().optional(),
     street: z.string().min(2, { message: 'La Calle es necesaria' }),
     floor: z.string().min(2, { message: 'El Piso es necesario' }),
+    reference: z.string().optional(),
     postal_code: z
       .string()
       .min(2, { message: 'El Código Postal es necesario' }),
@@ -62,7 +63,7 @@ export const resellerFormSchema = z.object({
     .max(9, 'El NIE debe tener exactamente 9 caracteres')
     .min(1, 'El NIE es requerido'),
   province: z.enum(['Ninguno de los anteriores', ...localities], {
-    required_error: 'Debes seleccionar una localidad'
+    errorMap: () => ({ message: 'Debes seleccionar un Localidad' })
   }),
   phone: z
     .string()
@@ -70,19 +71,20 @@ export const resellerFormSchema = z.object({
     .max(15, 'El teléfono no debe exceder los 15 dígitos')
     .min(1, 'El teléfono es requerido'),
   birthDate: z.string().min(1, 'La fecha de nacimiento es requerida'),
-  birthPlace: z.enum(['Ninguno de los anteriores', ...localities], {
-    required_error: 'Debes seleccionar una localidad'
-  }),
   privacyPolicy: z.boolean().refine((val) => val === true, {
     message: 'Debes aceptar la política de privacidad'
   }),
   jobType: z.enum(['Ninguno de los anteriores', ...jobType], {
-    required_error: 'Debes seleccionar un tipo de trabajo'
+    errorMap: () => ({ message: 'Debes seleccionar un tipo de trabajo' })
   }),
-  companyFile: z.any().refine((file) => file instanceof File, {
-    message:
-      'Debes adjuntar un archivo válido para la identificación de la empresa o NIF'
-  })
+  companyFile: z
+    .any()
+    .refine((files) => files?.[0], 'Debes subir un archivo')
+    .refine(
+      (files) => files?.[0]?.size <= 5000000,
+      'El archivo debe ser menor a 5MB'
+    )
+    .optional()
 })
 
 export type ResellerFormSchemaType = z.infer<typeof resellerFormSchema>

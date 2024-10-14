@@ -63,12 +63,6 @@ export default {
       validation: (Rule: any) => Rule.required()
     },
     {
-      name: 'birthPlace',
-      title: 'Lugar de nacimiento',
-      type: 'string',
-      description: 'Ciudad o localidad donde nació el revendedor.'
-    },
-    {
       name: 'privacyPolicy',
       title: 'He visto el Privacy Policy',
       type: 'boolean',
@@ -91,7 +85,7 @@ export default {
       validation: (Rule: any) => Rule.required()
     },
     {
-      name: 'file',
+      name: 'companyFile',
       title: 'Documento de Identificación',
       type: 'file',
       description:

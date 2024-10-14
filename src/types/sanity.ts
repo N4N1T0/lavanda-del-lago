@@ -104,64 +104,12 @@ export type ResellerForm = {
   lastName?: string
   email?: string
   nie?: string
-  province?:
-    | '-'
-    | '\xC1lava'
-    | 'Albacete'
-    | 'Alicante'
-    | 'Almer\xEDa'
-    | 'Asturias'
-    | '\xC1vila'
-    | 'Badajoz'
-    | 'Baleares'
-    | 'Barcelona'
-    | 'Burgos'
-    | 'C\xE1ceres'
-    | 'C\xE1diz'
-    | 'Cantabria'
-    | 'Castell\xF3n'
-    | 'Ceuta'
-    | 'Ciudad Real'
-    | 'C\xF3rdoba'
-    | 'Cuenca'
-    | 'Gerona'
-    | 'Granada'
-    | 'Guadalajara'
-    | 'Guip\xFAzcoa'
-    | 'Huelva'
-    | 'Huesca'
-    | 'Ja\xE9n'
-    | 'La Coru\xF1a'
-    | 'La Rioja'
-    | 'Las Palmas'
-    | 'Le\xF3n'
-    | 'L\xE9rida'
-    | 'Lugo'
-    | 'Madrid'
-    | 'M\xE1laga'
-    | 'Melilla'
-    | 'Murcia'
-    | 'Navarra'
-    | 'Orense'
-    | 'Palencia'
-    | 'Pontevedra'
-    | 'Salamanca'
-    | 'Santa Cruz de Tenerife'
-    | 'Segovia'
-    | 'Sevilla'
-    | 'Soria'
-    | 'Tarragona'
-    | 'Teruel'
-    | 'Toledo'
-    | 'Valencia'
-    | 'Valladolid'
-    | 'Vizcaya'
-    | 'Zamora'
-    | 'Zaragoza'
+  province?: string
   phone?: string
   birthDate?: string
   birthPlace?: string
   privacyPolicy?: boolean
+  companyFile: string
 }
 
 export type Purchase = {

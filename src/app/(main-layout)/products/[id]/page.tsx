@@ -6,7 +6,7 @@ import Newsletter from '@/components/shared/newsletter'
 import { jldProduct } from '@/components/layout/seo'
 
 // Utils Imports
-import { desurlizeForQuery } from '@/lib/utils'
+import { desurlizeForQuery, desurlizeForBreadcrumbs } from '@/lib/utils'
 
 // Queries imports
 import { productByName } from '@sanity-studio/queries'
@@ -45,15 +45,15 @@ export async function generateMetadata({
   )
 
   return {
-    title: `${response?.nombre || 'Estamos trabajando en un nombre'}`,
+    title: `${desurlizeForBreadcrumbs(response?.nombre) || 'Estamos trabajando en un nombre'}`,
     description: `${response?.descripcion || 'No hay descripción'}`,
     openGraph: {
-      title: `${response?.nombre || 'Estamos trabajando en un nombre'}`,
+      title: `${desurlizeForBreadcrumbs(response?.nombre) || 'Estamos trabajando en un nombre'}`,
       description: `${response?.descripcion || 'No hay descripción'}`,
       images: response?.image || MainLogo.src
     },
     twitter: {
-      title: `${response?.nombre || 'Estamos trabajando en un nombre'}`,
+      title: `${desurlizeForBreadcrumbs(response?.nombre) || 'Estamos trabajando en un nombre'}`,
       description: `${response?.descripcion || 'No hay descripción'}`,
       images: response?.image || MainLogo.src
     }

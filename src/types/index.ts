@@ -14,6 +14,7 @@ export interface Product {
   medidas: Medidas
   precio: number
   slogan: string
+  composicion: string
   fichaTecnica: string
   fotosVarias: FotosVarias[]
 }
@@ -270,6 +271,7 @@ export interface User {
   address: {
     street: string | null
     floor: string | null
+    reference: string | null
     postal_code: string | null
     locality: string | null
   } | null

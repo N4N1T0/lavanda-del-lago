@@ -88,6 +88,7 @@ export const UserProfileForm = ({
       documentNumber: user?.idDocument?.value || '',
       street: user?.address?.street || '',
       floor: user?.address?.floor || '',
+      reference: user?.address?.reference || '',
       postal_code: user?.address?.postal_code || '',
       locality: user?.address?.locality || '',
       password: user?.password || '',
@@ -209,8 +210,15 @@ export const UserProfileForm = ({
           <FormFieldComponent
             control={form.control}
             name='floor'
-            label='Piso'
+            label='Numero'
             placeholder='Piso 1, 1zq'
+            isSubmitting={isSubmitting}
+          />
+          <FormFieldComponent
+            control={form.control}
+            name='reference'
+            label='Referencia de la dirección (opcional)'
+            placeholder='Detrás del Mercadona'
             isSubmitting={isSubmitting}
           />
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>

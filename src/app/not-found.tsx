@@ -18,6 +18,7 @@ import type { NotFoundPage } from '@/types'
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { notFoundPage } from '@sanity-studio/queries'
+import { buttonVariants } from '@/components/ui/button'
 
 // Metadata for the error page
 export const metadata: Metadata = {
@@ -51,6 +52,17 @@ export default function NotFound() {
 
     getPageInfo()
   }, [])
+
+  const getLabel = (link: string) => {
+    switch (link) {
+      case '/products':
+        return <span>Products</span>
+      case '/events':
+        return <span>Eventos</span>
+      default:
+        return <span>Blog</span>
+    }
+  }
 
   return (
     <section className='bg-white'>
@@ -103,13 +115,9 @@ export default function NotFound() {
               <div key={link}>
                 <Link
                   href={link}
-                  className='inline-flex items-center gap-x-2 text-sm text-accent hover:underline'
+                  className={buttonVariants({ variant: 'default' })}
                 >
-                  <span>
-                    {link
-                      .replace(/\/$/, '')
-                      .replace(/^[a-z]/, (m) => m.toUpperCase())}{' '}
-                  </span>
+                  {getLabel(link)}
 
                   <svg
                     xmlns='http://www.w3.org/2000/svg'

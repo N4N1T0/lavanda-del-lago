@@ -33,30 +33,42 @@ const ResellerForm = () => {
   const form = useForm<ResellerFormSchemaType>({
     resolver: zodResolver(resellerFormSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      nie: '',
+      firstName: 'Adrian',
+      lastName: 'Alvarez',
+      email: 'adrian@gmail.com',
+      nie: 'Z1234567P',
       province: '',
-      phone: '',
+      phone: '+34567890',
       birthDate: '',
-      birthPlace: '',
-      privacyPolicy: false,
+      privacyPolicy: true,
       jobType: '',
-      companyFile: undefined,
+      companyFile: undefined
     }
   })
 
-  // OnSubmit function
   const onSubmit = useCallback(
     async (values: ResellerFormSchemaType) => {
       try {
+        // Crear una instancia de FormData
+        const formData = new FormData()
+
+        // Añadir cada campo del formulario a FormData
+        for (const key in values) {
+          if (
+            key === 'companyFile' &&
+            values[key] instanceof FileList &&
+            values[key].length > 0
+          ) {
+            // Si el campo es un archivo, añadirlo correctamente a FormData
+            formData.append(key, values[key][0])
+          } else {
+            formData.append(key, values[key as keyof typeof values])
+          }
+        }
+        // Enviar los datos al endpoint
         const response = await fetch('/api/create-reseller-form', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(values)
+          body: formData // Usamos FormData aquí
         })
 
         const data = await response.json()
@@ -71,7 +83,6 @@ const ResellerForm = () => {
 
           router.push('/?security=form_send-ok')
         } else {
-          // Handle failure case if the form submission is unsuccessful
           console.error('Form submission failed:', data.message)
         }
       } catch (error) {
@@ -80,6 +91,7 @@ const ResellerForm = () => {
     },
     [form, router]
   )
+
   const {
     handleSubmit,
     formState: { isSubmitting }
@@ -151,17 +163,6 @@ const ResellerForm = () => {
           label='Fecha de Nacimiento'
           placeholder=''
           type='date'
-          isSubmitting={isSubmitting}
-        />
-
-        {/* Birth Place */}
-        <FormFieldComponent
-          control={form.control}
-          name='birthPlace'
-          label='Lugar de Nacimiento'
-          placeholder='Selecciona un lugar'
-          type='select'
-          options={localities}
           isSubmitting={isSubmitting}
         />
 

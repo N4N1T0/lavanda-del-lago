@@ -116,7 +116,6 @@ export const errorPage = groq`
 
 export const notFoundPage = groq`
   *[_type == "notFoundPage"]{
-
     digest,
     "imageUrl": image.asset->url,
     links
@@ -294,6 +293,7 @@ export const productByName = groq`
     usabilidad,
     subcategoria,
     codigoReferencia,
+    composicion,
     certificacion,
     medidas,
     codigoBarras,
