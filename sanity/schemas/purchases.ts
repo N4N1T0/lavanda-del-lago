@@ -41,16 +41,30 @@ export default {
               validation: (Rule: any) => Rule.min(1),
               description: 'Cantidad del producto comprado.'
             }
-          ]
+          ],
+          preview: {
+            select: {
+              title: 'product.nombre',
+              subtitle: 'quantity',
+              media: 'product.fotoPrincipal'
+            },
+            prepare(selection: {
+              title: string
+              subtitle: string
+              media: string
+            }) {
+              const { title, subtitle, media } = selection
+              return {
+                title: title,
+                subtitle: `Cantidad: ${subtitle}`,
+                media: media
+              }
+            }
+          }
         }
       ],
       description:
-        'Lista de productos comprados y sus cantidades en esta transacción.',
-      preview: {
-        select: {
-          title: 'product.name'
-        }
-      }
+        'Lista de productos comprados y sus cantidades en esta transacción.'
     },
     {
       name: 'totalAmount',
@@ -62,7 +76,14 @@ export default {
       name: 'purchaseDate',
       title: 'Fecha de Compra',
       type: 'datetime',
-      description: 'Fecha y hora en que se realizó la compra.'
+      description: 'Fecha y hora en que se realizó la compra.',
+      options: {
+        dateFormat: 'DD-MM-YYYY',
+        timeFormat: 'HH:mm',
+        timeStep: 15,
+        calendarTodayLabel: 'Hoy'
+      },
+      readonly: true
     },
     {
       name: 'paymentMethod',
@@ -78,7 +99,10 @@ export default {
         list: [
           { title: 'Pendiente', value: 'pendiente' },
           { title: 'Completado', value: 'completado' },
-          { title: 'Cancelado', value: 'cancelado' }
+          { title: 'Cancelado', value: 'cancelado' },
+          { title: 'Procesando', value: 'procesando' },
+          { title: 'Enviado', value: 'enviado' },
+          { title: 'Entregado', value: 'entregado' }
         ]
       },
       description: 'El estado actual de la compra.'
@@ -87,7 +111,16 @@ export default {
   preview: {
     select: {
       title: 'userEmail.name',
-      subtitle: 'purchaseDate'
+      subtitle: 'purchaseDate',
+      media: 'userEmail.image'
+    },
+    prepare(selection: { title: string; subtitle: string; media: string }) {
+      const { title, subtitle, media } = selection
+      return {
+        title: title,
+        subtitle: new Date(subtitle).toLocaleString('es-ES'),
+        media: media
+      }
     }
   }
 }

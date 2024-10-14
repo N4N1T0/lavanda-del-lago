@@ -20,6 +20,13 @@ export default {
     select: {
       title: 'email',
       subtitle: 'date'
+    },
+    prepare(selection: { title: string; subtitle: string }) {
+      const { title, subtitle } = selection
+      return {
+        title: title,
+        subtitle: new Date(subtitle).toLocaleString('es-ES')
+      }
     }
   }
 }

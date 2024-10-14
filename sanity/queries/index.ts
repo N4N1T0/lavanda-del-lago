@@ -280,7 +280,7 @@ export const allProducts = groq`
 `
 
 export const productByName = groq`
-  *[_type == "product" && nombre == $name]{
+  *[_type == "product" && nombre in $name]{
     "id": _id,
     nombre,
     descripcion,
@@ -347,7 +347,7 @@ export const userByIdCompleted = groq`
   *[_type == "user" && _id == $id][0] {
   "id": _id,
   email,
-  image,
+  "image": image.asset->url,
   name,
   phone,
   address,
@@ -382,7 +382,7 @@ export const userByIdPartial = groq`
   *[_type == "user" && _id == $id][0] {
   "id": _id,
   email,
-  image,
+  "image": image.asset->url,
   name,
   phone,
   address,
@@ -412,3 +412,5 @@ export const events = groq`
   }
 }
 `
+
+// TODO Partial Product Query
