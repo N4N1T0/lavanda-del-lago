@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Server Functions Imports
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Auth Imports
 import { currentUser } from '@clerk/nextjs/server'
@@ -21,7 +21,7 @@ export const dynamic = 'force-dynamic'
  * @param {NextRequest} req - The incoming request object.
  * @return {Promise<NextResponse>} A redirect response to the sign-in page if the user is not authenticated, or a redirect to the original URL after creating the Sanity user.
  */
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
   try {
     // Get the current user
     const user = await currentUser()
@@ -70,10 +70,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       })
     }
 
-    // Redirect to the main URL after successful operation
-    const baseUrl =
-      req.url?.split('api/create-sanity-user-from-clerk')[0] || '/'
-    return NextResponse.redirect(baseUrl)
+    return NextResponse.redirect(process.env.NEXTAUTH_URL!)
   } catch (error) {
     // Log the error for debugging purposes
     console.error('Error creating user in Sanity:', error)
