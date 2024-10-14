@@ -11,11 +11,14 @@ import { Purchase } from '@/types/sanity'
 import { Product, User } from '@/types'
 
 // Next.js Imports
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Resend Imports
 import { resend } from '@/lib/clients'
 import CompletedPurchase from '@/emails/completed-purchase'
+
+// Axiom Imports
+import { withAxiom, AxiomRequest } from 'next-axiom'
 
 export const runtime = 'nodejs'
 
@@ -24,8 +27,8 @@ export const runtime = 'nodejs'
  * @param req Solicitud de Next.js.
  * @returns Respuesta de Next.js con el estado de la solicitud.
  */
-export async function POST(req: NextRequest) {
-  console.log('Notification received')
+export const POST = withAxiom(async (req: AxiomRequest) => {
+  req.log.info('Payment notification received') // Log when endpoint is hit
 
   const notificationParams: ResponseJSONSuccess = {
     Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
@@ -47,7 +50,7 @@ export async function POST(req: NextRequest) {
       .commit()
 
     if (!response) {
-      console.log('No se pudo actualizar el estado de la orden')
+      req.log.error('Failed to update order status') // Log error for order update failure
       return NextResponse.json({ success: false }, { status: 500 })
     }
 
@@ -59,7 +62,7 @@ export async function POST(req: NextRequest) {
     )
 
     if (!userResponse) {
-      console.log('No se pudo obtener el usuario')
+      req.log.error('Failed to fetch user information') // Log error for user fetch failure
       return NextResponse.json({ success: false }, { status: 500 })
     }
 
@@ -79,10 +82,12 @@ export async function POST(req: NextRequest) {
           ?.products as unknown as { product: Product; quantity: number }[]
       })
     })
+
+    req.log.info('Order updated and email sent successfully', { orderId }) // Log success
   } else {
-    console.log(`Fallo en el pago para la orden ${orderId}`)
+    req.log.warn(`Payment failed for order ${orderId}`) // Log payment failure
     // Aquí puedes actualizar el estado de la orden a 'fallido'
   }
 
   return NextResponse.json({ success: true }, { status: 200 })
-}
+})

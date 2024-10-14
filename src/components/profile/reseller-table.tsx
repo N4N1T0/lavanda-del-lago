@@ -184,7 +184,7 @@ const ResellerTable = ({
                   {eurilize(precio)}
                 </TableCell>
                 <TableCell className='hidden md:table-cell'>
-                  {eurilize(precio - precio * (discount = discount ?? 0.1))}
+                  {eurilize(precio - precio * (discount ?? 0.1))}
                 </TableCell>
                 <TableCell>
                   <ResellerTableQuantity

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Server Functions Imports
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Sanity Secret Helper Functions
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
@@ -13,6 +13,9 @@ import { readBody } from '@sanity-studio/lib/utils'
 import { resend } from '@/lib/clients'
 import ResellerWelcomeEmail from '@/emails/reseller-welcome'
 
+// Axiom Imports
+import { withAxiom, AxiomRequest } from 'next-axiom'
+
 export const runtime = 'nodejs'
 
 // Get the Secret Sanity Webhook from the Environment Variables
@@ -24,48 +27,55 @@ const secret = process.env.SANITY_WEBHOOK_SECRET
  * @param {NextRequest} req - The incoming request object.
  * @return {Promise<NextResponse>} A JSON response indicating the success or failure of the request.
  */
-export async function POST(req: NextRequest): Promise<NextResponse> {
-  try {
-    // Read the request body
-    const body = await readBody(req.body)
-    const signature = req.headers.get(SIGNATURE_HEADER_NAME) || ''
+export const POST = withAxiom(
+  async (req: AxiomRequest): Promise<NextResponse> => {
+    try {
+      req.log.info('Webhook received') // Log when the endpoint is hit
 
-    // Validate the signature
-    if (!(await validateSignature(body, signature))) {
+      // Read the request body
+      const body = await readBody(req.body)
+      const signature = req.headers.get(SIGNATURE_HEADER_NAME) || ''
+
+      // Validate the signature
+      if (!(await validateSignature(body, signature))) {
+        req.log.error('Invalid signature', { signature }) // Log invalid signature attempt
+        return NextResponse.json(
+          { success: false, message: 'Invalid signature' },
+          { status: 401 }
+        )
+      }
+
+      // Process the request if the signature is valid
+      const jsonBody = JSON.parse(body)
+      await updateUserResellerStatus(jsonBody.id, jsonBody.reseller)
+
+      // Send email to user
+      await resend.emails.send({
+        from: 'info@lavandadellago.es',
+        to: jsonBody.email,
+        subject: 'Felicidades, eres un reseller',
+        react: ResellerWelcomeEmail({
+          link: `https://lavandadellago.es/reseller/${jsonBody.id}`,
+          nombre: jsonBody.name
+        })
+      })
+
+      req.log.info('Webhook processed successfully', { userId: jsonBody.id }) // Log successful processing
+
+      // Return success response
+      return NextResponse.json({ success: true, message: 'Webhook success' })
+    } catch (error: any) {
+      // Log the error for debugging purposes
+      req.log.error('Error processing webhook', { error })
+
+      // Return a 500 Internal Server Error response
       return NextResponse.json(
-        { success: false, message: 'Invalid signature' },
-        { status: 401 }
+        { success: false, message: error?.message || 'Internal server error' },
+        { status: 500 }
       )
     }
-
-    // Process the request if the signature is valid
-    const jsonBody = JSON.parse(body)
-    await updateUserResellerStatus(jsonBody.id, jsonBody.reseller)
-
-    // Send email to user
-    resend.emails.send({
-      from: 'info@lavandadellago.es',
-      to: jsonBody.email,
-      subject: 'Felicidades, eres un reseller',
-      react: ResellerWelcomeEmail({
-        link: `https://lavandadellago.es/reseller/${jsonBody.id}`,
-        nombre: jsonBody.name
-      })
-    })
-
-    // Return success response
-    return NextResponse.json({ success: true, message: 'Webhook success' })
-  } catch (error: any) {
-    // Log the error for debugging purposes
-    console.error('Error processing webhook:', error)
-
-    // Return a 500 Internal Server Error response
-    return NextResponse.json(
-      { success: false, message: error?.message || 'Internal server error' },
-      { status: 500 }
-    )
   }
-}
+)
 
 // * HELPER FUNCTIONS ↓↓↓
 

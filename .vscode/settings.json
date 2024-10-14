@@ -5,10 +5,23 @@
     "bentofeatured",
     "Bentofeatured",
     "categoria",
+    "CONSUMERLANGUAGE",
     "datadog",
     "datadoghq",
     "descripcion",
+    "MERCHANTCODE",
+    "MERCHANTNAME",
+    "MERCHANTURL",
+    "nextjs",
+    "redsys",
+    "Redsys",
+    "REDSYS",
     "Sapone",
-    "urlize"
+    "SHIPPINGADDRESSPYP",
+    "TRANSACTIONDATE",
+    "TRANSACTIONTYPE",
+    "urlize",
+    "URLKO",
+    "URLOK"
   ]
 }

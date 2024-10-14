@@ -10,163 +10,175 @@ import { currentUser } from '@clerk/nextjs/server'
 import { sanityClientWrite } from '@sanity-studio/lib/client'
 
 // server functions imports
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Resend Imports
 import NewUserCreatedEmail from '@/emails/new-user-created'
 import { resend } from '@/lib/clients'
+
+// Axiom Imports
+import { withAxiom, AxiomRequest } from 'next-axiom'
 
 export const runtime = 'nodejs'
 
 /**
  * Handles the POST request to update or create user information.
  *
- * @param {NextRequest} request - The incoming request object.
+ * @param {NextRequest} req - The incoming request object.
  * @return {Promise<NextResponse>} A JSON response indicating the success or failure of the operation.
  */
-export async function POST(
-  request: NextRequest
-): Promise<NextResponse<unknown>> {
-  try {
-    // Parse and validate request body
-    const body = await request.json()
-    const newUser = request.headers.get('new-user')
-    const parsedBody = userSchema.safeParse(body)
+export const POST = withAxiom(
+  async (req: AxiomRequest): Promise<NextResponse<unknown>> => {
+    try {
+      req.log.info('Received user update/create request') // Log request receipt
 
-    if (!parsedBody.success) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid request body' },
-        { status: 400 }
-      )
-    }
+      // Parse and validate request body
+      const body = await req.json()
+      const newUser = req.headers.get('new-user')
+      const parsedBody = userSchema.safeParse(body)
 
-    const {
-      name,
-      email,
-      phone,
-      floor,
-      locality,
-      street,
-      postal_code,
-      documentNumber,
-      documentType,
-      password
-    } = parsedBody.data
-
-    // Helper to split full name into parts
-    const { firstName, lastName } = splitFullName(name)
-
-    if (newUser === 'false') {
-      // Update existing user
-      const clerkUser = await currentUser()
-      if (!clerkUser) {
-        return NextResponse.redirect('/sign-in')
+      if (!parsedBody.success) {
+        req.log.warn('Invalid request body', { errors: parsedBody.error }) // Log validation error
+        return NextResponse.json(
+          { success: false, message: 'Invalid request body' },
+          { status: 400 }
+        )
       }
 
-      const id = clerkUser.id
-
-      await updateSanityUser(id, {
+      const {
         name,
         email,
         phone,
-        address: {
-          floor,
-          locality,
-          street,
-          postal_code
-        },
-        idDocument: {
-          type: documentType,
-          value: documentNumber
-        }
-      })
-
-      await updateClerkUser(id, firstName, lastName)
-      await ensureClerkEmail(id, email)
-
-      return NextResponse.json({
-        success: true,
-        message: 'The profile has been updated successfully.',
-        data: id
-      })
-    } else {
-      // Create a new user
-      const clerkUser = await clerkClient.users.createUser({
-        emailAddress: [email],
-        firstName,
-        lastName,
-        password,
-        username: firstName
-      })
-
-      // Upload the user's image to Sanity
-      const uploadedImage = await uploadImageToSanity(
-        clerkUser.imageUrl,
-        clerkUser.id
-      )
-
-      const sanityCreateResponse = await sanityClientWrite.createIfNotExists({
-        _id: clerkUser.id,
-        _type: 'user',
-        name,
-        email,
-        phone,
-        image: {
-          _type: 'image',
-          asset: {
-            _type: 'reference',
-            _ref: uploadedImage._id // Reference the uploaded image asset
-          }
-        },
-        address: {
-          floor,
-          locality,
-          street,
-          postal_code
-        },
-        idDocument: {
-          type: documentType,
-          value: documentNumber
-        },
+        floor,
+        locality,
+        street,
+        postal_code,
+        documentNumber,
+        documentType,
         password
-      })
+      } = parsedBody.data
 
-      if (!sanityCreateResponse) {
+      // Helper to split full name into parts
+      const { firstName, lastName } = splitFullName(name)
+
+      if (newUser === 'false') {
+        // Update existing user
+        const clerkUser = await currentUser()
+        if (!clerkUser) {
+          req.log.warn('User not signed in') // Log sign-in warning
+          return NextResponse.redirect('/sign-in')
+        }
+
+        const id = clerkUser.id
+
+        await updateSanityUser(id, {
+          name,
+          email,
+          phone,
+          address: {
+            floor,
+            locality,
+            street,
+            postal_code
+          },
+          idDocument: {
+            type: documentType,
+            value: documentNumber
+          }
+        })
+
+        await updateClerkUser(id, firstName, lastName)
+        await ensureClerkEmail(id, email)
+
+        req.log.info('User profile updated successfully', { userId: id }) // Log successful update
         return NextResponse.json({
-          success: false,
-          message: 'Internal server error',
-          data: sanityCreateResponse
+          success: true,
+          message: 'The profile has been updated successfully.',
+          data: id
+        })
+      } else {
+        // Create a new user
+        const clerkUser = await clerkClient.users.createUser({
+          emailAddress: [email],
+          firstName,
+          lastName,
+          password,
+          username: firstName
+        })
+
+        // Upload the user's image to Sanity
+        const uploadedImage = await uploadImageToSanity(
+          clerkUser.imageUrl,
+          clerkUser.id
+        )
+
+        const sanityCreateResponse = await sanityClientWrite.createIfNotExists({
+          _id: clerkUser.id,
+          _type: 'user',
+          name,
+          email,
+          phone,
+          image: {
+            _type: 'image',
+            asset: {
+              _type: 'reference',
+              _ref: uploadedImage._id // Reference the uploaded image asset
+            }
+          },
+          address: {
+            floor,
+            locality,
+            street,
+            postal_code
+          },
+          idDocument: {
+            type: documentType,
+            value: documentNumber
+          },
+          password
+        })
+
+        if (!sanityCreateResponse) {
+          req.log.error('Failed to create user in Sanity', {
+            response: sanityCreateResponse
+          }) // Log Sanity error
+          return NextResponse.json({
+            success: false,
+            message: 'Internal server error',
+            data: sanityCreateResponse
+          })
+        }
+
+        // Send email to admin
+        await resend.emails.send({
+          from: 'info@lavandadellago.es',
+          to: 'info@lavandadellago.es',
+          subject: 'Nueva Usuario',
+          react: NewUserCreatedEmail({
+            nombre: name || '',
+            email: email,
+            fecha: new Date().toLocaleDateString('es-ES'),
+            link: `https://lavandadellago.es/studio/structure/usuariosYVentas;user;${clerkUser.id}`
+          })
+        })
+
+        req.log.info('New user created successfully', { userId: clerkUser.id }) // Log user creation
+        return NextResponse.json({
+          success: true,
+          message: 'The profile has been created successfully',
+          data: clerkUser.id
         })
       }
-
-      // Send email to admin
-      resend.emails.send({
-        from: 'info@lavandadellago.es',
-        to: 'info@lavandadellago.es',
-        subject: 'Nueva Usuario',
-        react: NewUserCreatedEmail({
-          nombre: name || '',
-          email: email,
-          fecha: new Date().toLocaleDateString('es-ES'),
-          link: `https://lavandadellago.es/studio/structure/usuariosYVentas;user;${clerkUser.id}`
-        })
-      })
-
+    } catch (error: any) {
+      req.log.error('Error updating user', { error }) // Log error details
       return NextResponse.json({
-        success: true,
-        message: 'The profile has been created successfully',
-        data: clerkUser.id
+        success: false,
+        message: error?.message || 'Internal server error',
+        data: error.errors
       })
     }
-  } catch (error: any) {
-    console.error('Error updating user:', error)
-    return NextResponse.json({
-      success: false,
-      message: error?.message || 'Internal server error',
-      data: error.errors
-    })
   }
-}
+)
 
 // * HELPER FUNCTIONS ↓↓↓
 

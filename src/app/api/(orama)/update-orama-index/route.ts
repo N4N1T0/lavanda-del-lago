@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Next.js Imports
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Orama Index Imports
 import { indexManager } from '@/lib/clients'
@@ -16,6 +16,9 @@ import type { Product } from '@/types'
 import { resend } from '@/lib/clients'
 import DailyIndexingEmail from '@/emails/daily-orama-index'
 
+// Axiom Imports
+import { withAxiom, AxiomRequest } from 'next-axiom'
+
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
@@ -25,52 +28,56 @@ export const dynamic = 'force-dynamic'
  * @param {NextRequest} req - The incoming request object.
  * @return {Promise<NextResponse>} A JSON response indicating the success or failure of the request.
  */
-export async function GET(req: NextRequest): Promise<NextResponse> {
-  try {
-    // Validate API Key
-    const apiKey = req.headers.get('x-api-key') || ''
-    if (!isValidApiKey(apiKey)) {
-      console.warn('Invalid API key')
+export const GET = withAxiom(
+  async (req: AxiomRequest): Promise<NextResponse> => {
+    try {
+      // Validate API Key
+      const apiKey = req.headers.get('x-api-key') || ''
+      if (!isValidApiKey(apiKey)) {
+        req.log.warn('Invalid API key')
+        return NextResponse.json(
+          { success: false, message: 'Invalid API key' },
+          { status: 401 }
+        )
+      }
+
+      // Fetch and update products
+      const sanityProducts: Product[] = await fetchUpdatedProducts()
+
+      // Insert documents and trigger deployment
+      await updateAndDeployProducts(sanityProducts)
+
+      // Send email to admin
+      await resend.emails.send({
+        from: 'info@lavandadellago.es',
+        to: 'info@lavandadellago.es',
+        subject: 'Informe diario de indexación de productos',
+        react: DailyIndexingEmail({
+          fecha: new Date().toLocaleDateString(),
+          productosActualizados: sanityProducts.length
+        })
+      })
+
+      // Log success and return response
+      req.log.info('Deployment triggered successfully', {
+        updatedProductsCount: sanityProducts.length
+      })
+      return NextResponse.json({
+        success: true,
+        message: 'Deployment triggered'
+      })
+    } catch (error: any) {
+      // Log the error for debugging purposes
+      req.log.error('Error processing request', { error: error.message })
+
+      // Return a 500 Internal Server Error response
       return NextResponse.json(
-        { success: false, message: 'Invalid API key' },
-        { status: 401 }
+        { success: false, message: error?.message || 'Internal server error' },
+        { status: 500 }
       )
     }
-
-    // Fetch and update products
-    const sanityProducts: Product[] = await fetchUpdatedProducts()
-
-    // Insert documents and trigger deployment
-    await updateAndDeployProducts(sanityProducts)
-
-    // Send email to admin
-    resend.emails.send({
-      from: 'info@lavandadellago.es',
-      to: 'info@lavandadellago.es',
-      subject: 'Informe diario de indexación de productos',
-      react: DailyIndexingEmail({
-        fecha: new Date().toLocaleDateString(),
-        productosActualizados: sanityProducts.length
-      })
-    })
-
-    // Log success and return response
-    console.info('Deployment triggered successfully')
-    return NextResponse.json({
-      success: true,
-      message: 'Deployment triggered'
-    })
-  } catch (error: any) {
-    // Log the error for debugging purposes
-    console.error('Error processing request:', error)
-
-    // Return a 500 Internal Server Error response
-    return NextResponse.json(
-      { success: false, message: error?.message || 'Internal server error' },
-      { status: 500 }
-    )
   }
-}
+)
 
 // * HELPER FUNCTIONS ↓↓↓
 

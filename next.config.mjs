@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+import { withAxiom } from 'next-axiom'
+
+const nextConfig = withAxiom({
   output: 'standalone',
   experimental: {
     nextScriptWorkers: true
@@ -23,6 +25,6 @@ const nextConfig = {
       }
     ]
   }
-}
+})
 
 export default nextConfig

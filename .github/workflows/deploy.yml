@@ -59,6 +59,8 @@ jobs:
           echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
           echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
           echo NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }} >> .env
+          echo NEXT_PUBLIC_AXIOM_DATASET=${{ secrets.NEXT_PUBLIC_AXIOM_DATASET }} >> .env
+          echo NEXT_PUBLIC_AXIOM_TOKEN=${{ secrets.NEXT_PUBLIC_AXIOM_TOKEN }} >> .env
 
       - name: Set up QEMU for cross-platform builds
         uses: docker/setup-qemu-action@v3

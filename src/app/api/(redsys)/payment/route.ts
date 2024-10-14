@@ -1,5 +1,5 @@
 // Next.js Imports
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 // Redsys Payment Gateway Imports
 import {
   CURRENCIES,
@@ -12,6 +12,9 @@ import { createRedirectForm } from '@/lib/clients'
 // External Libraries Imports
 import Decimal from 'decimal.js'
 import { User } from '@/types'
+
+// Axiom Imports
+import { withAxiom, AxiomRequest } from 'next-axiom'
 
 const merchantInfo = {
   DS_MERCHANT_MERCHANTCODE: process.env.REDSYS_MERCHANT_CODE!, // Merchant code
@@ -29,56 +32,60 @@ export const runtime = 'nodejs'
  * @param {NextRequest} req - The incoming request object.
  * @return {Promise<NextResponse>} The HTML response that redirects to the payment gateway.
  */
-export async function POST(req: NextRequest): Promise<NextResponse> {
-  const {
-    totalAmount,
-    user,
-    products
-  }: {
-    totalAmount: number
-    user: User
-    products: {
-      id: string
-      quantity: number
-    }
-  } = await req.json()
+export const POST = withAxiom(
+  async (req: AxiomRequest): Promise<NextResponse> => {
+    const {
+      totalAmount,
+      user,
+      products
+    }: {
+      totalAmount: number
+      user: User
+      products: {
+        id: string
+        quantity: number
+      }[]
+    } = await req.json()
 
-  const { name, id, reseller, email } = user
-  const currency = 'EUR'
-  const serializedProducts = encodeURIComponent(JSON.stringify(products))
+    const { name, id, reseller, email } = user
+    const currency = 'EUR'
+    const serializedProducts = encodeURIComponent(JSON.stringify(products))
 
-  // Random ID for the transaction
-  const orderId = randomTransactionId()
+    // Random ID for the transaction
+    const orderId = randomTransactionId()
 
-  // Get the currency information
-  const currencyInfo = CURRENCIES[currency]
-  const redsysAmount = new Decimal(totalAmount)
-    .mul(10 ** currencyInfo.decimals)
-    .toFixed(0)
-  const redsysCurrency = currencyInfo.num
+    // Get the currency information
+    const currencyInfo = CURRENCIES[currency]
+    const redsysAmount = new Decimal(totalAmount)
+      .mul(10 ** currencyInfo.decimals)
+      .toFixed(0)
+    const redsysCurrency = currencyInfo.num
 
-  // Generate the RedSys redirect form
-  const form = createRedirectForm({
-    ...merchantInfo,
-    DS_MERCHANT_TRANSACTIONTYPE: TRANSACTION_TYPES.AUTHORIZATION, // '0' = Authorization
-    DS_MERCHANT_ORDER: orderId,
-    DS_MERCHANT_AMOUNT: redsysAmount,
-    DS_MERCHANT_CURRENCY: redsysCurrency,
-    DS_MERCHANT_MERCHANTNAME: 'Lavanda del Lago.es',
-    DS_MERCHANT_MERCHANTURL: `${process.env.NEXT_PUBLIC_URL}/api/notifications`, // Notification URL
-    DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/success?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}&products=${serializedProducts}`, // Success URL
-    DS_MERCHANT_URLKO: `${process.env.NEXT_PUBLIC_URL}/failed?userId=${id}&userName.normalize('NFC')=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Error URL
-    DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
-    DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE,
-    DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
-    DS_MERCHANT_CONSUMERLANGUAGE: LANGUAGES.es,
-    DS_MERCHANT_SHIPPINGADDRESSPYP: 'S',
-    DS_MERCHANT_TITULAR: name
-  })
+    // Generate the RedSys redirect form
+    const form = createRedirectForm({
+      ...merchantInfo,
+      DS_MERCHANT_TRANSACTIONTYPE: TRANSACTION_TYPES.AUTHORIZATION, // '0' = Authorization
+      DS_MERCHANT_ORDER: orderId,
+      DS_MERCHANT_AMOUNT: redsysAmount,
+      DS_MERCHANT_CURRENCY: redsysCurrency,
+      DS_MERCHANT_MERCHANTNAME: 'Lavanda del Lago.es',
+      DS_MERCHANT_MERCHANTURL: `${process.env.NEXT_PUBLIC_URL}/api/notifications`, // Notification URL
+      DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/success?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}&products=${serializedProducts}`, // Success URL
+      DS_MERCHANT_URLKO: `${process.env.NEXT_PUBLIC_URL}/failed?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Error URL
+      DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
+      DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE,
+      DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
+      DS_MERCHANT_CONSUMERLANGUAGE: LANGUAGES.es,
+      DS_MERCHANT_SHIPPINGADDRESSPYP: 'S',
+      DS_MERCHANT_TITULAR: name
+    })
 
-  // Return the HTML response
-  return NextResponse.json({
-    success: true,
-    data: form
-  })
-}
+    req.log.info('RedSys redirect form created', { orderId, totalAmount }) // Log success with order details
+
+    // Return the HTML response
+    return NextResponse.json({
+      success: true,
+      data: form
+    })
+  }
+)
