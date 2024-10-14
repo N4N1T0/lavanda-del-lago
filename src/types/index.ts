@@ -286,7 +286,10 @@ export interface User {
 
 export interface PastPurchase {
   id: string
-  products: CartItem[]
+  products: {
+    product: Product
+    quantity: number
+  }[]
   totalAmount: number
   purchaseDate: string
   paymentMethod: string

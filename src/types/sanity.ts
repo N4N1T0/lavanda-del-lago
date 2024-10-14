@@ -189,7 +189,7 @@ export type Purchase = {
   totalAmount?: number
   purchaseDate?: string
   paymentMethod?: string
-  status?: 'pendiente' | 'completado' | 'cancelado'
+  status?: 'pendiente' | 'completado' | 'cancelado' | 'procesando' | 'enviado'
 }
 
 export type User = {

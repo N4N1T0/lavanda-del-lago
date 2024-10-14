@@ -37,13 +37,22 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // Destructure relevant user properties
     const { id, fullName, emailAddresses, imageUrl } = user
 
+    // Upload the user's image to Sanity
+    const uploadedImage = await uploadImageToSanity(imageUrl, id)
+
     // Create the user document in Sanity if it doesn't already exist
     const response: any = await sanityClientWrite.createIfNotExists({
       _type: 'user',
       _id: id,
       name: fullName,
       email: emailAddresses[0].emailAddress,
-      image: imageUrl
+      image: {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: uploadedImage._id // Reference the uploaded image asset
+        }
+      }
     })
 
     if (response._createdAt === date) {
@@ -75,4 +84,21 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       { status: 500 }
     )
   }
+}
+
+// Helper to upload image to Sanity from URL
+async function uploadImageToSanity(imageUrl: string, userId: string) {
+  const response = await fetch(imageUrl)
+  const imageBlob = await response.blob()
+
+  // Upload the image to Sanity as an asset
+  const sanityImageAsset = await sanityClientWrite.assets.upload(
+    'image',
+    imageBlob,
+    {
+      filename: userId
+    }
+  )
+
+  return sanityImageAsset
 }
