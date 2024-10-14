@@ -3,7 +3,7 @@
 // Project Components Imports
 import PaypalButton from '@/components/checkout/paypal-button'
 
-// Utilitys Imports
+// Utility Imports
 import { calculateTotal, eurilize } from '@/lib/utils'
 
 // Store Imports
@@ -99,7 +99,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
       <div className='mt-3 space-y-3'>
         {/* shipping costs */}
         <div>
-          <h3 className='text-xl'>Gastos de Envio</h3>
+          <h3 className='text-xl'>Gastos de Envío</h3>
           <p className='text-gray-600'>Gratis</p>
         </div>
         {/* Subtotal */}
