@@ -58,13 +58,13 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
       // If the product is already in the cart, update its quantity
       const updatedCart = count.map((productItem) =>
         productItem.id === cartItem.id
-          ? { ...productItem, quantity: productItem.quantity + 1 }
+          ? { ...productItem, quantity: productItem.quantity + quantity }
           : productItem
       )
       setCount(updatedCart)
     } else {
       // If the product is not in the cart, add it with an initial quantity of 1
-      setCount([...count, { ...cartItem, quantity: 1 }])
+      setCount([...count, { ...cartItem }])
     }
 
     toast({
@@ -94,6 +94,7 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
           type='number'
           id='Quantity'
           value={quantity || 0}
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
           className='w-12 border-accent/50 text-center'
         />
         <Button
@@ -156,13 +157,13 @@ const QuantitySmall = ({
       // If the product is already in the cart, update its quantity
       const updatedCart = count.map((productItem) =>
         productItem.id === cartItem.id
-          ? { ...productItem, quantity: productItem.quantity + 1 }
+          ? { ...productItem, quantity: productItem.quantity + quantity }
           : productItem
       )
       setCount(updatedCart)
     } else {
       // If the product is not in the cart, add it with an initial quantity of 1
-      setCount([...count, { ...cartItem, quantity: 1 }])
+      setCount([...count, { ...cartItem }])
     }
 
     removeFromWishlist(prduct.id)
@@ -193,6 +194,7 @@ const QuantitySmall = ({
           type='number'
           id='Quantity'
           value={quantity || 0}
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
           className='w-12 border-accent/50 text-center'
         />
         <Button

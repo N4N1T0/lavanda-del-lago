@@ -132,7 +132,6 @@ const CartSheet = (): JSX.Element => {
           <SheetFooter className='w-full border-t border-accent/70 pt-5'>
             <div className='flex w-full flex-col items-center gap-5'>
               <p>No hay elementos en el carrito de la compra</p>
-              <p className='text-sm text-gray-500'>Puedes empezar por:</p>
               <div className='flex w-full items-center justify-between'>
                 <SheetClose asChild>
                   <Link
