@@ -9,7 +9,6 @@ import NoData from '@/components/shared/no-data'
 import { buttonVariants } from '@/components/ui/button'
 
 // External Libraries Imports
-import { v4 as uuidv4 } from 'uuid'
 import { urlize } from '@/lib/utils'
 
 // Assets Imports
@@ -52,23 +51,42 @@ export const Hero = async ({
   return (
     <section id='hero' className='bg-white pt-4'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-3'>
-        {bentoThreeImages.map(({ image }, index) => (
-          <div
-            key={uuidv4()}
-            className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''}`}
-          >
-            <Image
-              src={image.url || Hero1}
-              alt='Lavanda Del Lago'
-              className='aspect-square h-auto w-full object-cover'
-              width={500}
-              height={500}
-              priority
-              placeholder={image.blur ? 'blur' : 'empty'}
-              blurDataURL={image.blur ? image.blur : undefined}
-            />
-          </div>
-        ))}
+        {bentoThreeImages.map(({ image, id, link }, index) => {
+          return link === null ? (
+            <div
+              key={id}
+              className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''}`}
+            >
+              <Image
+                src={image.url || Hero1}
+                alt='Lavanda Del Lago'
+                className='aspect-square h-auto w-full object-cover'
+                width={500}
+                height={500}
+                priority
+                placeholder={image.blur ? 'blur' : 'empty'}
+                blurDataURL={image.blur ? image.blur : undefined}
+              />
+            </div>
+          ) : (
+            <Link
+              key={id}
+              className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''} group overflow-hidden`}
+              href={link}
+            >
+              <Image
+                src={image.url || Hero1}
+                alt='Lavanda Del Lago'
+                className='aspect-square h-auto w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105'
+                width={500}
+                height={500}
+                priority
+                placeholder={image.blur ? 'blur' : 'empty'}
+                blurDataURL={image.blur ? image.blur : undefined}
+              />
+            </Link>
+          )
+        })}
       </div>
       <div className='mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2'>
         <div className='col-span-1'>

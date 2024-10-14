@@ -27,11 +27,13 @@ export const aboutUsPage = groq`
 
 export const homePage = groq`
 *[_type == "homePage"]{
-  bentoThreeImages[]{
-    "image": asset->{
+ bentoThreeImages[]{
+    "id": _key,
+    "image": bentoImage.asset->{
       url,
       "blur": metadata.lqip
-    }
+    },
+    "link": imageLink
   },
   featuredEvent->{
     date,

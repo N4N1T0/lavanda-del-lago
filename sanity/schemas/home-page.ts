@@ -29,6 +29,7 @@ export default {
             {
               type: 'image',
               options: { hotspot: true },
+              name: 'bentoImage',
               title: 'Imagen',
               description: 'La imagen que se va a mostrar en el bento principal'
             }
