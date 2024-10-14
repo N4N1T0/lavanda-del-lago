@@ -99,13 +99,25 @@ export async function POST(
         username: firstName
       })
 
+      // Upload the user's image to Sanity
+      const uploadedImage = await uploadImageToSanity(
+        clerkUser.imageUrl,
+        clerkUser.id
+      )
+
       const sanityCreateResponse = await sanityClientWrite.createIfNotExists({
         _id: clerkUser.id,
         _type: 'user',
         name,
         email,
         phone,
-        image: clerkUser.imageUrl,
+        image: {
+          _type: 'image',
+          asset: {
+            _type: 'reference',
+            _ref: uploadedImage._id // Reference the uploaded image asset
+          }
+        },
         address: {
           floor,
           locality,
@@ -216,4 +228,21 @@ async function ensureClerkEmail(userId: string, email: string): Promise<void> {
       verified: false
     })
   }
+}
+
+// Helper to upload image to Sanity from URL
+async function uploadImageToSanity(imageUrl: string, userId: string) {
+  const response = await fetch(imageUrl)
+  const imageBlob = await response.blob()
+
+  // Upload the image to Sanity as an asset
+  const sanityImageAsset = await sanityClientWrite.assets.upload(
+    'image',
+    imageBlob,
+    {
+      filename: userId
+    }
+  )
+
+  return sanityImageAsset
 }

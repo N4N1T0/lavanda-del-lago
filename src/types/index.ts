@@ -149,6 +149,8 @@ export interface BentoThreeImage {
     url: string
     blur: string
   }
+  link: string
+  id: string
 }
 
 export interface BentofeaturedCategory {

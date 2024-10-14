@@ -131,8 +131,7 @@ export default {
   preview: {
     select: {
       title: 'name',
-      subtitle: 'email',
-      media: 'image'
+      subtitle: 'email'
     }
   }
 }
