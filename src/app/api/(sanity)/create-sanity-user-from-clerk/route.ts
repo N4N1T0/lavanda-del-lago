@@ -70,7 +70,7 @@ export async function GET(): Promise<NextResponse> {
       })
     }
 
-    return NextResponse.redirect(process.env.NEXTAUTH_URL!)
+    return NextResponse.redirect(process.env.NEXT_PUBLIC_URL!)
   } catch (error) {
     // Log the error for debugging purposes
     console.error('Error creating user in Sanity:', error)

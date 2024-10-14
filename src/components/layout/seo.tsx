@@ -179,7 +179,7 @@ export const jldHomePage = () => {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     'name': 'Lavanda del Lago',
-    'url': process.env.NEXTAUTH_URL,
+    'url': process.env.NEXT_PUBLIC_URL,
     'logo': MainLogo.src,
     'contactPoint': {
       '@type': 'ContactPoint',

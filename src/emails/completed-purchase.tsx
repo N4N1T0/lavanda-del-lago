@@ -17,7 +17,7 @@ import { TailwindWrapper } from './email-utils'
 import { Product } from '@/types'
 import { eurilize } from '@/lib/utils'
 
-const baseUrl = process.env.NEXTAUTH_URL
+const baseUrl = process.env.NEXT_PUBLIC_URL
 
 export interface PurchaseConfirmationEmailProps {
   customerName: string

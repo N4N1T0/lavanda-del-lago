@@ -58,7 +58,7 @@ jobs:
           echo CRON_JOB_API_KEY=${{ secrets.CRON_JOB_API_KEY }} >> .env
           echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
           echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
-          echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
+          echo NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }} >> .env
 
       - name: Set up QEMU for cross-platform builds
         uses: docker/setup-qemu-action@v3

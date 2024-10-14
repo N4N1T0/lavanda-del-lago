@@ -32,7 +32,14 @@ const PaypalButton = ({
   user: User | null
 }): JSX.Element => {
   const router = useRouter()
-  const serializedProducts = encodeURIComponent(JSON.stringify(products))
+  const serializedProducts = encodeURIComponent(
+    JSON.stringify(
+      products.map((product) => ({
+        id: product.id,
+        quantity: product.quantity
+      }))
+    )
+  )
   const [{ isPending }] = usePayPalScriptReducer()
 
   // This function gets called when the user clicks on the PayPal button
@@ -43,7 +50,7 @@ const PaypalButton = ({
 
       // Redirect the user to the success page
       router.push(
-        `${process.env.NEXTAUTH_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}?gateway=Paypal`
+        `/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}?gateway=Paypal`
       )
     } else {
       // If the order is null or undefined, log an error
@@ -56,7 +63,7 @@ const PaypalButton = ({
   const handleOnCancel = () => {
     // Redirect the user to the success page with an orderId of null
     router.push(
-      `${process.env.NEXTAUTH_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
+      `/failed?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
     )
   }
 
