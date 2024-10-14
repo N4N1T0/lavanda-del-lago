@@ -1,8 +1,10 @@
 // Types Imports
-import { certifications } from '@sanity-studio/queries'
 import type { Certifications } from '@/types'
-import { sanityClientRead } from '@sanity-studio/lib/client'
 import type { Metadata } from 'next'
+
+// Query Imports
+import { certifications } from '@sanity-studio/queries'
+import { sanityClientRead } from '@sanity-studio/lib/client'
 import { PortableText } from 'next-sanity'
 
 // Metadata for this page
@@ -18,7 +20,13 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the.
  */
 const CertificationsPage = async (): Promise<JSX.Element> => {
-  const response: Certifications = await sanityClientRead.fetch(certifications)
+  const response: Certifications = await sanityClientRead.fetch(
+    certifications,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   return (
     <section

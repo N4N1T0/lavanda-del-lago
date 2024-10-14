@@ -23,6 +23,8 @@ const ClerkLayout = ({
           src={SignUpImage}
           className='h-full w-full object-cover'
           priority
+          sizes='(max-width: 768px) 0vw, (min-width: 769px) 50vw'
+          placeholder='blur'
         />
       </aside>
 

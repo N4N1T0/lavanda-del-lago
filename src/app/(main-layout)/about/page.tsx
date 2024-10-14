@@ -29,7 +29,13 @@ export const metadata: Metadata = {
  */
 const AboutUsPage = async (): Promise<JSX.Element> => {
   // Get About Us Page Data
-  const response: AboutsPageType = await sanityClientRead.fetch(aboutUsPage)
+  const response: AboutsPageType = await sanityClientRead.fetch(
+    aboutUsPage,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   // deconstruct data
   const {
@@ -73,13 +79,15 @@ const AboutUsPage = async (): Promise<JSX.Element> => {
           ))}
         </ul>
         <Image
-          src={statImage}
+          src={statImage.url}
           alt='Stats Image'
           title='Stats Image'
           className='col-span-1 aspect-square object-cover'
-          width={1500}
-          height={1500}
+          width={700}
+          height={700}
           priority
+          placeholder='blur'
+          blurDataURL={statImage.blur}
         />
       </div>
 

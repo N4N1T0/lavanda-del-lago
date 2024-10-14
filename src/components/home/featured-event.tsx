@@ -15,6 +15,8 @@ import { buttonVariants } from '@/components/ui/button'
 + * @return {JSX.Element} The JSX element representing the featured event section
 + */
 const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
+  const { image, title, description, urls } = event
+
   return (
     <section
       id='featured-event'
@@ -23,11 +25,13 @@ const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
       <div className='container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-12'>
         {/* Image of the event */}
         <Image
-          src={event.image}
+          src={image.url}
           width={1000}
           height={1000}
-          alt={event.title}
-          title={event.title}
+          alt={title}
+          title={title}
+          placeholder='blur'
+          blurDataURL={image.blur}
           className='mx-auto aspect-square overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last'
         />
         {/* Event details */}
@@ -39,15 +43,15 @@ const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
             </div>
             {/* Title and description of the event */}
             <h2 className='text-3xl font-bold tracking-tighter text-accent sm:text-5xl'>
-              {event.title}
+              {title}
             </h2>
             <p className='max-w-[600px] text-base/relaxed text-gray-600'>
-              {event.description}
+              {description}
             </p>
           </div>
           {/* List of links to add to calendars */}
           <ul className='flex flex-wrap items-center gap-3 border-b border-gray-300 pb-2'>
-            {event.urls.map(({ id, calendarName, calendarUrl }) => (
+            {urls.map(({ id, calendarName, calendarUrl }) => (
               <li key={id}>
                 <Link
                   target='_blank'

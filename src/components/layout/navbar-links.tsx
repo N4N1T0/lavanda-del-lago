@@ -45,7 +45,7 @@ import { v4 as uuidv4 } from 'uuid'
  */
 const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
   return (
-    <nav className='hidden flex-[0_0_auto] items-start gap-12 md:inline-flex'>
+    <nav className='hidden flex-[0_0_auto] items-start gap-12 xl:inline-flex'>
       {navItems.map(({ label, children }) => {
         if (typeof children !== 'string') {
           return (
@@ -120,9 +120,9 @@ const NavbarLinksMobile = ({
 }): JSX.Element => {
   return (
     <Sheet>
-      <SheetTrigger className='block md:hidden'>
+      <SheetTrigger className='block xl:hidden'>
         <MenuIcon
-          size={25}
+          size={30}
           className='transition-colors duration-150 hover:text-accent'
         />
       </SheetTrigger>
@@ -153,7 +153,7 @@ const NavbarLinksMobile = ({
                               <SheetClose asChild>
                                 <Link
                                   href={`/products?category=${category}`}
-                                  className='font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
+                                  className='mt-1 text-base font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
                                 >
                                   {capitalizeFirstLetter(category)}
                                 </Link>
@@ -168,7 +168,7 @@ const NavbarLinksMobile = ({
                               <SheetClose asChild>
                                 <Link
                                   href={child.href}
-                                  className='font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
+                                  className='mt-1 text-base font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
                                 >
                                   {child.label}
                                 </Link>

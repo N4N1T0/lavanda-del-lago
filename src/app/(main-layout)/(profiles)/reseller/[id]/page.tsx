@@ -16,7 +16,13 @@ const ResellerPage = async ({ params }: { params: { id: string } }) => {
   })
 
   // Fetch products
-  const products: Product[] = await sanityClientRead.fetch(allProducts)
+  const products: Product[] = await sanityClientRead.fetch(
+    allProducts,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   if (response.reseller !== true) {
     return (

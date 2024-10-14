@@ -1,92 +1,100 @@
-# name: Deployment
+name: Deployment
 
-# on:
-#   push:
-#     branches:
-#       - 'main'
-#     tags:
-#       - 'v*'
+on:
+  push:
+    branches:
+      - 'main'
 
-# jobs:
-#   lint:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-#       - name: Install pnpm
-#         run: npm install -g pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-#       - name: Install dependencies
-#         run: pnpm install
+      - name: Install dependencies
+        run: pnpm install
 
-#       - name: Run ESLint
-#         run: pnpm lint
+      - name: Run ESLint
+        run: pnpm lint
 
-#       - name: Run Typescript Checks
-#         run: pnpm typecheck
+      - name: Run Typescript Checks
+        run: pnpm typecheck
 
-#   docker-deploy:
-#     runs-on: ubuntu-latest
-#     needs: lint
+  docker-deploy:
+    runs-on: ubuntu-latest
+    needs: lint
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-#       - name: Create .env file
-#         run: |
-#           echo NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }} >> .env
-#           echo NEXT_PUBLIC_SANITY_DATASET=${{ secrets.NEXT_PUBLIC_SANITY_DATASET }} >> .env
-#           echo SANITY_TOKEN=${{ secrets.SANITY_TOKEN }} >> .env
-#           echo SANITY_WEBHOOK_SECRET=${{ secrets.SANITY_WEBHOOK_SECRET }} >> .env
-#           echo NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }} >> .env
-#           echo CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} >> .env
-#           echo NEXT_PUBLIC_CLERK_SIGN_IN_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_IN_URL }} >> .env
-#           echo NEXT_PUBLIC_CLERK_SIGN_UP_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_UP_URL }} >> .env
-#           echo ORAMA_PRIVATE_API_KEY=${{ secrets.ORAMA_PRIVATE_API_KEY }} >> .env
-#           echo ORAMA_API_URL=${{ secrets.ORAMA_API_URL }} >> .env
-#           echo ORAMA_PUBLIC_KEY=${{ secrets.ORAMA_PUBLIC_KEY }} >> .env
-#           echo REDSYS_MERCHANT_CODE=${{ secrets.REDSYS_MERCHANT_CODE }} >> .env
-#           echo REDSYS_TERMINAL=${{ secrets.REDSYS_TERMINAL }} >> .env
-#           echo REDSYS_CURRENCY=${{ secrets.REDSYS_CURRENCY }} >> .env
-#           echo REDSYS_SECRET_KEY=${{ secrets.REDSYS_SECRET_KEY }} >> .env
-#           echo RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} >> .env
-#           echo CRON_JOB_API_KEY=${{ secrets.CRON_JOB_API_KEY }} >> .env
-#           echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
-#           echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
-#           echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
+      - name: Create .env file
+        run: |
+          echo NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }} >> .env
+          echo NEXT_PUBLIC_SANITY_DATASET=${{ secrets.NEXT_PUBLIC_SANITY_DATASET }} >> .env
+          echo SANITY_TOKEN=${{ secrets.SANITY_TOKEN }} >> .env
+          echo SANITY_WEBHOOK_SECRET=${{ secrets.SANITY_WEBHOOK_SECRET }} >> .env
+          echo NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }} >> .env
+          echo CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} >> .env
+          echo NEXT_PUBLIC_CLERK_SIGN_IN_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_IN_URL }} >> .env
+          echo NEXT_PUBLIC_CLERK_SIGN_UP_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_UP_URL }} >> .env
+          echo ORAMA_PRIVATE_API_KEY=${{ secrets.ORAMA_PRIVATE_API_KEY }} >> .env
+          echo ORAMA_API_URL=${{ secrets.ORAMA_API_URL }} >> .env
+          echo ORAMA_PUBLIC_KEY=${{ secrets.ORAMA_PUBLIC_KEY }} >> .env
+          echo REDSYS_MERCHANT_CODE=${{ secrets.REDSYS_MERCHANT_CODE }} >> .env
+          echo REDSYS_TERMINAL=${{ secrets.REDSYS_TERMINAL }} >> .env
+          echo REDSYS_CURRENCY=${{ secrets.REDSYS_CURRENCY }} >> .env
+          echo REDSYS_SECRET_KEY=${{ secrets.REDSYS_SECRET_KEY }} >> .env
+          echo RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} >> .env
+          echo CRON_JOB_API_KEY=${{ secrets.CRON_JOB_API_KEY }} >> .env
+          echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
+          echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
+          echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
 
-#       - name: Set up QEMU for cross-platform builds
-#         uses: docker/setup-qemu-action@v3
+      - name: Set up QEMU for cross-platform builds
+        uses: docker/setup-qemu-action@v3
 
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-#       - name: Log in to GitHub Container Registry
-#         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
-#       - name: Build multi-platform Docker image
-#         run: docker build . --platform linux/amd64 -t ghcr.io/n4n1t0/lavanda-del-lago:latest
+      - name: Build multi-platform Docker image
+        run: docker build . --platform linux/amd64 -t ghcr.io/n4n1t0/lavanda-del-lago:latest
 
-#       - name: Push Docker image to GitHub Packages
-#         run: docker push ghcr.io/n4n1t0/lavanda-del-lago:latest
+      - name: Push Docker image to GitHub Packages
+        run: docker push ghcr.io/n4n1t0/lavanda-del-lago:latest
 
-#       - name: Connect with VPS
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.HOST }}
-#           username: ${{ secrets.USERNAME }}
-#           key: ${{ secrets.SSH_PRIVATE_KEY }}
-#           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-#           port: ${{ secrets.SSH_PORT }}
-#           script: |
-#             docker stop lavanda-del-lago || true
-#             docker rm lavanda-del-lago || true
-#             docker pull ghcr.io/n4n1t0/lavanda-del-lago:latest
-#             docker run -d --name lavanda-del-lago -p 3000:3000 ghcr.io/n4n1t0/lavanda-del-lago:latest
+      - name: Connect with VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker stop lavanda-del-lago || true
+            docker rm lavanda-del-lago || true
+            docker pull ghcr.io/n4n1t0/lavanda-del-lago:latest
+            docker run -d --name lavanda-del-lago -p 3000:3000 ghcr.io/n4n1t0/lavanda-del-lago:latest
+
+  # notify:
+  #   runs-on: ubuntu-latest
+  #   needs: docker-deploy
+
+  #   steps:
+  #     - name: Send HTTP request
+  #       run: |
+  #         curl -X GET "https://your-endpoint.com/api/deploy-success" \
+  #           -H "Authorization: Bearer ${{ secrets.YOUR_API_KEY }}"  # Optional: if the endpoint needs authentication

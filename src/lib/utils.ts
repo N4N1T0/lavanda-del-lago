@@ -150,6 +150,7 @@ export function urlize(name: string): string {
   return name
     .trim() // Elimina los espacios al principio y al final
     .toLowerCase() // Convierte a minúsculas
+    .normalize('NFC')
     .replace(/\s+/g, '-') // Reemplaza los espacios por guiones
 }
 
@@ -225,7 +226,7 @@ export function getMostUsedCategory(
   // Loop through past purchases
   for (const purchase of pastPurchases) {
     for (const product of purchase.products) {
-      const category = product.categoria
+      const category = product.product.categoria
 
       // Count occurrences of each category
       if (categoryCount[category]) {
@@ -264,6 +265,12 @@ export function getStatusColor(status: string): string {
       return '#10B981' // Green (for Completed)
     case 'cancelado':
       return '#EF4444' // Red (for Canceled)
+    case 'procesando':
+      return '#3B82F6' // Blue (for Processing)
+    case 'enviado':
+      return '#6366F1' // Indigo (for Shipped)
+    case 'entregado':
+      return '#22C55E' // Light Green (for Delivered)
     default:
       return '#6B7280' // Gray (for default/fallback)
   }

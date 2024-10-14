@@ -27,30 +27,33 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const desurlizedProductName = desurlizeForQuery(params.id)
 
-  let response: Product | null = null
+  const productNames = [
+    desurlizedProductName,
+    `${desurlizedProductName} `,
+    ` ${desurlizedProductName}`
+  ]
 
-  // ftist feth for the product with the given name
-  response = await sanityClientRead.fetch(productByName, {
-    name: desurlizedProductName
-  })
-
-  if (!response) {
-    // if not found, fetch for the product with the given name plus and space
-    response = await sanityClientRead.fetch(productByName, {
-      name: `${desurlizedProductName} `
-    })
-  }
+  // first fetch for the product with the given name
+  const response: Product = await sanityClientRead.fetch(
+    productByName,
+    {
+      name: productNames
+    },
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   return {
-    title: `${response?.nombre || 'Estamos trabajando en una nombre'}`,
+    title: `${response?.nombre || 'Estamos trabajando en un nombre'}`,
     description: `${response?.descripcion || 'No hay descripción'}`,
     openGraph: {
-      title: `${response?.nombre || 'Estamos trabajando en una nombre'}`,
+      title: `${response?.nombre || 'Estamos trabajando en un nombre'}`,
       description: `${response?.descripcion || 'No hay descripción'}`,
       images: response?.image || MainLogo.src
     },
     twitter: {
-      title: `${response?.nombre || 'Estamos trabajando en una nombre'}`,
+      title: `${response?.nombre || 'Estamos trabajando en un nombre'}`,
       description: `${response?.descripcion || 'No hay descripción'}`,
       images: response?.image || MainLogo.src
     }
@@ -73,19 +76,24 @@ const ProductPage = async ({
 }): Promise<JSX.Element> => {
   const desurlizedProductName = desurlizeForQuery(params.id)
 
-  let response: Product | null = null
+  const productNames = [
+    desurlizedProductName,
+    `${desurlizedProductName} `,
+    ` ${desurlizedProductName}`
+  ]
 
-  // ftist feth for the product with the given name
-  response = await sanityClientRead.fetch(productByName, {
-    name: desurlizedProductName
-  })
+  // first fetch for the product with the given name
+  const response: Product = await sanityClientRead.fetch(
+    productByName,
+    {
+      name: productNames
+    },
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
-  if (!response) {
-    // if not found, fetch for the product with the given name plus and space
-    response = await sanityClientRead.fetch(productByName, {
-      name: `${desurlizedProductName} `
-    })
-  }
+  console.log(response)
 
   return (
     <>

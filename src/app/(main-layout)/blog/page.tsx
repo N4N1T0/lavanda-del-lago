@@ -21,7 +21,13 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the featured articles section.
  */
 const BlogPage = async (): Promise<JSX.Element> => {
-  const articles: Posts[] = await sanityClientRead.fetch(allBlogArticles)
+  const articles: Posts[] = await sanityClientRead.fetch(
+    allBlogArticles,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   // Separate articles into featured and non-featured lists
   const featuredArticles = articles.filter(

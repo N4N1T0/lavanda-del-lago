@@ -58,13 +58,13 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
       // If the product is already in the cart, update its quantity
       const updatedCart = count.map((productItem) =>
         productItem.id === cartItem.id
-          ? { ...productItem, quantity: productItem.quantity + 1 }
+          ? { ...productItem, quantity: productItem.quantity + quantity }
           : productItem
       )
       setCount(updatedCart)
     } else {
       // If the product is not in the cart, add it with an initial quantity of 1
-      setCount([...count, { ...cartItem, quantity: 1 }])
+      setCount([...count, { ...cartItem }])
     }
 
     toast({
@@ -74,7 +74,7 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
   }
 
   return (
-    <div className='flex w-full items-center justify-between border-b border-t border-accent/50 px-2 py-5 md:px-10'>
+    <div className='flex w-full items-center justify-between border-b border-t border-accent/50 px-2 py-5 xl:px-10'>
       <p className='hidden text-lg font-bold md:block'>Cantidad</p>
       <label htmlFor='Quantity' className='sr-only'>
         Quantity{' '}
@@ -94,7 +94,8 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
           type='number'
           id='Quantity'
           value={quantity || 0}
-          className='w-16 border-accent/50 text-center'
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          className='w-12 border-accent/50 text-center'
         />
         <Button
           variant='outline'
@@ -156,13 +157,13 @@ const QuantitySmall = ({
       // If the product is already in the cart, update its quantity
       const updatedCart = count.map((productItem) =>
         productItem.id === cartItem.id
-          ? { ...productItem, quantity: productItem.quantity + 1 }
+          ? { ...productItem, quantity: productItem.quantity + quantity }
           : productItem
       )
       setCount(updatedCart)
     } else {
       // If the product is not in the cart, add it with an initial quantity of 1
-      setCount([...count, { ...cartItem, quantity: 1 }])
+      setCount([...count, { ...cartItem }])
     }
 
     removeFromWishlist(prduct.id)
@@ -173,7 +174,7 @@ const QuantitySmall = ({
   }
 
   return (
-    <div className='flex w-fit items-center justify-between gap-3 px-3'>
+    <div className='flex w-full flex-wrap items-center justify-between gap-3'>
       <label htmlFor='Quantity' className='sr-only'>
         {' '}
         Quantity{' '}
@@ -182,7 +183,7 @@ const QuantitySmall = ({
       <div className='flex items-center space-x-2 text-accent'>
         <Button
           variant='outline'
-          size='icon'
+          size='sm'
           onClick={decrement}
           disabled={quantity === 1}
           aria-label='Disminuir cantidad'
@@ -193,11 +194,12 @@ const QuantitySmall = ({
           type='number'
           id='Quantity'
           value={quantity || 0}
-          className='w-16 border-accent/50 text-center'
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          className='w-12 border-accent/50 text-center'
         />
         <Button
           variant='outline'
-          size='icon'
+          size='sm'
           onClick={increment}
           aria-label='Incrementar cantidad'
         >

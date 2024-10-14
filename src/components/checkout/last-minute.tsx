@@ -28,6 +28,9 @@ const LastMinute = async ({
       productsByCategory,
       {
         category
+      },
+      {
+        next: { revalidate: 3600 }
       }
     )
 

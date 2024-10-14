@@ -44,10 +44,22 @@ const ProductsPage = async ({
 }): Promise<JSX.Element> => {
   // Determine query based on the presence of a category
   const productQuery = searchParams?.category
-    ? sanityClientRead.fetch(productsByCategory, {
-        category: searchParams?.category
-      })
-    : sanityClientRead.fetch(allProducts)
+    ? sanityClientRead.fetch(
+        productsByCategory,
+        {
+          category: searchParams?.category
+        },
+        {
+          next: { revalidate: 3600 }
+        }
+      )
+    : sanityClientRead.fetch(
+        allProducts,
+        {},
+        {
+          next: { revalidate: 3600 }
+        }
+      )
 
   try {
     // Fetch products, passing in category if needed

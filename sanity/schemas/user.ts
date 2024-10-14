@@ -26,9 +26,8 @@ export default {
     {
       name: 'image',
       title: 'Imagen',
-      type: 'string',
-      description: 'La url de la imagen del usuario',
-      validation: (Rule: any) => Rule.uri({ allowRelative: false })
+      type: 'image',
+      description: 'La url de la imagen del usuario'
     },
     {
       name: 'idDocument',
@@ -119,7 +118,7 @@ export default {
       title: 'Perfil de Revendedor',
       type: 'boolean',
       description:
-        'Indica si el usuario es un revendedor (IMPORTANTE SOLO ACTIVAR DESPUES DE REVISAR LA INFO DEL FORMULARIO DE REVENDEDOR CON EL MISMO EMAIL QUE ESTE USANDO EN LA APP)',
+        'Indica si el usuario es un revendedor (IMPORTANTE SOLO ACTIVAR DESPUÉS DE REVISAR LA INFO DEL FORMULARIO DE REVENDEDOR CON EL MISMO EMAIL QUE ESTE USANDO EN LA APP)',
       initialValue: false
     },
     {
@@ -132,7 +131,8 @@ export default {
   preview: {
     select: {
       title: 'name',
-      subtitle: 'email'
+      subtitle: 'email',
+      media: 'image'
     }
   }
 }

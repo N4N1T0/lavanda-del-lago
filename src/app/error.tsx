@@ -46,7 +46,16 @@ const ErrorPage = ({
   useEffect(() => {
     const getPageInfo = async () => {
       try {
-        const response = await sanityClientRead.fetch(errorPage)
+        const response = await sanityClientRead.fetch(
+          errorPage,
+          {},
+          {
+            next: {
+              revalidate: 86400
+            }
+          }
+        )
+
         setPageInfo(response)
       } catch (err) {
         console.error('Error fetching error page info:', err)

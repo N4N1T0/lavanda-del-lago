@@ -2,15 +2,14 @@
 
 // Next.js Imports
 import { usePathname, useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // Forms Imports
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 // UI Imports
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -34,11 +33,19 @@ import { userSchema, type UserSchemaType } from '@/lib/forms/form-schemas'
 import { localities } from '@/constants/site-data'
 
 export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
-  // TODO OPEN and CLOSE Dialog
+  // Estado para controlar el diálogo abierto/cerrado
+  const [isOpen, setIsOpen] = useState(false)
+
+  // Función para abrir el diálogo
+  const openDialog = () => setIsOpen(true)
+
+  // Función para cerrar el diálogo
+  const closeDialog = () => setIsOpen(false)
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-4 w-full' variant='cart'>
+        <Button className='mt-4 w-full' variant='cart' onClick={openDialog}>
           <Pencil className='mr-2 h-4 w-4' />
           Editar Perfil
         </Button>
@@ -53,13 +60,19 @@ export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
             Editar Perfil
           </DialogDescription>
         </DialogHeader>
-        <UserProfileForm user={user} />
+        <UserProfileForm user={user} closeDialog={closeDialog} />
       </DialogContent>
     </Dialog>
   )
 }
 
-export const UserProfileForm = ({ user }: { user: User | null }) => {
+export const UserProfileForm = ({
+  user,
+  closeDialog
+}: {
+  user: User | null
+  closeDialog?: () => void
+}) => {
   // initialize the Router & Pathname
   const router = useRouter()
   const path = usePathname()
@@ -79,10 +92,9 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
       locality: user?.address?.locality || '',
       password: user?.password || '',
       confirmPassword: user?.password || ''
-    }
+    },
+    mode: 'onBlur'
   })
-
-  const isDirty = Object.values(form.formState.dirtyFields).length > 0
 
   // UseEffect para actualizar valores cuando newUser cambie
   useEffect(() => {
@@ -90,8 +102,20 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
     form.setValue('confirmPassword', user ? '12345678a' : '')
   }, [user, form])
 
+  const {
+    formState: { isSubmitting, errors, dirtyFields }
+  } = form
+
+  const isDirty = Object.values(dirtyFields).length > 0
+  const noErrors = Object.keys(errors).length === 0
+
   // Form submit handler.
   async function onSubmit(values: UserSchemaType) {
+    if (!isDirty && noErrors) {
+      router.push(`/checkout/review?userId=${user?.id}`)
+      return
+    }
+
     const response = await fetch('/api/update-user-info', {
       method: 'POST',
       headers: {
@@ -112,22 +136,20 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
         }, 200)
       } else {
         router.push(path)
+        // Cierra el diálogo después del éxito del submit
+        if (closeDialog) closeDialog()
       }
     } else {
       router.push(`${path}?security=${data.data[0].code}`)
     }
   }
 
-  const {
-    formState: { isSubmitting }
-  } = form
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
         <fieldset className='space-y-4'>
           <legend className='w-full border-b text-lg text-accent'>
-            Informacio Personal
+            Información Personal
           </legend>
           <FormFieldComponent
             control={form.control}
@@ -175,7 +197,7 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
 
         <fieldset className='space-y-4'>
           <legend className='w-full border-b text-lg text-accent'>
-            Direccion
+            Dirección
           </legend>
           <FormFieldComponent
             control={form.control}
@@ -195,7 +217,7 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
             <FormFieldComponent
               control={form.control}
               name='postal_code'
-              label='Codigo Postal'
+              label='Código Postal'
               placeholder='22345'
               isSubmitting={isSubmitting}
             />
@@ -219,26 +241,15 @@ export const UserProfileForm = ({ user }: { user: User | null }) => {
             <PasswordCheck form={form} />
           </fieldset>
         )}
-        {isDirty ? (
-          <Button
-            type='submit'
-            variant='cart'
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? (
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-            ) : (
-              'Guardar Cambios'
-            )}
-          </Button>
-        ) : (
-          <Link
-            className={buttonVariants({ variant: 'cart' })}
-            href={`/checkout/review?userId=${user?.id}`}
-          >
-            Continuar
-          </Link>
-        )}
+        <Button type='submit' variant='cart' disabled={isSubmitting}>
+          {isSubmitting ? (
+            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+          ) : isDirty ? (
+            'Guardar Cambios'
+          ) : (
+            'Continuar'
+          )}
+        </Button>
       </form>
     </Form>
   )

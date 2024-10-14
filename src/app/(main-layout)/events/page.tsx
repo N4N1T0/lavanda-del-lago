@@ -21,7 +21,13 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the Events page content.
  */
 const EventsPage = async (): Promise<JSX.Element> => {
-  const response = await sanityClientRead.fetch(eventsFetch)
+  const response = await sanityClientRead.fetch(
+    eventsFetch,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   return (
     <section

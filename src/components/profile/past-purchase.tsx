@@ -54,7 +54,7 @@ const PastPurchasesCard = ({
                       </td>
                       <td className='py-2'>
                         <ul className='flex items-center gap-3'>
-                          {purchase.products.map((product) => (
+                          {purchase.products.map(({ product, quantity }) => (
                             <Link
                               key={product.nombre}
                               className='h-fit w-fit'
@@ -68,7 +68,7 @@ const PastPurchasesCard = ({
                             >
                               <Avatar
                                 className='mb-4 h-12 w-12 border border-white transition-colors duration-150 hover:border-accent'
-                                title={`${product.nombre} - CANTIDAD ${product.quantity}`}
+                                title={`${product.nombre} - CANTIDAD ${quantity}`}
                               >
                                 <AvatarImage
                                   src={product.image}

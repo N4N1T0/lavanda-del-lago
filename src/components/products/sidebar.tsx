@@ -29,7 +29,13 @@ const ProductsSidebar = async ({
   categoryPath: string | undefined
 }): Promise<JSX.Element> => {
   try {
-    const response: CategoriesList[] = await sanityClientRead.fetch(categories)
+    const response: CategoriesList[] = await sanityClientRead.fetch(
+      categories,
+      {},
+      {
+        next: { revalidate: 3600 }
+      }
+    )
     const filterCategories = categoriesFilter(response)
 
     if (response.length === 0) {

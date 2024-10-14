@@ -23,9 +23,15 @@ export async function generateMetadata({
 }: {
   params: { slug: string }
 }): Promise<Metadata> {
-  const post: Posts = await sanityClientRead.fetch(blogArticleById, {
-    slug: params.slug
-  })
+  const post: Posts = await sanityClientRead.fetch(
+    blogArticleById,
+    {
+      slug: params.slug
+    },
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   return {
     title: post.title,
@@ -48,9 +54,15 @@ const BlogArticlePage = async ({
   params: { slug: string }
 }): Promise<JSX.Element> => {
   try {
-    const post: Posts = await sanityClientRead.fetch(blogArticleById, {
-      slug: params.slug
-    })
+    const post: Posts = await sanityClientRead.fetch(
+      blogArticleById,
+      {
+        slug: params.slug
+      },
+      {
+        next: { revalidate: 3600 }
+      }
+    )
 
     const { title, description, image, content, categories } = post
 

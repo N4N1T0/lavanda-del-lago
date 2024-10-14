@@ -36,7 +36,13 @@ export default function NotFound() {
   useEffect(() => {
     const getPageInfo = async () => {
       try {
-        const response = await sanityClientRead.fetch(notFoundPage)
+        const response = await sanityClientRead.fetch(
+          notFoundPage,
+          {},
+          {
+            next: { revalidate: 86400 }
+          }
+        )
         setPageInfo(response)
       } catch (err) {
         console.error('Error fetching error page info:', err)

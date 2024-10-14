@@ -1,3 +1,6 @@
+// Next.js Imports
+import Link from 'next/link'
+
 // React Hook Imports
 import { Control, FieldValues, Path } from 'react-hook-form'
 
@@ -18,6 +21,7 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 // Define the props for the FormFieldComponent
 interface FormFieldComponentProps<T extends FieldValues> {
@@ -25,11 +29,12 @@ interface FormFieldComponentProps<T extends FieldValues> {
   name: Path<T>
   label: string
   placeholder: string
-  type?: 'text' | 'email' | 'date' | 'select' | 'checkbox' // Extend types as needed
-  options?: string[] // Only applicable if type is 'select'
+  type?: 'text' | 'email' | 'date' | 'select' | 'checkbox' | 'radio' | 'file' // Added 'file' type
+  options?: string[] // Only applicable if type is 'select' or 'radio'
   isSubmitting: boolean
   className?: string | null
 }
+
 
 const FormFieldComponent = <T extends FieldValues>({
   control,
@@ -46,9 +51,24 @@ const FormFieldComponent = <T extends FieldValues>({
     name={name} // Type assertion for the name
     render={({ field }) => (
       <FormItem
-        className={`${type === 'checkbox' ? 'flex-row-reverse' : ''} ${className}`}
+        className={`${type === 'checkbox' ? 'flex flex-row-reverse items-center justify-end gap-2' : ''} ${className}`}
       >
-        <FormLabel className='font-bold text-gray-800'>{label}</FormLabel>
+        <FormLabel className='font-bold text-gray-800'>
+          {label === 'He Leído las Privacy Policy' ? (
+            <span>
+              He Leído{' '}
+              <Link
+                className='text-accent hover:underline'
+                target='_blank'
+                href='/privacy policy'
+              >
+                las Privacy Policy
+              </Link>
+            </span>
+          ) : (
+            label
+          )}
+        </FormLabel>
         <FormControl>
           {type === 'select' ? (
             <Select
@@ -77,6 +97,29 @@ const FormFieldComponent = <T extends FieldValues>({
               checked={field.value}
               onCheckedChange={field.onChange}
               disabled={isSubmitting}
+              className='!mt-0'
+            />
+          ) : type === 'radio' ? (
+            <RadioGroup
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+              className='flex flex-col space-y-1'
+            >
+              {options.map((option) => (
+                <FormItem key={option} className='flex items-center space-x-3'>
+                  <FormControl>
+                    <RadioGroupItem value={option} />
+                  </FormControl>
+                  <FormLabel className='font-normal'>{option}</FormLabel>
+                </FormItem>
+              ))}
+            </RadioGroup>
+          ) : type === 'file' ? (
+            <Input
+              type='file'
+              onChange={(e) => field.onChange(e.target.files)} // Handle file input change
+              disabled={isSubmitting}
+              className='border border-accent/50'
             />
           ) : (
             <Input

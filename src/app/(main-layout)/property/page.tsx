@@ -1,3 +1,7 @@
+// Next.js Imports
+import Image from 'next/image'
+
+import Link from 'next/link'
 // Types Imports
 import type { Property } from '@/types'
 import type { Metadata } from 'next'
@@ -5,17 +9,27 @@ import type { Metadata } from 'next'
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { property } from '@sanity-studio/queries'
-import Image from 'next/image'
-import { badges } from '@/constants/site-data'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { PortableText } from 'next-sanity'
+
+// Data Imports
+import { badges } from '@/constants/site-data'
+
+// UI Imports
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { buttonVariants } from '@/components/ui/button'
+
+// Utils Imports
 import { urlize } from '@/lib/utils'
-import Link from 'next/link'
 
 // Function to genarte Metadata for this page
 export async function generateMetadata(): Promise<Metadata> {
-  const response: Property = await sanityClientRead.fetch(property)
+  const response: Property = await sanityClientRead.fetch(
+    property,
+    {},
+    {
+      next: { revalidate: 3600 }
+    }
+  )
 
   return {
     title: response.title,
@@ -29,18 +43,24 @@ export async function generateMetadata(): Promise<Metadata> {
  * @return {Promise<JSX.Element>} The JSX element representing the property page.
  */
 const ProperyPage = async (): Promise<JSX.Element> => {
-  const response: Property = await sanityClientRead.fetch(property)
+  const response: Property = await sanityClientRead.fetch(
+    property,
+    {},
+    { next: { revalidate: 3600 } }
+  )
+
+  const { title, product, featuredImage, content } = response
 
   return (
     <section
       id='ProperyPage'
       className='mx-auto flex max-w-screen-lg flex-col items-center gap-12 text-balance px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-20'
     >
-      <h1 className='text-xl text-accent md:text-5xl'>{response.title}</h1>
+      <h1 className='text-xl text-accent md:text-5xl'>{title}</h1>
       <div className='grid w-full md:grid-cols-3'>
         <div className='col-span-2 flex flex-col justify-center gap-5'>
           <p className='text-xl leading-relaxed tracking-wide'>
-            {response.product.descripcion}
+            {product.descripcion}
           </p>
           <div className='flex w-full flex-wrap items-center justify-center gap-5'>
             {badges.map((badge) => (
@@ -62,29 +82,32 @@ const ProperyPage = async (): Promise<JSX.Element> => {
           <br />
         </div>
         <Image
-          src={response.product.image}
-          alt={response.title}
-          title={response.title}
+          src={product.image}
+          alt={title}
+          title={title}
           width={500}
           height={500}
           className='col-span-1'
+          priority
         />
       </div>
       <Image
-        src={response.featuredImage}
-        alt={response.title}
-        title={response.title}
-        width={1920}
+        src={featuredImage.url}
+        alt={title}
+        title={title}
+        width={1024}
         height={1080}
+        placeholder='blur'
+        blurDataURL={featuredImage.blur}
       />
       <div className='[&>p:first-child]:mt-0 [&>p]:mt-5 [&>p]:text-lg'>
-        <PortableText value={response.content} />
+        <PortableText value={content} />
       </div>
       <Link
         href={
-          response.product.nombre && response.product.categoria
-            ? `/products/${urlize(response.product.nombre)}?category=${
-                response.product.categoria
+          product.nombre && product.categoria
+            ? `/products/${urlize(product.nombre)}?category=${
+                product.categoria
               }`
             : '/products'
         }

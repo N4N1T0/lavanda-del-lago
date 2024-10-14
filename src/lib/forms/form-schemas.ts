@@ -1,3 +1,4 @@
+import { jobType, localities } from '@/constants/site-data'
 import { z } from 'zod'
 
 // Checkout Validation Schema with New User
@@ -39,18 +40,48 @@ export const userSchema = z
 
 export type UserSchemaType = z.infer<typeof userSchema>
 
-// Reseller Form Validation Schema
 export const resellerFormSchema = z.object({
-  firstName: z.string().min(2).max(50),
-  lastName: z.string().min(2).max(50),
-  email: z.string().email().min(5),
-  nie: z.string().min(9).max(9), // NIE validation can be adjusted
-  province: z.string().min(1, 'Por favor selecciona una provincia'),
-  phone: z.string().min(9).max(15), // Adjust depending on validation needs
-  birthDate: z.string(),
-  birthPlace: z.string().optional(),
+  firstName: z
+    .string()
+    .min(2, 'El nombre debe tener al menos 2 caracteres')
+    .max(50, 'El nombre no debe exceder los 50 caracteres')
+    .min(1, 'El nombre es requerido'),
+  lastName: z
+    .string()
+    .min(2, 'El apellido debe tener al menos 2 caracteres')
+    .max(50, 'El apellido no debe exceder los 50 caracteres')
+    .min(1, 'El apellido es requerido'),
+  email: z
+    .string()
+    .email('Correo electrónico inválido')
+    .min(5, 'El correo debe tener al menos 5 caracteres')
+    .min(1, 'El correo electrónico es requerido'),
+  nie: z
+    .string()
+    .min(9, 'El NIE debe tener exactamente 9 caracteres')
+    .max(9, 'El NIE debe tener exactamente 9 caracteres')
+    .min(1, 'El NIE es requerido'),
+  province: z.enum(['Ninguno de los anteriores', ...localities], {
+    required_error: 'Debes seleccionar una localidad'
+  }),
+  phone: z
+    .string()
+    .min(9, 'El teléfono debe tener al menos 9 dígitos')
+    .max(15, 'El teléfono no debe exceder los 15 dígitos')
+    .min(1, 'El teléfono es requerido'),
+  birthDate: z.string().min(1, 'La fecha de nacimiento es requerida'),
+  birthPlace: z.enum(['Ninguno de los anteriores', ...localities], {
+    required_error: 'Debes seleccionar una localidad'
+  }),
   privacyPolicy: z.boolean().refine((val) => val === true, {
     message: 'Debes aceptar la política de privacidad'
+  }),
+  jobType: z.enum(['Ninguno de los anteriores', ...jobType], {
+    required_error: 'Debes seleccionar un tipo de trabajo'
+  }),
+  companyFile: z.any().refine((file) => file instanceof File, {
+    message:
+      'Debes adjuntar un archivo válido para la identificación de la empresa o NIF'
   })
 })
 

@@ -5,10 +5,13 @@
 import { useRouter } from 'next/navigation'
 
 // External Packages Imports
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 
 // Types Imports
 import { CartItem, User } from '@/types'
+
+// UI Imports
+import { Skeleton } from '@/components/ui/skeleton'
 
 /**
  * Componente que renderiza un bot n de PayPal para realizar pagos.
@@ -30,6 +33,7 @@ const PaypalButton = ({
 }): JSX.Element => {
   const router = useRouter()
   const serializedProducts = encodeURIComponent(JSON.stringify(products))
+  const [{ isPending }] = usePayPalScriptReducer()
 
   // This function gets called when the user clicks on the PayPal button
   const handleApprove = async (_data: any, actions: any) => {
@@ -39,7 +43,7 @@ const PaypalButton = ({
 
       // Redirect the user to the success page
       router.push(
-        `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}?gateway=Paypal`
+        `${process.env.NEXTAUTH_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}?gateway=Paypal`
       )
     } else {
       // If the order is null or undefined, log an error
@@ -52,20 +56,13 @@ const PaypalButton = ({
   const handleOnCancel = () => {
     // Redirect the user to the success page with an orderId of null
     router.push(
-      `${process.env.CI ? 'http://www.lavandadellago.es' : 'http://localhost:3000'}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
+      `${process.env.NEXTAUTH_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
     )
   }
 
   return (
-    // This is the PayPal button component
-    <PayPalScriptProvider
-      options={{
-        clientId:
-          'ARVFu5YwJzX47SVNwU5c9WlQ1zzfgjPoa6KCeenXoy1KL-kK5PyLUjiKzewOcnzm2uKEEWH3qTSJbrEM',
-        currency: 'EUR',
-        buyerCountry: 'ES'
-      }}
-    >
+    <>
+      {isPending ? <Skeleton className='bg-bl h-12 w-full' /> : null}
       <PayPalButtons
         createOrder={(_data, actions) =>
           actions.order.create({
@@ -92,7 +89,7 @@ const PaypalButton = ({
         onCancel={handleOnCancel}
         style={{ layout: 'horizontal', color: 'blue', tagline: false }}
       />
-    </PayPalScriptProvider>
+    </>
   )
 }
 

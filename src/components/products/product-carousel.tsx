@@ -38,15 +38,16 @@ const ProductCarousel = ({
         })
       ]}
       opts={{
-        loop: true
+        loop: true,
+        align: 'start'
       }}
-      className='w-full'
+      className='mx-auto w-[93%]'
     >
-      <CarouselContent className='gap-5'>
+      <CarouselContent className='-ml-2'>
         {productList.map((product, index: number) => (
           <CarouselItem
             key={product.id}
-            className='px-14 md:basis-1/2 md:px-10 lg:basis-1/3 lg:px-8 2xl:basis-1/4 2xl:px-6'
+            className='basis-1/2 pl-2 md:basis-1/3 md:pl-4 xl:basis-1/4 xl:pl-4'
           >
             <ProductCard product={product} index={index} />
           </CarouselItem>

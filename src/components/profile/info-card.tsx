@@ -55,7 +55,7 @@ const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
           </div>
           <div className='mb-2 flex items-center'>
             <Phone className='mr-2 h-4 w-4' />
-            <span>{user.phone || 'Sin telefono'}</span>
+            <span>{user.phone || 'Sin teléfono'}</span>
           </div>
           <div className='flex items-center'>
             <MapPin className='mr-2 h-4 w-4' />
@@ -70,7 +70,7 @@ const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
               className='flex items-center justify-center gap-2'
             >
               <ReceiptEuro className='h-4 w-4' />
-              Formulario de Revenedor
+              Formulario de Revendedor
             </Link>
           </Button>
         )}

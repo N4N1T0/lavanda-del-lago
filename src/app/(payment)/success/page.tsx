@@ -18,16 +18,22 @@ import {
 import { CheckCircle2Icon, PackageIcon, TruckIcon } from 'lucide-react'
 
 // Types Imports
+import { Product, User } from '@/types'
 import { Purchase } from '@/types/sanity'
 
 // Utils imports
 import { eurilize } from '@/lib/utils'
 
 // Query Imports
-import { sanityClientWrite } from '@sanity-studio/lib/client'
+import { sanityClientRead, sanityClientWrite } from '@sanity-studio/lib/client'
+import { userByIdCompleted } from '@sanity-studio/queries'
+
+// Resend Imports
+import { resend } from '@/lib/clients'
+import CompletedPurchase from '@/emails/completed-purchase'
 
 // Define the Server Component
-const SuccesPaymentPage = async ({
+const SuccessPaymentPage = async ({
   searchParams
 }: {
   searchParams: {
@@ -66,7 +72,7 @@ const SuccesPaymentPage = async ({
   }
 
   // Parse products from the URL parameter
-  const products: Purchase['products'] = productsParam
+  const products: { id: string; quantity: number }[] = productsParam
     ? JSON.parse(decodeURIComponent(productsParam))
     : []
 
@@ -80,14 +86,41 @@ const SuccesPaymentPage = async ({
       _type: 'reference'
     },
     totalAmount: Number(totalAmount),
-    status: gateway !== null ? 'completado' : 'pendiente',
+    status: gateway !== undefined ? 'pendiente' : 'procesando',
     reseller: reseller === 'true',
-    paymentMethod: gateway !== null ? gateway : 'redsys',
-    products,
+    paymentMethod: gateway !== undefined ? gateway : 'redsys',
+    products: products?.map((item) => ({
+      product: { _ref: item.id, _type: 'reference' }, // Fix: product reference
+      quantity: item.quantity,
+      _key: item.id
+    })),
     _createdAt: new Date().toISOString(),
     _updatedAt: new Date().toISOString(),
     _rev: orderId
   })
+
+  if (gateway !== undefined) {
+    const user: User = await sanityClientRead.fetch(userByIdCompleted, {
+      _id: userId
+    })
+
+    // Send email to user
+    await resend.emails.send({
+      from: 'info@lavandadellago.es',
+      to: [userEmail, 'info@lavandadellago.es'],
+      subject: 'Orden Completada',
+      react: CompletedPurchase({
+        customerName: userName,
+        orderNumber: orderId,
+        totalAmount: Number(totalAmount),
+        purchaseDate: new Date().toLocaleString('es-ES'),
+        id: userId,
+        reseller: reseller === 'true',
+        products: user.pastPurchases?.find((p) => p.id === orderId)
+          ?.products as unknown as { product: Product; quantity: number }[]
+      })
+    })
+  }
 
   return (
     <main className='flex min-h-screen items-center justify-center bg-green-100 p-4'>
@@ -140,4 +173,4 @@ const SuccesPaymentPage = async ({
   )
 }
 
-export default SuccesPaymentPage
+export default SuccessPaymentPage

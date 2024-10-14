@@ -103,7 +103,10 @@ export interface AboutsPageType {
   teams_section_title: string
   teams_section_description: string
   stats: Stat[]
-  statImage: string
+  statImage: {
+    url: string
+    blur: string
+  }
   second_section_description: Content[]
   teams: Team[]
 }
@@ -142,7 +145,10 @@ export interface HomePageType {
 }
 
 export interface BentoThreeImage {
-  image: string
+  image: {
+    url: string
+    blur: string
+  }
 }
 
 export interface BentofeaturedCategory {
@@ -169,7 +175,10 @@ export interface Event {
   urls: URL[]
   id: string
   date: Date
-  image: string
+  image: {
+    url: string
+    blur: string
+  }
   title: string
 }
 
@@ -277,7 +286,10 @@ export interface User {
 
 export interface PastPurchase {
   id: string
-  products: CartItem[]
+  products: {
+    product: Product
+    quantity: number
+  }[]
   totalAmount: number
   purchaseDate: string
   paymentMethod: string
@@ -288,8 +300,14 @@ export interface PastPurchase {
 export interface JustAFlower {
   secondaryText: string
   quote: string
-  mainImage: string
-  secondaryImage: string
+  mainImage: {
+    url: string
+    blur: string
+  }
+  secondaryImage: {
+    url: string
+    blur: string
+  }
   text: string
   title: string
 }
@@ -298,13 +316,19 @@ export interface Property {
   title: string
   content: Content[]
   product: Product
-  featuredImage: string
+  featuredImage: {
+    url: string
+    blur: string
+  }
 }
 
 export interface Remedies {
   title: string
   firstDescription: string
-  dualImage: string[]
+  dualImage: {
+    url: string
+    blur: string
+  }[]
   secodDescription: string
   benefits: Benefit[]
 }

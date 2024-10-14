@@ -1,3 +1,5 @@
+'use client'
+
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,14 +18,18 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover'
 import { Button, buttonVariants } from '@/components/ui/button'
-
-// Auth Imports
-import { SignInButton, SignedOut } from '@clerk/nextjs'
+import { SignInButton, useUser } from '@clerk/nextjs'
+import { Skeleton } from '../ui/skeleton'
 
 const UserPopover = (): JSX.Element => {
+  // Get the user from Clerk
+  const { user, isLoaded, isSignedIn } = useUser()
+
+  if (!isLoaded) return <Skeleton className='h-8 w-8 rounded-full' />
+
   return (
     <>
-      <SignedOut>
+      {!isSignedIn ? (
         <Popover>
           <PopoverTrigger>
             <Image
@@ -51,8 +57,9 @@ const UserPopover = (): JSX.Element => {
             </Link>
           </PopoverContent>
         </Popover>
-      </SignedOut>
-      <UserProfile />
+      ) : (
+        <UserProfile currentUser={user} />
+      )}
     </>
   )
 }

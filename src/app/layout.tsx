@@ -14,10 +14,10 @@ import { Toaster } from '@/components/ui/toaster'
 
 // Clerk Imports
 import { ClerkProvider } from '@clerk/nextjs'
-import { esES } from '@clerk/localizations'
 
 // Security
 import SecurityHandling from '@/components/layout/security-handling'
+import { localization } from '@/components/auth/custom-locale'
 
 // Local Fonts Configuration
 const josefinSand = Josefin_Sans({
@@ -45,7 +45,7 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <ClerkProvider
-      localization={esES}
+      localization={localization}
       appearance={{
         variables: { colorPrimary: '#694DAB', colorInputText: '#694DAB' }
       }}
