@@ -12,26 +12,41 @@ export default {
     },
     {
       name: 'bentoThreeImages',
-      title: 'Tres Imagenes del Bento',
-      description: 'Tres imagenes que se van a mostrar en la pagina principal',
+      title: 'Tres Imágenes del Bento',
+      description: 'Tres imágenes que se van a mostrar en la pagina principal',
       type: 'array',
       of: [
         {
-          type: 'image',
-          options: { hotspot: true }
+          type: 'object',
+          fields: [
+            {
+              type: 'string',
+              name: 'imageLink',
+              title: 'Link de la Imagen',
+              description:
+                'El link de la imagen que se va a mostrar, dejar en blanco si no se va a mostrar'
+            },
+            {
+              type: 'image',
+              options: { hotspot: true },
+              title: 'Imagen',
+              description: 'La imagen que se va a mostrar en el bento principal'
+            }
+          ]
         }
-      ]
+      ],
+      validation: (Rule: any) => Rule.max(3)
     },
     {
       name: 'bentofeaturedCategory',
-      title: 'Categoria Destacada del Bento',
-      description: 'La categoria que se va a destacar en la pagina principal',
+      title: 'Categoría Destacada del Bento',
+      description: 'La categoría que se va a destacar en la pagina principal',
       type: 'object',
       fields: [
         {
           name: 'title',
-          title: 'Titulo de la Categoria',
-          description: 'El titulo de la categoria que se va a destacar',
+          title: 'Titulo de la Categoría',
+          description: 'El titulo de la categoría que se va a destacar',
           type: 'string',
           initialValue: 'Bienestar',
           options: {

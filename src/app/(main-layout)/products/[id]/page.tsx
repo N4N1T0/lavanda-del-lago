@@ -93,8 +93,6 @@ const ProductPage = async ({
     }
   )
 
-  console.log(response)
-
   return (
     <>
       <section

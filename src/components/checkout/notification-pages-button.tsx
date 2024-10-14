@@ -36,8 +36,6 @@ const NotidicationsPageButton = ({
     router.push(href)
   }
 
-  console.log(reseller)
-
   if (status === 'success') {
     return (
       <>

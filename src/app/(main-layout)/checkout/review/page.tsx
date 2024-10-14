@@ -31,7 +31,6 @@ const CheckoutReviewPage = async ({
     id: searchParams.userId
   })
 
-  console.log(response)
 
   return (
     <section
