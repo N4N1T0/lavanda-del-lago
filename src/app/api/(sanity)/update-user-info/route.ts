@@ -55,7 +55,8 @@ export const POST = withAxiom(
         postal_code,
         documentNumber,
         documentType,
-        password
+        password,
+        reference
       } = parsedBody.data
 
       // Helper to split full name into parts
@@ -79,7 +80,8 @@ export const POST = withAxiom(
             floor,
             locality,
             street,
-            postal_code
+            postal_code,
+            reference: reference === undefined ? null : reference
           },
           idDocument: {
             type: documentType,
