@@ -26,15 +26,9 @@ const UserProfilePage = async ({
   params: { id: string }
 }): Promise<JSX.Element> => {
   // Fetch user data
-  const response: User = await sanityClientRead.fetch(
-    userByIdCompleted,
-    {
-      id: params.id
-    },
-    {
-      next: { revalidate: 3600 }
-    }
-  )
+  const response: User = await sanityClientRead.fetch(userByIdCompleted, {
+    id: params.id
+  })
 
   // Check if user exists
   if (!response || params.id === 'no_user_id') {
@@ -43,7 +37,7 @@ const UserProfilePage = async ({
       <div className='flex h-screen w-full flex-col items-center justify-center'>
         <h1 className='text-5xl text-accent'>Usuario no encontrado</h1>
         <p className='text-lg'>
-          porfavor trate de cerrar session y vuelva a iniciarla
+          por favor trate de cerrar session y vuelva a iniciarla
         </p>
       </div>
     )
@@ -55,7 +49,7 @@ const UserProfilePage = async ({
   return (
     <div className='container mx-auto p-4'>
       <h1 className='mb-6 text-3xl font-bold uppercase text-accent'>
-        Perfil de Usario
+        Perfil de Usuario
       </h1>
       <div className='flex flex-col gap-6 md:flex-row'>
         <div className='w-full space-y-6 md:w-1/4'>

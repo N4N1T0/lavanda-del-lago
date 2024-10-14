@@ -17,7 +17,7 @@ import { UserProfileForm } from '@/components/profile/user-info-from'
 export const metadata: Metadata = {
   title: 'Checkout Info',
   description:
-    'Esta es la página de checkout para la tienda en linea de Lavanda del lago. Puedes realizar cambios en la informacion del usuario y compras de ultima hora'
+    'Esta es la página de checkout para la tienda en linea de Lavanda del lago. Puedes realizar cambios en la información del usuario y compras de ultima hora'
 }
 
 /**

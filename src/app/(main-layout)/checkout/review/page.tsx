@@ -14,7 +14,7 @@ import { userByIdPartial } from '@sanity-studio/queries'
 export const metadata: Metadata = {
   title: 'Checkout Review',
   description:
-    'Esta es la página de checkout para la tienda en linea de Lavanda del lago. Puedes realizar cambios en la informacion de la compra y compras de ultima hora'
+    'Esta es la página de checkout para la tienda en linea de Lavanda del lago. Puedes realizar cambios en la información de la compra y compras de ultima hora'
 }
 
 /**
@@ -30,6 +30,8 @@ const CheckoutReviewPage = async ({
   const response: User = await sanityClientRead.fetch(userByIdPartial, {
     id: searchParams.userId
   })
+
+  console.log(response)
 
   return (
     <section
