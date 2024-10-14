@@ -47,7 +47,7 @@ const HomeProductsList = ({
           allProducts,
           {},
           {
-            next: { revalidate: 3600 }
+            next: { revalidate: 60 }
           }
         )
         setProducts(response)

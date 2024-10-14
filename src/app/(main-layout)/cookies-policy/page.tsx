@@ -25,7 +25,7 @@ const CookiesPolicyPage = async (): Promise<JSX.Element> => {
     cookiePolicy,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

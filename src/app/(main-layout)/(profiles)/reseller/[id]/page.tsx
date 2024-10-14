@@ -20,7 +20,7 @@ const ResellerPage = async ({ params }: { params: { id: string } }) => {
     allProducts,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

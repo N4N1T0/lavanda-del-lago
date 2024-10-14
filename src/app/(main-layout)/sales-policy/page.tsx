@@ -25,7 +25,7 @@ const SalesPolicy = async (): Promise<JSX.Element> => {
     salesPolicy,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

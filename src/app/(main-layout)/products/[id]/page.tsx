@@ -40,7 +40,7 @@ export async function generateMetadata({
       name: productNames
     },
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 
@@ -89,7 +89,7 @@ const ProductPage = async ({
       name: productNames
     },
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

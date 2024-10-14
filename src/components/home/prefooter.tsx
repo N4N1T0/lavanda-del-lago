@@ -22,7 +22,7 @@ const Prefooter = async (): Promise<JSX.Element> => {
     prefooter,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

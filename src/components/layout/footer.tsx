@@ -23,7 +23,7 @@ const Footer = async (): Promise<JSX.Element> => {
     footer,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

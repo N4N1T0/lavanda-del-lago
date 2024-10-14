@@ -24,9 +24,13 @@ import type { CategoriesList } from '@/types'
  */
 export const Categories = async (): Promise<JSX.Element> => {
   try {
-    const response: CategoriesList[] = await sanityClientRead.fetch(categories, {}, {
-      next: {revalidate: 3600}
-    })
+    const response: CategoriesList[] = await sanityClientRead.fetch(
+      categories,
+      {},
+      {
+        next: { revalidate: 60 }
+      }
+    )
 
     const filterCategories = response
       .map((category) => category.categoria)

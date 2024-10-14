@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
     property,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 
@@ -46,7 +46,7 @@ const ProperyPage = async (): Promise<JSX.Element> => {
   const response: Property = await sanityClientRead.fetch(
     property,
     {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 60 } }
   )
 
   const { title, product, featuredImage, content } = response

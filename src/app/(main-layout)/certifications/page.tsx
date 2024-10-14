@@ -24,7 +24,7 @@ const CertificationsPage = async (): Promise<JSX.Element> => {
     certifications,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

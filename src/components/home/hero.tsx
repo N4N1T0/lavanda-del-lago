@@ -37,7 +37,7 @@ export const Hero = async ({
       category: bentofeaturedCategory.title
     },
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
   const featuredProducts = response.slice(0, 2).map((product) => {

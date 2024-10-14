@@ -37,7 +37,7 @@ const FeaturedList = async ({
         category: itemCategory
       },
       {
-        next: { revalidate: 3600 }
+        next: { revalidate: 60 }
       }
     )
 

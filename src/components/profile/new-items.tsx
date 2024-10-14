@@ -45,7 +45,7 @@ const NewItems = async ({
         category
       },
       {
-        next: { revalidate: 3600 }
+        next: { revalidate: 60 }
       }
     )
 

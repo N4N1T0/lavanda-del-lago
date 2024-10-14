@@ -50,14 +50,14 @@ const ProductsPage = async ({
           category: searchParams?.category
         },
         {
-          next: { revalidate: 3600 }
+          next: { revalidate: 60 }
         }
       )
     : sanityClientRead.fetch(
         allProducts,
         {},
         {
-          next: { revalidate: 3600 }
+          next: { revalidate: 60 }
         }
       )
 

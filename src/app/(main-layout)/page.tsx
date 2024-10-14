@@ -24,9 +24,13 @@ import type { HomePageType } from '@/types'
  * @return {Promise<JSX.Element>} The rendered Home component.
  */
 export default async function Home(): Promise<JSX.Element> {
-  const homePageResponse: HomePageType = await sanityClientRead.fetch(homePage, {}, {
-    next: {revalidate: 3600}
-  })
+  const homePageResponse: HomePageType = await sanityClientRead.fetch(
+    homePage,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
+  )
 
   const {
     bentoFeaturedProducto,

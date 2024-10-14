@@ -33,7 +33,7 @@ const ProductsSidebar = async ({
       categories,
       {},
       {
-        next: { revalidate: 3600 }
+        next: { revalidate: 60 }
       }
     )
     const filterCategories = categoriesFilter(response)

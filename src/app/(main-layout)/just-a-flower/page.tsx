@@ -25,9 +25,13 @@ export const metadata: Metadata = {
  * @return {Promise<JSX.Element>} The JSX element representing the Events page content.
  */
 const JustAFlowerPage = async (): Promise<JSX.Element> => {
-  const response: JustAFlower = await sanityClientRead.fetch(jusAFLower, {}, {
-    next: {revalidate: 3600}
-  })
+  const response: JustAFlower = await sanityClientRead.fetch(
+    jusAFLower,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
+  )
 
   const { mainImage, title, quote, secondaryImage, secondaryText, text } =
     response

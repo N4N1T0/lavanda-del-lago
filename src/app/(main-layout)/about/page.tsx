@@ -33,7 +33,7 @@ const AboutUsPage = async (): Promise<JSX.Element> => {
     aboutUsPage,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

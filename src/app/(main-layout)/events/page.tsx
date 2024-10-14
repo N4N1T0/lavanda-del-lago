@@ -25,7 +25,7 @@ const EventsPage = async (): Promise<JSX.Element> => {
     eventsFetch,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 
