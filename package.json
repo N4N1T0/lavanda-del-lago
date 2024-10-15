@@ -1,6 +1,6 @@
 {
   "name": "lavanda-del-lago",
-  "version": "4.5.10",
+  "version": "4.6.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
-    "@clerk/backend": "^1.13.9",
-    "@clerk/localizations": "^3.2.0",
-    "@clerk/nextjs": "^5.7.2",
+    "@clerk/backend": "^1.13.10",
+    "@clerk/localizations": "^3.2.1",
+    "@clerk/nextjs": "^5.7.3",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
@@ -51,10 +51,10 @@
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
     "husky": "^9.1.6",
-    "lucide-react": "^0.452.0",
+    "lucide-react": "^0.453.0",
     "next": "14.2.15",
     "next-axiom": "^1.5.1",
-    "next-sanity": "9.5.0",
+    "next-sanity": "9.5.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "^7.53.0",
@@ -66,7 +66,7 @@
     "styled-components": "6.1.13",
     "swr": "^2.2.5",
     "swr-global-state": "^2.2.0",
-    "tailwind-merge": "^2.5.3",
+    "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.4",
     "uuid": "^10.0.0",
@@ -84,13 +84,13 @@
     "postcss": "^8.4.47",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "react-email": "3.0.1",
-    "tailwindcss": "^3.4.13",
+    "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   },
   "packageManager": "pnpm@9.12.1",
   "pnpm": {
     "allowedDeprecatedVersions": {
-      "eslint": "8.57.0"
+      "eslint": "8.57.1"
     }
   }
 }
