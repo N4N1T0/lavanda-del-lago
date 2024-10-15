@@ -3,7 +3,7 @@ import React from 'react'
 import { redirect } from 'next/navigation'
 
 // Project Components Imports
-import NotidicationsPageButton from '@/components/checkout/notification-pages-button'
+import NotificationsPageButton from '@/components/checkout/notification-pages-button'
 
 // UI Imports
 import {
@@ -18,7 +18,7 @@ import {
 import { CheckCircle2Icon, PackageIcon, TruckIcon } from 'lucide-react'
 
 // Types Imports
-import { Product, User } from '@/types'
+import { Product, SuccessPage, User } from '@/types'
 import { Purchase } from '@/types/sanity'
 
 // Utils imports
@@ -36,16 +36,7 @@ import CompletedPurchase from '@/emails/completed-purchase'
 const SuccessPaymentPage = async ({
   searchParams
 }: {
-  searchParams: {
-    userId: string
-    userName: string
-    orderId: string
-    totalAmount: number
-    reseller: string
-    userEmail: string
-    products: string
-    gateway: string
-  }
+  searchParams: SuccessPage
 }): Promise<JSX.Element> => {
   // Destructure search parameters
   const {
@@ -86,9 +77,12 @@ const SuccessPaymentPage = async ({
       _type: 'reference'
     },
     totalAmount: Number(totalAmount),
-    status: gateway !== undefined ? 'pendiente' : 'procesando',
+    status:
+      gateway === 'PayPal' || gateway === 'Transferencia'
+        ? 'completado'
+        : 'pendiente',
     reseller: reseller === 'true',
-    paymentMethod: gateway !== undefined ? gateway : 'redsys',
+    paymentMethod: gateway,
     products: products?.map((item) => ({
       product: { _ref: item.id, _type: 'reference' }, // Fix: product reference
       quantity: item.quantity,
@@ -99,7 +93,7 @@ const SuccessPaymentPage = async ({
     _rev: orderId
   })
 
-  if (gateway !== undefined) {
+  if (gateway === 'PayPal' || gateway === 'Transferencia') {
     const user: User = await sanityClientRead.fetch(
       userByIdCompleted,
       {
@@ -123,7 +117,8 @@ const SuccessPaymentPage = async ({
         id: userId,
         reseller: reseller === 'true',
         products: user.pastPurchases?.find((p) => p.id === orderId)
-          ?.products as unknown as { product: Product; quantity: number }[]
+          ?.products as unknown as { product: Product; quantity: number }[],
+        gateway
       })
     })
   }
@@ -144,9 +139,28 @@ const SuccessPaymentPage = async ({
             </span>
             Gracias por tu compra. Tu pedido ha sido procesado con éxito.
           </p>
-          <p className='text-center text-xs text-gray-500'>
-            Solo falta la confirmación de la pasarela de pago, para empezar a
-            preparar tu envío, puedes ver el estado de tu pedido en tu perfil.
+          <p className='text-center text-xs'>
+            {gateway === 'RedSys' || gateway === 'PayPal' ? (
+              <span className='text-gray-500'>
+                Solo falta la confirmación de la pasarela de pago, para empezar
+                a preparar tu envío, puedes ver el estado de tu pedido en tu
+                perfil.
+              </span>
+            ) : (
+              <div className='text-center text-gray-800'>
+                Si has elegido pagar mediante transferencia, solo tienes que
+                realizar la transferencia a la cuenta{' '}
+                <span className='font-bold'>
+                  ES12 0182 2310 08 0200 1632 13
+                </span>{' '}
+                con el concepto &quot;lavandadellago-{orderId}&quot;.
+                <br />
+                <br />
+                Después de recibir la confirmación de la transferencia, nosotros
+                nos pondremos en contacto contigo para confirmar la recepción
+                del pago y proceder con el envío de tu pedido.
+              </div>
+            )}
           </p>
           <div className='space-y-2 rounded-lg bg-[#694DAB10] p-4'>
             <div className='flex items-center justify-between'>
@@ -168,7 +182,7 @@ const SuccessPaymentPage = async ({
           </div>
         </CardContent>
         <CardFooter className='flex justify-center space-x-4'>
-          <NotidicationsPageButton
+          <NotificationsPageButton
             reseller={reseller}
             userId={userId}
             status='success'

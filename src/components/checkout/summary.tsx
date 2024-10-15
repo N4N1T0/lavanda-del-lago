@@ -5,6 +5,7 @@ import PaypalButton from '@/components/checkout/paypal-button'
 
 // Utility Imports
 import { calculateTotal, eurilize } from '@/lib/utils'
+import { v4 as uuidv4 } from 'uuid'
 
 // Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
@@ -57,6 +58,15 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
   // Calculate the total price of the items in the shopping cart
   const [subTotal, total, iva] = calculateTotal(count, 0, discount)
 
+  const serializedProducts = encodeURIComponent(
+    JSON.stringify(
+      count.map((item) => ({
+        id: item.id,
+        quantity: item.quantity
+      }))
+    )
+  )
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -70,10 +80,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         body: JSON.stringify({
           totalAmount: Number(total.split(' ')[0].replace(',', '.')), // Use discounted total for payment
           user: user,
-          products: count.map((item) => ({
-            id: item.id,
-            quantity: item.quantity
-          }))
+          products: serializedProducts
         })
       })
 
@@ -174,6 +181,14 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         >
           <PaypalButton products={count} total={total} user={user} />
         </PayPalScriptProvider>
+        {user !== null && (
+          <Link
+            href={`${process.env.NEXT_PUBLIC_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${uuidv4()}&gateway=Transferencia}&totalAmount=${total}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia`}
+            className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
+          >
+            Pago con Transferencia
+          </Link>
+        )}
       </div>
       <PaymentForm form={paymentForm} />
     </div>

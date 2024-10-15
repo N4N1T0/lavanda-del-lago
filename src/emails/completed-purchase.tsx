@@ -14,20 +14,10 @@ import {
   Text
 } from '@react-email/components'
 import { TailwindWrapper } from './email-utils'
-import { Product } from '@/types'
+import { PurchaseConfirmationEmailProps } from '@/types'
 import { eurilize } from '@/lib/utils'
 
 const baseUrl = process.env.NEXT_PUBLIC_URL
-
-export interface PurchaseConfirmationEmailProps {
-  customerName: string
-  orderNumber: string
-  totalAmount: number | undefined | string
-  purchaseDate: string | undefined
-  id: string | undefined
-  reseller: boolean | undefined
-  products: { product: Product; quantity: number }[] | []
-}
 
 export const CompletedPurchase = ({
   customerName = 'Cliente Valorado',
@@ -36,7 +26,8 @@ export const CompletedPurchase = ({
   purchaseDate = new Date().toLocaleString('es-ES'),
   id = '1q2w3e4r5t',
   reseller = false,
-  products = []
+  products = [],
+  gateway
 }: PurchaseConfirmationEmailProps) => (
   <TailwindWrapper>
     <Html>
@@ -52,7 +43,8 @@ export const CompletedPurchase = ({
             className='mx-auto mb-6'
           />
           <Heading className='mb-6 text-center text-2xl font-bold text-accent sm:text-4xl'>
-            Confirmación de Pago
+            Confirmación de Pago via{' '}
+            <span className='font-bold uppercase'>{gateway}</span>
           </Heading>
           <Text className='mb-4 text-base text-gray-700'>
             Hola {customerName},

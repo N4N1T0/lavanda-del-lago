@@ -39,7 +39,7 @@ const ErrorPage = ({
   error: Error & { digest?: string }
   reset: () => void
 }) => {
-  // Router initialitation
+  // Router initialization
   const router = useRouter()
 
   // Axiom Init
@@ -171,12 +171,14 @@ const ErrorPage = ({
         <div className='relative mt-8 w-full lg:mt-0 lg:w-1/2'>
           <Image
             className='h-80 w-full rounded-lg object-cover md:h-96 lg:h-[32rem]'
-            src={pageInfo?.imageUrl || Image500}
+            src={pageInfo?.imageUrl.url || Image500}
             priority
             width={500}
             height={500}
             alt='Imagen Lavanda 404'
             title='Imagen Lavanda 404'
+            placeholder='blur'
+            blurDataURL={pageInfo?.imageUrl.blur}
           />
         </div>
       </div>

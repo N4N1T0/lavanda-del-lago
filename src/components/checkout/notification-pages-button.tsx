@@ -13,7 +13,7 @@ import { HelpCircle, RefreshCcw, UserIcon } from 'lucide-react'
 // Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
 
-const NotidicationsPageButton = ({
+const NotificationsPageButton = ({
   reseller,
   userId,
   status
@@ -79,4 +79,4 @@ const NotidicationsPageButton = ({
   }
 }
 
-export default NotidicationsPageButton
+export default NotificationsPageButton

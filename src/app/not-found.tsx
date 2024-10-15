@@ -80,7 +80,7 @@ export default function NotFound() {
             Error 404
           </p>
           <h1 className='mt-3 text-xl font-bold text-gray-800 md:text-2xl'>
-            ´{pageInfo?.digest}
+            {pageInfo?.digest}
           </h1>
 
           <div className='mt-6 flex items-center gap-x-3'>
@@ -151,12 +151,14 @@ export default function NotFound() {
         <div className='relative mt-8 w-full lg:mt-0 lg:w-1/2'>
           <Image
             className='h-80 w-full rounded-lg object-cover md:h-96 lg:h-[32rem]'
-            src={pageInfo?.imageUrl || Image404}
+            src={pageInfo?.imageUrl.url || Image404}
             width={500}
             height={500}
             alt='Imagen Lavanda 404'
             title='Imagen Lavanda 404'
             priority
+            placeholder='blur'
+            blurDataURL={pageInfo?.imageUrl.blur}
           />
         </div>
       </div>

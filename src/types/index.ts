@@ -219,7 +219,21 @@ export interface ErrorPage {
   title: string
   description: string
   digest: string
-  imageUrl: string
+  imageUrl: {
+    url: string
+    blur: string
+  }
+}
+
+export interface PurchaseConfirmationEmailProps {
+  customerName: string
+  orderNumber: string
+  totalAmount: number | undefined | string
+  purchaseDate: string | undefined
+  id: string | undefined
+  reseller: boolean | undefined
+  products: { product: Product; quantity: number }[] | []
+  gateway: Gateway
 }
 
 export interface Contact {
@@ -227,8 +241,32 @@ export interface Contact {
   link: string
 }
 
+export interface SalesProcess {
+  ibanTitular: string
+  iban: string
+  supportEmail: string
+  deliveryDays: string
+  shippingCost: number
+}
+
+export type Gateway = 'RedSys' | 'PayPal' | 'Transferencia'
+
+export interface SuccessPage {
+  userId: string
+  userName: string
+  orderId: string
+  totalAmount: number
+  reseller: string
+  userEmail: string
+  products: string
+  gateway: Gateway
+}
+
 export interface NotFoundPage {
-  imageUrl: string
+  imageUrl: {
+    url: string
+    blur: string
+  }
   links: string[]
   title: string
   description: string

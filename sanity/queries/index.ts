@@ -106,7 +106,10 @@ export const salesPolicy = groq`
 export const errorPage = groq`
   *[_type == "errorPage"]{
     digest,
-    "imageUrl": image.asset->url,
+    "imageUrl": image.asset->{
+      url,
+      "blur": metadata.lqip
+    },,
     contacts[] {
       label,
       link
@@ -117,7 +120,10 @@ export const errorPage = groq`
 export const notFoundPage = groq`
   *[_type == "notFoundPage"]{
     digest,
-    "imageUrl": image.asset->url,
+    "imageUrl": image.asset->{
+      url,
+      "blur": metadata.lqip
+    },,
     links
   }[0]
 `
@@ -208,6 +214,16 @@ export const certifications = groq`*[_type == 'certifications']{
     description
   }
 }[0]`
+
+export const saleProcess = groq`
+*[_type == "salesProcess"][0] {
+  ibanTitular,
+  iban,
+  supportEmail,
+  deliveryDays,
+  shippingCost
+}
+`
 
 // BLOG
 export const allBlogArticles = groq`
