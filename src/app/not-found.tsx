@@ -15,10 +15,15 @@ import { Image404 } from '@/assets'
 import type { Metadata } from 'next'
 import type { NotFoundPage } from '@/types'
 
+// UI Imports
+import { buttonVariants } from '@/components/ui/button'
+
 // Queries Imports
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { notFoundPage } from '@sanity-studio/queries'
-import { buttonVariants } from '@/components/ui/button'
+
+// Axiom Imports
+import { useLogger } from 'next-axiom'
 
 // Metadata for the error page
 export const metadata: Metadata = {
@@ -29,6 +34,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   // initialize router
   const router = useRouter()
+
+  // Axiom Init
+  const log = useLogger()
 
   // State for the Page info from Sanity
   const [pageInfo, setPageInfo] = useState<NotFoundPage | null>(null)
@@ -46,12 +54,12 @@ export default function NotFound() {
         )
         setPageInfo(response)
       } catch (err) {
-        console.error('Error fetching error page info:', err)
+        log.debug('Error fetching page info in notFound Page', { data: err })
       }
     }
 
     getPageInfo()
-  }, [])
+  }, [log])
 
   const getLabel = (link: string) => {
     switch (link) {

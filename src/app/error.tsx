@@ -23,6 +23,9 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 // Data Imports
 import { contactLinks } from '@/constants/site-data'
 
+// Axiom Imports
+import { useLogger } from 'next-axiom'
+
 // Metadata for the error page
 export const metadata: Metadata = {
   title: 'Error 500',
@@ -38,6 +41,9 @@ const ErrorPage = ({
 }) => {
   // Router initialitation
   const router = useRouter()
+
+  // Axiom Init
+  const log = useLogger()
 
   // State for the Page info from Sanity
   const [pageInfo, setPageInfo] = useState<ErrorPageSanity | null>(null)
@@ -58,12 +64,12 @@ const ErrorPage = ({
 
         setPageInfo(response)
       } catch (err) {
-        console.error('Error fetching error page info:', err)
+        log.debug('Error fetching page info in errorPage', { data: err })
       }
     }
 
     getPageInfo()
-  }, [])
+  }, [log])
 
   return (
     <section className='min-h-screen bg-white'>

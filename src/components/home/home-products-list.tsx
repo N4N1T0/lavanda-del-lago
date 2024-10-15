@@ -23,6 +23,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { allProducts } from '@sanity-studio/queries'
 
+// Axiom imports
+import { useLogger } from 'next-axiom'
+
 /**
  * Renders a list of products based on the selected category.
  *
@@ -39,6 +42,9 @@ const HomeProductsList = ({
     categories[0]
   )
 
+  // Axiom Init
+  const log = useLogger()
+
   // Fetching of data from sanity as part of client side rendering
   useEffect(() => {
     const getAllProducts = async () => {
@@ -52,12 +58,14 @@ const HomeProductsList = ({
         )
         setProducts(response)
       } catch (error) {
-        console.error('Error fetching products:', error)
+        log.debug('Error fetching products in HomeProductsList', {
+          data: error
+        })
       }
     }
 
     getAllProducts()
-  }, [])
+  }, [log])
 
   // Rendering of the list of products based on the selected category
   if (!products) {

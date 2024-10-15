@@ -25,9 +25,15 @@ import {
 import { Loader2 } from 'lucide-react'
 import { localities, jobType } from '@/constants/site-data'
 
+// Axiom Imports
+import { useLogger } from 'next-axiom'
+
 const ResellerForm = () => {
   // Initialize the router
   const router = useRouter()
+
+  // Axiom Init
+  const log = useLogger()
 
   // Form State definition
   const form = useForm<ResellerFormSchemaType>({
@@ -83,13 +89,15 @@ const ResellerForm = () => {
 
           router.push('/?security=form_send-ok')
         } else {
-          console.error('Form submission failed:', data.message)
+          log.debug('Form submission failed', { data: data.message })
         }
       } catch (error) {
-        console.error('Error occurred during form submission:', error)
+        log.debug('Error occurred during form submission:', {
+          data: error
+        })
       }
     },
-    [form, router]
+    [form, router, log]
   )
 
   const {

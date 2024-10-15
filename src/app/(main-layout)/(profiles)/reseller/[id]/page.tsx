@@ -33,8 +33,6 @@ const ResellerPage = async ({
     }
   )
 
-  console.log(response)
-
   // Fetch products
   const products: Product[] = await sanityClientRead.fetch(allProducts)
 

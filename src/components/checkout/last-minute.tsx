@@ -11,6 +11,9 @@ import { productsByCategory } from '@sanity-studio/queries'
 // Types imports
 import type { Product } from '@/types'
 
+// Axiom Imports
+import { Logger } from 'next-axiom';
+
 /**
  * Fetches and renders a list of last-minute products from the Sanity API.
  *
@@ -23,6 +26,9 @@ const LastMinute = async ({
 }: {
   category: string
 }): Promise<JSX.Element> => {
+  // Axiom Init
+  const log = new Logger()
+
   try {
     const response = await sanityClientRead.fetch<Product[]>(
       productsByCategory,
@@ -35,7 +41,7 @@ const LastMinute = async ({
     )
 
     if (response.length === 0) {
-      return <NoData data='No hay Articulosde ultimo minuto' />
+      return <NoData data='No hay Articulos de ultimo minuto' />
     }
 
     return (
@@ -54,7 +60,9 @@ const LastMinute = async ({
       </article>
     )
   } catch (error) {
-    console.error('Error fetching last-minute products:', error)
+    log.info('Error fetching the last minute products', { data: error })
+
+    await log.flush()
     return <ServerFetchError error={error} />
   }
 }

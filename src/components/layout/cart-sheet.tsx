@@ -113,8 +113,8 @@ const CartSheet = (): JSX.Element => {
                 <p>{subTotal}</p>
               </div>
               <p className='mt-1 text-xs text-gray-500 md:text-sm'>
-                Gastos de envío e impuestos calculados en la Finalización de
-                Compra.
+                Gastos de envío, impuestos y descuento de revendedor calculados
+                en la Finalización de Compra.
               </p>
               <div className='mt-3'>
                 <SheetClose asChild>

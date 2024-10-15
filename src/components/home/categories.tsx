@@ -17,12 +17,17 @@ import { categories } from '@sanity-studio/queries'
 // Types Imports
 import type { CategoriesList } from '@/types'
 
+// Axiom Imports
+import { Logger } from 'next-axiom'
+
 /**
  * Asynchronously fetches categories from the Fake Store API and renders a list of category links.
  *
  * @return {Promise<JSX.Element>} A React component that renders a list of category links. If an error occurs during the fetch, an error message is rendered.
  */
 export const Categories = async (): Promise<JSX.Element> => {
+  // Axiom Init
+  const log = new Logger()
   try {
     const response: CategoriesList[] = await sanityClientRead.fetch(
       categories,
@@ -65,7 +70,9 @@ export const Categories = async (): Promise<JSX.Element> => {
       </section>
     )
   } catch (error) {
-    console.error(error)
+    log.info('Error fetching in the categories component', { data: error })
+
+    await log.flush()
     return <ServerFetchError error={error} />
   }
 }

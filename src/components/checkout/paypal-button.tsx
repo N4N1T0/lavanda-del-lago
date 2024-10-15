@@ -13,6 +13,9 @@ import { CartItem, User } from '@/types'
 // UI Imports
 import { Skeleton } from '@/components/ui/skeleton'
 
+// Axiom imports
+import { useLogger } from 'next-axiom'
+
 /**
  * Componente que renderiza un bot n de PayPal para realizar pagos.
  *
@@ -42,6 +45,9 @@ const PaypalButton = ({
   )
   const [{ isPending }] = usePayPalScriptReducer()
 
+  // Axiom Init
+  const log = useLogger()
+
   // This function gets called when the user clicks on the PayPal button
   const handleApprove = async (_data: any, actions: any) => {
     if (actions.order) {
@@ -54,7 +60,7 @@ const PaypalButton = ({
       )
     } else {
       // If the order is null or undefined, log an error
-      console.error('actions.order is null or undefined')
+      log.debug('actions.order is null or undefined')
       return Promise.reject()
     }
   }
@@ -69,7 +75,7 @@ const PaypalButton = ({
 
   return (
     <>
-      {isPending ? <Skeleton className='bg-bl h-12 w-full' /> : null}
+      {isPending ? <Skeleton className='bg-blue h-12 w-full' /> : null}
       <PayPalButtons
         createOrder={(_data, actions) =>
           actions.order.create({

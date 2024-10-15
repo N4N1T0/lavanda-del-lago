@@ -11,6 +11,9 @@ import NoData from '@/components/shared/no-data'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { relatedArticlesByCategory } from '@sanity-studio/queries'
 
+// Axiom Imports
+import { Logger } from 'next-axiom'
+
 /**
  * Fetches and renders related articles based on the provided category.
  *
@@ -22,6 +25,8 @@ const Related = async ({
 }: {
   category: string
 }): Promise<JSX.Element> => {
+  // Axiom Init
+  const log = new Logger()
   try {
     const response = await sanityClientRead.fetch(
       relatedArticlesByCategory,
@@ -34,12 +39,12 @@ const Related = async ({
     )
 
     if (response.length === 0) {
-      return <NoData data='No hay Articulos relacionados' />
+      return <NoData data='No hay Artículos relacionados' />
     }
 
     return (
       <section id='related-articles' className='h-auto w-full'>
-        <h2 className='text-3xl'>Articulos Relacionados</h2>
+        <h2 className='text-3xl'>Artículos Relacionados</h2>
         <ul className='mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
           {response.slice(0, 3).map((post: Posts) => (
             <li key={post.id}>
@@ -50,7 +55,9 @@ const Related = async ({
       </section>
     )
   } catch (error) {
-    console.error(error)
+    log.info('Error fetching in the blog related component', { data: error })
+
+    await log.flush()
     return <ServerFetchError error={error} />
   }
 }

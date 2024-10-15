@@ -28,16 +28,26 @@ import { RedirectForm } from 'redsys-easy'
 // Paypal Imports
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
+// Axiom imports
+import { useLogger } from 'next-axiom'
+
 /**
  * Calculate the total price of the items in the shopping cart.
  *
  * @return {JSX.Element} An array containing the subtotal, total, and tax.
  */
+// Discount percentage for resellers (adjust as needed)
 const Summary = ({ user }: { user: User | null }): JSX.Element => {
   // Get the shopping cart items and a function to update the cart items
   const [count, setCount, { isLoading: cartIsLoading }] = useShoppingCart()
   const [isLoading, setIsLoading] = useState(false)
   const [paymentForm, setPaymentForm] = useState(null)
+
+  // Axiom Init
+  const log = useLogger()
+
+  const discount =
+    user?.discount !== undefined ? user?.discount / 100 : undefined
 
   // Function to remove an item from the shopping cart
   const removeFromCart = (id: string) => {
@@ -45,7 +55,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
   }
 
   // Calculate the total price of the items in the shopping cart
-  const [subTotal, total, iva] = calculateTotal(count)
+  const [subTotal, total, iva] = calculateTotal(count, 0, discount)
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -58,7 +68,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          totalAmount: Number(total.split(' ')[0].replace(',', '.')),
+          totalAmount: Number(total.split(' ')[0].replace(',', '.')), // Use discounted total for payment
           user: user,
           products: count.map((item) => ({
             id: item.id,
@@ -75,7 +85,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
 
       setIsLoading(false)
     } catch (error) {
-      console.error('Payment error:', error)
+      log.debug('Payment error in Summary:', { data: error })
     } finally {
       setIsLoading(false)
     }
@@ -102,11 +112,23 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
           <h3 className='text-xl'>Gastos de Envío</h3>
           <p className='text-gray-600'>Gratis</p>
         </div>
-        {/* Subtotal */}
-        <div className='flex justify-between'>
-          <h3 className='text-lg'>Subtotal</h3>
-          <p className='text-gray-600'>{subTotal}</p>
-        </div>
+        {user?.reseller && discount !== undefined ? (
+          <>
+            <div className='flex justify-between'>
+              <h3 className='text-lg'>Subtotal con descuento</h3>
+              <p className='text-gray-600'>{subTotal}</p>
+            </div>
+            <div className='flex justify-between text-green-500'>
+              <h3 className='text-lg'>Descuento de Revendedor</h3>
+              <p>{discount * 100}%</p>
+            </div>
+          </>
+        ) : (
+          <div className='flex justify-between'>
+            <h3 className='text-lg'>Subtotal</h3>
+            <p className='text-gray-600'>{subTotal}</p>
+          </div>
+        )}
         {/* IVA */}
         <div className='flex justify-between'>
           <h3 className='text-lg'>

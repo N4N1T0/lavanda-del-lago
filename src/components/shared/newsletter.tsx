@@ -11,6 +11,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 
+// Axiom Imports
+import { useLogger } from 'next-axiom'
+
 /**
  * Render a form to subscribe to the newsletter.
  *
@@ -19,6 +22,9 @@ import { useToast } from '@/components/ui/use-toast'
 const Newsletter = React.memo(function Newsletter() {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const { toast } = useToast()
+
+  // Axiom init
+  const log = useLogger()
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
@@ -58,7 +64,7 @@ const Newsletter = React.memo(function Newsletter() {
 
           input.value = ''
         } catch (error) {
-          console.error('Error subscribing to newsletter:', error)
+          log.debug('Error subscribing to newsletter', { data: error })
           toast({
             title: 'Error',
             description:

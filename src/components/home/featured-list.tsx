@@ -11,6 +11,9 @@ import { productsByCategory } from '@sanity-studio/queries'
 // Types imports
 import type { Product } from '@/types'
 
+// Axiom Imports
+import { Logger } from 'next-axiom'
+
 /**
  * Renders a featured list section with a title and a product carousel.
  *
@@ -29,6 +32,7 @@ const FeaturedList = async ({
   featuredTitle: string
   direction?: 'left' | 'right'
 }): Promise<JSX.Element> => {
+  const log = new Logger()
   try {
     const response: Product[] = await sanityClientRead.fetch(
       productsByCategory,
@@ -55,7 +59,9 @@ const FeaturedList = async ({
       </section>
     )
   } catch (error) {
-    console.error(error)
+    log.debug('Error in the featured List Component', {data: error})
+
+    await log.flush()
     return <ServerFetchError error={error} />
   }
 }

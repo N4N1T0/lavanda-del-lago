@@ -45,7 +45,9 @@ export default function UserPopover({ currentUser }: { currentUser: any }) {
           className='group relative ml-1 h-8 w-8 rounded-full p-0'
         >
           {/* User Avatar */}
-          <Avatar className='h-8 w-8 transition-opacity duration-150 ease-in-out group-hover:opacity-70'>
+          <Avatar
+            className={`${isReseller ? 'border-green-600' : 'border-accent/70'} h-8 w-8 border-2 transition-opacity duration-150 ease-in-out group-hover:opacity-70`}
+          >
             <AvatarImage
               src={currentUser.imageUrl}
               alt={currentUser.username || 'Avatar de usuario'}

@@ -14,6 +14,9 @@ import { jldProductList } from '@/components/layout/seo'
 import { allProducts, productsByCategory } from '@sanity-studio/queries'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 
+// Axiom Imports
+import { Logger } from 'next-axiom'
+
 // function to generate metadata
 export async function generateMetadata({
   searchParams
@@ -61,6 +64,9 @@ const ProductsPage = async ({
         }
       )
 
+  // Axiom Init
+  const log = new Logger()
+
   try {
     // Fetch products, passing in category if needed
     const response: Product[] = await productQuery
@@ -86,7 +92,9 @@ const ProductsPage = async ({
       </section>
     )
   } catch (error) {
-    console.error(error)
+    log.info('Error fetching in the ProductsPage', { data: error })
+
+    await log.flush()
     return <ServerFetchError error={error} />
   }
 }

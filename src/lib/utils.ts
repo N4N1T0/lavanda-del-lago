@@ -98,19 +98,34 @@ export function capitalizeFirstLetter(str: string): string {
  * calculateTotal([{ price: 5, quantity: 3 }, { price: 10, quantity: 1 }], 10) // ['25', '35', '1.75']
  * calculateTotal([{ price: 100, quantity: 1 }], 20) // ['100', '120', '8.5']
  *
- */
-export function calculateTotal(
+ */ export function calculateTotal(
   count: CartItem[],
-  shipping: number = 0
+  shipping: number = 0,
+  discount: number | undefined = undefined
 ): [string, string, string] {
   let subTotal = 0
+
+  // Calculate the subtotal for the items in the cart
   for (const item of count) {
     subTotal += Number(item.precio) * item.quantity
   }
+
+  // Apply discount if it exists
+  if (discount !== undefined) {
+    subTotal -= discount * subTotal // Subtract the discount from the subtotal
+  }
+
+  // Ensure subTotal doesn't go below zero
+  subTotal = Math.max(subTotal, 0)
+
+  // Calculate total and IVA
+  const iva = subTotal * 0.21 // Calculate IVA as 21% of the subtotal
+  const total = subTotal + shipping + iva // Total includes shipping costs
+
   return [
-    eurilize(subTotal),
-    eurilize(subTotal * 1.21 + shipping),
-    eurilize(subTotal * 0.21)
+    eurilize(subTotal), // Subtotal formatted
+    eurilize(total), // Total formatted
+    eurilize(iva) // IVA formatted
   ]
 }
 

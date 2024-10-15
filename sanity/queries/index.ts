@@ -389,10 +389,17 @@ export const userByIdPartial = groq`
   phone,
   address,
   reseller,
+  discount,
   "idDocument": {
     "type": idDocument.type,
     "value": idDocument.value
   },
+}
+`
+
+export const discountOfReseller = groq`
+ *[_type == "user" && _id == $userId][0] {
+  discount
 }
 `
 

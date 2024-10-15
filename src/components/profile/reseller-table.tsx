@@ -26,7 +26,7 @@ import { eurilize, urlize } from '@/lib/utils'
 // Type Imports
 import type { Product } from '@/types'
 
-// Store Importss
+// Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
 import { ResellerTableQuantity } from '@/components/shared/quantity'
 
@@ -61,6 +61,8 @@ const ResellerTable = ({
   const [count] = useShoppingCart()
   // Flag to avoid setting state on every render
   const [initialized, setInitialized] = useState(false)
+
+  console.log(discount)
 
   // Use effect to filter products when debounced search value changes
   useEffect(() => {
@@ -105,8 +107,11 @@ const ResellerTable = ({
   const renderDescription = (description: string) => {
     return description
       ? `${description.split(' ').slice(0, 10).join(' ')} ...`
-      : 'Estamos trabajando en una descripci&oacute;n'
+      : 'Estamos trabajando en una descripcion'
   }
+
+  const formattedDiscount =
+    discount !== undefined && discount !== null ? discount / 100 : 1
 
   return (
     <section id='reseller-products' className='container mx-auto p-4'>
@@ -129,7 +134,7 @@ const ResellerTable = ({
             <TableHead className='md:w-[50px]'>Seleccione</TableHead>
             <TableHead className='w-[100px]'>Imagen</TableHead>
             <TableHead>Nombre</TableHead>
-            <TableHead>Descripci&oacute;n</TableHead>
+            <TableHead>Descripcion</TableHead>
             <TableHead>Precio</TableHead>
             <TableHead>Descuento</TableHead>
             <TableHead>Cantidad</TableHead>
@@ -184,7 +189,7 @@ const ResellerTable = ({
                   {eurilize(precio)}
                 </TableCell>
                 <TableCell className='hidden md:table-cell'>
-                  {eurilize(precio - precio * (discount ?? 0.1))}
+                  {eurilize(precio * formattedDiscount)}
                 </TableCell>
                 <TableCell>
                   <ResellerTableQuantity

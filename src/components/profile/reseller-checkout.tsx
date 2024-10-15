@@ -68,18 +68,18 @@ const ResellerCheckout = ({
   }, [productsToCheckout, discount])
 
   return (
-    <Card className='border border-accent/70'>
-      <CardHeader>
-        <CardTitle>Order Summary</CardTitle>
+    <Card className='border border-accent/70 pb-0'>
+      <CardHeader className='pt-3'>
+        <CardTitle>Resumen de Compra</CardTitle>
       </CardHeader>
-      <CardContent className='space-y-2'>
+      <CardContent className='space-y-2 pt-2'>
         <div role='status' aria-live='polite'>
-          <p>Total Products: {totalProducts}</p>
-          <p>Total Price: ${totalPrice.toFixed(2)}</p>
+          <p>Total de Productos: {totalProducts}</p>
+          <p>Precio Total: ${totalPrice.toFixed(2)}</p>
         </div>
         <Button className='mt-4 w-full' variant='cart' onClick={addToCart}>
           <ShoppingCart className='mr-2 h-4 w-4' />
-          Checkout
+          Finalizar
         </Button>
       </CardContent>
     </Card>
