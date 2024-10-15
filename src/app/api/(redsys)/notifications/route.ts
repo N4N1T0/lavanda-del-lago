@@ -82,7 +82,8 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
         id: userResponse.id,
         reseller: response.reseller,
         products: userResponse.pastPurchases?.find((p) => p.id === orderId)
-          ?.products as unknown as { product: Product; quantity: number }[]
+          ?.products as unknown as { product: Product; quantity: number }[],
+        gateway: 'RedSys'
       })
     })
 
