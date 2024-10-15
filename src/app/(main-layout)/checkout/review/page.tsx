@@ -27,10 +27,15 @@ const CheckoutReviewPage = async ({
 }: {
   searchParams: { userId: string }
 }): Promise<JSX.Element> => {
-  const response: User = await sanityClientRead.fetch(userByIdPartial, {
-    id: searchParams.userId
-  })
-
+  const response: User = await sanityClientRead.fetch(
+    userByIdPartial,
+    {
+      id: searchParams.userId
+    },
+    {
+      cache: 'no-store'
+    }
+  )
 
   return (
     <section

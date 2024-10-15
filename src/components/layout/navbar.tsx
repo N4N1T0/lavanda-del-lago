@@ -40,8 +40,6 @@ const Navbar = async (): Promise<JSX.Element> => {
   )
   const filterCategories = categoriesFilter(response)
 
-  console.log(filterCategories)
-
   return (
     <header className='flex items-center justify-between border-b border-accent/50 px-5 py-4 md:px-10 2xl:px-20'>
       <div className='inline-flex flex-[0_0_auto] flex-col items-center'>

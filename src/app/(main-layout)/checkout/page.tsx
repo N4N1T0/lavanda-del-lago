@@ -30,9 +30,15 @@ const CheckoutInfoPage = async (): Promise<JSX.Element> => {
   let response: User | null = null
 
   if (user !== null) {
-    response = await sanityClientRead.fetch(userByIdPartial, {
-      id: user.id
-    })
+    response = await sanityClientRead.fetch(
+      userByIdPartial,
+      {
+        id: user.id
+      },
+      {
+        cache: 'no-store'
+      }
+    )
   }
 
   return (

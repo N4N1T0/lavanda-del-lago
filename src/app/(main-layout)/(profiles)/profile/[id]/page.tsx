@@ -13,6 +13,8 @@ import { getMostUsedCategory } from '@/lib/utils'
 // Types Imports
 import type { User } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 /**
  * Renders the user profile page.
  *
@@ -26,9 +28,15 @@ const UserProfilePage = async ({
   params: { id: string }
 }): Promise<JSX.Element> => {
   // Fetch user data
-  const response: User = await sanityClientRead.fetch(userByIdCompleted, {
-    id: params.id
-  })
+  const response: User = await sanityClientRead.fetch(
+    userByIdCompleted,
+    {
+      id: params.id
+    },
+    {
+      cache: 'no-store'
+    }
+  )
 
   // Check if user exists
   if (!response || params.id === 'no_user_id') {

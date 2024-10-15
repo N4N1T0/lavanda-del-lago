@@ -72,9 +72,9 @@ export default {
     },
     {
       name: 'phone',
-      title: 'Telefono',
+      title: 'Teléfono',
       type: 'string',
-      description: 'El telefono del usuario'
+      description: 'El teléfono del usuario'
     },
     {
       name: 'address',

@@ -29,6 +29,8 @@ export const GET = withAxiom(
     try {
       req.log.info('GET request for creating Sanity user initiated')
 
+      const now = new Date()
+
       // Get the current user
       const user = await currentUser()
 
@@ -59,8 +61,10 @@ export const GET = withAxiom(
         }
       })
 
+      const createdAtDate = new Date(response._createdAt)
+
       // Log new user creation
-      if (response._createdAt) {
+      if (Math.abs(now.getTime() - createdAtDate.getTime()) < 1000) {
         req.log.info('New user created', { userId: id, fullName })
         // Send email to admin
         await resend.emails.send({

@@ -52,7 +52,7 @@ export const POST = withAxiom(
       await resend.emails.send({
         from: 'info@lavandadellago.es',
         to: 'info@lavandadellago.es',
-        subject: 'Nueva Usuario',
+        subject: 'Nuevo Subscriptor',
         react: NewsletterSubscriptionEmail({
           email,
           fecha: new Date(date).toLocaleDateString('es-ES')

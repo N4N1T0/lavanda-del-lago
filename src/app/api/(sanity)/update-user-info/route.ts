@@ -155,7 +155,7 @@ export const POST = withAxiom(
         await resend.emails.send({
           from: 'info@lavandadellago.es',
           to: 'info@lavandadellago.es',
-          subject: 'Nueva Usuario',
+          subject: 'Nuevo Usuario',
           react: NewUserCreatedEmail({
             nombre: name || '',
             email: email,
@@ -164,7 +164,10 @@ export const POST = withAxiom(
           })
         })
 
-        req.log.info('New user created successfully', { userId: clerkUser.id }) // Log user creation
+        req.log.info('New user created successfully', {
+          userId: clerkUser.id,
+          fullName: name
+        }) // Log user creation
         return NextResponse.json({
           success: true,
           message: 'The profile has been created successfully',

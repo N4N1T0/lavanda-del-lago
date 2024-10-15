@@ -33,14 +33,14 @@ const ResellerForm = () => {
   const form = useForm<ResellerFormSchemaType>({
     resolver: zodResolver(resellerFormSchema),
     defaultValues: {
-      firstName: 'Adrian',
-      lastName: 'Alvarez',
-      email: 'adrian@gmail.com',
-      nie: 'Z1234567P',
+      firstName: '',
+      lastName: '',
+      email: '',
+      nie: '',
       province: '',
-      phone: '+34567890',
+      phone: '',
       birthDate: '',
-      privacyPolicy: true,
+      privacyPolicy: false,
       jobType: '',
       companyFile: undefined
     }

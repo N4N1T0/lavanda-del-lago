@@ -58,6 +58,9 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
       userByIdCompleted,
       {
         id: response.userEmail?._ref
+      },
+      {
+        cache: 'no-store'
       }
     )
 

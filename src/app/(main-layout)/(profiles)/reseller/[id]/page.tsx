@@ -9,20 +9,34 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 // Types Imports
 import type { Product, User } from '@/types'
 
-const ResellerPage = async ({ params }: { params: { id: string } }) => {
-  // Fetch user data
-  const response: User = await sanityClientRead.fetch(userByIdCompleted, {
-    id: params.id
-  })
+export const dynamic = 'force-dynamic'
 
-  // Fetch products
-  const products: Product[] = await sanityClientRead.fetch(
-    allProducts,
-    {},
+/**
+ * Page for reseller profile
+ *
+ * @param {{ params: { id: string } }} - The Next.js page parameters
+ * @returns {Promise<JSX.Element>} - The JSX element representing the page content
+ */
+const ResellerPage = async ({
+  params
+}: {
+  params: { id: string }
+}): Promise<JSX.Element> => {
+  // Fetch user data
+  const response: User = await sanityClientRead.fetch(
+    userByIdCompleted,
     {
-      next: { revalidate: 60 }
+      id: params.id
+    },
+    {
+      cache: 'no-store'
     }
   )
+
+  console.log(response)
+
+  // Fetch products
+  const products: Product[] = await sanityClientRead.fetch(allProducts)
 
   if (response.reseller !== true) {
     return (

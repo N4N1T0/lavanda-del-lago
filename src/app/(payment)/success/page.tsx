@@ -100,9 +100,15 @@ const SuccessPaymentPage = async ({
   })
 
   if (gateway !== undefined) {
-    const user: User = await sanityClientRead.fetch(userByIdCompleted, {
-      _id: userId
-    })
+    const user: User = await sanityClientRead.fetch(
+      userByIdCompleted,
+      {
+        _id: userId
+      },
+      {
+        cache: 'no-store'
+      }
+    )
 
     // Send email to user
     await resend.emails.send({
