@@ -24,7 +24,6 @@ import type { Product } from '@/types'
 const FeaturedList = async ({
   itemCategory,
   featuredTitle,
-  direction = 'left'
 }: {
   itemCategory: string | undefined
   featuredTitle: string
@@ -48,11 +47,7 @@ const FeaturedList = async ({
     return (
       <section id={itemCategory}>
         <div className='mx-auto max-w-screen-2xl space-y-5 px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
-          <h2
-            className={`text-4xl font-bold uppercase text-accent ${
-              direction === 'right' ? 'text-right' : 'text-left'
-            }`}
-          >
+          <h2 className='text-4xl font-bold uppercase text-accent'>
             {featuredTitle}
           </h2>
           <ProductCarousel productList={response} />

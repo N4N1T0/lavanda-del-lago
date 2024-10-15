@@ -1,3 +1,5 @@
+import { categories } from '@/constants/site-data'
+
 export default {
   name: 'homePage',
   title: 'Pagina principal',
@@ -52,11 +54,9 @@ export default {
           initialValue: 'Bienestar',
           options: {
             list: [
-              { title: 'Bienestar', value: 'Bienestar' },
-              { title: 'Cosmética', value: 'Cosmética' },
-              { title: 'Cosmética corporal', value: 'Cosmética corporal' },
-              { title: 'Cosmética facial', value: 'Cosmética facial' },
-              { title: 'Hogar y ambiente', value: 'Hogar y ambiente' }
+              ...categories.map((category) => {
+                return { title: category, value: category }
+              })
             ]
           }
         },
@@ -78,9 +78,9 @@ export default {
     },
     {
       name: 'mainListCategories',
-      title: 'Categorias Principales del Main List',
+      title: 'Categorías Principales del Main List',
       description:
-        'Las categorias principales que se van a mostrar en la pagina principal',
+        'Las categorías principales que se van a mostrar en la pagina principal',
       type: 'array',
       of: [
         {
@@ -92,11 +92,9 @@ export default {
           initialValue: 'Bienestar',
           options: {
             list: [
-              { title: 'Bienestar', value: 'Bienestar' },
-              { title: 'Cosmética', value: 'Cosmética' },
-              { title: 'Cosmética corporal', value: 'Cosmética corporal' },
-              { title: 'Cosmética facial', value: 'Cosmética facial' },
-              { title: 'Hogar y ambiente', value: 'Hogar y ambiente' }
+              ...categories.map((category) => {
+                return { title: category, value: category }
+              })
             ]
           }
         }
@@ -106,9 +104,9 @@ export default {
     },
     {
       name: 'InfoCards',
-      title: 'Tarjetas de Informacion',
+      title: 'Tarjetas de Información',
       description:
-        'Las tarjetas de informacion que se van a mostrar en la pagina principal',
+        'Las tarjetas de información que se van a mostrar en la pagina principal',
       type: 'array',
       of: [
         {
@@ -118,21 +116,21 @@ export default {
               name: 'icon',
               title: 'Icono',
               description:
-                'El icono que se va a mostrar en la tarjeta de informacion',
+                'El icono que se va a mostrar en la tarjeta de información',
               type: 'image'
             },
             {
               name: 'title',
               title: 'Titulo',
               description:
-                'El titulo que se va a mostrar en la tarjeta de informacion',
+                'El titulo que se va a mostrar en la tarjeta de información',
               type: 'string'
             },
             {
               name: 'description',
               title: 'Descripción',
               description:
-                'La descripcion que se va a mostrar en la tarjeta de informacion',
+                'La descripcion que se va a mostrar en la tarjeta de información',
               type: 'string'
             }
           ]
@@ -160,11 +158,9 @@ export default {
           initialValue: 'Bienestar',
           options: {
             list: [
-              { title: 'Bienestar', value: 'Bienestar' },
-              { title: 'Cosmética', value: 'Cosmética' },
-              { title: 'Cosmética corporal', value: 'Cosmética corporal' },
-              { title: 'Cosmética facial', value: 'Cosmética facial' },
-              { title: 'Hogar y ambiente', value: 'Hogar y ambiente' }
+              ...categories.map((category) => {
+                return { title: category, value: category }
+              })
             ]
           }
         }
@@ -192,11 +188,9 @@ export default {
           initialValue: 'Bienestar',
           options: {
             list: [
-              { title: 'Bienestar', value: 'Bienestar' },
-              { title: 'Cosmética', value: 'Cosmética' },
-              { title: 'Cosmética corporal', value: 'Cosmética corporal' },
-              { title: 'Cosmética facial', value: 'Cosmética facial' },
-              { title: 'Hogar y ambiente', value: 'Hogar y ambiente' }
+              ...categories.map((category) => {
+                return { title: category, value: category }
+              })
             ]
           }
         }

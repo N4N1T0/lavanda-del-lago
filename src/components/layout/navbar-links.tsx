@@ -124,6 +124,7 @@ const NavbarLinksMobile = ({
         <MenuIcon
           size={30}
           className='transition-colors duration-150 hover:text-accent'
+          strokeWidth={1}
         />
       </SheetTrigger>
       <SheetContent side='left'>
@@ -152,7 +153,11 @@ const NavbarLinksMobile = ({
                             <li key={uuidv4()}>
                               <SheetClose asChild>
                                 <Link
-                                  href={`/products?category=${category}`}
+                                  href={
+                                    category === 'Todos'
+                                      ? '/products'
+                                      : `/products?category=${category}`
+                                  }
                                   className='mt-1 text-base font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
                                 >
                                   {capitalizeFirstLetter(category)}

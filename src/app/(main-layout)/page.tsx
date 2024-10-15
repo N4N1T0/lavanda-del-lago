@@ -60,7 +60,6 @@ export default async function Home(): Promise<JSX.Element> {
       <FeaturedList
         itemCategory={carousel2.category}
         featuredTitle={carousel2.title}
-        direction='right'
       />
       <FeaturedEvent event={featuredEvent} />
       <Newsletter />

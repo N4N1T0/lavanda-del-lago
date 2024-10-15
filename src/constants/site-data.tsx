@@ -245,3 +245,13 @@ export const jobType = [
   'Tienda Física',
   'Distribuidor'
 ]
+
+export const categories = [
+  'Bienestar',
+  'Cosmética corporal',
+  'Cosmética facial',
+  'Esencias para lavado',
+  'Higiene personal',
+  'Hogar y ambiente',
+  'Línea mosquitos e insectos'
+]

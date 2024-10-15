@@ -84,8 +84,7 @@ const ProductCard = ({
             }
             className='leading-bold self-stretch text-center text-sm font-medium text-accent transition-colors duration-200 hover:text-black lg:text-base'
           >
-            {nombre?.split(' ').slice(0, 3).join(' ') ||
-              'Estamos trabajando en una nombre'}
+            {nombre || 'Estamos trabajando en una nombre'}
           </Link>
           <div className='self-stretch text-center text-xs tracking-wide text-gray-600 md:text-base'>
             {descripcion?.split(' ').slice(0, 10).join(' ') ||

@@ -51,7 +51,7 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
 
   return (
     <article className='relative mt-7 grid flex-[80%] grid-cols-1 gap-10 md:grid-cols-2'>
-      <div className='sticky top-2 flex h-fit items-center justify-center'>
+      <div className='top-2 flex h-fit items-center justify-center md:sticky'>
         {imageGallery.length > 0 ? (
           <ImageGallery images={imageGallery} />
         ) : (

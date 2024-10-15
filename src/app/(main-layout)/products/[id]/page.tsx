@@ -102,14 +102,9 @@ const ProductPage = async ({
         {response && <ProductDetails product={response} />}
         <FeaturedList
           featuredTitle='Productos Relacionados'
-          direction='left'
           itemCategory={searchParams?.category}
         />
-        <FeaturedList
-          featuredTitle='Mas Vendidos'
-          direction='right'
-          itemCategory={'Bienestar'}
-        />
+        <FeaturedList featuredTitle='Mas Vendidos' itemCategory={'Bienestar'} />
       </section>
       <Newsletter />
       <Prefooter />
