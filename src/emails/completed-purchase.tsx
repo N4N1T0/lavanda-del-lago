@@ -1,6 +1,5 @@
 import {
   Body,
-  Column,
   Container,
   Head,
   Heading,
@@ -9,7 +8,6 @@ import {
   Img,
   Link,
   Preview,
-  Row,
   Section,
   Text
 } from '@react-email/components'
@@ -34,7 +32,7 @@ export const CompletedPurchase = ({
       <Body className='bg-white font-sans'>
         <Container className='mx-auto max-w-screen-sm p-4 sm:p-6'>
           <Img
-            src={`${baseUrl}/navbar-logo.png`}
+            src='https://www.lavandadellago.es/navbar-logo.png'
             width='170'
             height='50'
             alt='Logo de tu empresa'
@@ -59,35 +57,80 @@ export const CompletedPurchase = ({
               <strong>Total:</strong> {eurilize(Number(totalAmount))}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Fecha de compra:</strong>{' '}
-              {new Date(purchaseDate).toLocaleDateString('es-ES')}
+              <strong>Fecha de compra:</strong> {purchaseDate}
             </Text>
           </Section>
           <Section className='mb-6 mt-3 rounded-lg bg-gray-100 p-6'>
             <Text className='mb-2 text-xl text-gray-700'>
               <strong>Productos:</strong>
             </Text>
-            {products.map(({ product }, quantity) => (
-              <Row
-                key={product.id}
-                className='flex w-full items-center justify-between'
-              >
-                <Column>
-                  <Img
-                    src={product.image}
-                    alt={product.nombre}
-                    title={product.nombre}
-                    width={50}
-                    height={50}
-                    className='aspect-square size-12'
-                  />
-                </Column>
-                <Column>{product.nombre}</Column>
-                <Column>{quantity}</Column>
-                <Column>{eurilize(quantity * product.precio)}</Column>
-              </Row>
-            ))}
+            <table width='100%' style={{ borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>
+                  <th style={{ padding: '10px', textAlign: 'left' }}>
+                    Producto
+                  </th>
+                  <th style={{ padding: '10px', textAlign: 'left' }}>
+                    Cantidad
+                  </th>
+                  <th style={{ padding: '10px', textAlign: 'left' }}>Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map(({ product, quantity }) => (
+                  <tr
+                    key={product.id}
+                    style={{ borderBottom: '1px solid #dddddd' }}
+                  >
+                    <td
+                      style={{
+                        padding: '10px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '10px'
+                      }}
+                    >
+                      <Img
+                        src={product.image}
+                        alt={product.nombre}
+                        title={product.nombre}
+                        width={50}
+                        height={50}
+                        style={{ marginRight: '10px' }}
+                      />
+                      <p>{product.nombre}</p>
+                    </td>
+                    <td style={{ padding: '10px', textAlign: 'center' }}>
+                      {quantity}
+                    </td>
+                    <td style={{ padding: '10px', textAlign: 'right' }}>
+                      {eurilize(quantity * product.precio)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </Section>
+          {gateway === 'Transferencia' && (
+            <>
+              <Text className='text-center text-gray-800'>
+                Si has elegido pagar mediante transferencia, solo tienes que
+                realizar la transferencia a la cuenta{' '}
+              </Text>
+              <Text className='font-bold'>
+                ES12 0182 2310 08 0200 1632 13 | con el concepto
+                &quot;lavandadellago-{orderNumber}&quot;
+              </Text>{' '}
+              <br />
+              <Text>
+                Después de recibir la confirmación de la transferencia, nosotros
+                nos pondremos en contacto contigo para confirmar la recepción
+                del pago y proceder con el envío de tu pedido.
+              </Text>
+            </>
+          )}
+
           <Text className='mb-6 text-base text-gray-700'>
             Puedes ver los detalles de tu pedido y seguir tu envío haciendo clic
             en el botón a continuación:

@@ -4,8 +4,7 @@
 import PaypalButton from '@/components/checkout/paypal-button'
 
 // Utility Imports
-import { calculateTotal, eurilize } from '@/lib/utils'
-import { v4 as uuidv4 } from 'uuid'
+import { calculateTotal, eurilize, generateShortId } from '@/lib/utils'
 
 // Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
@@ -183,7 +182,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         </PayPalScriptProvider>
         {user !== null && (
           <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${uuidv4()}&gateway=Transferencia}&totalAmount=${total}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia`}
+            href={`${process.env.NEXT_PUBLIC_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia`}
             className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
           >
             Pago con Transferencia

@@ -18,7 +18,7 @@ const NotificationsPageButton = ({
   userId,
   status
 }: {
-  reseller: string
+  reseller: boolean
   userId: string
   status: 'success' | 'failed'
 }) => {
@@ -46,9 +46,7 @@ const NotificationsPageButton = ({
           variant='default'
           onClick={() =>
             handleClick(
-              reseller === 'true' || reseller !== 'null'
-                ? `/reseller/${userId}`
-                : `/profile/${userId}`
+              reseller === true ? `/reseller/${userId}` : `/profile/${userId}`
             )
           }
           className='flex items-center'

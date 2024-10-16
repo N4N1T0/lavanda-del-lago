@@ -47,7 +47,7 @@ export const POST = withAxiom(
       }[]
     } = await req.json()
 
-    const { name, id, reseller, email } = user
+    const { name, id } = user
     const currency = 'EUR'
 
     // Random ID for the transaction
@@ -69,8 +69,8 @@ export const POST = withAxiom(
       DS_MERCHANT_CURRENCY: redsysCurrency,
       DS_MERCHANT_MERCHANTNAME: 'Lavanda del Lago.es',
       DS_MERCHANT_MERCHANTURL: `${process.env.NEXT_PUBLIC_URL}/api/notifications`, // Notification URL
-      DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/success?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}&products=${products}&gateway=RedSys`, // Success URL
-      DS_MERCHANT_URLKO: `${process.env.NEXT_PUBLIC_URL}/failed?userId=${id}&userName=${encodeURIComponent(name.normalize('NFC'))}&orderId=${orderId}&totalAmount=${totalAmount}&reseller=${reseller}&userEmail=${email}`, // Error URL
+      DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/success?userId=${id}&orderId=${orderId}&totalAmount=${totalAmount}&products=${products}&gateway=RedSys`, // Success URL
+      DS_MERCHANT_URLKO: `${process.env.NEXT_PUBLIC_URL}/failed?userId=${id}&orderId=${orderId}&totalAmount=${totalAmount}`, // Error URL
       DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
       DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE,
       DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
