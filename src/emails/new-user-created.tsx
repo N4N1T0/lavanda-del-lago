@@ -11,7 +11,7 @@ import {
   Text
 } from '@react-email/components'
 import * as React from 'react'
-import { baseUrl, TailwindWrapper } from './email-utils'
+import { TailwindWrapper } from './email-utils'
 
 interface EmailProps {
   nombre: string
@@ -20,15 +20,20 @@ interface EmailProps {
   link: string
 }
 
-export const NewUserCreatedEmail = ({ nombre, email, fecha, link }: EmailProps) => (
+export const NewUserCreatedEmail = ({
+  nombre,
+  email,
+  fecha,
+  link
+}: EmailProps) => (
   <TailwindWrapper>
     <Html>
       <Head />
       <Body className='bg-gray-100 font-sans'>
         <Container className='mx-auto max-w-md p-4 sm:p-6'>
           <Img
-            src={`${baseUrl}/navbar-logo.png`}
-            width='170'
+            src='https://www.lavandadellago.es/navbar-logo.png'
+             width='200'
             height='50'
             alt='Logo de tu empresa'
             className='mx-auto mb-6'

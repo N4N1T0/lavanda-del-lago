@@ -62,8 +62,6 @@ const ResellerTable = ({
   // Flag to avoid setting state on every render
   const [initialized, setInitialized] = useState(false)
 
-  console.log(discount)
-
   // Use effect to filter products when debounced search value changes
   useEffect(() => {
     const filtered = products.filter((product) =>

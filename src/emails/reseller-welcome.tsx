@@ -10,7 +10,7 @@ import {
   Img
 } from '@react-email/components'
 import * as React from 'react'
-import { baseUrl, TailwindWrapper } from './email-utils'
+import { TailwindWrapper } from './email-utils'
 
 interface EmailProps {
   nombre: string
@@ -24,14 +24,14 @@ export const ResellerWelcomeEmail = ({ nombre, link }: EmailProps) => (
       <Body className='bg-gray-100 font-sans'>
         <Container className='mx-auto max-w-md p-4 sm:p-6'>
           <Img
-            src={`${baseUrl}/navbar-logo.png`}
-            width='170'
+            src='https://www.lavandadellago.es/navbar-logo.png'
+            width='200'
             height='50'
             alt='Logo de tu empresa'
             className='mx-auto mb-6'
           />
           <Heading className='mb-4 text-center text-2xl font-bold text-gray-800'>
-            ¡Bienvenido como Reseller!
+            ¡Bienvenido como Revendedor!
           </Heading>
           <Text className='mb-6 text-gray-800'>Hola {nombre},</Text>
           <Text className='mb-6 text-gray-800'>

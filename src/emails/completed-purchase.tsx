@@ -33,7 +33,7 @@ export const CompletedPurchase = ({
         <Container className='mx-auto max-w-screen-sm p-4 sm:p-6'>
           <Img
             src='https://www.lavandadellago.es/navbar-logo.png'
-            width='170'
+             width='200'
             height='50'
             alt='Logo de tu empresa'
             className='mx-auto mb-6'

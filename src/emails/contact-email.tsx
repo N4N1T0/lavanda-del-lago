@@ -10,7 +10,7 @@ import {
   Text
 } from '@react-email/components'
 import { NotificacionContactoInternoProps } from '@/types'
-import { baseUrl, TailwindWrapper } from './email-utils'
+import { TailwindWrapper } from './email-utils'
 
 export const NotificacionContactoInterno: React.FC<
   NotificacionContactoInternoProps
@@ -22,8 +22,8 @@ export const NotificacionContactoInterno: React.FC<
       <Body className='bg-gray-100 font-sans'>
         <Container className='mx-auto my-8 rounded-lg bg-white p-6 shadow-lg'>
           <Img
-            src={`${baseUrl}/navbar-logo.png`}
-            width='170'
+            src='https://www.lavandadellago.es/navbar-logo.png'
+             width='200'
             height='50'
             alt='Logo de tu empresa'
             className='mx-auto mb-6'
