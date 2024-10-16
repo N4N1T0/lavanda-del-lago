@@ -148,7 +148,7 @@ export interface HomePageType {
 export interface BentoThreeImage {
   image: {
     url: string
-    blur: string
+    originalFilename: string
   }
   link: string
   id: string
@@ -262,11 +262,17 @@ export interface SuccessPage {
   userId: string
   userName: string
   orderId: string
-  totalAmount: number
+  totalAmount: string
   reseller: string
   userEmail: string
   products: string
   gateway: Gateway
+}
+
+export interface NotificationPageBodyProps {
+  user: User
+  gateway: string
+  orderId: string
 }
 
 export interface NotFoundPage {
@@ -353,10 +359,7 @@ export interface JustAFlower {
     url: string
     blur: string
   }
-  secondaryImage: {
-    url: string
-    blur: string
-  }
+  video: string
   text: string
   title: string
 }

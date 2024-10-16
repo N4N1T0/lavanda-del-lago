@@ -29,11 +29,11 @@ export default {
                 'El link de la imagen que se va a mostrar, dejar en blanco si no se va a mostrar'
             },
             {
-              type: 'image',
-              options: { hotspot: true },
+              type: 'file',
               name: 'bentoImage',
               title: 'Imagen',
-              description: 'La imagen que se va a mostrar en el bento principal'
+              description:
+                'La imagen o el video que se va a mostrar en el bento principal'
             }
           ]
         }

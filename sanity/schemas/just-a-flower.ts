@@ -28,10 +28,10 @@ export default {
       description: 'El texto que se mostrará en la página'
     },
     {
-      name: 'secondaryImage',
-      type: 'image',
-      title: 'Imagen Secundaria',
-      description: 'La imagen secundaria que se mostrará en la página'
+      name: 'video',
+      type: 'file',
+      title: 'Video',
+      description: 'El video que se mostrará en la página'
     },
     {
       name: 'secondaryText',

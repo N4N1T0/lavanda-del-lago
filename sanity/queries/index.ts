@@ -31,7 +31,7 @@ export const homePage = groq`
     "id": _key,
     "image": bentoImage.asset->{
       url,
-      "blur": metadata.lqip
+      originalFilename
     },
     "link": imageLink
   },
@@ -162,10 +162,7 @@ export const jusAFLower = groq`*[_type == "justAFlower"]{
      url,
      "blur": metadata.lqip
    },
-   "secondaryImage": secondaryImage.asset->{
-     url,
-     "blur": metadata.lqip
-   },
+   "video": video.asset->url,
    text,
    secondaryText,
    quote,
@@ -322,29 +319,18 @@ export const productByName = groq`
   }[0]
 `
 
-export const productById = groq`
-  *[_type == "product" && nombre in $ids{
-    "id": _id,
-    nombre,
-    descripcion,
-    precio,
-    "image": fotoPrincipal.asset->url,
-    categoria,
-    stock,
-    "createdAt": _createdAt,
-    usabilidad,
-    subcategoria,
-    codigoReferencia,
-    composicion,
-    certificacion,
-    medidas,
-    codigoBarras,
-    slogan,
-    "fichaTecnica": fichaTecnica.asset->url,
-    fotosVarias[] {
-      "image": asset->url,
-      "key": _key
-    }
+export const PurchaseById = groq`
+ *[_type == "purchase" && _id == $id][0] {
+    products[] {
+      product-> {
+        "id": _id,
+        nombre,
+        "image": fotoPrincipal.asset->url,
+        categoria,
+        precio
+      },
+      quantity
+    },
   }
 `
 
