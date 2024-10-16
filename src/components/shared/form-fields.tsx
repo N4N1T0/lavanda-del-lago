@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Textarea } from '../ui/textarea'
 
 // Define the props for the FormFieldComponent
 interface FormFieldComponentProps<T extends FieldValues> {
@@ -29,7 +30,15 @@ interface FormFieldComponentProps<T extends FieldValues> {
   name: Path<T>
   label: string
   placeholder: string
-  type?: 'text' | 'email' | 'date' | 'select' | 'checkbox' | 'radio' | 'file' // Added 'file' type
+  type?:
+    | 'text'
+    | 'email'
+    | 'date'
+    | 'select'
+    | 'checkbox'
+    | 'radio'
+    | 'file'
+    | 'textarea' // Added 'file' type
   options?: string[] // Only applicable if type is 'select' or 'radio'
   isSubmitting: boolean
   className?: string | null
@@ -123,6 +132,13 @@ const FormFieldComponent = <T extends FieldValues>({
               onChange={(e) => field.onChange(e.target.files)} // Handle file input change
               disabled={isSubmitting}
               className='border border-accent/50'
+            />
+          ) : type === 'textarea' ? (
+            <Textarea
+              placeholder={placeholder}
+              className='resize-none'
+              disabled={isSubmitting}
+              {...field}
             />
           ) : (
             <Input

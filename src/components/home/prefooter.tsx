@@ -34,8 +34,8 @@ const Prefooter = async (): Promise<JSX.Element> => {
         <Image
           alt='prefooter'
           src={imageUrl || PrefooterImage}
-          width={1800}
-          height={900}
+          width={1024}
+          height={800}
           title='prefooter'
           className='w-full object-fill'
         />

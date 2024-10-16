@@ -26,7 +26,7 @@ import { Logger } from 'next-axiom'
  */
 const FeaturedList = async ({
   itemCategory,
-  featuredTitle,
+  featuredTitle
 }: {
   itemCategory: string | undefined
   featuredTitle: string
@@ -59,7 +59,7 @@ const FeaturedList = async ({
       </section>
     )
   } catch (error) {
-    log.debug('Error in the featured List Component', {data: error})
+    log.debug('Error in the featured List Component', { data: error })
 
     await log.flush()
     return <ServerFetchError error={error} />

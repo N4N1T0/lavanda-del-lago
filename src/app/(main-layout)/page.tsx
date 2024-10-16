@@ -61,9 +61,11 @@ export default async function Home(): Promise<JSX.Element> {
         itemCategory={carousel2.category}
         featuredTitle={carousel2.title}
       />
-      <FeaturedEvent event={featuredEvent} />
-      <Newsletter />
-      <Prefooter />
+      <div className='mx-auto mb-3 flex max-w-screen-2xl flex-col items-center px-4 sm:px-6 lg:px-8'>
+        <FeaturedEvent event={featuredEvent} />
+        <Newsletter />
+        <Prefooter />
+      </div>
       {jldHomePage()}
     </>
   )
