@@ -374,3 +374,9 @@ export const formatComposicion = (composicion: string): string[] => {
     .split(',')
     .map((item) => capitalizeFirstLetter(item))
 }
+
+export const generateShortId = () => {
+  const timestamp = Date.now().toString(36)
+  const randomNum = Math.floor(Math.random() * 1000).toString(36)
+  return `${timestamp}-${randomNum}`
+}

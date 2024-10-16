@@ -322,6 +322,32 @@ export const productByName = groq`
   }[0]
 `
 
+export const productById = groq`
+  *[_type == "product" && nombre in $ids{
+    "id": _id,
+    nombre,
+    descripcion,
+    precio,
+    "image": fotoPrincipal.asset->url,
+    categoria,
+    stock,
+    "createdAt": _createdAt,
+    usabilidad,
+    subcategoria,
+    codigoReferencia,
+    composicion,
+    certificacion,
+    medidas,
+    codigoBarras,
+    slogan,
+    "fichaTecnica": fichaTecnica.asset->url,
+    fotosVarias[] {
+      "image": asset->url,
+      "key": _key
+    }
+  }
+`
+
 export const productsByCategory = groq`
   *[_type == "product" && categoria == $category && stock > 0]{
     "id": _id,

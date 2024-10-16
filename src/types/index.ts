@@ -236,6 +236,13 @@ export interface PurchaseConfirmationEmailProps {
   gateway: Gateway
 }
 
+export interface NotificacionContactoInternoProps {
+  name: string
+  email: string
+  phone: string
+  message: string
+}
+
 export interface Contact {
   label: string
   link: string

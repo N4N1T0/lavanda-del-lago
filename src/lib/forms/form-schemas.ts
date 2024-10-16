@@ -16,7 +16,7 @@ export const userSchema = z
       .optional(),
     confirmPassword: z.string().optional(),
     street: z.string().min(2, { message: 'La Calle es necesaria' }),
-    floor: z.string().min(2, { message: 'El Piso es necesario' }),
+    floor: z.string().min(1, { message: 'El Numero es necesario' }),
     reference: z.string().optional(),
     postal_code: z
       .string()
@@ -88,3 +88,18 @@ export const resellerFormSchema = z.object({
 })
 
 export type ResellerFormSchemaType = z.infer<typeof resellerFormSchema>
+
+export const contactFormSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'El nombre debe tener al menos 2 caracteres' }),
+  email: z.string().email({ message: 'Correo electrónico inválido' }),
+  phone: z
+    .string()
+    .min(9, { message: 'El telémfono debe tener al menos 9 dígitos' }),
+  message: z
+    .string()
+    .min(5, { message: 'El mensaje debe tener al menos 5 caracteres' })
+})
+
+export type ContactFormValues = z.infer<typeof contactFormSchema>

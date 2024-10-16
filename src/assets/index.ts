@@ -22,6 +22,7 @@ import EnergiaRinnovabile from './energia-rinnovabile 1.png'
 import VecetaleCento from './vecetalecento 1.png'
 import Image404 from './annie-spratt-NrflUuJJK0I-unsplash.webp'
 import Image500 from './baraa-jalahej-qfZGhapxoa4-unsplash.webp'
+import Map from './Map.png'
 
 export {
   Cart,
@@ -44,5 +45,6 @@ export {
   EnergiaRinnovabile,
   VecetaleCento,
   Image404,
-  Image500
+  Image500,
+  Map
 }
