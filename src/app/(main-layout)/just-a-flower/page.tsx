@@ -33,8 +33,7 @@ const JustAFlowerPage = async (): Promise<JSX.Element> => {
     }
   )
 
-  const { mainImage, title, quote, secondaryImage, secondaryText, text } =
-    response
+  const { mainImage, title, quote, video, secondaryText, text } = response
 
   return (
     <section
@@ -58,15 +57,10 @@ const JustAFlowerPage = async (): Promise<JSX.Element> => {
         <QuoteIcon className='ml-3 inline-block h-10 w-10 md:h-14 md:w-14' />
       </h2>
       <p className='text-lg tracking-wide'>{text}</p>
-      <Image
-        src={secondaryImage.url}
-        alt={title || 'Con solo una Flor'}
-        title={title || 'Con solo una Flor'}
-        width={1024}
-        height={1080}
-        placeholder='blur'
-        blurDataURL={secondaryImage.blur}
-      />
+      <video className='aspect-video w-full' controls preload='auto'>
+        <source src={video} type='video/mp4' />
+        Your browser does not support the video tag.
+      </video>
       <p className='text-lg tracking-wide'>{secondaryText}</p>
     </section>
   )
