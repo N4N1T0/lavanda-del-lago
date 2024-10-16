@@ -13,11 +13,9 @@ import {
   Section,
   Text
 } from '@react-email/components'
-import { TailwindWrapper } from './email-utils'
+import { baseUrl, TailwindWrapper } from './email-utils'
 import { PurchaseConfirmationEmailProps } from '@/types'
 import { eurilize } from '@/lib/utils'
-
-const baseUrl = process.env.NEXT_PUBLIC_URL
 
 export const CompletedPurchase = ({
   customerName = 'Cliente Valorado',

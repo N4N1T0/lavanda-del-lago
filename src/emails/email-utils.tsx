@@ -27,3 +27,5 @@ export const TailwindWrapper = ({
     </Tailwind>
   )
 }
+
+export const baseUrl = process.env.NEXT_PUBLIC_URL

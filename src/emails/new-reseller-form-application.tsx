@@ -5,6 +5,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Section,
   Text
@@ -30,6 +31,13 @@ export const NewResellerApplicationEmail = ({
       <Head />
       <Body className='bg-gray-100 font-sans'>
         <Container className='mx-auto max-w-md p-4 sm:p-6'>
+          <Img
+            src={`${baseUrl}/navbar-logo.png`}
+            width='170'
+            height='50'
+            alt='Logo de tu empresa'
+            className='mx-auto mb-6'
+          />
           <Heading className='mb-4 text-center text-2xl font-bold text-gray-800'>
             Nueva Solicitud de Reseller
           </Heading>
