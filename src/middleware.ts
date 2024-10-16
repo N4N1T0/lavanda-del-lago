@@ -23,7 +23,8 @@ const publicRoutes = createRouteMatcher([
   '/about-us',
   '/certifications',
   '/remedies',
-  '/checkout(.*)'
+  '/checkout(.*)',
+  '/contact'
 ])
 
 // Define reseller-protected routes

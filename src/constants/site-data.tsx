@@ -45,6 +45,10 @@ export const navItems = [
   {
     label: 'Blog',
     children: '/blog'
+  },
+  {
+    label: 'Contacto',
+    children: '/contact'
   }
 ]
 
