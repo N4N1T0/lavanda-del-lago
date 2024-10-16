@@ -58,6 +58,8 @@ const FailedPaymentPage = ({
     redirect('/')
   }
 
+  const formattedReseller = reseller === 'true' ? true : false
+
   return (
     <main className='flex min-h-screen items-center justify-center bg-red-100 p-4'>
       <Card className='w-full max-w-lg border-accent'>
@@ -116,7 +118,7 @@ const FailedPaymentPage = ({
         </CardContent>
         <CardFooter className='flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
           <NotidicationsPageButton
-            reseller={reseller}
+            reseller={formattedReseller}
             userId={userId}
             status='failed'
           />
