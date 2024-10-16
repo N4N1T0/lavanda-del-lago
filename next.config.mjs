@@ -10,16 +10,6 @@ const nextConfig = withAxiom({
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'fakestoreapi.com',
-        port: ''
-      },
-      {
-        protocol: 'https',
-        hostname: 'dummyimage.com',
-        port: ''
-      },
-      {
-        protocol: 'https',
         hostname: 'cdn.sanity.io',
         port: ''
       }
