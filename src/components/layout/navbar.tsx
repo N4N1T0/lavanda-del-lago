@@ -38,6 +38,7 @@ const Navbar = async (): Promise<JSX.Element> => {
       next: { revalidate: 60 }
     }
   )
+
   const filterCategories = categoriesFilter(response)
 
   return (

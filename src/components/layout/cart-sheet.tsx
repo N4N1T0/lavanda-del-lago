@@ -22,7 +22,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
 // Utils Imports
-import { calculateTotal, eurilize, urlize } from '@/lib/utils'
+import { simpleCalculateTotal, eurilize, urlize } from '@/lib/utils'
 
 // Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
@@ -47,7 +47,7 @@ const CartSheet = (): JSX.Element => {
   }
 
   // Calculate the total price of the items in the shopping cart
-  const [subTotal] = calculateTotal(count)
+  const subTotal = simpleCalculateTotal(count)
 
   // Calculate total ammount of items
   const totalamountOfItems =

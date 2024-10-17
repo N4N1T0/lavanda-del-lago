@@ -137,6 +137,17 @@ export function capitalizeFirstLetter(str: string): string {
   ]
 }
 
+export const simpleCalculateTotal = (count: CartItem[]) => {
+  let subTotal = 0
+
+  // Calculate the subtotal for the items in the cart
+  for (const item of count) {
+    subTotal += Number(item.precio) * item.quantity
+  }
+
+  return subTotal
+}
+
 /**
  * Removes an item from the wishlist based on its ID.
  *
