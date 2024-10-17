@@ -106,7 +106,7 @@ const Newsletter = React.memo(function Newsletter() {
           Subsicibete a nuestro newsletter para ofertas e informacion exclusiva
           sobre nuestros eventos. Lee nuestra{' '}
           <Link
-            href='/privacy-policy'
+            href='/politica-de-privacidad'
             className='text-gray-300 underline transition-colors duration-150 hover:text-white'
             prefetch={false}
           >

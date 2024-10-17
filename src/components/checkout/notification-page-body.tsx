@@ -35,7 +35,12 @@ const NotificationPageBody = ({
   const discount =
     user?.discount !== undefined ? user?.discount / 100 : undefined
 
-  const [subTotal, total, iva] = calculateTotal(count, 0, discount)
+  const [subTotal, total, iva, shipping] = calculateTotal(
+    count,
+    discount,
+    user?.address?.postal_code,
+    user?.address?.country
+  )
 
   return (
     <>
@@ -82,7 +87,7 @@ const NotificationPageBody = ({
         </div>
         <div className='flex items-center justify-between text-sm font-normal'>
           <span>Gastos de Envio:</span>
-          <span>Gratis</span>
+          <span>{shipping}</span>
         </div>
         {user?.reseller === true && discount !== undefined && (
           <>

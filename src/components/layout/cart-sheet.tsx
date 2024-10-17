@@ -144,7 +144,7 @@ const CartSheet = (): JSX.Element => {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link
-                    href='/events'
+                    href='/eventos'
                     className='font-medium text-accent transition-colors duration-200 hover:text-accent/80'
                   >
                     Nuestros Eventos

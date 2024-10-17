@@ -141,7 +141,7 @@ const Footer = async (): Promise<JSX.Element> => {
           </div>
 
           {/* Designer and developer */}
-          <div className='pt-2 text-center text-gray-300'>
+          <div className='sr-only pt-2 text-center text-gray-300'>
             <small className='text-xs'>
               Created with <span className='text-red-500'>❤️</span>, powered by{' '}
               <Link

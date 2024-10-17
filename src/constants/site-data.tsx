@@ -18,29 +18,29 @@ export const navItems = [
     children: [
       {
         label: 'Con una Flor',
-        href: '/just-a-flower'
+        href: '/con-solo-una-flor'
       },
       {
         label: 'Nosotros',
-        href: '/about'
+        href: '/sobre-nosotros'
       },
       {
         label: 'Certificaciones',
-        href: '/certifications'
+        href: '/certificaciones'
       },
       {
         label: 'Propiedad',
-        href: '/property'
+        href: '/propiedad'
       },
       {
         label: 'Remedios',
-        href: '/remedies'
+        href: '/remedios'
       }
     ]
   },
   {
     label: 'Eventos',
-    children: '/events'
+    children: '/eventos'
   },
   {
     label: 'Blog',
@@ -48,7 +48,7 @@ export const navItems = [
   },
   {
     label: 'Contacto',
-    children: '/contact'
+    children: '/contacto'
   }
 ]
 
@@ -108,15 +108,15 @@ export const socialLinks = [
 export const footerLinks = [
   {
     name: 'Política de Cookies',
-    href: '/cookies-policy'
+    href: '/politica-de-cookies'
   },
   {
     name: 'Política de Privacidad',
-    href: '/privacy-policy'
+    href: '/politica-de-privacidad'
   },
   {
     name: 'Política de Compra y Ventas',
-    href: '/sales-policy'
+    href: '/politica-de-compras'
   }
 ]
 
@@ -258,4 +258,36 @@ export const categories = [
   'Higiene personal',
   'Hogar y ambiente',
   'Línea mosquitos e insectos'
+]
+
+export const shippingCountries = [
+  'Alemania',
+  'Austria',
+  'Bélgica',
+  'Bulgaria',
+  'Chipre',
+  'Croacia',
+  'Dinamarca',
+  'Eslovaquia',
+  'Eslovenia',
+  'España',
+  'Estonia',
+  'Finlandia',
+  'Francia',
+  'Grecia',
+  'Hungría',
+  'Irlanda',
+  'Italia',
+  'Letonia',
+  'Lituania',
+  'Luxemburgo',
+  'Malta',
+  'Países Bajos',
+  'Polonia',
+  'Portugal',
+  'República Checa',
+  'Rumanía',
+  'Suecia',
+  'Estados Unidos',
+  'Canadá'
 ]

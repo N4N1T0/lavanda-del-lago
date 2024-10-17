@@ -11,6 +11,9 @@ import type {
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+// External Libraries Imports
+import { validate } from 'postal-codes-js'
+
 /**
  * A utility function that merges and normalizes CSS class names using Tailwind CSS.
  *
@@ -100,9 +103,10 @@ export function capitalizeFirstLetter(str: string): string {
  *
  */ export function calculateTotal(
   count: CartItem[],
-  shipping: number = 0,
-  discount: number | undefined = undefined
-): [string, string, string] {
+  discount: number | undefined = undefined,
+  postalCode: string | null | undefined,
+  country: string | null | undefined
+): [string, string, string, string] {
   let subTotal = 0
 
   // Calculate the subtotal for the items in the cart
@@ -118,14 +122,18 @@ export function capitalizeFirstLetter(str: string): string {
   // Ensure subTotal doesn't go below zero
   subTotal = Math.max(subTotal, 0)
 
+  // Calculate shipping costs
+  const shippingCost = getShippingCost(postalCode, subTotal, country)
+
   // Calculate total and IVA
   const iva = subTotal * 0.21 // Calculate IVA as 21% of the subtotal
-  const total = subTotal + shipping // Total includes shipping costs
+  const total = subTotal + shippingCost // Total includes shipping costs
 
   return [
     eurilize(subTotal), // Subtotal formatted
     eurilize(total), // Total formatted
-    eurilize(iva) // IVA formatted
+    eurilize(iva), // IVA formatted
+    eurilize(shippingCost)
   ]
 }
 
@@ -368,6 +376,13 @@ export function formatAddress(address: User['address']): string {
   return [street, floor, postal_code, locality].filter(Boolean).join(', ')
 }
 
+/**
+ * Takes a string of comma-separated values and formats them into an array of
+ * strings with the first letter capitalized.
+ *
+ * @param {string} composicion - The string to be formatted.
+ * @return {string[]} An array of strings with the first letter capitalized.
+ */
 export const formatComposicion = (composicion: string): string[] => {
   return composicion
     .toLocaleLowerCase()
@@ -379,4 +394,60 @@ export const generateShortId = () => {
   const timestamp = Date.now().toString(36)
   const randomNum = Math.floor(Math.random() * 1000).toString(36)
   return `${timestamp}-${randomNum}`
+}
+
+export const getShippingCost = (
+  postalCode: string | null | undefined,
+  amount: number,
+  country: string | null | undefined
+) => {
+  if (!postalCode || !country) return 0
+
+  const isSpain = country === 'España'
+  const isUSA = country === 'Estados Unidos'
+  const isCanada = country === 'Canada'
+  const isEurope = !isSpain && !isUSA && !isCanada
+  const isCanaryIslands = isSpain ? validate('ic', postalCode) : false
+
+  let shippingCost = 0
+
+  if (isSpain) {
+    if (isCanaryIslands) {
+      // Envío a Islas Canarias
+      if (amount <= 25) {
+        shippingCost = 12
+      } else if (amount > 25 && amount <= 50) {
+        shippingCost = 7
+      } else {
+        shippingCost = 0 // Envío gratis
+      }
+    } else {
+      // Envío a la Península
+      if (amount <= 25) {
+        shippingCost = 7
+      } else if (amount > 25 && amount <= 50) {
+        shippingCost = 5
+      } else {
+        shippingCost = 0 // Envío gratis
+      }
+    }
+  } else if (isEurope) {
+    // Envío a Europa
+    if (amount <= 50) {
+      shippingCost = 16
+    } else if (amount > 50 && amount <= 100) {
+      shippingCost = 5
+    } else {
+      shippingCost = 0 // Envío gratis
+    }
+  } else if (isUSA || isCanada) {
+    // Envío a EE.UU. o Canadá
+    if (amount <= 50) {
+      shippingCost = 35
+    } else {
+      shippingCost = 20 // Tarifa reducida para compras mayores de 50
+    }
+  }
+
+  return shippingCost
 }

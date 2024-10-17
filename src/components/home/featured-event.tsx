@@ -67,7 +67,7 @@ const FeaturedEvent = ({ event }: { event: Event }): JSX.Element => {
           {/* Link to events page */}
           <Link
             target='_blank'
-            href='/events'
+            href='/eventos'
             className={buttonVariants({ variant: 'outline' })}
             prefetch={false}
           >

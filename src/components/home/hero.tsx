@@ -158,7 +158,7 @@ const BentoImage = ({
   index: number
   link: string
 }) => {
-  const isVideo = image.originalFilename.endsWith('.mp4')
+  const isVideo = image.originalFilename.toLowerCase().endsWith('.mp4')
 
   return (
     <LinkOrDiv index={index} link={link}>
@@ -202,7 +202,7 @@ const LinkOrDiv = ({
 
   return isLink ? (
     <Link
-      className={`col-span-1 ${index > 0 ? 'hidden md:block' : ''} group overflow-hidden`}
+      className={`col-span-1 ${index > 1 ? 'hidden md:block' : ''} group overflow-hidden`}
       href={link}
     >
       {children}

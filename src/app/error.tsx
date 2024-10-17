@@ -1,8 +1,5 @@
 'use client'
 
-// React Imports
-import { useEffect, useState } from 'react'
-
 // Next.js Imports
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,18 +10,10 @@ import { Image500 } from '@/assets'
 import { v4 as uuidv4 } from 'uuid'
 
 // Types Imports
-import type { ErrorPage as ErrorPageSanity } from '@/types'
 import type { Metadata } from 'next'
-
-// Queries Imports
-import { errorPage } from '@sanity-studio/queries'
-import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Data Imports
 import { contactLinks } from '@/constants/site-data'
-
-// Axiom Imports
-import { useLogger } from 'next-axiom'
 
 // Metadata for the error page
 export const metadata: Metadata = {
@@ -42,35 +31,6 @@ const ErrorPage = ({
   // Router initialization
   const router = useRouter()
 
-  // Axiom Init
-  const log = useLogger()
-
-  // State for the Page info from Sanity
-  const [pageInfo, setPageInfo] = useState<ErrorPageSanity | null>(null)
-
-  // Fetch Page info from Sanity
-  useEffect(() => {
-    const getPageInfo = async () => {
-      try {
-        const response = await sanityClientRead.fetch(
-          errorPage,
-          {},
-          {
-            next: {
-              revalidate: 86400
-            }
-          }
-        )
-
-        setPageInfo(response)
-      } catch (err) {
-        log.debug('Error fetching page info in errorPage', { data: err })
-      }
-    }
-
-    getPageInfo()
-  }, [log])
-
   return (
     <section className='min-h-screen bg-white'>
       <div className='container mx-auto px-6 py-12 lg:flex lg:flex-row-reverse lg:items-center lg:gap-12'>
@@ -79,36 +39,27 @@ const ErrorPage = ({
             Error 500
           </p>
           <h1 className='mt-3 text-xl font-bold text-gray-800 md:text-2xl'>
-            Error Interno
+            Error Interno del Servidor
           </h1>
           <small>{error.message}</small>
-          <h2 className='mt-3'>{pageInfo?.digest}</h2>
+          <h2 className='mt-3'>
+            Parece que algo salió mal. Por favor, intenta una de las siguientes
+            opciones:
+          </h2>
+
           <ul className='mt-3 space-y-1'>
-            {pageInfo === null
-              ? contactLinks.map((link) => (
-                  <li key={uuidv4()}>
-                    <Link
-                      href={link.link}
-                      target='_blank'
-                      rel='noreferrer'
-                      className='text-secondary underline'
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))
-              : pageInfo?.contacts.map((link) => (
-                  <li key={uuidv4()}>
-                    <Link
-                      href={link.link}
-                      target='_blank'
-                      rel='noreferrer'
-                      className='text-secondary underline'
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+            {contactLinks.map((link) => (
+              <li key={uuidv4()}>
+                <Link
+                  href={link.link}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='text-secondary underline'
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
 
           <div className='mt-6 flex items-center gap-x-3'>
@@ -171,14 +122,13 @@ const ErrorPage = ({
         <div className='relative mt-8 w-full lg:mt-0 lg:w-1/2'>
           <Image
             className='h-80 w-full rounded-lg object-cover md:h-96 lg:h-[32rem]'
-            src={pageInfo?.imageUrl.url || Image500}
+            src={Image500}
             priority
             width={500}
             height={500}
-            alt='Imagen Lavanda 404'
-            title='Imagen Lavanda 404'
+            alt='Imagen Lavanda 500'
+            title='Imagen Lavanda 500'
             placeholder='blur'
-            blurDataURL={pageInfo?.imageUrl.blur}
           />
         </div>
       </div>

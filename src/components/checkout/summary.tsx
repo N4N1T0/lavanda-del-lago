@@ -55,7 +55,12 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
   }
 
   // Calculate the total price of the items in the shopping cart
-  const [subTotal, total, iva] = calculateTotal(count, 0, discount)
+  const [subTotal, total, iva, shipping] = calculateTotal(
+    count,
+    discount,
+    user?.address?.postal_code,
+    user?.address?.country
+  )
 
   const serializedProducts = encodeURIComponent(
     JSON.stringify(
@@ -114,9 +119,9 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
       </ul>
       <div className='mt-3 space-y-3'>
         {/* shipping costs */}
-        <div>
+        <div className='flex justify-between'>
           <h3 className='text-xl'>Gastos de Envío</h3>
-          <p className='text-gray-600'>Gratis</p>
+          <p className='text-gray-600'>{shipping}</p>
         </div>
         {user?.reseller && discount !== undefined ? (
           <>
@@ -182,7 +187,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         </PayPalScriptProvider>
         {user !== null && (
           <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/success?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia`}
+            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia`}
             className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
           >
             Pago con Transferencia

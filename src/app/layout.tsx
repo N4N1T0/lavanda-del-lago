@@ -18,6 +18,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 // Security
 import SecurityHandling from '@/components/layout/security-handling'
 import { localization } from '@/components/auth/custom-locale'
+import CookieConsent from '@/components/ui/cookie'
 
 // Local Fonts Configuration
 const josefinSand = Josefin_Sans({
@@ -58,6 +59,7 @@ export default function RootLayout({
           )}
         >
           {children}
+          <CookieConsent />
           <Toaster />
           <SecurityHandling />
         </body>

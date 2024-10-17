@@ -1,4 +1,4 @@
-import { jobType, localities } from '@/constants/site-data'
+import { jobType, localities, shippingCountries } from '@/constants/site-data'
 import { z } from 'zod'
 
 // Checkout Validation Schema with New User
@@ -22,6 +22,9 @@ export const userSchema = z
       .string()
       .min(2, { message: 'El Código Postal es necesario' }),
     locality: z.string().min(2, { message: 'La Localidad es necesaria' }),
+    country: z.enum(['Ninguno de los anteriores', ...shippingCountries], {
+      errorMap: () => ({ message: 'Debes seleccionar un País' })
+    }),
     documentType: z.enum(['DNI', 'NIE'], {
       message: 'Seleccione un tipo de documento'
     }),

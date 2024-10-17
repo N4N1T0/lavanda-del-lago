@@ -325,6 +325,7 @@ export interface User {
     reference: string | null
     postal_code: string | null
     locality: string | null
+    country: string | null
   } | null
   reseller?: boolean | null
   idDocument: {

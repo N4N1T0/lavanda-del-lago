@@ -109,12 +109,13 @@ const ProductDetails = ({ product }: { product: Product }): JSX.Element => {
           </TabsContent>
           <TabsContent value='use' className='px-5 py-3 text-center'>
             <p className='text-lg text-gray-600'>
-              {composicion !== null ? (
+              {composicion !== null && (
                 <IngredientsTable composicion={composicion} />
-              ) : (
-                usabilidad ||
-                'Estamos trabajando en una usabilidad detallada para usted'
               )}
+              {usabilidad !== null && <hr className='my-2 border-accent' />}
+              {usabilidad !== null
+                ? usabilidad
+                : 'Estamos trabajando en una usabilidad detallada para usted'}
             </p>
           </TabsContent>
           <TabsContent value='caracteristics' className='px-5 py-3 text-center'>

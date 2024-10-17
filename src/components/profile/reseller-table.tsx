@@ -114,7 +114,7 @@ const ResellerTable = ({
   return (
     <section id='reseller-products' className='container mx-auto p-4'>
       <div className='mb-6 flex w-full items-center justify-between'>
-        <h1 className='text-3xl font-bold'>Lista de Productos</h1>
+        <h1 className='text-xl font-bold md:text-3xl'>Lista de Productos</h1>
         <label htmlFor='product-search' className='sr-only'>
           Buscar productos:
         </label>

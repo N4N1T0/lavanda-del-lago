@@ -1,8 +1,5 @@
 'use client'
 
-// React Imports
-import { useEffect, useState } from 'react'
-
 // Next.js Imports
 import Link from 'next/link'
 import Image from 'next/image'
@@ -13,17 +10,9 @@ import { Image404 } from '@/assets'
 
 // Types Imports
 import type { Metadata } from 'next'
-import type { NotFoundPage } from '@/types'
 
 // UI Imports
 import { buttonVariants } from '@/components/ui/button'
-
-// Queries Imports
-import { sanityClientRead } from '@sanity-studio/lib/client'
-import { notFoundPage } from '@sanity-studio/queries'
-
-// Axiom Imports
-import { useLogger } from 'next-axiom'
 
 // Metadata for the error page
 export const metadata: Metadata = {
@@ -35,37 +24,11 @@ export default function NotFound() {
   // initialize router
   const router = useRouter()
 
-  // Axiom Init
-  const log = useLogger()
-
-  // State for the Page info from Sanity
-  const [pageInfo, setPageInfo] = useState<NotFoundPage | null>(null)
-
-  // Fetch Page info from Sanity
-  useEffect(() => {
-    const getPageInfo = async () => {
-      try {
-        const response = await sanityClientRead.fetch(
-          notFoundPage,
-          {},
-          {
-            next: { revalidate: 86400 }
-          }
-        )
-        setPageInfo(response)
-      } catch (err) {
-        log.debug('Error fetching page info in notFound Page', { data: err })
-      }
-    }
-
-    getPageInfo()
-  }, [log])
-
   const getLabel = (link: string) => {
     switch (link) {
       case '/products':
         return <span>Products</span>
-      case '/events':
+      case '/eventos':
         return <span>Eventos</span>
       default:
         return <span>Blog</span>
@@ -75,12 +38,12 @@ export default function NotFound() {
   return (
     <section className='bg-white'>
       <div className='container mx-auto min-h-screen px-6 py-12 lg:flex lg:items-center lg:gap-12'>
-        <div className='wf-ull lg:w-1/2'>
+        <div className='lg:w-1/2'>
           <p className='text-5xl font-medium uppercase text-accent'>
             Error 404
           </p>
           <h1 className='mt-3 text-xl font-bold text-gray-800 md:text-2xl'>
-            {pageInfo?.digest}
+            Página No Encontrada
           </h1>
 
           <div className='mt-6 flex items-center gap-x-3'>
@@ -119,7 +82,7 @@ export default function NotFound() {
           <p className='mt-5'>Puedes usar estos links alternativos</p>
 
           <div className='mt-5 space-y-6'>
-            {pageInfo?.links.map((link) => (
+            {['/products', '/eventos', '/blog'].map((link) => (
               <div key={link}>
                 <Link
                   href={link}
@@ -133,7 +96,7 @@ export default function NotFound() {
                     viewBox='0 0 24 24'
                     strokeWidth='1.5'
                     stroke='currentColor'
-                    className='h-5 w-5 rtl:rotate-180'
+                    className='ml-2 h-5 w-5 rtl:rotate-180'
                   >
                     <title>Flecha Derecha</title>
                     <path
@@ -151,14 +114,13 @@ export default function NotFound() {
         <div className='relative mt-8 w-full lg:mt-0 lg:w-1/2'>
           <Image
             className='h-80 w-full rounded-lg object-cover md:h-96 lg:h-[32rem]'
-            src={pageInfo?.imageUrl.url || Image404}
+            src={Image404}
             width={500}
             height={500}
             alt='Imagen Lavanda 404'
             title='Imagen Lavanda 404'
             priority
             placeholder='blur'
-            blurDataURL={pageInfo?.imageUrl.blur}
           />
         </div>
       </div>

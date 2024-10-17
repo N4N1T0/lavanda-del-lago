@@ -48,9 +48,9 @@ const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
         <h2 className='mb-2 text-xl font-semibold'>
           {user.name || 'Usuario sin nombre'}
         </h2>
-        <div className='flex w-full flex-col items-start'>
+        <div className='flex w-full flex-col items-start text-balance'>
           <div className='mb-2 flex items-center'>
-            <Mail className='mr-2 h-4 w-4' />
+            <Mail className='mr-2 h-4 w-4 text-sm md:text-base' />
             <span>{user.email || 'Sin correo'}</span>
           </div>
           <div className='mb-2 flex items-center'>
@@ -61,6 +61,12 @@ const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
             <MapPin className='mr-2 h-4 w-4' />
             <span>{formatAddress(user.address)}</span>
           </div>
+          {user?.reseller && (
+            <div className='flex items-center pt-2 text-green-500'>
+              <span>Descuento por Revendedor</span>
+              <span>-{user?.discount}%</span>
+            </div>
+          )}
         </div>
         <UserProfileFormDialog user={user} />
         {!user.reseller && (

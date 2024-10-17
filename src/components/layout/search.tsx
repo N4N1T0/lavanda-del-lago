@@ -46,7 +46,7 @@ const Search = (): JSX.Element => {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            router.push(`/search/?q=${encodeURIComponent(search)}`)
+            router.push(`/busqueda/?q=${encodeURIComponent(search)}`)
           }
         }}
         className='h-full w-full rounded-md bg-neutral-100 p-5 py-2.5 shadow-sm sm:text-sm'
@@ -54,7 +54,7 @@ const Search = (): JSX.Element => {
 
       {/* Search button */}
       <Link
-        href={`/search/?q=${search}`}
+        href={`/busqueda/?q=${search}`}
         className='text-gray-8000 absolute inset-y-0 end-0 m-1 grid w-9 place-content-center'
       >
         {/* Visually hidden text for screen readers */}
@@ -113,7 +113,7 @@ const SearchMobile = (): JSX.Element => {
           // On enter key press, navigate to search results page
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              router.push(`/search/?q=${encodeURIComponent(search)}`)
+              router.push(`/busqueda/?q=${encodeURIComponent(search)}`)
             }
           }}
           // Styling for search input field

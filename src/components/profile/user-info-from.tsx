@@ -30,7 +30,7 @@ import type { User } from '@/types'
 import { userSchema, type UserSchemaType } from '@/lib/forms/form-schemas'
 
 // Data Imports
-import { localities } from '@/constants/site-data'
+import { shippingCountries } from '@/constants/site-data'
 
 export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
   // Estado para controlar el diálogo abierto/cerrado
@@ -91,6 +91,7 @@ export const UserProfileForm = ({
       reference: user?.address?.reference || '',
       postal_code: user?.address?.postal_code || '',
       locality: user?.address?.locality || '',
+      country: user?.address?.country || 'España',
       password: user?.password || '',
       confirmPassword: user?.password || ''
     },
@@ -214,13 +215,22 @@ export const UserProfileForm = ({
             placeholder='Piso 1, 1zq'
             isSubmitting={isSubmitting}
           />
-          <FormFieldComponent
-            control={form.control}
-            name='reference'
-            label='Referencia de la dirección (opcional)'
-            placeholder='Detrás del Mercadona'
-            isSubmitting={isSubmitting}
-          />
+          <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
+            <FormFieldComponent
+              control={form.control}
+              name='reference'
+              label='Referencia (opcional)'
+              placeholder='Detrás del Mercadona'
+              isSubmitting={isSubmitting}
+            />
+            <FormFieldComponent
+              control={form.control}
+              name='locality'
+              label='Localidad'
+              placeholder='Marbella'
+              isSubmitting={isSubmitting}
+            />
+          </div>
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
             <FormFieldComponent
               control={form.control}
@@ -231,11 +241,11 @@ export const UserProfileForm = ({
             />
             <FormFieldComponent
               control={form.control}
-              name='locality'
-              label='Localidad'
-              placeholder=''
+              name='country'
+              label='País de residencia'
+              placeholder='España'
               type='select'
-              options={localities}
+              options={shippingCountries}
               isSubmitting={isSubmitting}
             />
           </div>

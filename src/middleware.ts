@@ -5,26 +5,25 @@ import { NextResponse } from 'next/server'
 // Define public routes that don't require authentication
 const publicRoutes = createRouteMatcher([
   '/',
-  '/about',
+  '/sobre-nosotros',
   '/blog(.*)',
-  '/search',
-  '/privacy-policy',
-  '/cookies-policy',
-  '/sales-policy',
-  '/events',
+  '/busqueda',
+  '/politica-de-privacidad',
+  '/politica-de-cookies',
+  '/politica-de-compras',
+  '/eventos',
   '/sitemap',
   '/studio(.*)',
   '/api(.*)',
   '/sign-in(.*)',
   '/sign-up(.*)',
   '/products(.*)',
-  '/just-a-flower',
-  '/property',
-  '/about-us',
+  '/con-solo-una-flor',
+  '/propiedad',
   '/certifications',
-  '/remedies',
+  '/remedios',
   '/checkout(.*)',
-  '/contact'
+  '/contacto'
 ])
 
 // Define reseller-protected routes

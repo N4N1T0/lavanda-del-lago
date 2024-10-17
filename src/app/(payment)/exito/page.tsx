@@ -126,7 +126,7 @@ const SuccessPaymentPage = async ({
     // Send email to user
     const { data, error } = await resend.emails.send({
       from: 'info@lavandadellago.es',
-      to: ['info@lavandadellago.es', user.email],
+      to: ['info@lavandadellago.es', user.email, 'pedidos@lavandadellago.es'],
       subject: 'Orden Completada',
       react: CompletedPurchase({
         customerName: user.name,

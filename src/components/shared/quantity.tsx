@@ -251,7 +251,7 @@ const ResellerTableQuantity = ({
         id='Quantity'
         value={quantities[id] || 0}
         onChange={setQuantities(id)}
-        className='w-16 text-center'
+        className='w-10 text-center md:w-16'
       />
       <Button
         variant='outline'

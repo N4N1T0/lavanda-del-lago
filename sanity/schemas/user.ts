@@ -1,3 +1,5 @@
+import { shippingCountries } from '@/constants/site-data'
+
 export default {
   name: 'user',
   title: 'Usuario',
@@ -100,16 +102,23 @@ export default {
           description: 'referencia de la dirección'
         },
         {
+          name: 'country',
+          title: 'Países',
+          type: 'string',
+          options: {
+            list: [
+              ...shippingCountries.map((country) => ({
+                title: country,
+                value: country
+              }))
+            ]
+          }
+        },
+        {
           name: 'postal_code',
           title: 'Código Postal',
           type: 'string',
-          description: 'El código postal del usuario',
-          validation: (Rule: any) =>
-            Rule.length(5).regex(/^\d{5}$/, {
-              name: 'postal',
-              inverse: true,
-              message: 'El código postal debe tener 5 dígitos.'
-            })
+          description: 'El código postal del usuario'
         },
         {
           name: 'locality',
@@ -137,7 +146,8 @@ export default {
   preview: {
     select: {
       title: 'name',
-      subtitle: 'email'
+      subtitle: 'email',
+      media: 'image'
     }
   }
 }
