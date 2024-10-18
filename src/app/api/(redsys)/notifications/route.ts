@@ -30,6 +30,8 @@ export const runtime = 'nodejs'
 export const POST = withAxiom(async (req: AxiomRequest) => {
   req.log.info('Payment notification received') // Log when endpoint is hit
 
+  const iva = req.nextUrl.searchParams.get('iva')
+
   const notificationParams: ResponseJSONSuccess = {
     Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
     Ds_Signature: req.headers.get('Ds_Signature') as string,
@@ -83,7 +85,9 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
         reseller: response.reseller,
         products: userResponse.pastPurchases?.find((p) => p.id === orderId)
           ?.products as unknown as { product: Product; quantity: number }[],
-        gateway: 'RedSys'
+        gateway: 'RedSys',
+        user: userResponse,
+        iva: iva || '0'
       })
     })
 
