@@ -77,9 +77,11 @@ const CartSheet = (): JSX.Element => {
           />
         </div>
       </SheetTrigger>
-      <SheetContent className='flex flex-col items-start justify-between px-2 pb-2 md:px-5'>
+      <SheetContent className='flex flex-col items-start justify-between px-2 pb-2 pt-3 md:px-5 md:py-4'>
         <SheetHeader>
-          <SheetTitle className='text-2xl'>Carrito de la Compra</SheetTitle>
+          <SheetTitle className='text-lg md:text-2xl'>
+            Carrito de la Compra
+          </SheetTitle>
           <SheetDescription className='sr-only'>
             Carrito de la Compra
           </SheetDescription>
@@ -110,7 +112,7 @@ const CartSheet = (): JSX.Element => {
             <div className='w-full border-t border-gray-200 px-4 py-3 sm:px-6'>
               <div className='flex justify-between text-base font-medium text-gray-900'>
                 <p>Subtotal</p>
-                <p>{subTotal}</p>
+                <p>{eurilize(subTotal)}</p>
               </div>
               <p className='mt-1 text-xs text-gray-500 md:text-sm'>
                 Gastos de envío, impuestos y descuento de revendedor calculados

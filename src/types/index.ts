@@ -267,6 +267,7 @@ export interface SuccessPage {
   userEmail: string
   products: string
   gateway: Gateway
+  iva: string
 }
 
 export interface NotificationPageBodyProps {

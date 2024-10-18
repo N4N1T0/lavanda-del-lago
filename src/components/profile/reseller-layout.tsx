@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // Types Imports
 import type { Product, User } from '@/types'
@@ -10,6 +10,9 @@ import type { Product, User } from '@/types'
 import UserInfoCard from '@/components/profile/info-card'
 import ResellerCheckout from '@/components/profile/reseller-checkout'
 import ResellerTable from '@/components/profile/reseller-table'
+
+// UI Imports
+import { ArrowBigUp } from 'lucide-react'
 
 /**
  * A layout component for resellers, displaying user information, a checkout summary, and a table of products.
@@ -34,6 +37,9 @@ const ResellerLayout = ({
   const [selectedProducts, setSelectedProducts] = useState<Set<string>>(
     new Set()
   )
+
+  // State to track if the floating button should be visible
+  const [showFloatingButton, setShowFloatingButton] = useState(false)
 
   // Helper function to update quantities
   const updateQuantity = (id: string, delta: number) => {
@@ -63,6 +69,26 @@ const ResellerLayout = ({
       quantity: quantities[item.id]
     }))
 
+  // Scroll event to show/hide the floating button
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop
+
+      // Adjust this value based on when you want the button to appear
+      if (scrollY > 1200) {
+        setShowFloatingButton(true)
+      } else {
+        setShowFloatingButton(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
     <div className='relative flex flex-col gap-6 md:flex-row'>
       <div className='top-2 h-fit w-full space-y-2 md:sticky md:w-1/4'>
@@ -83,6 +109,16 @@ const ResellerLayout = ({
           updateQuantity={updateQuantity}
         />
       </div>
+
+      {/* Floating Checkout Button */}
+      {showFloatingButton && (
+        <a
+          href='#checkout'
+          className='fixed bottom-2 right-2 flex items-center justify-center rounded-md bg-accent p-3 text-white md:hidden'
+        >
+          <ArrowBigUp className='h-6 w-6' />
+        </a>
+      )}
     </div>
   )
 }

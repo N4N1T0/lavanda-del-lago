@@ -84,7 +84,8 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         body: JSON.stringify({
           totalAmount: Number(total.split(' ')[0].replace(',', '.')), // Use discounted total for payment
           user: user,
-          products: serializedProducts
+          products: serializedProducts,
+          iva: iva
         })
       })
 
@@ -183,11 +184,11 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
             buyerCountry: 'ES'
           }}
         >
-          <PaypalButton products={count} total={total} user={user} />
+          <PaypalButton products={count} total={total} user={user} iva={iva} />
         </PayPalScriptProvider>
         {user !== null && (
           <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia`}
+            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${iva}`}
             className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
           >
             Pago con Transferencia

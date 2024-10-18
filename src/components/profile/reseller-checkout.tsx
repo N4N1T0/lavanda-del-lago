@@ -68,7 +68,7 @@ const ResellerCheckout = ({
   }, [productsToCheckout, discount])
 
   return (
-    <Card className='border border-accent/70 pb-0'>
+    <Card className='border border-accent/70 pb-0' id='checkout'>
       <CardHeader className='pt-3'>
         <CardTitle>Resumen de Compra</CardTitle>
       </CardHeader>

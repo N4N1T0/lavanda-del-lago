@@ -52,7 +52,8 @@ const SuccessPaymentPage = async ({
     orderId,
     totalAmount,
     gateway,
-    products: productsParam
+    products: productsParam,
+    iva
   } = searchParams
 
   // Verify the presence of required parameters
@@ -126,7 +127,7 @@ const SuccessPaymentPage = async ({
     // Send email to user
     const { data, error } = await resend.emails.send({
       from: 'info@lavandadellago.es',
-      to: ['info@lavandadellago.es', user.email, 'pedidos@lavandadellago.es'],
+      to: [user.email],
       subject: 'Orden Completada',
       react: CompletedPurchase({
         customerName: user.name,
@@ -136,7 +137,9 @@ const SuccessPaymentPage = async ({
         id: userId,
         reseller: user?.reseller === null ? false : user?.reseller,
         products: productsResponse.products,
-        gateway
+        gateway,
+        user,
+        iva
       })
     })
 

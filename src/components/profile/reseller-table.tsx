@@ -112,8 +112,12 @@ const ResellerTable = ({
     discount !== undefined && discount !== null ? discount / 100 : 1
 
   return (
-    <section id='reseller-products' className='container mx-auto p-4'>
-      <div className='mb-6 flex w-full items-center justify-between'>
+    <section
+      id='reseller-products'
+      className='container relative mx-auto p-2 md:p-4'
+    >
+      {/* Header for Larger Screens */}
+      <div className='mb-6 hidden w-full items-center justify-between lg:flex'>
         <h1 className='text-xl font-bold md:text-3xl'>Lista de Productos</h1>
         <label htmlFor='product-search' className='sr-only'>
           Buscar productos:
@@ -126,7 +130,23 @@ const ResellerTable = ({
           onChange={handleSearchChange}
         />
       </div>
-      <Table>
+
+      {/* Header for small Screens */}
+      <div className='sticky top-0 z-50 mb-6 w-full items-center justify-between bg-white p-2 pt-3 lg:hidden'>
+        <label htmlFor='product-search' className='sr-only'>
+          Buscar productos:
+        </label>
+        <Input
+          id='product-search'
+          type='search'
+          placeholder='Buscar productos...'
+          className='max-w-xs'
+          onChange={handleSearchChange}
+        />
+      </div>
+
+      {/* Table for larger screens */}
+      <Table className='hidden lg:table'>
         <TableHeader className='hidden md:table-header-group'>
           <TableRow className='border-accent/50 text-accent/60 hover:bg-white'>
             <TableHead className='md:w-[50px]'>Seleccione</TableHead>
@@ -202,6 +222,73 @@ const ResellerTable = ({
           )}
         </TableBody>
       </Table>
+
+      {/* Cards for smaller screens */}
+      <div className='space-y-2 lg:hidden'>
+        {filteredProducts.map(({ id, nombre, categoria, image, precio }) => (
+          <div
+            key={id}
+            className='flex flex-col space-y-1 rounded-lg border border-accent/50 p-4'
+          >
+            <div className='flex items-center'>
+              <Checkbox
+                checked={selectedProducts.has(id)}
+                onCheckedChange={() => toggleProductSelection(id)}
+                className='mr-4'
+              />
+              <Link
+                href={
+                  nombre && categoria
+                    ? `/products/${urlize(nombre)}?category=${categoria}`
+                    : '/products'
+                }
+              >
+                <Image
+                  src={image}
+                  alt={nombre}
+                  width={50}
+                  height={50}
+                  className='rounded-md'
+                />
+              </Link>
+            </div>
+            <div className='mt-2 space-y-2'>
+              <Link
+                href={
+                  nombre && categoria
+                    ? `/products/${urlize(nombre)}?category=${categoria}`
+                    : '/products'
+                }
+                className='text-lg font-bold hover:text-accent'
+              >
+                {nombre}
+              </Link>
+              <div className='flex w-full items-center justify-between text-sm'>
+                <p>
+                  Precio Original:{' '}
+                  <span className='text-base font-semibold'>
+                    {eurilize(precio)}
+                  </span>
+                </p>
+                <p>
+                  Precio con Descuento:{' '}
+                  <span className='text-base font-semibold text-green-500'>
+                    {eurilize(precio * formattedDiscount)}
+                  </span>
+                </p>
+              </div>
+              <div className='flex items-center justify-between'>
+                <ResellerTableQuantity
+                  id={id}
+                  quantities={quantities}
+                  setQuantities={handleQuantityChange}
+                  updateQuantity={updateQuantity}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   )
 }

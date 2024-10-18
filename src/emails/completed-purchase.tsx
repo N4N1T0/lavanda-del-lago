@@ -12,7 +12,7 @@ import {
   Text
 } from '@react-email/components'
 import { baseUrl, TailwindWrapper } from './email-utils'
-import { PurchaseConfirmationEmailProps } from '@/types'
+import { PurchaseConfirmationEmailProps, User } from '@/types'
 import { eurilize } from '@/lib/utils'
 
 export const CompletedPurchase = ({
@@ -23,8 +23,10 @@ export const CompletedPurchase = ({
   id = '1q2w3e4r5t',
   reseller = false,
   products = [],
-  gateway
-}: PurchaseConfirmationEmailProps) => (
+  gateway,
+  user,
+  iva
+}: PurchaseConfirmationEmailProps & { user: User; iva: string }) => (
   <TailwindWrapper>
     <Html>
       <Head />
@@ -33,7 +35,7 @@ export const CompletedPurchase = ({
         <Container className='mx-auto max-w-screen-sm p-4 sm:p-6'>
           <Img
             src='https://www.lavandadellago.es/navbar-logo.png'
-             width='200'
+            width='200'
             height='50'
             alt='Logo de tu empresa'
             className='mx-auto mb-6'
@@ -57,9 +59,60 @@ export const CompletedPurchase = ({
               <strong>Total:</strong> {eurilize(Number(totalAmount))}
             </Text>
             <Text className='text-sm text-gray-700'>
+              <strong>Iva:</strong> {eurilize(Number(iva))}
+            </Text>
+            {user?.reseller && user?.discount && (
+              <Text className='text-sm text-gray-700'>
+                <strong>Descuento por Revendedor:</strong> -{user?.discount}%
+              </Text>
+            )}
+            <Text className='text-sm text-gray-700'>
               <strong>Fecha de compra:</strong> {purchaseDate}
             </Text>
           </Section>
+
+          {/* New Section for Shipping Information */}
+          <Section className='mb-6 mt-3 rounded-lg bg-gray-100 p-6'>
+            <Text className='mb-4 text-xl text-gray-700'>
+              <strong>Datos del Envío y Facturación:</strong>
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Nombre:</strong> {user?.name || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Email:</strong> {user?.email || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Teléfono:</strong> {user?.phone || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Tipo de Documento:</strong>
+              {user?.idDocument?.type || 'DNI'}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Número de Documento:</strong>
+              {user?.idDocument?.value || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Calle:</strong> {user?.address?.street || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Piso:</strong> {user?.address?.floor || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Referencia:</strong> {user?.address?.reference || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Código Postal:</strong> {user?.address?.postal_code || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Localidad:</strong> {user?.address?.locality || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>País:</strong> {user?.address?.country || ''}
+            </Text>
+          </Section>
+
           <Section className='mb-6 mt-3 rounded-lg bg-gray-100 p-6'>
             <Text className='mb-2 text-xl text-gray-700'>
               <strong>Productos:</strong>
@@ -112,6 +165,7 @@ export const CompletedPurchase = ({
               </tbody>
             </table>
           </Section>
+
           {gateway === 'Transferencia' && (
             <>
               <Text className='text-center text-gray-800'>
@@ -138,7 +192,7 @@ export const CompletedPurchase = ({
           <Link
             href={`${baseUrl}/${reseller ? 'reseller' : 'profile'}/${id}`}
             target='_blank'
-            className='mx-auto mb-6 block w-full max-w-xs rounded-lg bg-accent px-6 py-3 text-center font-bold text-white'
+            className='mx-auto mb-6 block w-full max-w-[200px] rounded-lg bg-accent px-6 py-3 text-center font-bold text-white'
           >
             Ver estado del pedido
           </Link>
@@ -146,7 +200,7 @@ export const CompletedPurchase = ({
           <Text className='mb-2 text-sm text-gray-600'>
             Si tienes alguna pregunta o inquietud, no dudes en{' '}
             <Link
-              href='mailto:support@example.com'
+              href='mailto:info@lavandadellago.es'
               className='text-accent underline'
             >
               contactar a nuestro equipo de soporte

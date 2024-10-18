@@ -28,11 +28,13 @@ import { useLogger } from 'next-axiom'
 const PaypalButton = ({
   products,
   total,
-  user
+  user,
+  iva
 }: {
   products: CartItem[]
   total: string
   user: User | null
+  iva: string
 }): JSX.Element => {
   const router = useRouter()
   const serializedProducts = encodeURIComponent(
@@ -56,7 +58,7 @@ const PaypalButton = ({
 
       // Redirect the user to the success page
       router.push(
-        `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal`
+        `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${iva}`
       )
     } else {
       // If the order is null or undefined, log an error

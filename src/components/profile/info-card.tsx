@@ -48,11 +48,14 @@ const UserInfoCard = ({ user }: { user: User }): JSX.Element => {
         <h2 className='mb-2 text-xl font-semibold'>
           {user.name || 'Usuario sin nombre'}
         </h2>
-        <div className='flex w-full flex-col items-start text-balance'>
-          <div className='mb-2 flex items-center'>
-            <Mail className='mr-2 h-4 w-4 text-sm md:text-base' />
-            <span>{user.email || 'Sin correo'}</span>
+        <div className='flex w-full flex-col items-start overflow-hidden text-balance'>
+          <div className='mb-2 flex items-center text-sm md:text-base'>
+            <Mail className='mr-2 h-4 w-4' />
+            <span className='truncate text-ellipsis whitespace-nowrap'>
+              {user.email || 'Sin correo'}
+            </span>
           </div>
+
           <div className='mb-2 flex items-center'>
             <Phone className='mr-2 h-4 w-4' />
             <span>{user.phone || 'Sin teléfono'}</span>
