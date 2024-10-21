@@ -13,6 +13,8 @@ import ResellerTable from '@/components/profile/reseller-table'
 
 // UI Imports
 import { ArrowBigUp } from 'lucide-react'
+import PastPurchasesCard from './past-purchase'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 /**
  * A layout component for resellers, displaying user information, a checkout summary, and a table of products.
@@ -98,17 +100,36 @@ const ResellerLayout = ({
           discount={user.discount}
         />
       </div>
-      <div className='w-full md:w-3/4'>
-        <ResellerTable
-          products={products}
-          selectedProducts={selectedProducts}
-          toggleProductSelection={toggleProductSelection}
-          discount={user.discount}
-          quantities={quantities}
-          setQuantities={setQuantities}
-          updateQuantity={updateQuantity}
-        />
-      </div>
+      <Tabs defaultValue='product-list' className='w-full md:w-3/4'>
+        <TabsList className='mb-3 flex w-full items-center justify-between gap-5 bg-transparent md:gap-10'>
+          <TabsTrigger
+            value='product-list'
+            className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
+          >
+            Lista de Productos
+          </TabsTrigger>
+          <TabsTrigger
+            value='past-purchase'
+            className='flex-1 rounded-lg border border-accent/50 py-3 text-xs md:text-base'
+          >
+            Compras Pasadas
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value='product-list'>
+          <ResellerTable
+            products={products}
+            selectedProducts={selectedProducts}
+            toggleProductSelection={toggleProductSelection}
+            discount={user.discount}
+            quantities={quantities}
+            setQuantities={setQuantities}
+            updateQuantity={updateQuantity}
+          />
+        </TabsContent>
+        <TabsContent value='past-purchase'>
+          <PastPurchasesCard purchases={user.pastPurchases} />
+        </TabsContent>
+      </Tabs>
 
       {/* Floating Checkout Button */}
       {showFloatingButton && (

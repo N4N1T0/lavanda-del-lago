@@ -86,7 +86,7 @@ const PastPurchasesCard = ({
                         </ul>
                       </td>
                       <td className='py-2 text-right'>
-                        ${purchase.totalAmount.toFixed(2)}
+                        ${purchase.totalAmount}
                       </td>
                       <td
                         className='py-2 text-right uppercase'
