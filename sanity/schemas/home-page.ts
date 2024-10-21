@@ -26,12 +26,12 @@ export default {
               name: 'imageLink',
               title: 'Link de la Imagen',
               description:
-                'El link de la imagen que se va a mostrar, dejar en blanco si no se va a mostrar'
+                'El link hacia la web, dejar en blanco si no se va a mostrar'
             },
             {
               type: 'file',
               name: 'bentoImage',
-              title: 'Imagen',
+              title: 'Imagen o Video',
               description:
                 'La imagen o el video que se va a mostrar en el bento principal'
             }
