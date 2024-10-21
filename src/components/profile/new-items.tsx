@@ -68,8 +68,8 @@ const NewItems = async ({
                     <Link
                       href={
                         nombre && categoria
-                          ? `/products/${urlize(nombre)}?category=${categoria}`
-                          : '/products'
+                          ? `/productos/${urlize(nombre)}?category=${categoria}`
+                          : '/productos'
                       }
                       className='flex items-center justify-between transition-colors duration-200 group-hover:text-accent'
                       aria-label={`Ver producto ${nombre}`}

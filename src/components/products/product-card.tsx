@@ -79,8 +79,8 @@ const ProductCard = ({
             prefetch={index < 8}
             href={
               nombre && categoria
-                ? `/products/${urlize(nombre)}?category=${categoria}`
-                : '/products'
+                ? `/productos/${urlize(nombre)}?category=${categoria}`
+                : '/productos'
             }
             className='leading-bold self-stretch text-center text-sm font-medium text-accent transition-colors duration-200 hover:text-black lg:text-base'
           >
@@ -104,8 +104,8 @@ const ProductCard = ({
             prefetch
             href={
               nombre && categoria
-                ? `/products/${urlize(nombre)}?category=${categoria}`
-                : '/products'
+                ? `/productos/${urlize(nombre)}?category=${categoria}`
+                : '/productos'
             }
             className='rounded-lg bg-accent px-6 py-3 text-sm text-white transition-colors duration-200 hover:bg-white hover:text-accent md:text-base'
           >

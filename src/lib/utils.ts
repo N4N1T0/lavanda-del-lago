@@ -54,8 +54,8 @@ export function eurilize(number: number): string {
  * @return {Breadcrumb} The broken-apart breadcrumb object.
  *
  * @example
- * breakUrlToBreadcrumb('/products/accessories/belts') // [{ name: 'products', path: '/products' }, { name: 'accessories', path: '/products/accessories' }, { name: 'belts', path: '/products/accessories/belts' }]
- * breakUrlToBreadcrumb('/products/clothes/jackets?category=coats') // [{ name: 'products', path: '/products' }, { name: 'clothes', path: '/products/clothes' }, { name: 'jackets', path: '/products/clothes/jackets' }, { name: 'coats', path: '/products/clothes/jackets?category=coats' }]
+ * breakUrlToBreadcrumb('/productos/accessories/belts') // [{ name: 'products', path: '/productos' }, { name: 'accessories', path: '/productos/accessories' }, { name: 'belts', path: '/productos/accessories/belts' }]
+ * breakUrlToBreadcrumb('/productos/clothes/jackets?category=coats') // [{ name: 'products', path: '/productos' }, { name: 'clothes', path: '/productos/clothes' }, { name: 'jackets', path: '/productos/clothes/jackets' }, { name: 'coats', path: '/productos/clothes/jackets?category=coats' }]
  */
 export function breakUrlToBreadcrumb(url: string): Breadcrumbs {
   const parts = url.split('/').filter(Boolean)

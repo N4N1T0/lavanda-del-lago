@@ -140,8 +140,8 @@ const WishlistCartSheetCard = ({
                 <Link
                   href={
                     nombre && categoria
-                      ? `/products/${urlize(nombre)}?category=${categoria}`
-                      : '/products'
+                      ? `/productos/${urlize(nombre)}?category=${categoria}`
+                      : '/productos'
                   }
                 >
                   {nombre}
@@ -196,8 +196,8 @@ const WishlistCartSheetCardMobile = ({
             <Link
               href={
                 nombre && categoria
-                  ? `/products/${urlize(nombre)}?category=${categoria}`
-                  : '/products'
+                  ? `/productos/${urlize(nombre)}?category=${categoria}`
+                  : '/productos'
               }
             >
               {nombre}

@@ -59,8 +59,8 @@ const ProductsSidebar = async ({
                 <Link
                   href={
                     category === 'Todos'
-                      ? '/products'
-                      : `/products?category=${category}`
+                      ? '/productos'
+                      : `/productos?category=${category}`
                   }
                   className='block h-full w-full py-4 pl-2'
                 >

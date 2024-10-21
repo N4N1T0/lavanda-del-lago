@@ -39,7 +39,7 @@ const NotificationsPageButton = ({
   if (status === 'success') {
     return (
       <>
-        <Button variant='cart' onClick={() => handleClick('/products')}>
+        <Button variant='cart' onClick={() => handleClick('/productos')}>
           Seguir Comprando
         </Button>
         <Button

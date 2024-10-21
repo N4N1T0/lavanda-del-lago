@@ -92,7 +92,7 @@ const CategoryLink = React.memo(function CategoryLink({
   return (
     <Link
       prefetch
-      href={`/products?category=${category}`}
+      href={`/productos?category=${category}`}
       className='flex h-32 w-40 cursor-pointer flex-col items-center justify-center gap-2 rounded-[15px] border-[3px] border-accent bg-white px-10 py-6 text-center transition-colors duration-150 hover:bg-accent hover:text-white'
     >
       {category}

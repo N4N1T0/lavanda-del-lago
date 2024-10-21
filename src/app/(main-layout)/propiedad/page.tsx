@@ -106,10 +106,10 @@ const ProperyPage = async (): Promise<JSX.Element> => {
       <Link
         href={
           product.nombre && product.categoria
-            ? `/products/${urlize(product.nombre)}?category=${
+            ? `/productos/${urlize(product.nombre)}?category=${
                 product.categoria
               }`
-            : '/products'
+            : '/productos'
         }
         className={`${buttonVariants({ variant: 'cart' })} w-fit uppercase`}
       >

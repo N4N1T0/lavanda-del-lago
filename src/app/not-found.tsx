@@ -26,7 +26,7 @@ export default function NotFound() {
 
   const getLabel = (link: string) => {
     switch (link) {
-      case '/products':
+      case '/productos':
         return <span>Products</span>
       case '/eventos':
         return <span>Eventos</span>
@@ -82,7 +82,7 @@ export default function NotFound() {
           <p className='mt-5'>Puedes usar estos links alternativos</p>
 
           <div className='mt-5 space-y-6'>
-            {['/products', '/eventos', '/blog'].map((link) => (
+            {['/productos', '/eventos', '/blog'].map((link) => (
               <div key={link}>
                 <Link
                   href={link}

@@ -172,8 +172,8 @@ const ResellerTable = ({
                   <Link
                     href={
                       nombre && categoria
-                        ? `/products/${urlize(nombre)}?category=${categoria}`
-                        : '/products'
+                        ? `/productos/${urlize(nombre)}?category=${categoria}`
+                        : '/productos'
                     }
                     target='_blank'
                     className='group'
@@ -191,8 +191,8 @@ const ResellerTable = ({
                   <Link
                     href={
                       nombre && categoria
-                        ? `/products/${urlize(nombre)}?category=${categoria}`
-                        : '/products'
+                        ? `/productos/${urlize(nombre)}?category=${categoria}`
+                        : '/productos'
                     }
                     target='_blank'
                     className='transition-colors duration-200 hover:text-accent'
@@ -239,8 +239,8 @@ const ResellerTable = ({
               <Link
                 href={
                   nombre && categoria
-                    ? `/products/${urlize(nombre)}?category=${categoria}`
-                    : '/products'
+                    ? `/productos/${urlize(nombre)}?category=${categoria}`
+                    : '/productos'
                 }
               >
                 <Image
@@ -256,8 +256,8 @@ const ResellerTable = ({
               <Link
                 href={
                   nombre && categoria
-                    ? `/products/${urlize(nombre)}?category=${categoria}`
-                    : '/products'
+                    ? `/productos/${urlize(nombre)}?category=${categoria}`
+                    : '/productos'
                 }
                 className='text-lg font-bold hover:text-accent'
               >

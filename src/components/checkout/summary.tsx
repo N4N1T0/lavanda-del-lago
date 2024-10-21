@@ -155,7 +155,7 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         </div>
         {total === '0,00 €' ? (
           <Link
-            href='/products'
+            href='/productos'
             className={`${buttonVariants({ variant: 'cart' })} w-full`}
           >
             Comprar ahora

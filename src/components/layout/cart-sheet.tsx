@@ -137,7 +137,7 @@ const CartSheet = (): JSX.Element => {
               <div className='flex w-full items-center justify-between'>
                 <SheetClose asChild>
                   <Link
-                    href='/products'
+                    href='/productos'
                     className='font-medium text-accent transition-colors duration-200 hover:text-accent/80'
                   >
                     Lista de Productos
@@ -204,8 +204,8 @@ const CartSheetCard = ({
                 <Link
                   href={
                     nombre && categoria
-                      ? `/products/${urlize(nombre)}?category=${categoria}`
-                      : '/products'
+                      ? `/productos/${urlize(nombre)}?category=${categoria}`
+                      : '/productos'
                   }
                 >
                   {nombre}
@@ -275,8 +275,8 @@ const CartSheetCardMobile = ({
             <Link
               href={
                 nombre && categoria
-                  ? `/products/${urlize(nombre)}?category=${categoria}`
-                  : '/products'
+                  ? `/productos/${urlize(nombre)}?category=${categoria}`
+                  : '/productos'
               }
             >
               {nombre}

@@ -47,13 +47,13 @@ const Breadcrumbs = (): JSX.Element => {
     if (result.length > 1) {
       result.splice(1, 0, {
         name: category,
-        path: `/products?category=${category}`
+        path: `/productos?category=${category}`
       })
     } else {
       // If there is only 1 breadcrumb, add the category to the end
       result.push({
         name: category,
-        path: `/products?category=${category}`
+        path: `/productos?category=${category}`
       })
     }
 

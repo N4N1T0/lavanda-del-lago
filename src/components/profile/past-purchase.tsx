@@ -60,10 +60,10 @@ const PastPurchasesCard = ({
                               className='h-fit w-fit'
                               href={
                                 product.nombre && product.categoria
-                                  ? `/products/${urlize(
+                                  ? `/productos/${urlize(
                                       product.nombre
                                     )}?category=${product.categoria}`
-                                  : '/products'
+                                  : '/productos'
                               }
                             >
                               <Avatar

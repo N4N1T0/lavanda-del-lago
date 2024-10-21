@@ -62,8 +62,8 @@ const NavbarLinks = ({ categories }: { categories: string[] }): JSX.Element => {
                           <Link
                             href={
                               category === 'Todos'
-                                ? '/products'
-                                : `/products?category=${category}`
+                                ? '/productos'
+                                : `/productos?category=${category}`
                             }
                             className='-mt-1 w-fit cursor-pointer font-medium text-gray-900 transition-colors duration-150 hover:text-accent'
                           >
@@ -155,8 +155,8 @@ const NavbarLinksMobile = ({
                                 <Link
                                   href={
                                     category === 'Todos'
-                                      ? '/products'
-                                      : `/products?category=${category}`
+                                      ? '/productos'
+                                      : `/productos?category=${category}`
                                   }
                                   className='mt-1 text-base font-medium text-gray-600 transition-colors duration-150 hover:text-accent'
                                 >

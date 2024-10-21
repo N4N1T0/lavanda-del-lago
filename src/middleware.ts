@@ -17,7 +17,7 @@ const publicRoutes = createRouteMatcher([
   '/api(.*)',
   '/sign-in(.*)',
   '/sign-up(.*)',
-  '/products(.*)',
+  '/productos(.*)',
   '/con-solo-una-flor',
   '/propiedad',
   '/certifications',

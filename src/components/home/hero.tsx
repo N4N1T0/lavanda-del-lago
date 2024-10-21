@@ -104,7 +104,7 @@ const FeaturedProduct = ({ product }: { product: Product }) => (
       </p>
       <Link
         className={buttonVariants({ variant: 'default' })}
-        href={`/products/${urlize(product.nombre)}?category=${product.categoria}`}
+        href={`/productos/${urlize(product.nombre)}?category=${product.categoria}`}
       >
         Comprar
       </Link>
@@ -135,7 +135,7 @@ const ProductCard = ({
     }`}
   >
     <Link
-      href={`/products/${urlize(product.nombre)}?category=${product.categoria}`}
+      href={`/productos/${urlize(product.nombre)}?category=${product.categoria}`}
     >
       <Image
         src={product.image || Condimento1}
