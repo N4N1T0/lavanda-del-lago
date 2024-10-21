@@ -25,7 +25,7 @@ const BlogPage = async (): Promise<JSX.Element> => {
     allBlogArticles,
     {},
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     }
   )
 

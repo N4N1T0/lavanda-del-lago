@@ -60,7 +60,7 @@ const BlogArticlePage = async ({
         slug: params.slug
       },
       {
-        next: { revalidate: 3600 }
+        next: { revalidate: 60 }
       }
     )
 

@@ -80,7 +80,3 @@ To install all dependencies, run npm install or yarn install as outlined in the 
 his project is licensed under a Free License. Feel free to use, modify, and distribute the code.
 
 ## TODOS
-
-- [ ] Sanity Handoff
-- [ ] Clerk Handoff
-- [ ] Redsys Production
