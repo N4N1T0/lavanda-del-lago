@@ -27,7 +27,7 @@ export default function NotFound() {
   const getLabel = (link: string) => {
     switch (link) {
       case '/productos':
-        return <span>Products</span>
+        return <span>Productos</span>
       case '/eventos':
         return <span>Eventos</span>
       default:

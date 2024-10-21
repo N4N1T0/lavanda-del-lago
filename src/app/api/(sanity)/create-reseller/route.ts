@@ -49,18 +49,20 @@ export const POST = withAxiom(
       const jsonBody = JSON.parse(body)
       await updateUserResellerStatus(jsonBody.id, jsonBody.reseller)
 
-      // Send email to user
-      await resend.emails.send({
-        from: 'info@lavandadellago.es',
-        to: jsonBody.email,
-        subject: 'Felicidades, eres un reseller',
-        react: ResellerWelcomeEmail({
-          link: `https://lavandadellago.es/reseller/${jsonBody.id}`,
-          nombre: jsonBody.name
+      if (jsonBody.reseller === true) {
+        // Send email to user
+        await resend.emails.send({
+          from: 'info@lavandadellago.es',
+          to: jsonBody.email,
+          subject: 'Felicidades, eres un reseller',
+          react: ResellerWelcomeEmail({
+            link: `https://lavandadellago.es/reseller/${jsonBody.id}`,
+            nombre: jsonBody.name
+          })
         })
-      })
 
-      req.log.info('Webhook processed successfully', { userId: jsonBody.id }) // Log successful processing
+        req.log.info('Webhook processed successfully', { userId: jsonBody.id }) // Log successful processing
+      }
 
       // Return success response
       return NextResponse.json({ success: true, message: 'Webhook success' })

@@ -22,6 +22,9 @@ export const runtime = 'nodejs'
  */
 export const POST = withAxiom(
   async (req: AxiomRequest): Promise<NextResponse> => {
+    // Get the current date in ISO format
+    const date = new Date().toISOString()
+
     try {
       req.log.info('Received request to create reseller form') // Log when the endpoint is hit
 
@@ -101,7 +104,10 @@ export const POST = withAxiom(
       })
 
       // If the response is the same id, return an already: true
-      if (response._id === `resellerForm-${id}`) {
+      if (
+        new Date(response._createdAt).getTime() < new Date(date).getTime() &&
+        response._id === `resellerForm-${id}`
+      ) {
         req.log.info('Reseller Form already created', { userId: id }) // Log existing form
         return NextResponse.json({
           success: true,
@@ -113,7 +119,7 @@ export const POST = withAxiom(
       // Send email to admin
       await resend.emails.send({
         from: 'info@lavandadellago.es',
-        to: 'info@lavandadellago.es',
+        to: 'adrian.alvarezalonso1991@gmail.com',
         subject: 'Nueva solicitud de reseller',
         react: NewResellerApplicationEmail({
           fecha: new Date().toLocaleDateString('es-ES'),

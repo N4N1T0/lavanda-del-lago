@@ -70,7 +70,7 @@ const NotificationsPageButton = ({
         <Button variant='link'>
           <HelpCircle className='mr-2 h-4 w-4' />
           {/* TODO: Link to support */}
-          <Link href='/support'>Contactar Soporte</Link>
+          <Link href='mailto:info@lavandadellago.es'>Contactar Soporte</Link>
         </Button>
       </>
     )

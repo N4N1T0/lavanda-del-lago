@@ -58,7 +58,7 @@ const PaypalButton = ({
 
       // Redirect the user to the success page
       router.push(
-        `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${iva}`
+        `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${Number(iva.split(' ')[0].replace(',', '.'))}`
       )
     } else {
       // If the order is null or undefined, log an error
@@ -85,7 +85,7 @@ const PaypalButton = ({
             'purchase_units': [
               {
                 'reference_id': 'd9f80740-38f0-11e8-b467-0ed5f89f718b',
-                'amount': { 'currency_code': 'EUR', 'value': '100.00' }
+                'amount': { 'currency_code': 'EUR', 'value': total }
               }
             ],
             'payment_source': {

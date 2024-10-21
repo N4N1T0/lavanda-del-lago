@@ -12,7 +12,7 @@ import {
   Text
 } from '@react-email/components'
 import { baseUrl, TailwindWrapper } from './email-utils'
-import { PurchaseConfirmationEmailProps, User } from '@/types'
+import { PurchaseConfirmationEmailProps } from '@/types'
 import { eurilize } from '@/lib/utils'
 
 export const CompletedPurchase = ({
@@ -26,7 +26,7 @@ export const CompletedPurchase = ({
   gateway,
   user,
   iva
-}: PurchaseConfirmationEmailProps & { user: User; iva: string }) => (
+}: PurchaseConfirmationEmailProps) => (
   <TailwindWrapper>
     <Html>
       <Head />

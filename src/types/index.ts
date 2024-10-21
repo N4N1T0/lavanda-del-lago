@@ -234,6 +234,8 @@ export interface PurchaseConfirmationEmailProps {
   reseller: boolean | undefined
   products: { product: Product; quantity: number }[] | []
   gateway: Gateway
+  user: User
+  iva: number | undefined | string
 }
 
 export interface NotificacionContactoInternoProps {

@@ -178,12 +178,7 @@ const ContactForm = () => {
           </CardContent>
         </Card>
         <div className='aspect-video rounded-lg'>
-          <Image
-            src={Map}
-            alt='Mapa de la tienda'
-            title='Mapa de la tienda'
-            objectFit='cover'
-          />
+          <Image src={Map} alt='Mapa de la tienda' title='Mapa de la tienda' />
         </div>
       </div>
     </div>
