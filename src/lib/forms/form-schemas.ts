@@ -92,11 +92,9 @@ export const resellerFormSchema = z.object({
       'El archivo debe ser menor a 5MB'
     )
     .optional(),
-  address: addressSchema.omit({ country: true }).extend({
-    locality: z.enum(['Ninguno de los anteriores', ...localities], {
-      errorMap: () => ({ message: 'Debes seleccionar un localidad' })
-    })
-  }) // Reuse Address Schema
+  province: z.enum(['Ninguno de los anteriores', ...localities], {
+    errorMap: () => ({ message: 'Debes seleccionar un Localidad' })
+  })
 })
 
 export type ResellerFormSchemaType = z.infer<typeof resellerFormSchema>
