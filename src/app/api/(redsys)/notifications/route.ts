@@ -2,12 +2,15 @@
 import { processRestNotification } from '@/lib/clients'
 
 // Queries Imports
-import { sanityClientWrite } from '@sanity-studio/lib/client'
-import { userByIdCompleted } from '@sanity-studio/queries'
+import { sanityClientRead, sanityClientWrite } from '@sanity-studio/lib/client'
+import {
+  userByIdCompleted,
+  shippingAddress as getShippingAddress
+} from '@sanity-studio/queries'
 
 // Type imports
 import type { ResponseJSONSuccess } from 'redsys-easy'
-import { Purchase } from '@/types/sanity'
+import { Purchase, ShippingAddress } from '@/types/sanity'
 import { Product, User } from '@/types'
 
 // Next.js Imports
@@ -31,6 +34,7 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
   req.log.info('Payment notification received') // Log when endpoint is hit
 
   const iva = req.nextUrl.searchParams.get('iva')
+  const shippingAddressId = req.nextUrl.searchParams.get('shippingAddressId')
 
   const notificationParams: ResponseJSONSuccess = {
     Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
@@ -56,10 +60,20 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
       return NextResponse.json({ success: false }, { status: 500 })
     }
 
-    const userResponse: User = await sanityClientWrite.fetch(
+    const userResponse: User = await sanityClientRead.fetch(
       userByIdCompleted,
       {
         id: response.userEmail?._ref
+      },
+      {
+        cache: 'no-store'
+      }
+    )
+
+    const shippingAddress: ShippingAddress = await sanityClientRead.fetch(
+      getShippingAddress,
+      {
+        id: shippingAddressId
       },
       {
         cache: 'no-store'
@@ -87,7 +101,8 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
           ?.products as unknown as { product: Product; quantity: number }[],
         gateway: 'RedSys',
         user: userResponse,
-        iva: iva || '0'
+        iva: iva || '0',
+        shippingAddress: shippingAddress
       })
     })
 

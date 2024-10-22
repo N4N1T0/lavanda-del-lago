@@ -1,3 +1,4 @@
+import type { SchemaTypeDefinition } from 'sanity'
 import aboutPage from '@sanity-studio/schemas/about-page'
 import author from '@sanity-studio/schemas/author'
 import blogArticle from '@sanity-studio/schemas/blog-articles'
@@ -16,10 +17,10 @@ import seo from '@sanity-studio/schemas/seo'
 import teams from '@sanity-studio/schemas/teams'
 import user from '@sanity-studio/schemas/user'
 import justAFlower from '@sanity-studio/schemas/just-a-flower'
-import type { SchemaTypeDefinition } from 'sanity'
 import property from '@sanity-studio/schemas/property'
 import remedies from '@sanity-studio/schemas/remedies'
 import certification from '@sanity-studio/schemas/certification'
+import shippingAddress from '@sanity-studio/schemas/shipping-address'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -43,6 +44,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     justAFlower,
     property,
     remedies,
-    certification
+    certification,
+    shippingAddress
   ]
 }

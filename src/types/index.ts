@@ -1,3 +1,5 @@
+import { ShippingAddress } from './sanity'
+
 export interface Product {
   id: string
   categoria: string
@@ -236,6 +238,7 @@ export interface PurchaseConfirmationEmailProps {
   gateway: Gateway
   user: User
   iva: number | undefined | string
+  shippingAddress: ShippingAddress | null
 }
 
 export interface NotificacionContactoInternoProps {
@@ -270,6 +273,7 @@ export interface SuccessPage {
   products: string
   gateway: Gateway
   iva: string
+  shippingAddressId: string
 }
 
 export interface NotificationPageBodyProps {
@@ -332,7 +336,7 @@ export interface User {
   } | null
   reseller?: boolean | null
   idDocument: {
-    type: 'DNI' | 'NIE'
+    type: 'DNI' | 'NIE' | 'NIF'
     value: string | null
   } | null
   pastPurchases?: PastPurchase[]

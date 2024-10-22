@@ -25,7 +25,8 @@ export const CompletedPurchase = ({
   products = [],
   gateway,
   user,
-  iva
+  iva,
+  shippingAddress
 }: PurchaseConfirmationEmailProps) => (
   <TailwindWrapper>
     <Html>
@@ -94,22 +95,29 @@ export const CompletedPurchase = ({
               {user?.idDocument?.value || ''}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Calle:</strong> {user?.address?.street || ''}
+              <strong>Calle:</strong>{' '}
+              {shippingAddress?.address?.street || user?.address?.street}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Piso:</strong> {user?.address?.floor || ''}
+              <strong>Piso:</strong>{' '}
+              {shippingAddress?.address?.floor || user?.address?.floor}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Referencia:</strong> {user?.address?.reference || ''}
+              <strong>Referencia:</strong>{' '}
+              {shippingAddress?.address?.reference || user?.address?.reference}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Código Postal:</strong> {user?.address?.postal_code || ''}
+              <strong>Código Postal:</strong>{' '}
+              {shippingAddress?.address?.postal_code ||
+                user?.address?.postal_code}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Localidad:</strong> {user?.address?.locality || ''}
+              <strong>Localidad:</strong>{' '}
+              {shippingAddress?.address?.locality || user?.address?.locality}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>País:</strong> {user?.address?.country || ''}
+              <strong>País:</strong>{' '}
+              {shippingAddress?.address?.country || user?.address?.country}
             </Text>
           </Section>
 
@@ -173,7 +181,7 @@ export const CompletedPurchase = ({
                 realizar la transferencia a la cuenta{' '}
               </Text>
               <Text className='font-bold'>
-                ES12 0182 2310 08 0200 1632 13 | con el concepto
+                ES04 0182 4136 9102 0178 4853 | con el concepto
                 &quot;lavandadellago-{orderNumber}&quot;
               </Text>{' '}
               <br />

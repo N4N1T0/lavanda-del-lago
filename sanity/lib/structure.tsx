@@ -7,6 +7,7 @@ import {
   Footprints,
   IdCard,
   Mail,
+  Map,
   Newspaper,
   PanelsTopLeft,
   RectangleEllipsis,
@@ -167,7 +168,11 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
               S.divider(),
               S.documentTypeListItem('purchase')
                 .title('Ventas')
-                .icon(() => <BadgeEuro className='h-4 w-4' />)
+                .icon(() => <BadgeEuro className='h-4 w-4' />),
+              S.divider(),
+              S.documentTypeListItem('shippingAddress')
+                .title('Direcciones de Envío')
+                .icon(() => <Map className='h-4 w-4' />)
             ])
         ),
       S.documentTypeListItem('events')
@@ -201,7 +206,8 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
             'justAFlower',
             'property',
             'remedies',
-            'certifications'
+            'certifications',
+            'shippingAddress'
           ].includes(listItem.getId()!)
       )
     ])

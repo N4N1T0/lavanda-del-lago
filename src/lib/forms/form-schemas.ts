@@ -1,6 +1,20 @@
 import { jobType, localities, shippingCountries } from '@/constants/site-data'
 import { z } from 'zod'
 
+// Address Schema
+export const addressSchema = z.object({
+  street: z.string().min(2, { message: 'La Calle es necesaria' }),
+  floor: z.string().min(1, { message: 'El Numero es necesario' }),
+  reference: z.string().optional(),
+  postal_code: z.string().min(2, { message: 'El Código Postal es necesario' }),
+  locality: z.string().min(1, { message: 'La localidad es necesaria' }),
+  country: z.enum(['Ninguno de los anteriores', ...shippingCountries], {
+    errorMap: () => ({ message: 'Debes seleccionar un País' })
+  })
+})
+
+export type AddressSchemaType = z.infer<typeof addressSchema>
+
 // Checkout Validation Schema with New User
 export const userSchema = z
   .object({
@@ -15,22 +29,14 @@ export const userSchema = z
       })
       .optional(),
     confirmPassword: z.string().optional(),
-    street: z.string().min(2, { message: 'La Calle es necesaria' }),
-    floor: z.string().min(1, { message: 'El Numero es necesario' }),
-    reference: z.string().optional(),
-    postal_code: z
-      .string()
-      .min(2, { message: 'El Código Postal es necesario' }),
-    locality: z.string().min(2, { message: 'La Localidad es necesaria' }),
-    country: z.enum(['Ninguno de los anteriores', ...shippingCountries], {
-      errorMap: () => ({ message: 'Debes seleccionar un País' })
-    }),
-    documentType: z.enum(['DNI', 'NIE'], {
+    documentType: z.enum(['DNI', 'NIE', 'NIF'], {
       message: 'Seleccione un tipo de documento'
     }),
     documentNumber: z
       .string()
-      .min(1, { message: 'El número del documento es necesario' })
+      .min(1, { message: 'El número del documento es necesario' }),
+    address: addressSchema,
+    shippingAddress: addressSchema
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -44,6 +50,7 @@ export const userSchema = z
 
 export type UserSchemaType = z.infer<typeof userSchema>
 
+// Reseller Form Schema
 export const resellerFormSchema = z.object({
   firstName: z
     .string()
@@ -65,9 +72,6 @@ export const resellerFormSchema = z.object({
     .min(9, 'El NIE debe tener exactamente 9 caracteres')
     .max(9, 'El NIE debe tener exactamente 9 caracteres')
     .min(1, 'El NIE es requerido'),
-  province: z.enum(['Ninguno de los anteriores', ...localities], {
-    errorMap: () => ({ message: 'Debes seleccionar un Localidad' })
-  }),
   phone: z
     .string()
     .min(9, 'El teléfono debe tener al menos 9 dígitos')
@@ -87,11 +91,17 @@ export const resellerFormSchema = z.object({
       (files) => files?.[0]?.size <= 5000000,
       'El archivo debe ser menor a 5MB'
     )
-    .optional()
+    .optional(),
+  address: addressSchema.omit({ country: true }).extend({
+    locality: z.enum(['Ninguno de los anteriores', ...localities], {
+      errorMap: () => ({ message: 'Debes seleccionar un localidad' })
+    })
+  }) // Reuse Address Schema
 })
 
 export type ResellerFormSchemaType = z.infer<typeof resellerFormSchema>
 
+// Contact Form Schema
 export const contactFormSchema = z.object({
   name: z
     .string()
@@ -99,7 +109,7 @@ export const contactFormSchema = z.object({
   email: z.string().email({ message: 'Correo electrónico inválido' }),
   phone: z
     .string()
-    .min(9, { message: 'El telémfono debe tener al menos 9 dígitos' }),
+    .min(9, { message: 'El teléfono debe tener al menos 9 dígitos' }),
   message: z
     .string()
     .min(5, { message: 'El mensaje debe tener al menos 5 caracteres' })

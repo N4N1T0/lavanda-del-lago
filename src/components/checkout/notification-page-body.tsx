@@ -60,8 +60,8 @@ const NotificationPageBody = ({
           <div className='text-center text-gray-800'>
             Si has elegido pagar mediante transferencia, solo tienes que
             realizar la transferencia a la cuenta{' '}
-            <span className='font-bold'>ES12 0182 2310 08 0200 1632 13</span>{' '}
-            con el concepto &quot;lavandadellago-{orderId}&quot;.
+            <span className='font-bold'>ES04 0182 4136 9102 0178 4853</span> con
+            el concepto &quot;lavandadellago-{orderId}&quot;.
             <br />
             <br />
             Después de recibir la confirmación de la transferencia, nosotros nos

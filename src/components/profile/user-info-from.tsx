@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 // Forms Imports
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import ShippingAddressForm from '@/components/profile/shipping-adress-form'
 
 // UI Imports
 import { Button } from '@/components/ui/button'
@@ -21,6 +22,7 @@ import {
 import { Form } from '@/components/ui/form'
 import PasswordCheck from '@/components/checkout/password-check'
 import FormFieldComponent from '@/components/shared/form-fields'
+import { Checkbox } from '@/components/ui/checkbox'
 
 // Assets Imports
 import { Loader2, Pencil } from 'lucide-react'
@@ -34,8 +36,7 @@ import { shippingCountries } from '@/constants/site-data'
 
 export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
   // Estado para controlar el diálogo abierto/cerrado
-  const [isOpen, setIsOpen] = useState(false)
-
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   // Función para abrir el diálogo
   const openDialog = () => setIsOpen(true)
 
@@ -60,7 +61,7 @@ export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
             Editar Perfil
           </DialogDescription>
         </DialogHeader>
-        <UserProfileForm user={user} closeDialog={closeDialog} />
+        <UserProfileForm user={user} closeDialog={closeDialog} isCard={true} />
       </DialogContent>
     </Dialog>
   )
@@ -68,11 +69,16 @@ export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
 
 export const UserProfileForm = ({
   user,
-  closeDialog
+  closeDialog,
+  isCard = false
 }: {
   user: User | null
   closeDialog?: () => void
+  isCard?: boolean
 }) => {
+  // New Address Toggle & Data
+  const [isShippingAddress, setIsShippingAddress] = useState<boolean>(false)
+
   // initialize the Router & Pathname
   const router = useRouter()
   const path = usePathname()
@@ -86,14 +92,24 @@ export const UserProfileForm = ({
       phone: user?.phone || '',
       documentType: user?.idDocument?.type || 'DNI',
       documentNumber: user?.idDocument?.value || '',
-      street: user?.address?.street || '',
-      floor: user?.address?.floor || '',
-      reference: user?.address?.reference || '',
-      postal_code: user?.address?.postal_code || '',
-      locality: user?.address?.locality || '',
-      country: user?.address?.country || 'España',
+      address: {
+        street: user?.address?.street || '',
+        floor: user?.address?.floor || '',
+        reference: user?.address?.reference || '',
+        postal_code: user?.address?.postal_code || '',
+        locality: user?.address?.locality || '',
+        country: user?.address?.country || 'España'
+      },
       password: user?.password || '',
-      confirmPassword: user?.password || ''
+      confirmPassword: user?.password || '',
+      shippingAddress: {
+        street: '',
+        floor: '',
+        reference: '',
+        postal_code: '',
+        locality: '',
+        country: 'España'
+      }
     },
     mode: 'onBlur'
   })
@@ -104,6 +120,25 @@ export const UserProfileForm = ({
     form.setValue('confirmPassword', user ? '12345678a' : '')
   }, [user, form])
 
+  useEffect(() => {
+    form.setValue(
+      'shippingAddress.floor',
+      !isShippingAddress ? 'Marbella 1' : ''
+    )
+    form.setValue(
+      'shippingAddress.street',
+      !isShippingAddress ? 'Marbella 2' : ''
+    )
+    form.setValue(
+      'shippingAddress.postal_code',
+      !isShippingAddress ? '12345' : ''
+    )
+    form.setValue(
+      'shippingAddress.locality',
+      !isShippingAddress ? 'Marbella 3' : ''
+    )
+  }, [isShippingAddress, form])
+
   const {
     formState: { isSubmitting, errors, dirtyFields }
   } = form
@@ -113,8 +148,9 @@ export const UserProfileForm = ({
 
   // Form submit handler.
   async function onSubmit(values: UserSchemaType) {
-    if (!isDirty && noErrors) {
-      router.push(`/checkout/review?userId=${user?.id}`)
+    // TODO: Add no empty fields validation
+    if (!isDirty && noErrors && !isShippingAddress) {
+      router.push(`/checkout/review?userId=${user?.id}&shippingAddress=null`)
       return
     }
 
@@ -122,9 +158,12 @@ export const UserProfileForm = ({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'new-user': user ? 'false' : 'true'
+        'new-user': user ? 'false' : 'true',
+        'newShippingAddress': isShippingAddress ? 'true' : 'false'
       },
-      body: JSON.stringify(values)
+      body: JSON.stringify({
+        values
+      })
     })
 
     const data = await response.json()
@@ -134,7 +173,9 @@ export const UserProfileForm = ({
 
       if (path === '/checkout') {
         setTimeout(() => {
-          router.push(`/checkout/review?userId=${data.data}`)
+          router.push(
+            `/checkout/review?userId=${data.data}&shippingAddress=${data.shippingAddress}`
+          )
         }, 200)
       } else {
         router.push(path)
@@ -148,7 +189,7 @@ export const UserProfileForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+      <form className='space-y-8'>
         <fieldset className='space-y-4'>
           <legend className='w-full border-b text-lg text-accent'>
             Información Personal
@@ -183,7 +224,7 @@ export const UserProfileForm = ({
               label=''
               placeholder='DNI'
               isSubmitting={isSubmitting}
-              options={['DNI', 'NIE']}
+              options={['DNI', 'NIE', 'NIF']}
               className='col-span-1'
             />
             <FormFieldComponent
@@ -196,21 +237,20 @@ export const UserProfileForm = ({
             />
           </div>
         </fieldset>
-
         <fieldset className='space-y-4'>
           <legend className='w-full border-b text-lg text-accent'>
-            Dirección
+            Dirección de Facturación
           </legend>
           <FormFieldComponent
             control={form.control}
-            name='street'
+            name='address.street'
             label='Calle'
             placeholder='Calle Falsa 123'
             isSubmitting={isSubmitting}
           />
           <FormFieldComponent
             control={form.control}
-            name='floor'
+            name='address.floor'
             label='Numero'
             placeholder='Piso 1, 1zq'
             isSubmitting={isSubmitting}
@@ -218,14 +258,14 @@ export const UserProfileForm = ({
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
             <FormFieldComponent
               control={form.control}
-              name='reference'
+              name='address.reference'
               label='Referencia (opcional)'
               placeholder='Detrás del Mercadona'
               isSubmitting={isSubmitting}
             />
             <FormFieldComponent
               control={form.control}
-              name='locality'
+              name='address.locality'
               label='Localidad'
               placeholder='Marbella'
               isSubmitting={isSubmitting}
@@ -234,14 +274,14 @@ export const UserProfileForm = ({
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
             <FormFieldComponent
               control={form.control}
-              name='postal_code'
+              name='address.postal_code'
               label='Código Postal'
               placeholder='22345'
               isSubmitting={isSubmitting}
             />
             <FormFieldComponent
               control={form.control}
-              name='country'
+              name='address.country'
               label='País de residencia'
               placeholder='España'
               type='select'
@@ -251,6 +291,7 @@ export const UserProfileForm = ({
           </div>
         </fieldset>
 
+        {/* Password */}
         {!user && (
           <fieldset className='space-y-4'>
             <legend className='w-full border-b text-sm text-accent'>
@@ -259,10 +300,42 @@ export const UserProfileForm = ({
             <PasswordCheck form={form} />
           </fieldset>
         )}
-        <Button type='submit' variant='cart' disabled={isSubmitting}>
+
+        {/* Checkbox for enabling/disabling shipping form using Shadcn UI */}
+        {!isCard && (
+          <div className='flex items-center space-x-2'>
+            <Checkbox
+              id='useShippingAddress'
+              checked={isShippingAddress}
+              onCheckedChange={() => setIsShippingAddress(!isShippingAddress)}
+              className='h-4 w-4'
+            />
+            <label htmlFor='useShippingAddress' className='text-sm text-accent'>
+              Usar una dirección de envío diferente a la de facturación
+            </label>
+          </div>
+        )}
+
+        {/* Shipping Address */}
+        {isShippingAddress && (
+          <fieldset className='space-y-4'>
+            <legend className='w-full border-b text-lg text-accent'>
+              Dirección de envío
+            </legend>
+            <ShippingAddressForm form={form} isSubmitting={isSubmitting} />
+          </fieldset>
+        )}
+
+        {/* Submit */}
+        <Button
+          type='submit'
+          variant='cart'
+          disabled={isSubmitting}
+          onClick={form.handleSubmit(onSubmit)}
+        >
           {isSubmitting ? (
             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-          ) : isDirty ? (
+          ) : isDirty || isShippingAddress ? (
             'Guardar Cambios'
           ) : (
             'Continuar'

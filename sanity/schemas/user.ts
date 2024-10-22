@@ -43,7 +43,8 @@ export default {
           options: {
             list: [
               { title: 'DNI', value: 'DNI' },
-              { title: 'NIE', value: 'NIE' }
+              { title: 'NIE', value: 'NIE' },
+              { title: 'NIF', value: 'NIF' }
             ]
           }
         },
@@ -51,24 +52,7 @@ export default {
           name: 'value',
           title: 'Valor del Documento',
           type: 'string',
-          description: 'El DNI o NIE del usuario',
-          validation: (Rule: any) =>
-            Rule.custom((value: string, context: any) => {
-              if (!value) return true // Allow field to be optional
-
-              const type = context.document.idDocument.type || {}
-              const dniRegex = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/
-              const nieRegex = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/
-
-              if (type === undefined) {
-                return 'Tipo de documento no especificado'
-              }
-
-              if (type === 'DNI' && dniRegex.test(value)) return true
-              if (type === 'NIE' && nieRegex.test(value)) return true
-
-              return 'Debe ser un DNI o un NIE válido'
-            })
+          description: 'El DNI o NIE del usuario'
         }
       ]
     },
@@ -127,6 +111,13 @@ export default {
           description: 'La localidad del usuario'
         }
       ]
+    },
+    {
+      name: 'shippingAddress',
+      title: 'Direcciones de Envío',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'shippingAddress' } }],
+      description: 'Direcciones de envío'
     },
     {
       name: 'reseller',

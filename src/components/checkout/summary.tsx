@@ -37,7 +37,13 @@ import { useLogger } from 'next-axiom'
  * @return {JSX.Element} An array containing the subtotal, total, and tax.
  */
 // Discount percentage for resellers (adjust as needed)
-const Summary = ({ user }: { user: User | null }): JSX.Element => {
+const Summary = ({
+  user,
+  shippingAddressId
+}: {
+  user: User | null
+  shippingAddressId: string
+}): JSX.Element => {
   // Get the shopping cart items and a function to update the cart items
   const [count, setCount, { isLoading: cartIsLoading }] = useShoppingCart()
   const [isLoading, setIsLoading] = useState(false)
@@ -85,7 +91,8 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
           totalAmount: Number(total.split(' ')[0].replace(',', '.')), // Use discounted total for payment
           user: user,
           products: serializedProducts,
-          iva: Number(iva.split(' ')[0].replace(',', '.'))
+          iva: Number(iva.split(' ')[0].replace(',', '.')),
+          shippingAddressId
         })
       })
 
@@ -179,16 +186,21 @@ const Summary = ({ user }: { user: User | null }): JSX.Element => {
         <PayPalScriptProvider
           options={{
             clientId:
-              'ARVFu5YwJzX47SVNwU5c9WlQ1zzfgjPoa6KCeenXoy1KL-kK5PyLUjiKzewOcnzm2uKEEWH3qTSJbrEM',
-            currency: 'EUR',
-            buyerCountry: 'ES'
+              'AelDA1IcnU2muA7u06bT2t2-Z6ZIGG5MbzWEN0DDF6fQ6SbRei6HihEe2geMBW77ZdEmfJb84pE4rPTO',
+            currency: 'EUR'
           }}
         >
-          <PaypalButton products={count} total={total} user={user} iva={iva} />
+          <PaypalButton
+            products={count}
+            total={total}
+            user={user}
+            iva={iva}
+            shippingAddressId={shippingAddressId}
+          />
         </PayPalScriptProvider>
         {user !== null && (
           <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${Number(iva.split(' ')[0].replace(',', '.'))}`}
+            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId}`}
             className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
           >
             Pago con Transferencia

@@ -3,38 +3,22 @@
 
 // Next.js Imports
 import { useRouter } from 'next/navigation'
-
-// External Packages Imports
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-
-// Types Imports
+import { PayPalButtons } from '@paypal/react-paypal-js'
 import { CartItem, User } from '@/types'
-
-// UI Imports
-import { Skeleton } from '@/components/ui/skeleton'
-
-// Axiom imports
 import { useLogger } from 'next-axiom'
 
-/**
- * Componente que renderiza un bot n de PayPal para realizar pagos.
- *
- * @param {CartItem[]} products - Productos que se van a comprar.
- * @param {string} total - Precio total de la compra.
- * @param {User | null} user - Usuario que est  realizando la compra.
- *
- * @returns {JSX.Element} Un JSX.Element que representa el bot n de PayPal.
- */
 const PaypalButton = ({
   products,
   total,
   user,
-  iva
+  iva,
+  shippingAddressId
 }: {
   products: CartItem[]
   total: string
   user: User | null
   iva: string
+  shippingAddressId: string
 }): JSX.Element => {
   const router = useRouter()
   const serializedProducts = encodeURIComponent(
@@ -45,63 +29,48 @@ const PaypalButton = ({
       }))
     )
   )
-  const [{ isPending }] = usePayPalScriptReducer()
-
-  // Axiom Init
   const log = useLogger()
 
-  // This function gets called when the user clicks on the PayPal button
-  const handleApprove = async (_data: any, actions: any) => {
-    if (actions.order) {
-      // Get the details of the order
-      const details = await actions.order.capture()
+  const handleApprove = async (_data: any) => {
+    try {
+      const details = await fetch('/api/paypal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'capture',
+          orderId: _data.orderID
+        })
+      }).then((res) => res.json())
 
-      // Redirect the user to the success page
       router.push(
-        `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${Number(iva.split(' ')[0].replace(',', '.'))}`
+        `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name || '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId}`
       )
-    } else {
-      // If the order is null or undefined, log an error
-      log.debug('actions.order is null or undefined')
-      return Promise.reject()
+    } catch (error: any) {
+      log.error('Error capturing order:', error)
     }
-  }
-
-  // This function gets called when the user clicks on the cancel button
-  const handleOnCancel = () => {
-    // Redirect the user to the success page with an orderId of null
-    router.push(
-      `/fallo?userId=${user?.id}&userName=${encodeURIComponent(user?.name ? user.name.normalize('NFC') : '')}&orderId=null&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}`
-    )
   }
 
   return (
     <>
-      {isPending ? <Skeleton className='bg-blue h-12 w-full' /> : null}
       <PayPalButtons
-        createOrder={(_data, actions) =>
-          actions.order.create({
-            'intent': 'CAPTURE',
-            'purchase_units': [
-              {
-                'reference_id': 'd9f80740-38f0-11e8-b467-0ed5f89f718b',
-                'amount': { 'currency_code': 'EUR', 'value': total }
-              }
-            ],
-            'payment_source': {
-              'paypal': {
-                'experience_context': {
-                  'payment_method_preference': 'IMMEDIATE_PAYMENT_REQUIRED',
-                  'brand_name': 'Lavanda del Lago',
-                  'locale': 'es-ES',
-                  'user_action': 'PAY_NOW'
-                }
-              }
-            }
+        createOrder={async () => {
+          const response = await fetch('/api/paypal', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              action: 'create',
+              total: Number(total.split(' ')[0].replace(',', '.')).toFixed(2)
+            })
           })
-        }
+
+          const order = await response.json()
+          return order.id
+        }}
         onApprove={handleApprove}
-        onCancel={handleOnCancel}
         style={{ layout: 'horizontal', color: 'blue', tagline: false }}
       />
     </>

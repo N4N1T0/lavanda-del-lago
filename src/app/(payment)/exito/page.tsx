@@ -19,11 +19,15 @@ import { CheckCircle2Icon } from 'lucide-react'
 
 // Types Imports
 import { Product, SuccessPage, User } from '@/types'
-import { Purchase } from '@/types/sanity'
+import { Purchase, ShippingAddress } from '@/types/sanity'
 
 // Query Imports
 import { sanityClientRead, sanityClientWrite } from '@sanity-studio/lib/client'
-import { PurchaseById, userByIdCompleted } from '@sanity-studio/queries'
+import {
+  PurchaseById,
+  shippingAddress as getShippingAddress,
+  userByIdCompleted
+} from '@sanity-studio/queries'
 
 // Resend Imports
 import { resend } from '@/lib/clients'
@@ -53,7 +57,8 @@ const SuccessPaymentPage = async ({
     totalAmount,
     gateway,
     products: productsParam,
-    iva
+    iva,
+    shippingAddressId
   } = searchParams
 
   // Verify the presence of required parameters
@@ -109,7 +114,14 @@ const SuccessPaymentPage = async ({
         })),
         _createdAt: new Date().toISOString(),
         _updatedAt: new Date().toISOString(),
-        _rev: orderId
+        _rev: orderId,
+        shippingAddress:
+          shippingAddressId === 'undefined' || shippingAddressId === 'null'
+            ? undefined
+            : {
+                _ref: shippingAddressId,
+                _type: 'reference'
+              }
       })
 
     const productsResponse: {
@@ -124,10 +136,21 @@ const SuccessPaymentPage = async ({
       }
     )
 
+    const shippingAddressResponse: ShippingAddress =
+      await sanityClientRead.fetch(
+        getShippingAddress,
+        {
+          id: shippingAddressId
+        },
+        {
+          cache: 'no-store'
+        }
+      )
+
     // Send email to user
     const { data, error } = await resend.emails.send({
       from: 'info@lavandadellago.es',
-      to: [user.email, 'info@lavandadellago.es', 'pedidos@lavandadellago.es'],
+      to: [user.email],
       subject: 'Orden Completada',
       react: CompletedPurchase({
         customerName: user.name,
@@ -139,7 +162,8 @@ const SuccessPaymentPage = async ({
         products: productsResponse.products,
         gateway,
         user,
-        iva: Number(iva)
+        iva: Number(iva),
+        shippingAddress: shippingAddressResponse
       })
     })
 

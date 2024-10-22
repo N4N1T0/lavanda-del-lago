@@ -18,6 +18,9 @@ import { resend } from '@/lib/clients'
 
 // Axiom Imports
 import { withAxiom, AxiomRequest } from 'next-axiom'
+import { ShippingAddress } from '@/types/sanity'
+
+import { v4 as uuidv4 } from 'uuid'
 
 export const runtime = 'nodejs'
 
@@ -35,10 +38,11 @@ export const POST = withAxiom(
       // Parse and validate request body
       const body = await req.json()
       const newUser = req.headers.get('new-user')
-      const parsedBody = userSchema.safeParse(body)
+      const newShippingAddress = req.headers.get('newShippingAddress')
+      const parsedUser = userSchema.safeParse(body.values)
 
-      if (!parsedBody.success) {
-        req.log.warn('Invalid request body', { errors: parsedBody.error }) // Log validation error
+      if (!parsedUser.success) {
+        req.log.warn('Invalid request body', { errors: parsedUser.error }) // Log validation error
         return NextResponse.json(
           { success: false, message: 'Invalid request body' },
           { status: 400 }
@@ -49,16 +53,41 @@ export const POST = withAxiom(
         name,
         email,
         phone,
-        floor,
-        locality,
-        street,
-        postal_code,
         documentNumber,
         documentType,
         password,
-        reference,
-        country
-      } = parsedBody.data
+        address: { reference, floor, locality, street, postal_code, country },
+        shippingAddress
+      } = parsedUser.data
+
+      let newShippingAddressResponse: ShippingAddress | null = null
+
+      if (newShippingAddress === 'true') {
+        if (!shippingAddress) {
+          req.log.warn('Missing shipping address') // Log missing shipping address error
+          return NextResponse.json(
+            { success: false, message: 'Missing shipping address' },
+            { status: 400 }
+          )
+        }
+
+        newShippingAddressResponse =
+          await sanityClientWrite.createIfNotExists<ShippingAddress>({
+            _id: uuidv4(),
+            _createdAt: new Date().toISOString(),
+            _updatedAt: new Date().toISOString(),
+            _rev: uuidv4(),
+            _type: 'shippingAddress',
+            address: {
+              floor: shippingAddress.floor,
+              locality: shippingAddress.locality,
+              street: shippingAddress.street,
+              postal_code: shippingAddress.postal_code,
+              reference: shippingAddress.reference,
+              country: shippingAddress.country
+            }
+          })
+      }
 
       // Helper to split full name into parts
       const { firstName, lastName } = splitFullName(name)
@@ -98,7 +127,8 @@ export const POST = withAxiom(
         return NextResponse.json({
           success: true,
           message: 'The profile has been updated successfully.',
-          data: id
+          data: id,
+          shippingAddress: newShippingAddressResponse?._id
         })
       } else {
         // Create a new user
@@ -174,7 +204,8 @@ export const POST = withAxiom(
         return NextResponse.json({
           success: true,
           message: 'The profile has been created successfully',
-          data: clerkUser.id
+          data: clerkUser.id,
+          shippingAddress: newShippingAddressResponse?._id
         })
       }
     } catch (error: any) {

@@ -46,6 +46,121 @@ export type Geopoint = {
   alt?: number
 }
 
+export type Certifications = {
+  _id: string
+  _type: 'certifications'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  certificationsBlocks?: Array<{
+    title?: string
+    description?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    _type: 'certificationBlock'
+    _key: string
+  }>
+}
+
+export type Remedies = {
+  _id: string
+  _type: 'remedies'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  firstDescription?: string
+  dualImage?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+    _key: string
+  }>
+  secodDescription?: string
+  benefits?: Array<{
+    image?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    description?: string
+    _type: 'benefit'
+    _key: string
+  }>
+}
+
+export type Property = {
+  _id: string
+  _type: 'property'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  featuredProduct?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'product'
+  }
+  featuredImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+}
+
 export type JustAFlower = {
   _id: string
   _type: 'justAFlower'
@@ -66,16 +181,14 @@ export type JustAFlower = {
   }
   quote?: string
   text?: string
-  secondaryImage?: {
+  video?: {
     asset?: {
       _ref: string
       _type: 'reference'
       _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
     }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
+    _type: 'file'
   }
   secondaryText?: string
   SecondaryQuote?: string
@@ -92,6 +205,7 @@ export type JustAFlower = {
     _type: 'image'
   }
   tetratiaryText?: string
+  tetraciaryQuote?: string
 }
 
 export type ResellerForm = {
@@ -104,12 +218,76 @@ export type ResellerForm = {
   lastName?: string
   email?: string
   nie?: string
-  province?: string
+  province?:
+    | '\xC1lava'
+    | 'Albacete'
+    | 'Alicante'
+    | 'Almer\xEDa'
+    | 'Asturias'
+    | '\xC1vila'
+    | 'Badajoz'
+    | 'Baleares'
+    | 'Barcelona'
+    | 'Burgos'
+    | 'C\xE1ceres'
+    | 'C\xE1diz'
+    | 'Cantabria'
+    | 'Castell\xF3n'
+    | 'Ceuta'
+    | 'Ciudad Real'
+    | 'C\xF3rdoba'
+    | 'Cuenca'
+    | 'Gerona'
+    | 'Granada'
+    | 'Guadalajara'
+    | 'Guip\xFAzcoa'
+    | 'Huelva'
+    | 'Huesca'
+    | 'Ja\xE9n'
+    | 'La Coru\xF1a'
+    | 'La Rioja'
+    | 'Las Palmas'
+    | 'Le\xF3n'
+    | 'L\xE9rida'
+    | 'Lugo'
+    | 'Madrid'
+    | 'M\xE1laga'
+    | 'Melilla'
+    | 'Murcia'
+    | 'Navarra'
+    | 'Orense'
+    | 'Palencia'
+    | 'Pontevedra'
+    | 'Salamanca'
+    | 'Santa Cruz de Tenerife'
+    | 'Segovia'
+    | 'Sevilla'
+    | 'Soria'
+    | 'Tarragona'
+    | 'Teruel'
+    | 'Toledo'
+    | 'Valencia'
+    | 'Valladolid'
+    | 'Vizcaya'
+    | 'Zamora'
+    | 'Zaragoza'
   phone?: string
   birthDate?: string
-  birthPlace?: string
   privacyPolicy?: boolean
-  companyFile: string
+  jobType?:
+    | 'Aut\xF3nomo'
+    | 'Tienda Online'
+    | 'Tienda F\xEDsica'
+    | 'Distribuidor'
+  companyFile?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    _type: 'file'
+  }
 }
 
 export type Purchase = {
@@ -133,24 +311,118 @@ export type Purchase = {
       [internalGroqTypeReferenceTo]?: 'product'
     }
     quantity?: number
+    _key: string
   }>
   totalAmount?: number
   purchaseDate?: string
   paymentMethod?: string
-  status?: 'pendiente' | 'completado' | 'cancelado' | 'procesando' | 'enviado'
+  status?:
+    | 'pendiente'
+    | 'completado'
+    | 'cancelado'
+    | 'procesando'
+    | 'enviado'
+    | 'entregado'
+  shippingAddress?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'shippingAddress'
+  }
+}
+
+export type ShippingAddress = {
+  _id: string
+  _type: 'shippingAddress'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  address?: {
+    street?: string
+    floor?: string
+    reference?: string
+    country?: string
+    postal_code?: string
+    locality?: string
+  }
+  purchase?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'purchase'
+  }>
 }
 
 export type User = {
   _id: string
-  _type: string
+  _type: 'user'
   _createdAt: string
   _updatedAt: string
   _rev: string
   name?: string
   email?: string
-  image?: string
+  password?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  idDocument?: {
+    type?: 'DNI' | 'NIE' | 'NIF'
+    value?: string
+  }
   phone?: string
-  address?: string
+  address?: {
+    street?: string
+    floor?: string
+    reference?: string
+    country?:
+      | 'Alemania'
+      | 'Austria'
+      | 'B\xE9lgica'
+      | 'Bulgaria'
+      | 'Chipre'
+      | 'Croacia'
+      | 'Dinamarca'
+      | 'Eslovaquia'
+      | 'Eslovenia'
+      | 'Espa\xF1a'
+      | 'Estonia'
+      | 'Finlandia'
+      | 'Francia'
+      | 'Grecia'
+      | 'Hungr\xEDa'
+      | 'Irlanda'
+      | 'Italia'
+      | 'Letonia'
+      | 'Lituania'
+      | 'Luxemburgo'
+      | 'Malta'
+      | 'Pa\xEDses Bajos'
+      | 'Polonia'
+      | 'Portugal'
+      | 'Rep\xFAblica Checa'
+      | 'Ruman\xEDa'
+      | 'Suecia'
+      | 'Estados Unidos'
+      | 'Canad\xE1'
+    postal_code?: string
+    locality?: string
+  }
+  shippingAddress?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'shippingAddress'
+  }>
   reseller?: boolean
   discount?: number
 }
@@ -221,57 +493,6 @@ export type Prefooter = {
     _type: 'image'
   }
   link?: string
-}
-
-export type NotFoundPage = {
-  _id: string
-  _type: 'notFoundPage'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  description?: string
-  digest?: string
-  image?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-  links?: Array<'/products' | '/blog' | '/events'>
-}
-
-export type ErrorPage = {
-  _id: string
-  _type: 'errorPage'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  description?: string
-  digest?: string
-  image?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-  contacts?: Array<{
-    label?: string
-    link?: string
-    _type: 'contact'
-    _key: string
-  }>
 }
 
 export type Newsletter = {
@@ -409,24 +630,27 @@ export type HomePage = {
   _rev: string
   title?: string
   bentoThreeImages?: Array<{
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    imageLink?: string
+    bentoImage?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+      }
+      _type: 'file'
     }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
     _key: string
   }>
   bentofeaturedCategory?: {
     title?:
       | 'Bienestar'
-      | 'Cosm\xE9tica'
       | 'Cosm\xE9tica corporal'
       | 'Cosm\xE9tica facial'
+      | 'Esencias para lavado'
+      | 'Higiene personal'
       | 'Hogar y ambiente'
+      | 'L\xEDnea mosquitos e insectos'
     description?: string
   }
   bentoFeaturedProducto?: {
@@ -437,10 +661,12 @@ export type HomePage = {
   }
   mainListCategories?: Array<
     | 'Bienestar'
-    | 'Cosm\xE9tica'
     | 'Cosm\xE9tica corporal'
     | 'Cosm\xE9tica facial'
+    | 'Esencias para lavado'
+    | 'Higiene personal'
     | 'Hogar y ambiente'
+    | 'L\xEDnea mosquitos e insectos'
   >
   InfoCards?: Array<{
     icon?: {
@@ -462,42 +688,29 @@ export type HomePage = {
     title?: string
     category?:
       | 'Bienestar'
-      | 'Cosm\xE9tica'
       | 'Cosm\xE9tica corporal'
       | 'Cosm\xE9tica facial'
+      | 'Esencias para lavado'
+      | 'Higiene personal'
       | 'Hogar y ambiente'
+      | 'L\xEDnea mosquitos e insectos'
   }
   carousel2?: {
     title?: string
     category?:
       | 'Bienestar'
-      | 'Cosm\xE9tica'
       | 'Cosm\xE9tica corporal'
       | 'Cosm\xE9tica facial'
+      | 'Esencias para lavado'
+      | 'Higiene personal'
       | 'Hogar y ambiente'
+      | 'L\xEDnea mosquitos e insectos'
   }
   featuredEvent?: {
     _ref: string
     _type: 'reference'
     _weak?: boolean
     [internalGroqTypeReferenceTo]?: 'events'
-  }
-  SEO?: {
-    metaTitle?: string
-    metaDescription?: string
-    metaKeywords?: Array<string>
-    openGraphImage?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
-    }
-    twitterCard?: 'summary' | 'summary_large_image'
   }
 }
 
@@ -711,23 +924,6 @@ export type AboutPage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'teams'
   }>
-  SEO?: {
-    metaTitle?: string
-    metaDescription?: string
-    metaKeywords?: Array<string>
-    openGraphImage?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
-    }
-    twitterCard?: 'summary' | 'summary_large_image'
-  }
 }
 
 export type BlogArticles = {
@@ -798,23 +994,6 @@ export type BlogArticles = {
   description?: string
   categories?: Array<string>
   featured?: boolean
-  SEO?: {
-    metaTitle?: string
-    metaDescription?: string
-    metaKeywords?: Array<string>
-    openGraphImage?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
-    }
-    twitterCard?: 'summary' | 'summary_large_image'
-  }
 }
 
 export type Author = {
@@ -895,6 +1074,15 @@ export type SanityImageMetadata = {
   isOpaque?: boolean
 }
 
+export type MediaTag = {
+  _id: string
+  _type: 'media.tag'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: Slug
+}
+
 export type Slug = {
   _type: 'slug'
   current?: string
@@ -906,14 +1094,16 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | Geopoint
+  | Certifications
+  | Remedies
+  | Property
   | JustAFlower
   | ResellerForm
   | Purchase
+  | ShippingAddress
   | User
   | SeoMetatags
   | Prefooter
-  | NotFoundPage
-  | ErrorPage
   | Newsletter
   | Footer
   | SalesPolicy
@@ -932,516 +1122,6 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | SanityAssetSourceData
   | SanityImageMetadata
+  | MediaTag
   | Slug
 export declare const internalGroqTypeReferenceTo: unique symbol
-// Source: ./src/lib/queries.ts
-// Variable: aboutUsPage
-// Query: *[_type == "aboutPage"][0]{  title,  description,  stats,  "statImage":stats_image.asset->url,  second_section_title,  second_section_description,  teams_section_title,  teams_section_description,  teams[]->{    name,    description,    "image": image.asset->url,    role,    links,    "id": _id  }}
-export type AboutUsPageResult = {
-  title: string | null
-  description: string | null
-  stats: Array<{
-    title?: string
-    value?: string
-    description?: string
-    _key: string
-  }> | null
-  statImage: string | null
-  second_section_title: string | null
-  second_section_description: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?:
-          | 'blockquote'
-          | 'h1'
-          | 'h2'
-          | 'h3'
-          | 'h4'
-          | 'h5'
-          | 'h6'
-          | 'normal'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          href?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        _type: 'image'
-        _key: string
-      }
-  > | null
-  teams_section_title: string | null
-  teams_section_description: string | null
-  teams: Array<{
-    name: string | null
-    description: string | null
-    image: string | null
-    role: string | null
-    links: Array<{
-      title?: string
-      url?: string
-      _key: string
-    }> | null
-    id: string
-  }> | null
-} | null
-// Variable: homePage
-// Query: *[_type == "homePage"]{  bentoThreeImages[]{    "image": asset->url  },  featuredEvent->{    date,    title,    "image": image.asset->url,    description,    urls[]{      "id": _key,      calendarName,      calendarUrl    }  },  carousel1,  carousel2,  InfoCards[][]{    "id": _key,    title,    description,    "icon": icon.asset->url }, mainListCategories,  bentofeaturedCategory,  bentoFeaturedProducto->{    nombre,    descripcion,    categoria,    "id": _id,    "image": fotoPrincipal.asset->url,  }}[0]
-export type HomePageResult = {
-  bentoThreeImages: Array<{
-    image: string | null
-  }> | null
-  featuredEvent: {
-    date: string | null
-    title: string | null
-    image: string | null
-    description: string | null
-    urls: Array<{
-      id: string
-      calendarName: string | null
-      calendarUrl: string | null
-    }> | null
-  } | null
-  carousel1: {
-    title?: string
-    category?:
-      | 'Bienestar'
-      | 'Cosm\xE9tica corporal'
-      | 'Cosm\xE9tica facial'
-      | 'Cosm\xE9tica'
-      | 'Hogar y ambiente'
-  } | null
-  carousel2: {
-    title?: string
-    category?:
-      | 'Bienestar'
-      | 'Cosm\xE9tica corporal'
-      | 'Cosm\xE9tica facial'
-      | 'Cosm\xE9tica'
-      | 'Hogar y ambiente'
-  } | null
-  InfoCards: Array<{
-    id: string
-    title: string | null
-    description: string | null
-    icon: string | null
-  }> | null
-  mainListCategories: Array<
-    | 'Bienestar'
-    | 'Cosm\xE9tica corporal'
-    | 'Cosm\xE9tica facial'
-    | 'Cosm\xE9tica'
-    | 'Hogar y ambiente'
-  > | null
-  bentofeaturedCategory: {
-    title?:
-      | 'Bienestar'
-      | 'Cosm\xE9tica corporal'
-      | 'Cosm\xE9tica facial'
-      | 'Cosm\xE9tica'
-      | 'Hogar y ambiente'
-    description?: string
-  } | null
-  bentoFeaturedProducto: {
-    nombre: string | null
-    descripcion: string | null
-    categoria: string | null
-    id: string
-    image: string | null
-  } | null
-} | null
-// Variable: footer
-// Query: *[_type == "footer"]{  subtitle,  socialMedia[]{    link,    platformName,    "id": _key  },  contactInfo,  copyright}[0]
-export type FooterResult = {
-  subtitle: string | null
-  socialMedia: Array<{
-    link: string | null
-    platformName: 'facebook' | 'instagram' | 'twitter' | 'youtube' | null
-    id: string
-  }> | null
-  contactInfo: {
-    email?: string
-    phone?: string
-    address?: string
-  } | null
-  copyright: string | null
-} | null
-// Variable: cookiePolicy
-// Query: *[_type == "cookiePolicy"]{    title,    description,    content  }[0]
-export type CookiePolicyResult = {
-  title: string | null
-  description: string | null
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }> | null
-} | null
-// Variable: privacyPolicy
-// Query: *[_type == "privacyPolicy"]{    title,    description,    content  }[0]
-export type PrivacyPolicyResult = {
-  title: string | null
-  description: string | null
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }> | null
-} | null
-// Variable: salesPolicy
-// Query: *[_type == "salesPolicy"]{    title,    description,    content  }[0]
-export type SalesPolicyResult = {
-  title: string | null
-  description: string | null
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }> | null
-} | null
-// Variable: errorPage
-// Query: *[_type == "errorPage"]{    title,    description,    digest,    "imageUrl": image.asset->url,    contacts[] {      label,      link    }  }[0]
-export type ErrorPageResult = {
-  title: string | null
-  description: string | null
-  digest: string | null
-  imageUrl: string | null
-  contacts: Array<{
-    label: string | null
-    link: string | null
-  }> | null
-} | null
-// Variable: notFoundPage
-// Query: *[_type == "notFoundPage"]{    title,    description,    digest,    "imageUrl": image.asset->url,    links  }[0]
-export type NotFoundPageResult = {
-  title: string | null
-  description: string | null
-  digest: string | null
-  imageUrl: string | null
-  links: Array<'/blog' | '/events' | '/products'> | null
-} | null
-// Variable: prefooter
-// Query: *[_type == "prefooter"]{  title,  description,  "imageUrl": image.asset->url,  link}[0]
-export type PrefooterResult = {
-  title: string | null
-  description: string | null
-  imageUrl: string | null
-  link: string | null
-} | null
-// Variable: seo
-// Query: *[_type == "seoMetatags"]{  titleTemplate,  defaultTitle,  description,  keywords[],  dominio,  "openGraph": {    url,    images[]{      "imageUrl": asset->url,      alt,      width,      height    }  },  "twitter": {    images[]{      "imageUrl": asset->url,      alt    }  }}[0]
-export type SeoResult = {
-  titleTemplate: string | null
-  defaultTitle: string | null
-  description: string | null
-  keywords: Array<string> | null
-  dominio: string | null
-  openGraph: {
-    url: null
-    images: null
-  }
-  twitter: {
-    images: null
-  }
-} | null
-// Variable: jusAFLower
-// Query: *[_type == "justAFlower"]{   "mainImage": mainImage.asset->url,   "secondaryImage": secondaryImage.asset->url,   text,   secondaryText,   quote,   title }[0]
-export type JusAFLowerResult = {
-  mainImage: string | null
-  secondaryImage: string | null
-  text: string | null
-  secondaryText: string | null
-  quote: string | null
-  title: string | null
-} | null
-// Variable: property
-// Query: *[_type == "property"]{  title,  content,  "product": featuredProduct->{     nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,    usabilidad,  },  "featuredImage": featuredImage.asset->url}[0]
-export type PropertyResult = null
-// Variable: remedies
-// Query: *[_type == "remedies"]{  title,  firstDescription,  "dualImage": dualImage[].asset->url,  secodDescription,  benefits[]{    "image": image.asset->url,    description  }}[0]
-export type RemediesResult = null
-// Variable: certifications
-// Query: *[_type == 'certifications']{  title,  certificationsBlocks[]{    title,     description  }}[0]
-export type CertificationsResult = null
-// Variable: allBlogArticles
-// Query: *[_type == "blog-articles"]{  categories,  "image": mainImage.asset->url,  title,  description,  author->{    name  },  "id":_id,  "slug": slug.current,  "createdAt":_createdAt,  featured}
-export type AllBlogArticlesResult = Array<{
-  categories: Array<string> | null
-  image: string | null
-  title: string | null
-  description: string | null
-  author: {
-    name: string | null
-  } | null
-  id: string
-  slug: string | null
-  createdAt: string
-  featured: boolean | null
-}>
-// Variable: blogArticleById
-// Query: *[_type == "blog-articles" && slug.current == $slug][0]{    categories,    "image": mainImage.asset->url,    title,    description,    author->{      name    },    content,    "createdAt":_createdAt  }
-export type BlogArticleByIdResult = {
-  categories: Array<string> | null
-  image: string | null
-  title: string | null
-  description: string | null
-  author: {
-    name: string | null
-  } | null
-  content: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?:
-          | 'blockquote'
-          | 'h1'
-          | 'h2'
-          | 'h3'
-          | 'h4'
-          | 'h5'
-          | 'h6'
-          | 'normal'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          href?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        _type: 'image'
-        _key: string
-      }
-  > | null
-  createdAt: string
-} | null
-// Variable: relatedArticlesByCategory
-// Query: *[_type == "blog-articles" && $category in categories]{    categories,    "image": mainImage.asset->url,    title,    description,    author->{      name    },    "id":_id,    "slug": slug.current,    "createdAt":_createdAt  }
-export type RelatedArticlesByCategoryResult = Array<{
-  categories: Array<string> | null
-  image: string | null
-  title: string | null
-  description: string | null
-  author: {
-    name: string | null
-  } | null
-  id: string
-  slug: string | null
-  createdAt: string
-}>
-// Variable: categories
-// Query: *[_type == "product"]{  categoria} | order(categoria)
-export type CategoriesResult = Array<{
-  categoria: string | null
-}>
-// Variable: allProducts
-// Query: *[_type == "product"]{  "id": _id,  nombre,  descripcion,  precio,  "image": fotoPrincipal.asset->url,  categoria,  stock,  "createdAt": _createdAt}
-export type AllProductsResult = Array<{
-  id: string
-  nombre: string | null
-  descripcion: string | null
-  precio: number | null
-  image: string | null
-  categoria: string | null
-  stock: number | null
-  createdAt: string
-}>
-// Variable: productByName
-// Query: *[_type == "product" && nombre == $name]{    "id": _id,    nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,    "createdAt": _createdAt,    usabilidad,    subcategoria,    codigoReferencia,    certificacion,    medidas,    codigoBarras,    slogan,    "fichaTecnica": fichaTecnica.asset->url,    fotosVarias[] {      "image": asset->url,      "key": _key    }  }[0]
-export type ProductByNameResult = {
-  id: string
-  nombre: string | null
-  descripcion: string | null
-  precio: number | null
-  image: string | null
-  categoria: string | null
-  stock: number | null
-  createdAt: string
-  usabilidad: string | null
-  subcategoria: string | null
-  codigoReferencia: string | null
-  certificacion: string | null
-  medidas: {
-    ancho?: number
-    alto?: number
-    profundidad?: number
-    peso?: number
-    volumen?: number
-  } | null
-  codigoBarras: string | null
-  slogan: string | null
-  fichaTecnica: string | null
-  fotosVarias: Array<{
-    image: string | null
-    key: string
-  }> | null
-} | null
-// Variable: productsByCategory
-// Query: *[_type == "product" && categoria == $category]{    "id": _id,    nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,    "createdAt": _createdAt  }
-export type ProductsByCategoryResult = Array<{
-  id: string
-  nombre: string | null
-  descripcion: string | null
-  precio: number | null
-  image: string | null
-  categoria: string | null
-  stock: number | null
-  createdAt: string
-}>
-// Variable: oramaIndexDeployUpdatedProducts
-// Query: *[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60*60*24] {    "id": _id,    nombre,    descripcion,    precio,    "image": fotoPrincipal.asset->url,    categoria,    stock,    "createdAt": _createdAt,    usabilidad,    subcategoria,    codigoReferencia,    certificacion,    medidas,    codigoBarras,    slogan,    "fichaTecnica": fichaTecnica.asset->url,    fotosVarias[] {      "image": asset->url,      "key": _key    }}
-export type OramaIndexDeployUpdatedProductsResult = Array<never>
-// Variable: userByIdCompleted
-// Query: *[_type == "user" && _id == $id][0] {  "id": _id,  email,  image,  name,  phone,  address,  reseller,  discount,  "idDocument": {    "type": idDocument.type,    "value": idDocument.value  },  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {    "id": _id,    products[] {      product-> {        "id": _id,        nombre,        "image": fotoPrincipal.asset->url,        categoria      },      quantity    },    totalAmount,    purchaseDate,    paymentMethod,    status,    reseller  }}
-export type userByIdCompletedResult = {
-  id: string
-  email: string | null
-  image: string | null
-  name: string | null
-  phone: string | null
-  address: string | null
-  reseller: boolean | null
-  discount: number | null
-  idDocument: {
-    type: null
-    value: null
-  }
-  pastPurchases: Array<{
-    id: string
-    products: Array<{
-      product: {
-        id: string
-        nombre: string | null
-        image: string | null
-        categoria: string | null
-      } | null
-      quantity: number | null
-    }> | null
-    totalAmount: number | null
-    purchaseDate: string | null
-    paymentMethod:
-      | 'paypal'
-      | 'tarjeta_credito'
-      | 'transferencia_bancaria'
-      | null
-    status: 'cancelado' | 'completado' | 'pendiente' | null
-    reseller: boolean | null
-  }>
-} | null
-// Variable: events
-// Query: *[_type == "events"]{  "id": _id,  date,  title,  "image": image.asset->url,  description,  urls[]{    "id": _key,    calendarName,    calendarUrl  }}
-export type EventsResult = Array<{
-  id: string
-  date: string | null
-  title: string | null
-  image: string | null
-  description: string | null
-  urls: Array<{
-    id: string
-    calendarName: string | null
-    calendarUrl: string | null
-  }> | null
-}>
-
-// Query TypeMap
-import '@sanity-studio/lib/client'
-declare module '@sanity-studio/lib/client' {
-  interface SanityQueries {
-    '\n*[_type == "aboutPage"][0]{\n  title,\n  description,\n  stats,\n  "statImage":stats_image.asset->url,\n  second_section_title,\n  second_section_description,\n  teams_section_title,\n  teams_section_description,\n  teams[]->{\n    name,\n    description,\n    "image": image.asset->url,\n    role,\n    links,\n    "id": _id\n  }\n}\n': AboutUsPageResult
-    '\n*[_type == "homePage"]{\n  bentoThreeImages[]{\n    "image": asset->url\n  },\n  featuredEvent->{\n    date,\n    title,\n    "image": image.asset->url,\n    description,\n    urls[]{\n      "id": _key,\n      calendarName,\n      calendarUrl\n    }\n  },\n  carousel1,\n  carousel2,\n  InfoCards[][]{\n    "id": _key,\n    title,\n    description,\n    "icon": icon.asset->url\n },\n mainListCategories,\n  bentofeaturedCategory,\n  bentoFeaturedProducto->{\n    nombre,\n    descripcion,\n    categoria,\n    "id": _id,\n    "image": fotoPrincipal.asset->url,\n  }\n}[0]\n': HomePageResult
-    '\n*[_type == "footer"]{\n  subtitle,\n  socialMedia[]{\n    link,\n    platformName,\n    "id": _key\n  },\n  contactInfo,\n  copyright\n}[0]\n': FooterResult
-    '\n  *[_type == "cookiePolicy"]{\n    title,\n    description,\n    content\n  }[0]\n': CookiePolicyResult
-    '\n  *[_type == "privacyPolicy"]{\n    title,\n    description,\n    content\n  }[0]\n': PrivacyPolicyResult
-    '\n  *[_type == "salesPolicy"]{\n    title,\n    description,\n    content\n  }[0]\n': SalesPolicyResult
-    '\n  *[_type == "errorPage"]{\n    title,\n    description,\n    digest,\n    "imageUrl": image.asset->url,\n    contacts[] {\n      label,\n      link\n    }\n  }[0]\n': ErrorPageResult
-    '\n  *[_type == "notFoundPage"]{\n    title,\n    description,\n    digest,\n    "imageUrl": image.asset->url,\n    links\n  }[0]\n': NotFoundPageResult
-    '*[_type == "prefooter"]{\n  title,\n  description,\n  "imageUrl": image.asset->url,\n  link\n}[0]': PrefooterResult
-    '*[_type == "seoMetatags"]{\n  titleTemplate,\n  defaultTitle,\n  description,\n  keywords[],\n  dominio,\n  "openGraph": {\n    url,\n    images[]{\n      "imageUrl": asset->url,\n      alt,\n      width,\n      height\n    }\n  },\n  "twitter": {\n    images[]{\n      "imageUrl": asset->url,\n      alt\n    }\n  }\n}[0]\n': SeoResult
-    '*[_type == "justAFlower"]{\n   "mainImage": mainImage.asset->url,\n   "secondaryImage": secondaryImage.asset->url,\n   text,\n   secondaryText,\n   quote,\n   title\n }[0]\n': JusAFLowerResult
-    '*[_type == "property"]{\n  title,\n  content,\n  "product": featuredProduct->{\n     nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    usabilidad,\n  },\n  "featuredImage": featuredImage.asset->url\n}[0]\n': PropertyResult
-    '*[_type == "remedies"]{\n  title,\n  firstDescription,\n  "dualImage": dualImage[].asset->url,\n  secodDescription,\n  benefits[]{\n    "image": image.asset->url,\n    description\n  }\n}[0]\n': RemediesResult
-    "*[_type == 'certifications']{\n  title,\n  certificationsBlocks[]{\n    title, \n    description\n  }\n}[0]": CertificationsResult
-    '\n*[_type == "blog-articles"]{\n  categories,\n  "image": mainImage.asset->url,\n  title,\n  description,\n  author->{\n    name\n  },\n  "id":_id,\n  "slug": slug.current,\n  "createdAt":_createdAt,\n  featured\n}': AllBlogArticlesResult
-    '\n  *[_type == "blog-articles" && slug.current == $slug][0]{\n    categories,\n    "image": mainImage.asset->url,\n    title,\n    description,\n    author->{\n      name\n    },\n    content,\n    "createdAt":_createdAt\n  }\n': BlogArticleByIdResult
-    '\n  *[_type == "blog-articles" && $category in categories]{\n    categories,\n    "image": mainImage.asset->url,\n    title,\n    description,\n    author->{\n      name\n    },\n    "id":_id,\n    "slug": slug.current,\n    "createdAt":_createdAt\n  }\n': RelatedArticlesByCategoryResult
-    '\n*[_type == "product"]{\n  categoria\n} | order(categoria)\n': CategoriesResult
-    '\n*[_type == "product"]{\n  "id": _id,\n  nombre,\n  descripcion,\n  precio,\n  "image": fotoPrincipal.asset->url,\n  categoria,\n  stock,\n  "createdAt": _createdAt\n}\n': AllProductsResult
-    '\n  *[_type == "product" && nombre == $name]{\n    "id": _id,\n    nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    "createdAt": _createdAt,\n    usabilidad,\n    subcategoria,\n    codigoReferencia,\n    certificacion,\n    medidas,\n    codigoBarras,\n    slogan,\n    "fichaTecnica": fichaTecnica.asset->url,\n    fotosVarias[] {\n      "image": asset->url,\n      "key": _key\n    }\n  }[0]\n': ProductByNameResult
-    '\n  *[_type == "product" && categoria == $category]{\n    "id": _id,\n    nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    "createdAt": _createdAt\n  }\n': ProductsByCategoryResult
-    '\n*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60*60*24] {\n    "id": _id,\n    nombre,\n    descripcion,\n    precio,\n    "image": fotoPrincipal.asset->url,\n    categoria,\n    stock,\n    "createdAt": _createdAt,\n    usabilidad,\n    subcategoria,\n    codigoReferencia,\n    certificacion,\n    medidas,\n    codigoBarras,\n    slogan,\n    "fichaTecnica": fichaTecnica.asset->url,\n    fotosVarias[] {\n      "image": asset->url,\n      "key": _key\n    }\n}\n': OramaIndexDeployUpdatedProductsResult
-    '\n  *[_type == "user" && _id == $id][0] {\n  "id": _id,\n  email,\n  image,\n  name,\n  phone,\n  address,\n  reseller,\n  discount,\n  "idDocument": {\n    "type": idDocument.type,\n    "value": idDocument.value\n  },\n  "pastPurchases": *[_type == "purchase" && userEmail._ref == ^._id] {\n    "id": _id,\n    products[] {\n      product-> {\n        "id": _id,\n        nombre,\n        "image": fotoPrincipal.asset->url,\n        categoria\n      },\n      quantity\n    },\n    totalAmount,\n    purchaseDate,\n    paymentMethod,\n    status,\n    reseller\n  }\n}\n': userByIdCompletedResult
-    '\n*[_type == "events"]{\n  "id": _id,\n  date,\n  title,\n  "image": image.asset->url,\n  description,\n  urls[]{\n    "id": _key,\n    calendarName,\n    calendarUrl\n  }\n}\n': EventsResult
-  }
-}

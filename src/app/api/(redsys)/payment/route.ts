@@ -38,7 +38,8 @@ export const POST = withAxiom(
       totalAmount,
       user,
       products,
-      iva
+      iva,
+      shippingAddressId
     }: {
       totalAmount: number
       user: User
@@ -47,6 +48,7 @@ export const POST = withAxiom(
         id: string
         quantity: number
       }[]
+      shippingAddressId: string
     } = await req.json()
 
     const { name, id } = user
@@ -70,8 +72,8 @@ export const POST = withAxiom(
       DS_MERCHANT_AMOUNT: redsysAmount,
       DS_MERCHANT_CURRENCY: redsysCurrency,
       DS_MERCHANT_MERCHANTNAME: 'Lavanda del Lago.es',
-      DS_MERCHANT_MERCHANTURL: `${process.env.NEXT_PUBLIC_URL}/api/notifications?iva=${iva}`, // Notification URL
-      DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/exito?userId=${id}&orderId=${orderId}&totalAmount=${totalAmount}&products=${products}&gateway=RedSys&iva=${iva}`, // Success URL
+      DS_MERCHANT_MERCHANTURL: `${process.env.NEXT_PUBLIC_URL}/api/notifications?iva=${iva}&shippingAddressId=${shippingAddressId}`, // Notification URL
+      DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/exito?userId=${id}&orderId=${orderId}&totalAmount=${totalAmount}&products=${products}&gateway=RedSys&iva=${iva}&shippingAddressId=${shippingAddressId}`, // Success URL
       DS_MERCHANT_URLKO: `${process.env.NEXT_PUBLIC_URL}/fallo?userId=${id}&orderId=${orderId}&totalAmount=${totalAmount}`, // Error URL
       DS_MERCHANT_TERMINAL: merchantInfo.DS_MERCHANT_TERMINAL,
       DS_MERCHANT_MERCHANTCODE: merchantInfo.DS_MERCHANT_MERCHANTCODE,

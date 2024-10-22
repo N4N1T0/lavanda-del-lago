@@ -106,6 +106,14 @@ export default {
         ]
       },
       description: 'El estado actual de la compra.'
+    },
+    {
+      name: 'shippingAddress',
+      title: 'Dirección de Envío',
+      type: 'reference',
+      to: [{ type: 'shippingAddress' }],
+      description:
+        'La dirección de envío de la compra.SI EL CAMPO ESTA VACIO PUES LA DIRECCION DE ENVIO ES LA DEL USUARIO'
     }
   ],
   preview: {
