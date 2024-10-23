@@ -81,7 +81,5 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 
 ## TODOS
 
-- [x] Login automático del nuevo usuario (no es posible un Login automático por temas de seguridad, te explico en un audio)
-- [x] revisar el mensaje de error de PayPal (un campo se seguridad en caso el montoTotal, el usuario, o los productos no estén por algún fallo del sistema y cree problemas en la venta)
-- [x] agregar Banco y Bic a la página de Éxito y Al correo de compra
-- [x] Dirección de envío de la compra sincronizada con la compra y el envío (probe con Transferencia y funciona, se que no se usa el CMS para eso pero al final de la compra hay un apartada para la dirección asociada)
+- [ ] Update to Next.js 15 (Breaking Changes use codemod)
+- [ ] Update to Clerk 6

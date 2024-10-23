@@ -92,12 +92,12 @@ const FormFieldComponent = <T extends FieldValues>({
                   />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
+              <SelectContent className='border border-accent/50'>
                 {options.map((option) => (
                   <SelectItem
                     key={option}
                     value={option}
-                    className='font-medium'
+                    className='font-medium focus:bg-accent/20'
                   >
                     {option}
                   </SelectItem>
@@ -116,11 +116,12 @@ const FormFieldComponent = <T extends FieldValues>({
               onValueChange={field.onChange}
               defaultValue={field.value}
               className='flex flex-col space-y-1'
+              disabled={isSubmitting}
             >
               {options.map((option) => (
                 <FormItem key={option} className='flex items-center space-x-3'>
                   <FormControl>
-                    <RadioGroupItem value={option} />
+                    <RadioGroupItem value={option} disabled={isSubmitting} />
                   </FormControl>
                   <FormLabel className='font-normal'>{option}</FormLabel>
                 </FormItem>

@@ -119,8 +119,8 @@ export const POST = withAxiom(
       // Send email to admin
       await resend.emails.send({
         from: 'info@lavandadellago.es',
-        to: 'adrian.alvarezalonso1991@gmail.com',
-        subject: 'Nueva solicitud de reseller',
+        to: 'info@lavandadellago.es',
+        subject: 'Nueva solicitud de Revendedor',
         react: NewResellerApplicationEmail({
           fecha: new Date().toLocaleDateString('es-ES'),
           nombre: `${data.firstName} ${data.lastName}`,

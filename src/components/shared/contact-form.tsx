@@ -20,17 +20,19 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 // Icons Imports
-import { Mail, Phone, MapPin } from 'lucide-react'
+import { Mail, Phone, MapPin, Loader2 } from 'lucide-react'
 
 // Axiom logging
 import { useLogger } from 'next-axiom'
 import { useState } from 'react'
 
 const ContactForm = () => {
-  const { toast } = useToast()
+  // Axiom init
   const log = useLogger()
+  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
 
+  // React Hook Form init
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -92,7 +94,7 @@ const ContactForm = () => {
 
   return (
     <div className='grid gap-8 md:grid-cols-2'>
-      <Card className='flex flex-col justify-between'>
+      <Card className='flex flex-col justify-between border border-accent/30'>
         <CardHeader>
           <CardTitle className='text-accent'>Envíanos un mensaje</CardTitle>
         </CardHeader>
@@ -137,14 +139,18 @@ const ContactForm = () => {
                 variant='cart'
                 disabled={isLoading}
               >
-                {isLoading ? 'Enviando...' : 'Enviar mensaje'}
+                {isSubmitting || isLoading ? (
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                ) : (
+                  'Enviar'
+                )}
               </Button>
             </form>
           </Form>
         </CardContent>
       </Card>
       <div className='space-y-8'>
-        <Card>
+        <Card className='border border-accent/30'>
           <CardHeader>
             <CardTitle className='text-accent'>
               Información de contacto
@@ -177,9 +183,22 @@ const ContactForm = () => {
             </Link>
           </CardContent>
         </Card>
-        <div className='aspect-video rounded-lg'>
-          <Image src={Map} alt='Mapa de la tienda' title='Mapa de la tienda' />
-        </div>
+        <Link
+          href='https://www.google.com/maps/place/C.+Soria,+12,+29670+San+Pedro+Alc%C3%A1ntara,+M%C3%A1laga/@36.48077,-4.9961049,17z/data=!3m1!4b1!4m6!3m5!1s0xd732a3e8acc112d:0xb9d10395a903e1ab!8m2!3d36.48077!4d-4.99353!16s%2Fg%2F11c23zs3p_?entry=ttu&g_ep=EgoyMDI0MTAxMy4wIKXMDSoASAFQAw%3D%3D'
+          className='group relative block aspect-video overflow-hidden rounded-lg border border-accent/30'
+        >
+          <Image
+            src={Map}
+            alt='Mapa de la tienda'
+            title='Mapa de la tienda'
+            className='object-cover transition-transform duration-150 ease-in-out group-hover:scale-105'
+            fill
+            sizes='(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw'
+            priority
+          />
+        </Link>
       </div>
     </div>
   )

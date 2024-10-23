@@ -205,7 +205,12 @@ const ResellerForm = () => {
           isSubmitting={isSubmitting}
         />
 
-        <Button type='submit' disabled={isSubmitting}>
+        <Button
+          type='submit'
+          variant='cart'
+          className='w-full max-w-xs'
+          disabled={isSubmitting}
+        >
           {isSubmitting ? (
             <Loader2 className='mr-2 h-4 w-4 animate-spin' />
           ) : (

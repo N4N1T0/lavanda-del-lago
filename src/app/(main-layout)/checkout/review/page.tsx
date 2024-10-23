@@ -10,6 +10,7 @@ import { User } from '@/types'
 import { sanityClientRead } from '@sanity-studio/lib/client'
 import { shippingAddress, userByIdPartial } from '@sanity-studio/queries'
 import { ShippingAddress } from '@/types/sanity'
+import { getMostUsedCategory } from '@/lib/utils'
 
 // Metadata for the Page
 export const metadata: Metadata = {
@@ -49,6 +50,9 @@ const CheckoutReviewPage = async ({
     }
   )
 
+  // Get most used category for the reselling
+  const mostUsedCategory = getMostUsedCategory(response.pastPurchases)
+
   return (
     <section
       id='checkout info'
@@ -58,7 +62,7 @@ const CheckoutReviewPage = async ({
         <Summary user={response} shippingAddressId={shippingAddressResponse} />
       </div>
       <article className='sticky top-0 h-fit'>
-        <LastMinute category='Higiene personal' />
+        <LastMinute category={mostUsedCategory} />
       </article>
     </section>
   )

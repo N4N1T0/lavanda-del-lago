@@ -12,7 +12,7 @@ import { withAxiom, AxiomRequest } from 'next-axiom'
  * @return {Promise<any>} The PayPal order data.
  */
 const createPayPalOrder = async (total: string): Promise<any> => {
-  const PAYPAL_API = 'https://api-m.paypal.com' // or 'https://api-m.sandbox.paypal.com' for testing
+  const PAYPAL_API = 'https://api-m.paypal.com'
   const clientId = process.env.PAYPAL_CLIENT_ID
   const clientSecret = process.env.PAYPAL_CLIENT_SECRET
 
@@ -34,7 +34,17 @@ const createPayPalOrder = async (total: string): Promise<any> => {
             value: total
           }
         }
-      ]
+      ],
+      'payment_source': {
+        'paypal': {
+          'experience_context': {
+            'payment_method_preference': 'IMMEDIATE_PAYMENT_REQUIRED',
+            'brand_name': 'Lavanda del Lago España',
+            'locale': 'es-ES',
+            'user_action': 'PAY_NOW'
+          }
+        }
+      }
     })
   })
 

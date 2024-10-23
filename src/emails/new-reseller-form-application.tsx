@@ -39,7 +39,7 @@ export const NewResellerApplicationEmail = ({
             className='mx-auto mb-6'
           />
           <Heading className='mb-4 text-center text-2xl font-bold text-gray-800'>
-            Nueva Solicitud de Reseller
+            Nueva Solicitud de Revendedor
           </Heading>
           <Text className='mb-6 text-gray-800'>
             Estimado equipo administrativo,
