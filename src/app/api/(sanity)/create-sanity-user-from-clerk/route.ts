@@ -29,7 +29,11 @@ export const GET = withAxiom(
     try {
       req.log.info('GET request for creating Sanity user initiated')
 
+      // Get the current date in ISO format
       const now = new Date()
+
+      // Get the redirect URL
+      const redirectTo = req.nextUrl.searchParams.get('redirectUrl')
 
       // Get the current user
       const user = await currentUser()
@@ -80,7 +84,10 @@ export const GET = withAxiom(
         })
       }
 
-      return NextResponse.redirect(process.env.NEXT_PUBLIC_URL!)
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_URL!}/${redirectTo}` ||
+          process.env.NEXT_PUBLIC_URL!
+      )
     } catch (error) {
       // Log the error for debugging purposes
       req.log.error('Error creating user in Sanity', { error })

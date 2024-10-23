@@ -181,10 +181,14 @@ export const CompletedPurchase = ({
                 realizar la transferencia a la cuenta{' '}
               </Text>
               <Text className='font-bold'>
-                ES04 0182 4136 9102 0178 4853 | con el concepto
-                &quot;lavandadellago-{orderNumber}&quot;
-              </Text>{' '}
+                IBAN: ES04 0182 4136 9102 0178 4853
+              </Text>
               <br />
+              <Text className='font-bold'>BIC: BBVAESMMXXX</Text>
+              <br />
+              <Text className='font-bold'>
+                con el concepto: &quot;lavandadellago-{orderNumber}&quot;
+              </Text>
               <Text>
                 Después de recibir la confirmación de la transferencia, nosotros
                 nos pondremos en contacto contigo para confirmar la recepción

@@ -59,9 +59,15 @@ const NotificationPageBody = ({
         ) : (
           <div className='text-center text-gray-800'>
             Si has elegido pagar mediante transferencia, solo tienes que
-            realizar la transferencia a la cuenta{' '}
-            <span className='font-bold'>ES04 0182 4136 9102 0178 4853</span> con
-            el concepto &quot;lavandadellago-{orderId}&quot;.
+            realizar la transferencia a la cuenta
+            <span className='font-bold'>
+              IBAN: ES04 0182 4136 9102 0178 4853
+            </span>
+            <span className='font-bold'>BIC: BBVAESMMXXX</span>
+            con el concepto
+            <span className='font-bold'>
+              &quot;lavandadellago-{orderId}&quot;
+            </span>
             <br />
             <br />
             Después de recibir la confirmación de la transferencia, nosotros nos

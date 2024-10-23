@@ -452,7 +452,8 @@ export const events = groq`
 
 export const shippingAddress = groq`
 *[_type == "shippingAddress" && _id == $id][0]{
-  address
+  address,
+  _id
 }
 `
 

@@ -417,8 +417,6 @@ export const getShippingCost = (
   const isEurope = !isSpain && !isUSA && !isCanada
   const isCanaryIslands = isSpain ? isCanaryIlands(Number(postalCode)) : false
 
-  console.log(isCanaryIslands)
-
   let shippingCost = 0
 
   if (isSpain) {

@@ -20,11 +20,14 @@ const publicRoutes = createRouteMatcher([
   '/productos(.*)',
   '/con-solo-una-flor',
   '/propiedad',
-  '/certifications',
+  '/certificaciones',
   '/remedios',
-  '/checkout(.*)',
+  '/checkout',
   '/contacto'
 ])
+
+// Protect the /checkout/review route
+const checkoutReviewProtectedRoute = createRouteMatcher(['/checkout/review'])
 
 // Define reseller-protected routes
 const resellerProtectedRoutes = createRouteMatcher(['/reseller/(.*)'])
@@ -41,6 +44,12 @@ export default clerkMiddleware((auth, req) => {
   // Redirect to sign-in if not authenticated
   if (!userId) {
     return auth().redirectToSignIn({ returnBackUrl: req.url })
+  }
+
+  // If user tries to access /checkout/review, redirect to login with redirectUrl
+  if (checkoutReviewProtectedRoute(req) && !userId) {
+    const redirectUrl = encodeURIComponent(req.url)
+    return NextResponse.redirect(`/sign-in?redirectUrl=${redirectUrl}`)
   }
 
   // If user is authenticated but accesses a reseller-protected route

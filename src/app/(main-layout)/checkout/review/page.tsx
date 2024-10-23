@@ -49,8 +49,6 @@ const CheckoutReviewPage = async ({
     }
   )
 
-  console.log(shippingAddressResponse)
-
   return (
     <section
       id='checkout info'

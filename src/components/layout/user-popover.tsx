@@ -20,10 +20,14 @@ import {
 import { Button, buttonVariants } from '@/components/ui/button'
 import { SignInButton, useUser } from '@clerk/nextjs'
 import { Skeleton } from '../ui/skeleton'
+import { usePathname } from 'next/navigation'
 
 const UserPopover = (): JSX.Element => {
   // Get the user from Clerk
   const { user, isLoaded, isSignedIn } = useUser()
+
+  // Get the current path
+  const path = usePathname()
 
   if (!isLoaded) return <Skeleton className='h-8 w-8 rounded-full' />
 
@@ -40,8 +44,8 @@ const UserPopover = (): JSX.Element => {
           </PopoverTrigger>
           <PopoverContent className='flex w-fit flex-col gap-2'>
             <SignInButton
-              forceRedirectUrl='/api/create-sanity-user-from-clerk'
-              signUpForceRedirectUrl='/api/create-sanity-user-from-clerk'
+              forceRedirectUrl={`/api/create-sanity-user-from-clerk?redirectUrl=${path}`}
+              signUpForceRedirectUrl={`/api/create-sanity-user-from-clerk?redirectUrl=${path}`}
             >
               <Button className='flex w-full items-center justify-center'>
                 <LogIn className='mr-2 h-4 w-4' />
