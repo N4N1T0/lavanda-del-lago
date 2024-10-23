@@ -32,15 +32,15 @@ const resellerProtectedRoutes = createRouteMatcher(['/reseller/(.*)'])
 // Reseller Form Protected Routes
 const resellerFormProtectedRoutes = createRouteMatcher(['/reseller-form(.*)'])
 
-export default clerkMiddleware(async (auth, req) => {
-  const { userId, sessionClaims } = await auth()
+export default clerkMiddleware((auth, req) => {
+  const { userId, sessionClaims } = auth()
 
   // Bypass authentication for public routes
   if (publicRoutes(req)) return NextResponse.next()
 
   // Redirect to sign-in if not authenticated
   if (!userId) {
-    return (await auth()).redirectToSignIn({ returnBackUrl: req.url })
+    return auth().redirectToSignIn({ returnBackUrl: req.url })
   }
 
   // If user is authenticated but accesses a reseller-protected route

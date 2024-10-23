@@ -30,6 +30,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 // Axiom imports
 import { useLogger } from 'next-axiom'
+import { ShippingAddress } from '@/types/sanity'
 
 /**
  * Calculate the total price of the items in the shopping cart.
@@ -42,7 +43,7 @@ const Summary = ({
   shippingAddressId
 }: {
   user: User | null
-  shippingAddressId: string
+  shippingAddressId: ShippingAddress
 }): JSX.Element => {
   // Get the shopping cart items and a function to update the cart items
   const [count, setCount, { isLoading: cartIsLoading }] = useShoppingCart()
@@ -64,8 +65,12 @@ const Summary = ({
   const [subTotal, total, iva, shipping] = calculateTotal(
     count,
     discount,
-    user?.address?.postal_code,
-    user?.address?.country
+    shippingAddressId === null
+      ? user?.address?.postal_code
+      : shippingAddressId?.address?.postal_code,
+    shippingAddressId === null
+      ? user?.address?.country
+      : shippingAddressId?.address?.country
   )
 
   const serializedProducts = encodeURIComponent(
@@ -92,7 +97,8 @@ const Summary = ({
           user: user,
           products: serializedProducts,
           iva: Number(iva.split(' ')[0].replace(',', '.')),
-          shippingAddressId
+          shippingAddressId:
+            shippingAddressId === null ? 'null' : shippingAddressId._id
         })
       })
 
@@ -195,12 +201,14 @@ const Summary = ({
             total={total}
             user={user}
             iva={iva}
-            shippingAddressId={shippingAddressId}
+            shippingAddressId={
+              shippingAddressId === null ? 'null' : shippingAddressId._id
+            }
           />
         </PayPalScriptProvider>
         {user !== null && (
           <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId}`}
+            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId === null ? 'null' : shippingAddressId._id}`}
             className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
           >
             Pago con Transferencia

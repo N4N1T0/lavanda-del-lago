@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
-    "@clerk/backend": "^1.15.0",
-    "@clerk/localizations": "^3.3.1",
-    "@clerk/nextjs": "^6.0.0",
+    "@clerk/backend": "^1.13.9",
+    "@clerk/localizations": "^3.2.0",
+    "@clerk/nextjs": "^5.7.2",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
