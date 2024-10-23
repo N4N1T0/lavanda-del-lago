@@ -11,9 +11,6 @@ import type {
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-// External Libraries Imports
-import { validate } from 'postal-codes-js'
-
 /**
  * A utility function that merges and normalizes CSS class names using Tailwind CSS.
  *
