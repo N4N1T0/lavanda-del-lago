@@ -418,12 +418,14 @@ export const getShippingCost = (
   const isUSA = country === 'Estados Unidos'
   const isCanada = country === 'Canada'
   const isEurope = !isSpain && !isUSA && !isCanada
-  const isCanaryIslands = isSpain ? validate('ic', postalCode) : false
+  const isCanaryIslands = isSpain ? isCanaryIlands(Number(postalCode)) : false
+
+  console.log(isCanaryIslands)
 
   let shippingCost = 0
 
   if (isSpain) {
-    if (isCanaryIslands) {
+    if (isCanaryIslands === true) {
       // Envío a Islas Canarias
       if (amount <= 25) {
         shippingCost = 12
@@ -461,4 +463,8 @@ export const getShippingCost = (
   }
 
   return shippingCost
+}
+
+const isCanaryIlands = (postalCode: number) => {
+  return postalCode >= 35001 && postalCode <= 35211 ? true : false
 }
