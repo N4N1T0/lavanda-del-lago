@@ -36,26 +36,16 @@ const resellerProtectedRoutes = createRouteMatcher(['/reseller/(.*)'])
 const resellerFormProtectedRoutes = createRouteMatcher(['/reseller-form(.*)'])
 
 export default clerkMiddleware((auth, req) => {
-  const { userId, sessionClaims } = auth()
+  const { userId, sessionClaims, redirectToSignIn } = auth()
 
   // Bypass authentication for public routes
   if (publicRoutes(req)) return NextResponse.next()
 
-  // Redirect to sign-in if not authenticated
-  if (!userId) {
-    if (req.url.includes('/profile')) {
-      return NextResponse.redirect(process.env.NEXT_PUBLIC_URL!)
-    }
-
-    return auth().redirectToSignIn({ returnBackUrl: req.url }) // Redirect to the current URL
-  }
-
   // If user tries to access /checkout/review, redirect to login with redirectUrl
   if (checkoutReviewProtectedRoute(req) && !userId) {
-    const fullUrl = `${req.nextUrl.origin}${req.nextUrl.pathname}`
-    const redirectUrl = encodeURIComponent(fullUrl)
-    console.log(redirectUrl)
-    return auth().redirectToSignIn({ returnBackUrl: redirectUrl })
+    return redirectToSignIn({
+      returnBackUrl: '/checkout'
+    })
   }
 
   // If user is authenticated but accesses a reseller-protected route
@@ -78,6 +68,15 @@ export default clerkMiddleware((auth, req) => {
         new URL('/?security=already_reseller', req.url)
       )
     }
+  }
+
+  // Redirect to sign-in if not authenticated
+  if (!userId) {
+    if (req.url.includes('/profile')) {
+      return NextResponse.redirect(process.env.NEXT_PUBLIC_URL!)
+    }
+
+    return redirectToSignIn({ returnBackUrl: req.url }) // Redirect to the current URL
   }
 
   // Continue to the next middleware or handler

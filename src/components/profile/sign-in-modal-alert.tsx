@@ -10,6 +10,7 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 
 const SignInModalAlert = ({ open, url }: { open: boolean; url: string }) => {
+  console.log(encodeURIComponent(url))
   return (
     <Dialog open={open}>
       <DialogContent className='flex flex-col items-center justify-center bg-accent text-white'>
@@ -27,7 +28,11 @@ const SignInModalAlert = ({ open, url }: { open: boolean; url: string }) => {
             <Link href='/'>Cancelar</Link>
           </Button>
           <Button variant='default' asChild>
-            <Link href={url}>Continuar</Link>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_URL!}/sign-in?redirect_url=${encodeURIComponent(url)}`}
+            >
+              Continuar
+            </Link>
           </Button>
         </DialogFooter>
       </DialogContent>
