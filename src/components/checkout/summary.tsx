@@ -256,12 +256,16 @@ const SummaryCard = ({
           {/* Product title and price */}
           <div className='flex justify-between text-base font-light text-gray-900 transition-colors duration-150 hover:text-gray-800'>
             <h3 className='text-sm'>{product.nombre}</h3>
-            <p className='ml-4 font-bold'>{eurilize(Number(product.precio))}</p>
+            <p className='ml-4 font-bold'>
+              {eurilize(Number(product.precio * product.quantity))}
+            </p>
           </div>
         </div>
         <div className='flex flex-1 items-end justify-between text-sm'>
           {/* Product quantity */}
-          <p className='text-gray-500'>Cantidad: {product.quantity}</p>
+          <p className='text-gray-500'>
+            Cantidad: {product.quantity} x {eurilize(Number(product.precio))}
+          </p>
 
           {/* Remove product from cart button */}
           <div className='flex'>

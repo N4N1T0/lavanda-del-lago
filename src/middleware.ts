@@ -52,7 +52,9 @@ export default clerkMiddleware((auth, req) => {
 
   // If user tries to access /checkout/review, redirect to login with redirectUrl
   if (checkoutReviewProtectedRoute(req) && !userId) {
-    const redirectUrl = encodeURIComponent(req.url)
+    const fullUrl = `${req.nextUrl.origin}${req.nextUrl.pathname}`
+    const redirectUrl = encodeURIComponent(fullUrl)
+    console.log(redirectUrl)
     return auth().redirectToSignIn({ returnBackUrl: redirectUrl })
   }
 

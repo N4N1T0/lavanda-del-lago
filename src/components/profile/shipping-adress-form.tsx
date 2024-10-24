@@ -16,14 +16,14 @@ const ShippingAddressForm = ({
       <FormFieldComponent
         control={form.control}
         name='shippingAddress.street'
-        label='Calle'
+        label='Calle *'
         placeholder='Calle Falsa 123'
         isSubmitting={isSubmitting}
       />
       <FormFieldComponent
         control={form.control}
         name='shippingAddress.floor'
-        label='Número'
+        label='Número *'
         placeholder='Piso 1, 1zq'
         isSubmitting={isSubmitting}
       />
@@ -38,7 +38,7 @@ const ShippingAddressForm = ({
         <FormFieldComponent
           control={form.control}
           name='shippingAddress.locality'
-          label='Localidad'
+          label='Localidad *'
           placeholder='Marbella'
           isSubmitting={isSubmitting}
         />
@@ -47,14 +47,14 @@ const ShippingAddressForm = ({
         <FormFieldComponent
           control={form.control}
           name='shippingAddress.postal_code'
-          label='Código Postal'
+          label='Código Postal *'
           placeholder='22345'
           isSubmitting={isSubmitting}
         />
         <FormFieldComponent
           control={form.control}
           name='shippingAddress.country'
-          label='País de residencia'
+          label='País de residencia *'
           placeholder='España'
           type='select'
           options={shippingCountries}

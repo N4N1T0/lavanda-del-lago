@@ -202,13 +202,14 @@ export const UserProfileForm = ({
     <Form {...form}>
       <form className='space-y-8'>
         <fieldset className='space-y-4'>
-          <legend className='w-full border-b text-lg text-accent'>
+          <legend className='flex w-full items-center justify-between border-b text-lg text-accent'>
             Información Personal
+            <small>* campos obligatorios</small>
           </legend>
           <FormFieldComponent
             control={form.control}
             name='name'
-            label='Nombre'
+            label='Nombre *'
             placeholder='Juan Perez'
             isSubmitting={isSubmitting}
           />
@@ -216,14 +217,14 @@ export const UserProfileForm = ({
             control={form.control}
             name='email'
             type='email'
-            label='Correo Electrónico'
+            label='Correo Electrónico *'
             placeholder='juan.perez@example.com'
             isSubmitting={isSubmitting}
           />
           <FormFieldComponent
             control={form.control}
             name='phone'
-            label='Teléfono'
+            label='Teléfono *'
             placeholder='+34 123456789'
             isSubmitting={isSubmitting}
           />
@@ -255,14 +256,14 @@ export const UserProfileForm = ({
           <FormFieldComponent
             control={form.control}
             name='address.street'
-            label='Calle'
+            label='Calle *'
             placeholder='Calle Falsa 123'
             isSubmitting={isSubmitting}
           />
           <FormFieldComponent
             control={form.control}
             name='address.floor'
-            label='Numero'
+            label='Numero *'
             placeholder='Piso 1, 1zq'
             isSubmitting={isSubmitting}
           />
@@ -277,7 +278,7 @@ export const UserProfileForm = ({
             <FormFieldComponent
               control={form.control}
               name='address.locality'
-              label='Localidad'
+              label='Localidad *'
               placeholder='Marbella'
               isSubmitting={isSubmitting}
             />
@@ -286,14 +287,14 @@ export const UserProfileForm = ({
             <FormFieldComponent
               control={form.control}
               name='address.postal_code'
-              label='Código Postal'
+              label='Código Postal *'
               placeholder='22345'
               isSubmitting={isSubmitting}
             />
             <FormFieldComponent
               control={form.control}
               name='address.country'
-              label='País de residencia'
+              label='País de residencia *'
               placeholder='España'
               type='select'
               options={shippingCountries}
