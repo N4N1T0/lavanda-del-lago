@@ -43,7 +43,11 @@ export default clerkMiddleware((auth, req) => {
 
   // Redirect to sign-in if not authenticated
   if (!userId) {
-    return auth().redirectToSignIn({ returnBackUrl: req.url })
+    if (req.url.includes('/profile')) {
+      return auth().redirectToSignIn({ returnBackUrl: '/' }) // Redirect to home page
+    }
+
+    return auth().redirectToSignIn({ returnBackUrl: req.url }) // Redirect to the current URL
   }
 
   // If user tries to access /checkout/review, redirect to login with redirectUrl

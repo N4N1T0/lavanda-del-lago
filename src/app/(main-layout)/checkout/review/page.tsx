@@ -51,7 +51,10 @@ const CheckoutReviewPage = async ({
   )
 
   // Get most used category for the reselling
-  const mostUsedCategory = getMostUsedCategory(response.pastPurchases)
+  const mostUsedCategory =
+    response.pastPurchases === null
+      ? 'Bienestar'
+      : getMostUsedCategory(response.pastPurchases)
 
   return (
     <section

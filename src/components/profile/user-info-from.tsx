@@ -33,6 +33,7 @@ import { userSchema, type UserSchemaType } from '@/lib/forms/form-schemas'
 
 // Data Imports
 import { shippingCountries } from '@/constants/site-data'
+import SignInModalAlert from './sign-in-modal-alert'
 
 export const UserProfileFormDialog = ({ user }: { user: User | null }) => {
   // Estado para controlar el diálogo abierto/cerrado
@@ -78,6 +79,9 @@ export const UserProfileForm = ({
 }) => {
   // New Address Toggle & Data
   const [isShippingAddress, setIsShippingAddress] = useState<boolean>(false)
+  // SignInModalAlert State
+  const [isSignInModalAlert, setIsSignInModalAlert] = useState<boolean>(false)
+  const [nextUrl, setNextUrl] = useState<string>('')
 
   // initialize the Router & Pathname
   const router = useRouter()
@@ -172,11 +176,18 @@ export const UserProfileForm = ({
       form.reset()
 
       if (path === '/checkout') {
-        setTimeout(() => {
-          router.push(
+        if (!user) {
+          setIsSignInModalAlert(true)
+          setNextUrl(
             `/checkout/review?userId=${data.data}&shippingAddress=${data.shippingAddress}`
           )
-        }, 200)
+        } else {
+          setTimeout(() => {
+            router.push(
+              `/checkout/review?userId=${data.data}&shippingAddress=${data.shippingAddress}`
+            )
+          }, 200)
+        }
       } else {
         router.push(path)
         // Cierra el diálogo después del éxito del submit
@@ -342,6 +353,8 @@ export const UserProfileForm = ({
           )}
         </Button>
       </form>
+
+      <SignInModalAlert open={isSignInModalAlert} url={nextUrl} />
     </Form>
   )
 }
