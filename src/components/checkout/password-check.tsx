@@ -26,24 +26,44 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
     setShowPassword((prev) => !prev)
   }
 
+  // Custom password validation
+  const validatePasswordStrength = (password?: string) => {
+    if (!password) return 'La contraseña es obligatoria.' // Handle undefined case
+
+    const hasUpperCase = /[A-Z]/.test(password)
+    const hasLowerCase = /[a-z]/.test(password)
+    const hasNumbers = /\d/.test(password)
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password)
+    const isValidLength = password.length >= 8
+
+    return hasUpperCase &&
+      hasLowerCase &&
+      hasNumbers &&
+      hasSpecialChar &&
+      isValidLength
+      ? true
+      : 'La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos especiales.'
+  }
+
   return (
     <>
       <FormField
         control={form.control}
         name='password'
+        rules={{ validate: validatePasswordStrength }}
         render={({ field }) => (
           <FormItem>
             <FormControl>
               <div className='relative'>
                 <Input
-                  type={showPassword ? 'text' : 'password'} // Toggle between 'text' and 'password'
+                  type={showPassword ? 'text' : 'password'}
                   placeholder='Contraseña...'
                   {...field}
                   className='rounded-md border border-accent/50 pr-10'
                   autoComplete='new-password'
                   id='password'
                   disabled={form.formState.isSubmitting}
-                  aria-label='Contraseña' // Accessibility label
+                  aria-label='Contraseña'
                 />
                 <button
                   type='button'
@@ -51,7 +71,7 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
                   className='absolute inset-y-0 right-0 flex items-center pr-3'
                   aria-label={
                     showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
-                  } // Accessibility label
+                  }
                 >
                   {showPassword ? (
                     <EyeOff className='h-5 w-5 text-gray-600' />
@@ -69,6 +89,11 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
       <FormField
         control={form.control}
         name='confirmPassword'
+        rules={{
+          validate: (value) =>
+            value === form.getValues('password') ||
+            'Las contraseñas no coinciden.'
+        }}
         render={({ field }) => (
           <FormItem>
             <FormControl>
@@ -81,7 +106,7 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
                   autoComplete='new-password'
                   id='confirmPassword'
                   disabled={form.formState.isSubmitting}
-                  aria-label='Repite Contraseña' // Accessibility label
+                  aria-label='Repite Contraseña'
                 />
                 <button
                   type='button'
@@ -89,7 +114,7 @@ const PasswordCheck = ({ form }: { form: UseFormReturn<UserSchemaType> }) => {
                   className='absolute inset-y-0 right-0 flex items-center pr-3'
                   aria-label={
                     showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
-                  } // Accessibility label
+                  }
                 >
                   {showPassword ? (
                     <EyeOff className='h-5 w-5 text-gray-600' />

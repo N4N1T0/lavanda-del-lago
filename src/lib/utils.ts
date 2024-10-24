@@ -358,7 +358,7 @@ export function handlingSecurityInfo(security: string): {
       return {
         title: 'Correo Electrónico Ya Registrado',
         description:
-          'El correo electrónico ingresado ya está registrado. Por favor, intenta con otro correo electrónico o inicia sesión si ya tienes una cuenta.'
+          'El correo electrónico o el numero de teléfono ingresado ya está registrado. Por favor, intenta con otro correo electrónico o inicia sesión si ya tienes una cuenta.'
       }
 
     default:

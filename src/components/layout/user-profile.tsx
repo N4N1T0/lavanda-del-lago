@@ -18,7 +18,7 @@ import { useClerk } from '@clerk/nextjs'
 
 // Assets imports
 import { UserPlus, LogOut, Store, User } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 /**
  * A dropdown menu for the user to manage their profile, sign out, and (for
@@ -34,8 +34,16 @@ export default function UserPopover({ currentUser }: { currentUser: any }) {
   // Get the user from Clerk
   const { signOut } = useClerk()
   const path = usePathname()
+  const router = useRouter()
 
   const isReseller = currentUser.publicMetadata.reseller === true
+
+  const handleSignOut = () => {
+    signOut({
+      redirectUrl: path
+    })
+    router.refresh()
+  }
 
   return (
     <Popover>
@@ -115,14 +123,7 @@ export default function UserPopover({ currentUser }: { currentUser: any }) {
               </>
             )}
             <PopoverClose asChild>
-              <Button
-                variant='default'
-                onClick={() =>
-                  signOut({
-                    redirectUrl: path
-                  })
-                }
-              >
+              <Button variant='default' onClick={handleSignOut}>
                 {/* Sign out link */}
                 <LogOut className='mr-2 h-4 w-4' />
                 Cerrar Sesión

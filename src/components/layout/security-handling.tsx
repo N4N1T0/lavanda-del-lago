@@ -6,13 +6,14 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 // UI Imports
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle
-} from '@/components/ui/dialog'
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
 
 // Utils Imports
 import { handlingSecurityInfo } from '@/lib/utils'
@@ -44,29 +45,31 @@ const SecurityHandling = (): JSX.Element | null => {
   }
 
   return (
-    <Dialog defaultOpen>
-      <DialogContent
+    <AlertDialog defaultOpen>
+      <AlertDialogContent
         className={`flex flex-col items-center justify-center text-white ${
           splitArray[splitArray.length - 1] === 'ok'
             ? 'bg-green-500'
             : 'bg-red-500'
         }`}
       >
-        <DialogHeader>
-          <DialogTitle className='text-center text-3xl uppercase'>
+        <AlertDialogHeader>
+          <AlertDialogTitle className='text-center text-3xl uppercase'>
             {securityInfo.title}
-          </DialogTitle>
-          <DialogDescription className='text-center text-lg text-white'>
+          </AlertDialogTitle>
+          <AlertDialogDescription className='text-center text-lg text-white'>
             {securityInfo.description}
-          </DialogDescription>
-        </DialogHeader>
-        <DialogClose asChild>
-          <Button className='w-fit border-0' onClick={handleAccept}>
-            Aceptar
-          </Button>
-        </DialogClose>
-      </DialogContent>
-    </Dialog>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction asChild>
+            <Button className='w-fit border-0' onClick={handleAccept}>
+              Aceptar
+            </Button>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 
