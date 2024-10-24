@@ -44,7 +44,7 @@ export default clerkMiddleware((auth, req) => {
   // Redirect to sign-in if not authenticated
   if (!userId) {
     if (req.url.includes('/profile')) {
-      return auth().redirectToSignIn({ returnBackUrl: '/' }) // Redirect to home page
+      return NextResponse.redirect(process.env.NEXT_PUBLIC_URL!)
     }
 
     return auth().redirectToSignIn({ returnBackUrl: req.url }) // Redirect to the current URL
@@ -53,7 +53,7 @@ export default clerkMiddleware((auth, req) => {
   // If user tries to access /checkout/review, redirect to login with redirectUrl
   if (checkoutReviewProtectedRoute(req) && !userId) {
     const redirectUrl = encodeURIComponent(req.url)
-    return NextResponse.redirect(`/sign-in?redirectUrl=${redirectUrl}`)
+    return auth().redirectToSignIn({ returnBackUrl: redirectUrl })
   }
 
   // If user is authenticated but accesses a reseller-protected route
