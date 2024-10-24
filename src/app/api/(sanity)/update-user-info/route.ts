@@ -134,10 +134,9 @@ export const POST = withAxiom(
         // Create a new user
         const clerkUser = await clerkClient.users.createUser({
           emailAddress: [email],
-          firstName,
-          lastName,
+          firstName: name,
           password,
-          username: firstName
+          skipPasswordChecks: false
         })
 
         // Upload the user's image to Sanity
