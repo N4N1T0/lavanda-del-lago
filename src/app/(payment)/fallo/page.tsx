@@ -19,6 +19,14 @@ import type { Metadata } from 'next'
 
 // Utils Imports
 import { eurilize } from '@/lib/utils'
+import { FailedPage, User } from '@/types'
+import { sanityClientRead } from '@sanity-studio/lib/client'
+
+import { userByIdCompleted } from '@sanity-studio/queries'
+// Axiom Imports
+import { Logger } from 'next-axiom'
+import { resend } from '@/lib/clients'
+import PaymentErrorNotification from '@/emails/error-in-the-payment'
 
 // Metadata for this page
 export const metadata: Metadata = {
@@ -31,34 +39,50 @@ export const metadata: Metadata = {
  *
  * @return {JSX.Element} The JSX element representing the.
  */
-const FailedPaymentPage = ({
+const FailedPaymentPage = async ({
   searchParams
 }: {
-  searchParams: {
-    userId: string
-    userName: string
-    orderId: string
-    totalAmount: number
-    reseller: string
-    userEmail: string
-  }
-}): JSX.Element => {
-  const { userId, userName, orderId, totalAmount, reseller, userEmail } =
-    searchParams
+  searchParams: FailedPage
+}): Promise<JSX.Element> => {
+  const log = new Logger()
+
+  // Destructure search parameters
+  const { userId, orderId, totalAmount, errorDetails } = searchParams
 
   // Verify the presence of required parameters
-  if (
-    !orderId ||
-    !totalAmount ||
-    !reseller ||
-    !userId ||
-    !userName ||
-    !userEmail
-  ) {
+  if (!totalAmount || !userId) {
+    log.debug('Missing required parameters in the Failed Page')
     redirect('/')
   }
 
-  const formattedReseller = reseller === 'true' ? true : false
+  // fetch the user
+  const user: User = await sanityClientRead.fetch(
+    userByIdCompleted,
+    {
+      id: userId
+    },
+    {
+      cache: 'no-store'
+    }
+  )
+
+  // Verify the presence of required user information
+  if (user?.name === undefined || user?.reseller === undefined) {
+    log.debug('Missing required user information in the Failed Page')
+    redirect('/')
+  }
+
+  await resend.emails.send({
+    from: 'info@lavandadellago.es',
+    to: ['info@lavandadellago.es', 'pedidos@lavandadellago.es'],
+    subject: 'Error en el Pago',
+    react: PaymentErrorNotification({
+      user,
+      orderId,
+      errorDetails,
+      totalAmount
+    })
+  })
 
   return (
     <main className='flex min-h-screen items-center justify-center bg-red-100 p-4'>
@@ -72,7 +96,7 @@ const FailedPaymentPage = ({
         <CardContent className='space-y-6'>
           <p className='text-center text-gray-600'>
             <span className='block text-lg font-bold text-accent'>
-              {decodeURIComponent(searchParams.userName)}
+              {user.name}
             </span>{' '}
             Lo sentimos, hubo un problema al procesar tu pago. Por favor, revisa
             la información a continuación e intenta nuevamente.
@@ -84,7 +108,7 @@ const FailedPaymentPage = ({
             </h3>
             <div className='grid grid-cols-2 gap-2 text-sm'>
               <span className='font-medium'>Número de Pedido:</span>
-              <span>#{searchParams.orderId}</span>
+              <span>#{orderId || 'Sin Numero de Orden'}</span>
               <span className='font-medium'>Total:</span>
               <span>{eurilize(Number(searchParams.totalAmount || '0'))}</span>
             </div>
@@ -118,7 +142,7 @@ const FailedPaymentPage = ({
         </CardContent>
         <CardFooter className='flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
           <NotidicationsPageButton
-            reseller={formattedReseller}
+            reseller={user?.reseller === null ? false : user?.reseller}
             userId={userId}
             status='failed'
           />

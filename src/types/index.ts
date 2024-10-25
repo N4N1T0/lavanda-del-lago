@@ -241,11 +241,31 @@ export interface PurchaseConfirmationEmailProps {
   shippingAddress: ShippingAddress | null
 }
 
+export interface EmailPurchaseError {
+  customerName: string
+  orderNumber: string
+  totalAmount: number | undefined | string
+  purchaseDate: string | undefined
+  products: { product: Product; quantity: number }[] | []
+  gateway: Gateway
+  user: User
+  errorDetails: string
+  iva: number | undefined | string
+  shippingAddress: ShippingAddress | null
+}
+
 export interface NotificacionContactoInternoProps {
   name: string
   email: string
   phone: string
   message: string
+}
+
+export interface PaymentErrorNotificationProps {
+  user: User
+  orderId: string | null | undefined
+  totalAmount: string
+  errorDetails: string | null | undefined
 }
 
 export interface Contact {
@@ -274,6 +294,13 @@ export interface SuccessPage {
   gateway: Gateway
   iva: string
   shippingAddressId: string
+}
+
+export interface FailedPage {
+  userId: string
+  orderId?: string
+  totalAmount: string
+  errorDetails?: string
 }
 
 export interface NotificationPageBodyProps {

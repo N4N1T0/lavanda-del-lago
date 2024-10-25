@@ -36,6 +36,7 @@ import NotificationPageBody from '@/components/checkout/notification-page-body'
 
 // Axiom Imports
 import { Logger } from 'next-axiom'
+import ErrorPurchaseNotification from '@/emails/error-in-the-purchase'
 
 /**
  * Asynchronously processes a successful payment, creates a purchase order, and sends an email notification to the user.
@@ -67,9 +68,6 @@ const SuccessPaymentPage = async ({
     redirect('/')
   }
 
-  // Set the date
-  const dateNow = new Date().toLocaleString('es-ES')
-
   // fetch the user
   const user: User = await sanityClientRead.fetch(
     userByIdCompleted,
@@ -92,13 +90,27 @@ const SuccessPaymentPage = async ({
     ? JSON.parse(decodeURIComponent(productsParam))
     : []
 
+  let actuallProducts: {
+    products: { product: Product; quantity: number }[]
+  } | null = null
+
+  const shippingAddressResponse: ShippingAddress = await sanityClientRead.fetch(
+    getShippingAddress,
+    {
+      id: shippingAddressId
+    },
+    {
+      cache: 'no-store'
+    }
+  )
+
   // create the Purchase Order
   try {
     const purchaseResponse =
       await sanityClientWrite.createIfNotExists<Purchase>({
         _type: 'purchase',
         _id: orderId,
-        purchaseDate: dateNow,
+        purchaseDate: new Date().toISOString(),
         userEmail: {
           _ref: userId,
           _type: 'reference'
@@ -115,8 +127,8 @@ const SuccessPaymentPage = async ({
           quantity: item.quantity,
           _key: item.id
         })),
-        _createdAt: dateNow,
-        _updatedAt: dateNow,
+        _createdAt: new Date().toISOString(),
+        _updatedAt: new Date().toISOString(),
         _rev: orderId,
         shippingAddress:
           shippingAddressId === 'undefined' || shippingAddressId === 'null'
@@ -127,9 +139,7 @@ const SuccessPaymentPage = async ({
               }
       })
 
-    const productsResponse: {
-      products: { product: Product; quantity: number }[]
-    } = await sanityClientRead.fetch(
+    actuallProducts = await sanityClientRead.fetch(
       PurchaseById,
       {
         id: purchaseResponse._id
@@ -138,17 +148,6 @@ const SuccessPaymentPage = async ({
         cache: 'no-store'
       }
     )
-
-    const shippingAddressResponse: ShippingAddress =
-      await sanityClientRead.fetch(
-        getShippingAddress,
-        {
-          id: shippingAddressId
-        },
-        {
-          cache: 'no-store'
-        }
-      )
 
     // Send email to user
     const { data, error } = await resend.emails.send({
@@ -159,10 +158,13 @@ const SuccessPaymentPage = async ({
         customerName: user.name,
         orderNumber: orderId,
         totalAmount: Number(totalAmount),
-        purchaseDate: dateNow,
+        purchaseDate: new Date().toLocaleString('es-ES'),
         id: userId,
         reseller: user?.reseller === null ? false : user?.reseller,
-        products: productsResponse.products,
+        products:
+          actuallProducts?.products === undefined
+            ? []
+            : actuallProducts?.products,
         gateway,
         user,
         iva: Number(iva),
@@ -177,6 +179,27 @@ const SuccessPaymentPage = async ({
   } catch (error) {
     // Log the error for debugging purposes
     log.debug('Error creating Purchase', { data: error })
+
+    await resend.emails.send({
+      from: 'info@lavandadellago.es',
+      to: ['info@lavandadellago.es', 'pedidos@lavandadellago.es'],
+      subject: 'Error en la Creación de Compra',
+      react: ErrorPurchaseNotification({
+        customerName: user.name,
+        errorDetails: JSON.stringify(error),
+        gateway,
+        purchaseDate: new Date().toLocaleString('es-ES'),
+        products:
+          actuallProducts?.products === undefined
+            ? []
+            : actuallProducts?.products,
+        iva: Number(iva),
+        user,
+        shippingAddress: shippingAddressResponse,
+        orderNumber: orderId,
+        totalAmount: Number(totalAmount)
+      })
+    })
   }
 
   // Ending Logger

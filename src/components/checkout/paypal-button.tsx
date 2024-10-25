@@ -115,6 +115,15 @@ const PaypalButton = ({
     }
   }
 
+  const handleCancel = () => {
+    router.push(
+      `/fallo?userId=${user?.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}`
+    )
+    setErrorMessage(
+      'El pago fue cancelado. Puedes intentarlo de nuevo si lo deseas.'
+    )
+  }
+
   return (
     <>
       {/* Show loading or error messages to the user */}
@@ -123,6 +132,7 @@ const PaypalButton = ({
       <PayPalButtons
         createOrder={createOrder}
         onApprove={handleApprove}
+        onCancel={handleCancel}
         style={{ layout: 'horizontal', color: 'blue', tagline: false }}
       />
     </>

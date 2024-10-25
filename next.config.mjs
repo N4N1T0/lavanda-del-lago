@@ -3,9 +3,6 @@ import { withAxiom } from 'next-axiom'
 
 const nextConfig = withAxiom({
   output: 'standalone',
-  experimental: {
-    nextScriptWorkers: true
-  },
   images: {
     remotePatterns: [
       {

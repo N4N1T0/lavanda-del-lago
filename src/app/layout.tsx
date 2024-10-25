@@ -14,11 +14,14 @@ import { Toaster } from '@/components/ui/toaster'
 
 // Clerk Imports
 import { ClerkProvider } from '@clerk/nextjs'
+import { localization } from '@/components/auth/custom-locale'
 
 // Security
 import SecurityHandling from '@/components/layout/security-handling'
-import { localization } from '@/components/auth/custom-locale'
 import CookieConsent from '@/components/ui/cookie'
+
+// Google Tags
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 
 // Local Fonts Configuration
 const josefinSand = Josefin_Sans({
@@ -52,6 +55,7 @@ export default function RootLayout({
       }}
     >
       <html lang='es' suppressHydrationWarning>
+        <GoogleTagManager gtmId='GTM-K927WFGW' />
         <body
           className={cn(
             'bg-background min-h-screen overflow-x-hidden font-sans antialiased',
@@ -63,6 +67,7 @@ export default function RootLayout({
           <Toaster />
           <SecurityHandling />
         </body>
+        <GoogleAnalytics gaId='G-CVT66KMQBQ' />
       </html>
     </ClerkProvider>
   )
