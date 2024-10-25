@@ -67,6 +67,9 @@ const SuccessPaymentPage = async ({
     redirect('/')
   }
 
+  // Set the date
+  const dateNow = new Date().toLocaleString('es-ES')
+
   // fetch the user
   const user: User = await sanityClientRead.fetch(
     userByIdCompleted,
@@ -95,7 +98,7 @@ const SuccessPaymentPage = async ({
       await sanityClientWrite.createIfNotExists<Purchase>({
         _type: 'purchase',
         _id: orderId,
-        purchaseDate: new Date().toISOString(),
+        purchaseDate: dateNow,
         userEmail: {
           _ref: userId,
           _type: 'reference'
@@ -112,8 +115,8 @@ const SuccessPaymentPage = async ({
           quantity: item.quantity,
           _key: item.id
         })),
-        _createdAt: new Date().toISOString(),
-        _updatedAt: new Date().toISOString(),
+        _createdAt: dateNow,
+        _updatedAt: dateNow,
         _rev: orderId,
         shippingAddress:
           shippingAddressId === 'undefined' || shippingAddressId === 'null'
@@ -156,7 +159,7 @@ const SuccessPaymentPage = async ({
         customerName: user.name,
         orderNumber: orderId,
         totalAmount: Number(totalAmount),
-        purchaseDate: new Date().toLocaleString('es-ES'),
+        purchaseDate: dateNow,
         id: userId,
         reseller: user?.reseller === null ? false : user?.reseller,
         products: productsResponse.products,

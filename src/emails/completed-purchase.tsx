@@ -23,9 +23,9 @@ export const CompletedPurchase = ({
   id = '1q2w3e4r5t',
   reseller = false,
   products = [],
-  gateway,
+  gateway = 'Transferencia',
   user,
-  iva,
+  iva = 'N/A',
   shippingAddress
 }: PurchaseConfirmationEmailProps) => (
   <TailwindWrapper>
@@ -75,7 +75,7 @@ export const CompletedPurchase = ({
           {/* New Section for Shipping Information */}
           <Section className='mb-6 mt-3 rounded-lg bg-gray-100 p-6'>
             <Text className='mb-4 text-xl text-gray-700'>
-              <strong>Datos del Envío y Facturación:</strong>
+              <strong>Datos de Facturación</strong>
             </Text>
             <Text className='text-sm text-gray-700'>
               <strong>Nombre:</strong> {user?.name || ''}
@@ -87,12 +87,37 @@ export const CompletedPurchase = ({
               <strong>Teléfono:</strong> {user?.phone || ''}
             </Text>
             <Text className='text-sm text-gray-700'>
-              <strong>Tipo de Documento:</strong>
+              <strong>Tipo de Documento:</strong>{' '}
               {user?.idDocument?.type || 'DNI'}
             </Text>
             <Text className='text-sm text-gray-700'>
               <strong>Número de Documento:</strong>
               {user?.idDocument?.value || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Calle:</strong> {user?.address?.street}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Piso:</strong> {user?.address?.floor}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Referencia:</strong> {user?.address?.reference}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Código Postal:</strong> {user?.address?.postal_code}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Localidad:</strong> {user?.address?.locality}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>País:</strong> {user?.address?.country}
+            </Text>
+          </Section>
+
+          {/* New Section for Shipping Information */}
+          <Section className='mb-6 mt-3 rounded-lg bg-gray-100 p-6'>
+            <Text className='mb-4 text-xl text-gray-700'>
+              <strong>Datos del Envío</strong>
             </Text>
             <Text className='text-sm text-gray-700'>
               <strong>Calle:</strong>{' '}
