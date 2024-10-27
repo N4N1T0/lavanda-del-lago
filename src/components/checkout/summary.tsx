@@ -49,6 +49,7 @@ const Summary = ({
   const [count, setCount, { isLoading: cartIsLoading }] = useShoppingCart()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [paymentForm, setPaymentForm] = useState(null)
+  // TODO Cupoun Validation and Functionality
   const [disccountCoupon, setDiscountCoupon] = useState<number>(0)
 
   // Axiom Init
@@ -71,7 +72,8 @@ const Summary = ({
       : shippingAddressId?.address?.postal_code,
     shippingAddressId === null
       ? user?.address?.country
-      : shippingAddressId?.address?.country
+      : shippingAddressId?.address?.country,
+    disccountCoupon
   )
 
   const serializedProducts = encodeURIComponent(
@@ -183,11 +185,7 @@ const Summary = ({
         {/* Total price */}
         <div className='flex justify-between rounded-lg bg-neutral-100 p-2 text-xl'>
           <h3>Total</h3>
-          <p>
-            {eurilize(
-              Number(total.split(' ')[0].replace(',', '.')) - disccountCoupon
-            )}
-          </p>
+          <p>{total}</p>
         </div>
 
         {/* Cupón TODO */}

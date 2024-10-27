@@ -102,7 +102,8 @@ export function capitalizeFirstLetter(str: string): string {
   count: CartItem[],
   discount: number | undefined = undefined,
   postalCode: string | null | undefined,
-  country: string | null | undefined
+  country: string | null | undefined,
+  cuponDiscount: number
 ): [string, string, string, string] {
   let subTotal = 0
 
@@ -128,7 +129,7 @@ export function capitalizeFirstLetter(str: string): string {
 
   return [
     eurilize(subTotal), // Subtotal formatted
-    eurilize(total), // Total formatted
+    eurilize(total - cuponDiscount), // Total formatted
     eurilize(iva), // IVA formatted
     eurilize(shippingCost)
   ]

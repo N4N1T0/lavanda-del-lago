@@ -202,7 +202,7 @@ export const jldAboutUs = () => {
     '@type': 'AboutPage',
     'mainEntity': {
       '@type': 'Organization',
-      'name': 'Lavanda del Lagoo',
+      'name': 'Lavanda del Lago',
       'description':
         'Somos una empresa joven que viaja rápido. Con una flor queremos hacer todo y lo estamos logrando. Es un mundo nuevo que huele a lavanda.'
     }

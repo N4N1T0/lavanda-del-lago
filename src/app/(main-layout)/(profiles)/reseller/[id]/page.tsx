@@ -45,7 +45,6 @@ const ResellerPage = async ({
     )
   }
 
-  // TODO Make a tab and put past Purchases
   return (
     <div className='container mx-auto p-4'>
       <h1 className='my-6 text-3xl font-bold uppercase text-accent'>

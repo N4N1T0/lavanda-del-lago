@@ -18,7 +18,6 @@ const createPayPalOrder = async (total: string): Promise<any> => {
 
   const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
 
-  // TODO: Add more data
   const response = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
     method: 'POST',
     headers: {

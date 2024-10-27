@@ -152,7 +152,6 @@ export const UserProfileForm = ({
 
   // Form submit handler.
   async function onSubmit(values: UserSchemaType) {
-    // TODO: Add no empty fields validation
     if (!isDirty && noErrors && !isShippingAddress) {
       router.push(`/checkout/review?userId=${user?.id}&shippingAddress=null`)
       return
