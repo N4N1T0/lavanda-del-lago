@@ -54,7 +54,6 @@ export default function RootLayout({
         variables: { colorPrimary: '#694DAB', colorInputText: '#694DAB' }
       }}
     >
-      s
       <html lang='es' suppressHydrationWarning>
         <GoogleTagManager gtmId='GTM-K927WFGW' />
         <body

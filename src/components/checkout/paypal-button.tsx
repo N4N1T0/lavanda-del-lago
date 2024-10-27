@@ -13,13 +13,15 @@ const PaypalButton = ({
   total,
   user,
   iva,
-  shippingAddressId
+  shippingAddressId,
+  discountCoupon
 }: {
   products: CartItem[]
   total: string
   user: User | null
   iva: string
   shippingAddressId: string
+  discountCoupon: number
 }): JSX.Element => {
   const router = useRouter()
   const log = useLogger()
@@ -72,7 +74,7 @@ const PaypalButton = ({
         success = true // Success flag
         // Redirect to the success page with required params
         router.push(
-          `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name || '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId}`
+          `/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name || '')}&orderId=${details.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Paypal&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId}&discountCoupon=${discountCoupon}`
         )
       } catch (error: any) {
         attempt += 1 // Increase attempt count

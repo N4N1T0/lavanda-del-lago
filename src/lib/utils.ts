@@ -124,8 +124,8 @@ export function capitalizeFirstLetter(str: string): string {
   const shippingCost = getShippingCost(postalCode, subTotal, country)
 
   // Calculate total and IVA
-  const iva = subTotal * 0.21 // Calculate IVA as 21% of the subtotal
   const total = subTotal + shippingCost // Total includes shipping costs
+  const iva = total * 0.21 // Calculate IVA as 21% of the subtotal
 
   return [
     eurilize(subTotal), // Subtotal formatted

@@ -239,6 +239,7 @@ export interface PurchaseConfirmationEmailProps {
   user: User
   iva: number | undefined | string
   shippingAddress: ShippingAddress | null
+  discountCoupon: number
 }
 
 export interface EmailPurchaseError {
@@ -294,6 +295,7 @@ export interface SuccessPage {
   gateway: Gateway
   iva: string
   shippingAddressId: string
+  discountCoupon: number
 }
 
 export interface FailedPage {
@@ -307,6 +309,7 @@ export interface NotificationPageBodyProps {
   user: User
   gateway: string
   orderId: string
+  discountCoupon: number
 }
 
 export interface NotFoundPage {

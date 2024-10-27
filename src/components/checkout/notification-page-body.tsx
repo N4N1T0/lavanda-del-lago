@@ -28,7 +28,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 const NotificationPageBody = ({
   user,
   gateway,
-  orderId
+  orderId,
+  discountCoupon = 0
 }: NotificationPageBodyProps): JSX.Element => {
   const [count, , { isLoading }] = useShoppingCart()
 
@@ -39,7 +40,8 @@ const NotificationPageBody = ({
     count,
     discount,
     user?.address?.postal_code,
-    user?.address?.country
+    user?.address?.country,
+    discountCoupon
   )
 
   return (
@@ -91,6 +93,12 @@ const NotificationPageBody = ({
           </span>
           <span>{iva}</span>
         </div>
+        {discountCoupon > 0 && (
+          <div className='flex items-center justify-between'>
+            <span className='font-semibold'>Descuento por Cupon:</span>
+            <span>{discountCoupon}</span>
+          </div>
+        )}
         <div className='flex items-center justify-between text-sm font-normal'>
           <span>Gastos de Envio:</span>
           <span>{shipping}</span>

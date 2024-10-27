@@ -26,7 +26,8 @@ export const CompletedPurchase = ({
   gateway = 'Transferencia',
   user,
   iva = 'N/A',
-  shippingAddress
+  shippingAddress,
+  discountCoupon
 }: PurchaseConfirmationEmailProps) => (
   <TailwindWrapper>
     <Html>
@@ -62,6 +63,12 @@ export const CompletedPurchase = ({
             <Text className='text-sm text-gray-700'>
               <strong>Iva:</strong> {eurilize(Number(iva))}
             </Text>
+            {discountCoupon > 0 && (
+              <Text className='text-sm text-gray-700'>
+                <strong>Descuento por Cupon:</strong> -
+                {eurilize(discountCoupon)}
+              </Text>
+            )}
             {user?.reseller && user?.discount && (
               <Text className='text-sm text-gray-700'>
                 <strong>Descuento por Revendedor:</strong> -{user?.discount}%

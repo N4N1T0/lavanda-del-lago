@@ -50,7 +50,7 @@ const Summary = ({
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [paymentForm, setPaymentForm] = useState(null)
   // TODO Cupoun Validation and Functionality
-  const [disccountCoupon, setDiscountCoupon] = useState<number>(0)
+  const [discountCoupon, setDiscountCoupon] = useState<number>(0)
 
   // Axiom Init
   const log = useLogger()
@@ -73,7 +73,7 @@ const Summary = ({
     shippingAddressId === null
       ? user?.address?.country
       : shippingAddressId?.address?.country,
-    disccountCoupon
+    discountCoupon
   )
 
   const serializedProducts = encodeURIComponent(
@@ -119,7 +119,8 @@ const Summary = ({
           products: serializedProducts,
           iva: Number(iva.split(' ')[0].replace(',', '.')),
           shippingAddressId:
-            shippingAddressId === null ? 'null' : shippingAddressId._id
+            shippingAddressId === null ? 'null' : shippingAddressId._id,
+          discountCoupon
         })
       })
 
@@ -246,11 +247,12 @@ const Summary = ({
             shippingAddressId={
               shippingAddressId === null ? 'null' : shippingAddressId._id
             }
+            discountCoupon={discountCoupon}
           />
         </PayPalScriptProvider>
         {user !== null && (
           <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId === null ? 'null' : shippingAddressId._id}`}
+            href={`${process.env.NEXT_PUBLIC_URL}/exito?userId=${user?.id}&userName=${encodeURIComponent(user?.name.normalize('NFC'))}&orderId=${generateShortId()}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&reseller=${user?.reseller}&userEmail=${user?.email}&products=${serializedProducts}&gateway=Transferencia&iva=${Number(iva.split(' ')[0].replace(',', '.'))}&shippingAddressId=${shippingAddressId === null ? 'null' : shippingAddressId._id}&discountCoupon=${discountCoupon}`}
             className={`${buttonVariants({ variant: 'cart' })} !mt-1 h-12 w-full bg-tertiary text-xl`}
           >
             Pago con Transferencia

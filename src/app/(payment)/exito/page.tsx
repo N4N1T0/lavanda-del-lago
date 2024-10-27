@@ -59,7 +59,8 @@ const SuccessPaymentPage = async ({
     gateway,
     products: productsParam,
     iva,
-    shippingAddressId
+    shippingAddressId,
+    discountCoupon
   } = searchParams
 
   // Verify the presence of required parameters
@@ -168,7 +169,8 @@ const SuccessPaymentPage = async ({
         gateway,
         user,
         iva: Number(iva),
-        shippingAddress: shippingAddressResponse
+        shippingAddress: shippingAddressResponse,
+        discountCoupon: Number(discountCoupon)
       })
     })
 
@@ -218,6 +220,7 @@ const SuccessPaymentPage = async ({
             gateway={gateway}
             user={user}
             orderId={orderId}
+            discountCoupon={Number(discountCoupon)}
           />
         </CardContent>
         <CardFooter className='flex justify-center space-x-4'>

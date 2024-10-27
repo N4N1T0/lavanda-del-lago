@@ -35,6 +35,7 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
 
   const iva = req.nextUrl.searchParams.get('iva')
   const shippingAddressId = req.nextUrl.searchParams.get('shippingAddressId')
+  const discountCoupon = req.nextUrl.searchParams.get('discountCoupon')
 
   const notificationParams: ResponseJSONSuccess = {
     Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
@@ -102,7 +103,8 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
         gateway: 'RedSys',
         user: userResponse,
         iva: iva || '0',
-        shippingAddress: shippingAddress
+        shippingAddress: shippingAddress,
+        discountCoupon: Number(discountCoupon)
       })
     })
 
