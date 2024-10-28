@@ -1,4 +1,4 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
-  "ignorePatterns": ["sanity/schemas/*.ts"]
+  "ignorePatterns": ["sanity/schemas/*.ts", "public/scripts"]
 }

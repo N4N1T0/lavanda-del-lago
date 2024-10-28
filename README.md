@@ -83,4 +83,5 @@ his project is licensed under a Free License. Feel free to use, modify, and dist
 
 - [ ] Update to Next.js 15 (Breaking Changes use codemod)
 - [ ] Update to Clerk 6
-- [ ] delete user in clerk webhook from sanity
+- [ ] Coupon Logic
+- [ ] Sanity Webhook for email endpoint Purchase completed

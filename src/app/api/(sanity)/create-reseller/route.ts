@@ -54,7 +54,7 @@ export const POST = withAxiom(
         await resend.emails.send({
           from: 'info@lavandadellago.es',
           to: jsonBody.email,
-          subject: 'Felicidades, eres un reseller',
+          subject: 'Felicidades, eres un Revendedor',
           react: ResellerWelcomeEmail({
             link: `https://lavandadellago.es/reseller/${jsonBody.id}`,
             nombre: jsonBody.name

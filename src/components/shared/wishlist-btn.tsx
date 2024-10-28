@@ -13,6 +13,7 @@ import type { Product } from '@/types'
 // Assets Imports
 import { Heart } from 'lucide-react'
 import { useToast } from '../ui/use-toast'
+import { event } from '@/lib/fpixel'
 
 /**
  * Renders a heart component that changes color based on whether the product is wishlisted.
@@ -46,6 +47,14 @@ const WishlistBtn = ({
     id: string,
     product: Product
   ) => {
+    event('AddToWishlist', {
+      content_name: product.nombre,
+      content_category: product.categoria,
+      content_ids: [product.id],
+      content_type: 'product',
+      value: product.precio,
+      currency: 'EUR'
+    })
     // if the product is in the Cart, show a toast and return
     if (shoppingCart.some((cartProduct) => cartProduct.id === product.id)) {
       toast({

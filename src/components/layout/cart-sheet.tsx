@@ -29,6 +29,7 @@ import useShoppingCart from '@/stores/shopping-cart-store'
 
 // Types Imports
 import type { CartItem } from '@/types'
+import { event } from '@/lib/fpixel'
 
 /**
  * Renders a sheet component with a trigger and content. The trigger is a child component passed as a prop.
@@ -123,6 +124,7 @@ const CartSheet = (): JSX.Element => {
                   <Link
                     href='/checkout'
                     className={`${buttonVariants({ variant: 'cart' })} w-full`}
+                    onClick={() => event('InitiateCheckout')}
                   >
                     Finalizar Compra
                   </Link>

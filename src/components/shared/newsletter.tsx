@@ -13,6 +13,7 @@ import { useToast } from '@/components/ui/use-toast'
 
 // Axiom Imports
 import { useLogger } from 'next-axiom'
+import { event } from '@/lib/fpixel'
 
 /**
  * Render a form to subscribe to the newsletter.
@@ -27,10 +28,16 @@ const Newsletter = React.memo(function Newsletter() {
   const log = useLogger()
 
   const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
-    event.preventDefault()
+    e.preventDefault()
     const input = inputRef.current
+
+    event('CompleteRegistration', {
+      method: 'newsletter',
+      email: input?.value
+    })
+
     if (input) {
       const email = input.value.trim()
 

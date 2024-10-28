@@ -25,6 +25,7 @@ import { Mail, Phone, MapPin, Loader2 } from 'lucide-react'
 // Axiom logging
 import { useLogger } from 'next-axiom'
 import { useState } from 'react'
+import { event } from '@/lib/fpixel'
 
 const ContactForm = () => {
   // Axiom init
@@ -53,6 +54,11 @@ const ContactForm = () => {
   const onSubmit = async (data: ContactFormValues) => {
     log.debug('Form submitted', { data })
     setIsLoading(true)
+
+    event('Contact', {
+      method: 'contact',
+      email: data.email
+    })
 
     try {
       const response = await fetch('/api/contact-email', {
@@ -177,6 +183,9 @@ const ContactForm = () => {
               href='https://www.google.com/maps/place/C.+Soria,+12,+29670+San+Pedro+Alc%C3%A1ntara,+M%C3%A1laga/@36.48077,-4.9961049,17z/data=!3m1!4b1!4m6!3m5!1s0xd732a3e8acc112d:0xb9d10395a903e1ab!8m2!3d36.48077!4d-4.99353!16s%2Fg%2F11c23zs3p_?entry=ttu&g_ep=EgoyMDI0MTAxMy4wIKXMDSoASAFQAw%3D%3D'
               target='_blank'
               className='flex items-center space-x-2 hover:underline'
+              onClick={() =>
+                event('FindLocation', { location: 'San Pedro Alcántara' })
+              }
             >
               <MapPin className='text-muted-foreground h-5 w-5' />
               <span>Calle Soria, 12 cp 29670 San Pedro Alcántara (Málaga)</span>
@@ -186,6 +195,11 @@ const ContactForm = () => {
         <Link
           href='https://www.google.com/maps/place/C.+Soria,+12,+29670+San+Pedro+Alc%C3%A1ntara,+M%C3%A1laga/@36.48077,-4.9961049,17z/data=!3m1!4b1!4m6!3m5!1s0xd732a3e8acc112d:0xb9d10395a903e1ab!8m2!3d36.48077!4d-4.99353!16s%2Fg%2F11c23zs3p_?entry=ttu&g_ep=EgoyMDI0MTAxMy4wIKXMDSoASAFQAw%3D%3D'
           className='group relative block aspect-video overflow-hidden rounded-lg border border-accent/30'
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={() =>
+            event('FindLocation', { location: 'San Pedro Alcántara' })
+          }
         >
           <Image
             src={Map}

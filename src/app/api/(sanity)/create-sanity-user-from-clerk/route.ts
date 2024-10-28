@@ -14,6 +14,7 @@ import { resend } from '@/lib/clients'
 
 // Axiom Imports
 import { withAxiom, AxiomRequest } from 'next-axiom'
+// import { event } from '@/lib/fpixel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -82,6 +83,13 @@ export const GET = withAxiom(
             link: `https://lavandadellago.es/studio/structure/usuariosYVentas;user;${id}`
           })
         })
+
+        // TODO
+        //   event('CompleteRegistration', {
+        //     userId: id,
+        //     email: emailAddresses[0].emailAddress,
+        //     name: fullName
+        //   })
       }
 
       return NextResponse.redirect(

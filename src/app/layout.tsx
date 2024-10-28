@@ -22,6 +22,7 @@ import CookieConsent from '@/components/ui/cookie'
 
 // Google Tags
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+import FacebookPixel from '@/components/layout/facebook-pixel'
 
 // Local Fonts Configuration
 const josefinSand = Josefin_Sans({
@@ -66,6 +67,7 @@ export default function RootLayout({
           <CookieConsent />
           <Toaster />
           <SecurityHandling />
+          <FacebookPixel />
         </body>
         <GoogleAnalytics gaId='G-CVT66KMQBQ' />
       </html>

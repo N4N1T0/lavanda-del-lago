@@ -1,8 +1,12 @@
 'use client'
 
+// React Imports
+import { useState } from 'react'
+
 // UI Imports
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
+import { Input } from '@/components/ui/input'
 
 // Type imports
 import type { CartItem, Product } from '@/types'
@@ -10,10 +14,11 @@ import type { CartItem, Product } from '@/types'
 // Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
 
-// Store Imports
-import { useState } from 'react'
+// Assets Imports
 import { MinusCircle, PlusCircle } from 'lucide-react'
-import { Input } from '../ui/input'
+
+// Facebook Pixel Imports
+import { event } from '@/lib/fpixel'
 
 /**
  * Renders a quantity input field with increment and decrement buttons, and a button to add the selected quantity to the cart.
@@ -49,6 +54,15 @@ const Quantity = ({ prduct }: { prduct: Product }): JSX.Element => {
 
   // Function to add to the Cart and show a toast with a meesage of completed
   const addToCart = () => {
+    event('AddToCart', {
+      content_name: prduct.nombre,
+      content_category: prduct.categoria,
+      content_ids: [prduct.id],
+      content_type: 'product',
+      value: prduct.precio,
+      currency: 'EUR',
+      quantity
+    })
     // Find if the product is already in the cart
     const existingProduct = count.find(
       (productItem) => productItem.id === cartItem.id
@@ -148,6 +162,15 @@ const QuantitySmall = ({
   }
 
   const handleAddToCartFromWishlist = () => {
+    event('AddToCart', {
+      content_name: prduct.nombre,
+      content_category: prduct.categoria,
+      content_ids: [prduct.id],
+      content_type: 'product',
+      value: prduct.precio,
+      currency: 'EUR',
+      quantity
+    })
     // Find if the product is already in the cart
     const existingProduct = count.find(
       (productItem) => productItem.id === cartItem.id

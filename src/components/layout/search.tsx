@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@/components/ui/popover'
+import { event } from '@/lib/fpixel'
 
 /**
  * Renders a search component with an input field and a search button.
@@ -46,6 +47,9 @@ const Search = (): JSX.Element => {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
+            event('Search', {
+              searchTerm: search
+            })
             router.push(`/busqueda/?q=${encodeURIComponent(search)}`)
           }
         }}
@@ -56,6 +60,11 @@ const Search = (): JSX.Element => {
       <Link
         href={`/busqueda/?q=${search}`}
         className='text-gray-8000 absolute inset-y-0 end-0 m-1 grid w-9 place-content-center'
+        onClick={() =>
+          event('Search', {
+            searchTerm: search
+          })
+        }
       >
         {/* Visually hidden text for screen readers */}
         <span className='sr-only'>Search</span>
@@ -113,6 +122,9 @@ const SearchMobile = (): JSX.Element => {
           // On enter key press, navigate to search results page
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
+              event('Search', {
+                searchTerm: search
+              })
               router.push(`/busqueda/?q=${encodeURIComponent(search)}`)
             }
           }}

@@ -12,15 +12,19 @@ import { HelpCircle, RefreshCcw, UserIcon } from 'lucide-react'
 
 // Store Imports
 import useShoppingCart from '@/stores/shopping-cart-store'
+import { event } from '@/lib/fpixel'
+import { User } from '@/types'
 
 const NotificationsPageButton = ({
-  reseller,
-  userId,
-  status
+  status,
+  totalAmount,
+  gateway,
+  user
 }: {
-  reseller: boolean
-  userId: string
+  user: User
   status: 'success' | 'failed'
+  totalAmount: string
+  gateway: string
 }) => {
   const [, setCount] = useShoppingCart()
   const router = useRouter()
@@ -32,6 +36,12 @@ const NotificationsPageButton = ({
    */
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleClick = (href: string) => {
+    event('Purchase', {
+      value: Number(totalAmount),
+      currency: 'EUR',
+      gateway,
+      userName: user.name
+    })
     setCount([])
     router.push(href)
   }
@@ -46,7 +56,9 @@ const NotificationsPageButton = ({
           variant='default'
           onClick={() =>
             handleClick(
-              reseller === true ? `/reseller/${userId}` : `/profile/${userId}`
+              user?.reseller === true
+                ? `/reseller/${user?.id}`
+                : `/profile/${user?.id}`
             )
           }
           className='flex items-center'
@@ -62,7 +74,7 @@ const NotificationsPageButton = ({
         <Button
           variant='cart'
           className='w-fit'
-          onClick={() => handleClick(`/checkout/review?userId=${userId}`)}
+          onClick={() => handleClick(`/checkout/review?userId=${user?.id}`)}
         >
           <RefreshCcw className='mr-2 h-4 w-4' />
           Reintentar

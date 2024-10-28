@@ -17,6 +17,7 @@ import { sanityClientRead } from '@sanity-studio/lib/client'
 
 // Types Imports
 import type { Footer as FooterProps } from '@/types'
+import FooterLinks from './footer-links'
 
 const Footer = async (): Promise<JSX.Element> => {
   const response: FooterProps = await sanityClientRead.fetch(
@@ -103,13 +104,7 @@ const Footer = async (): Promise<JSX.Element> => {
                           : `tel:${value}`
                     return (
                       <li key={uuidv4()}>
-                        <Link
-                          target='_blank'
-                          className='transition-colors duration-150 hover:text-gray-400'
-                          href={link}
-                        >
-                          {value}
-                        </Link>
+                        <FooterLinks key={key} link={link} value={value} />
                       </li>
                     )
                   })}

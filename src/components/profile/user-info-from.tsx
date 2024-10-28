@@ -144,7 +144,8 @@ export const UserProfileForm = ({
   }, [isShippingAddress, form])
 
   const {
-    formState: { isSubmitting, errors, dirtyFields }
+    formState: { isSubmitting, errors, dirtyFields },
+    control
   } = form
 
   const isDirty = Object.values(dirtyFields).length > 0
@@ -206,14 +207,14 @@ export const UserProfileForm = ({
             <small>* campos obligatorios</small>
           </legend>
           <FormFieldComponent
-            control={form.control}
+            control={control}
             name='name'
             label='Nombre *'
             placeholder='Juan Perez'
             isSubmitting={isSubmitting}
           />
           <FormFieldComponent
-            control={form.control}
+            control={control}
             name='email'
             type='email'
             label='Correo Electrónico *'
@@ -221,7 +222,7 @@ export const UserProfileForm = ({
             isSubmitting={isSubmitting}
           />
           <FormFieldComponent
-            control={form.control}
+            control={control}
             name='phone'
             label='Teléfono *'
             placeholder='+34 123456789'
@@ -229,7 +230,7 @@ export const UserProfileForm = ({
           />
           <div className='grid w-full grid-cols-4 space-x-4 pt-2'>
             <FormFieldComponent
-              control={form.control}
+              control={control}
               name='documentType'
               type='select'
               label=''
@@ -239,7 +240,7 @@ export const UserProfileForm = ({
               className='col-span-1'
             />
             <FormFieldComponent
-              control={form.control}
+              control={control}
               name='documentNumber'
               label=''
               placeholder='Número del Documento...'
@@ -253,14 +254,14 @@ export const UserProfileForm = ({
             Dirección de Facturación
           </legend>
           <FormFieldComponent
-            control={form.control}
+            control={control}
             name='address.street'
             label='Calle *'
             placeholder='Calle Falsa 123'
             isSubmitting={isSubmitting}
           />
           <FormFieldComponent
-            control={form.control}
+            control={control}
             name='address.floor'
             label='Numero *'
             placeholder='Piso 1, 1zq'
@@ -268,14 +269,14 @@ export const UserProfileForm = ({
           />
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
             <FormFieldComponent
-              control={form.control}
+              control={control}
               name='address.reference'
               label='Referencia (opcional)'
               placeholder='Detrás del Mercadona'
               isSubmitting={isSubmitting}
             />
             <FormFieldComponent
-              control={form.control}
+              control={control}
               name='address.locality'
               label='Localidad *'
               placeholder='Marbella'
@@ -284,14 +285,14 @@ export const UserProfileForm = ({
           </div>
           <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2'>
             <FormFieldComponent
-              control={form.control}
+              control={control}
               name='address.postal_code'
               label='Código Postal *'
               placeholder='22345'
               isSubmitting={isSubmitting}
             />
             <FormFieldComponent
-              control={form.control}
+              control={control}
               name='address.country'
               label='País de residencia *'
               placeholder='España'
