@@ -119,7 +119,7 @@ const PaypalButton = ({
 
   const handleCancel = () => {
     router.push(
-      `/fallo?userId=${user?.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}`
+      `/fallo?userId=${user?.id}&totalAmount=${Number(total.split(' ')[0].replace(',', '.'))}&gateway=Paypal&userId=${user?.id}`
     )
     setErrorMessage(
       'El pago fue cancelado. Puedes intentarlo de nuevo si lo deseas.'

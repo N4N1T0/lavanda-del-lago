@@ -47,7 +47,7 @@ const FailedPaymentPage = async ({
   const log = new Logger()
 
   // Destructure search parameters
-  const { userId, orderId, totalAmount, errorDetails } = searchParams
+  const { userId, orderId, totalAmount, errorDetails, gateway } = searchParams
 
   // Verify the presence of required parameters
   if (!totalAmount || !userId) {
@@ -142,9 +142,10 @@ const FailedPaymentPage = async ({
         </CardContent>
         <CardFooter className='flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0'>
           <NotidicationsPageButton
-            reseller={user?.reseller === null ? false : user?.reseller}
-            userId={userId}
+            user={user}
             status='failed'
+            totalAmount={totalAmount}
+            gateway={gateway}
           />
         </CardFooter>
       </Card>

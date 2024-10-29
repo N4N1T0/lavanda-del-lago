@@ -225,9 +225,10 @@ const SuccessPaymentPage = async ({
         </CardContent>
         <CardFooter className='flex justify-center space-x-4'>
           <NotificationsPageButton
-            reseller={user?.reseller === null ? false : user?.reseller}
-            userId={userId}
+            user={user}
             status='success'
+            totalAmount={totalAmount}
+            gateway={gateway}
           />
         </CardFooter>
       </Card>
