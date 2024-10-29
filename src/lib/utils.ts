@@ -129,7 +129,7 @@ export function capitalizeFirstLetter(str: string): string {
 
   return [
     eurilize(subTotal), // Subtotal formatted
-    eurilize(total - cuponDiscount), // Total formatted
+    eurilize(total - total * (cuponDiscount / 100)), // Total formatted
     eurilize(iva), // IVA formatted
     eurilize(shippingCost)
   ]
@@ -381,7 +381,7 @@ export function formatAddress(address: User['address']): string {
 
   const { street, floor, postal_code, locality } = address
 
-  // Filtra campos nulos o vacíos y únelos con una coma
+  // Filtra campos nulos o vacíos y únalos con una coma
   return [street, floor, postal_code, locality].filter(Boolean).join(', ')
 }
 
@@ -393,10 +393,19 @@ export function formatAddress(address: User['address']): string {
  * @return {string[]} An array of strings with the first letter capitalized.
  */
 export const formatComposicion = (composicion: string): string[] => {
-  return composicion
-    .toLocaleLowerCase()
-    .split(',')
-    .map((item) => capitalizeFirstLetter(item))
+  const hasComa = composicion.includes(',')
+
+  if (!hasComa) {
+    return composicion
+      .toLocaleLowerCase()
+      .split(',')
+      .map((item) => capitalizeFirstLetter(item))
+  } else {
+    return composicion
+      .toLocaleLowerCase()
+      .split(' ')
+      .map((item) => capitalizeFirstLetter(item))
+  }
 }
 
 export const generateShortId = () => {

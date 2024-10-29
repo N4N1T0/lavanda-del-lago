@@ -12,6 +12,7 @@ import {
   PanelsTopLeft,
   RectangleEllipsis,
   ShoppingBasket,
+  Ticket,
   UserRound,
   UsersRound
 } from 'lucide-react'
@@ -172,7 +173,10 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
               S.divider(),
               S.documentTypeListItem('shippingAddress')
                 .title('Direcciones de Envío')
-                .icon(() => <Map className='h-4 w-4' />)
+                .icon(() => <Map className='h-4 w-4' />),
+              S.documentTypeListItem('coupon')
+                .title('Cupones de descuento')
+                .icon(() => <Ticket className='h-4 w-4' />)
             ])
         ),
       S.documentTypeListItem('events')
@@ -207,7 +211,8 @@ export const lavandaCMSStructure = (S: StructureBuilder) =>
             'property',
             'remedies',
             'certifications',
-            'shippingAddress'
+            'shippingAddress',
+            'coupon'
           ].includes(listItem.getId()!)
       )
     ])

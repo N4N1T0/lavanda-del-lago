@@ -456,5 +456,17 @@ export const shippingAddress = groq`
   _id
 }
 `
+export const couponQuery = groq`
+   *[_type == "coupon" && code == $coupon][0]{
+    _id,
+    discount,
+    validFrom,
+    validTo,
+    uses,
+    users[]->{
+      "id": _id
+    }
+  }
+`
 
 // TODO Partial Product Query

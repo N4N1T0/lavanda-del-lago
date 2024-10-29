@@ -21,6 +21,7 @@ import property from '@sanity-studio/schemas/property'
 import remedies from '@sanity-studio/schemas/remedies'
 import certification from '@sanity-studio/schemas/certification'
 import shippingAddress from '@sanity-studio/schemas/shipping-address'
+import coupon from './schemas/coupons'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -45,6 +46,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     property,
     remedies,
     certification,
-    shippingAddress
+    shippingAddress,
+    coupon
   ]
 }

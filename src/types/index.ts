@@ -262,6 +262,17 @@ export interface NotificacionContactoInternoProps {
   message: string
 }
 
+export interface PackageOnTheWayProps {
+  customerName: string
+  orderNumber: string
+  expectedDeliveryDate: Date
+  products: { product: Product; quantity: number }[] | []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shippingAddress: any
+  currierCode: string
+  currier: 'correos' | 'nacex'
+}
+
 export interface PaymentErrorNotificationProps {
   user: User
   orderId: string | null | undefined
@@ -303,6 +314,7 @@ export interface FailedPage {
   orderId?: string
   totalAmount: string
   errorDetails?: string
+  gateway: string
 }
 
 export interface NotificationPageBodyProps {
@@ -436,4 +448,23 @@ export interface Certifications {
 export interface CertificationsBlock {
   title: string
   description: Content[]
+}
+
+export interface Coupon {
+  validFrom: string
+  validTo: string
+  uses: number
+  users: { id: string }[]
+  _id: string
+  discount: number
+}
+
+export interface WebhookPurchase {
+  id: string
+  expectedDeliveryDate: string
+  currier: 'correos' | 'nacex'
+  currierCode: string
+  products: { product: Product; quantity: number }[]
+  userEmail: User
+  shippingAddress: null | ShippingAddress
 }

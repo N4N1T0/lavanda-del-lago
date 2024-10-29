@@ -94,9 +94,20 @@ const NotificationPageBody = ({
           <span>{iva}</span>
         </div>
         {discountCoupon > 0 && (
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center justify-between text-green-500'>
             <span className='font-semibold'>Descuento por Cupon:</span>
-            <span>{discountCoupon}</span>
+            <div>
+              <span className='mr-2'>-{discountCoupon}%</span>
+              <span>
+                (-
+                {eurilize(
+                  Number(total.split(' ')[0].replace(',', '.')) /
+                    (1 - discountCoupon / 100) -
+                    Number(total.split(' ')[0].replace(',', '.'))
+                )}
+                )
+              </span>
+            </div>
           </div>
         )}
         <div className='flex items-center justify-between text-sm font-normal'>

@@ -114,3 +114,10 @@ export const contactFormSchema = z.object({
 })
 
 export type ContactFormValues = z.infer<typeof contactFormSchema>
+
+
+export const couponSchema = z.object({
+  code: z.string().min(1, { message: 'El cupón es necesario' })
+})
+
+export type CouponSchemaType = z.infer<typeof couponSchema>

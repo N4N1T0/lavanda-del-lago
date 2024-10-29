@@ -31,6 +31,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 // Axiom imports
 import { useLogger } from 'next-axiom'
 import { ShippingAddress } from '@/types/sanity'
+import CouponValidationForm from './coupon-validation-form'
 
 /**
  * Calculate the total price of the items in the shopping cart.
@@ -49,7 +50,6 @@ const Summary = ({
   const [count, setCount, { isLoading: cartIsLoading }] = useShoppingCart()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [paymentForm, setPaymentForm] = useState(null)
-  // TODO Cupoun Validation and Functionality
   const [discountCoupon, setDiscountCoupon] = useState<number>(0)
 
   // Axiom Init
@@ -84,24 +84,6 @@ const Summary = ({
       }))
     )
   )
-
-  const handleDiscountCoupon = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const couponInput = (
-      e.currentTarget.elements.namedItem('coupon') as HTMLInputElement
-    )?.value
-
-    // Define valid coupons and their respective discounts
-    const couponDiscounts: Record<string, number> = {
-      'lavanda.es': 6,
-      'SUMMER20': 20,
-      'WELCOME10': 10
-    }
-
-    // Check if the coupon exists in our discounts record
-    const discount = couponDiscounts[couponInput] || 0
-    setDiscountCoupon(discount)
-  }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -183,6 +165,25 @@ const Summary = ({
           </h3>
           <p className='text-gray-600'>{iva}</p>
         </div>
+
+        {discountCoupon > 0 && (
+          <div className='flex justify-between text-green-500'>
+            <h3 className='text-lg'>Cupón</h3>
+            <p>
+              -{discountCoupon}%{' '}
+              <span>
+                (-
+                {eurilize(
+                  Number(total.split(' ')[0].replace(',', '.')) /
+                    (1 - discountCoupon / 100) -
+                    Number(total.split(' ')[0].replace(',', '.'))
+                )}
+                )
+              </span>
+            </p>
+          </div>
+        )}
+
         {/* Total price */}
         <div className='flex justify-between rounded-lg bg-neutral-100 p-2 text-xl'>
           <h3>Total</h3>
@@ -190,25 +191,11 @@ const Summary = ({
         </div>
 
         {/* Cupón TODO */}
-        <form
-          className='w-full border-y border-accent/50 py-3'
-          onSubmit={(e) => handleDiscountCoupon(e)}
-        >
-          <p className='text-sm md:text-base'>
-            Cupón de Regalo o Código Promocional
-          </p>
-          <div className='mt-1.5 flex items-center justify-between gap-4'>
-            <input
-              type='text'
-              className='h-10 w-3/4 rounded-md border border-accent/30 pl-2'
-              placeholder='x2Ltr30P...'
-              name='coupon'
-            />
-            <button className={`${buttonVariants({ variant: 'cart' })} w-1/4`}>
-              Validar
-            </button>
-          </div>
-        </form>
+        <CouponValidationForm
+          setDiscountCoupon={setDiscountCoupon}
+          discountCoupon={discountCoupon}
+          userId={user?.id}
+        />
         {total === '0,00 €' ? (
           <Link
             href='/productos'
