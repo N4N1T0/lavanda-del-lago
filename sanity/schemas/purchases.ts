@@ -114,6 +114,51 @@ export default {
       to: [{ type: 'shippingAddress' }],
       description:
         'La dirección de envío de la compra.SI EL CAMPO ESTA VACIO PUES LA DIRECCION DE ENVIO ES LA DEL USUARIO'
+    },
+    {
+      name: 'currier',
+      title: 'Transportista',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Correos', value: 'correos' },
+          { title: 'Nacex', value: 'nacex' }
+        ]
+      },
+      description: 'El transportista utilizado para la compra.',
+      validation: (Rule: any): any =>
+        Rule.custom((currier: string, context: any) => {
+          if (context.parent.status === 'enviado' && !currier) {
+            return 'El transportista es requerido si la compra ha sido enviada.'
+          }
+          return true
+        })
+    },
+    {
+      name: 'currierCode',
+      title: 'Código de Transporte',
+      type: 'string',
+      description: 'El código de transporte utilizado para la compra.',
+      validation: (Rule: any): any =>
+        Rule.custom((currierCode: string, context: any) => {
+          if (context.parent.currier && !currierCode) {
+            return 'El código de transporte es requerido si se selecciona un transportista.'
+          }
+          return true
+        })
+    },
+    {
+      name: 'expectedDeliveryDate',
+      title: 'Fecha de Entrega Estimada',
+      type: 'datetime',
+      description: 'Fecha estimada de entrega de la compra.',
+      validation: (Rule: any): any =>
+        Rule.custom((expectedDeliveryDate: string, context: any) => {
+          if (context.parent.currier && !expectedDeliveryDate) {
+            return 'La fecha de entrega estimada es requerida si se selecciona un transportista.'
+          }
+          return true
+        })
     }
   ],
   preview: {

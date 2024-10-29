@@ -65,8 +65,15 @@ export const CompletedPurchase = ({
             </Text>
             {discountCoupon > 0 && (
               <Text className='text-sm text-gray-700'>
-                <strong>Descuento por Cupon:</strong> -
-                {eurilize(discountCoupon)}
+                <strong>Descuento por Cupon:</strong> -{discountCoupon}%{' '}
+                <span>
+                  (-
+                  {eurilize(
+                    Number(totalAmount) / (1 - discountCoupon / 100) -
+                      Number(totalAmount)
+                  )}
+                  )
+                </span>
               </Text>
             )}
             {user?.reseller && user?.discount && (

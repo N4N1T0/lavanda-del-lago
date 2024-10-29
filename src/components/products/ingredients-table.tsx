@@ -8,7 +8,7 @@ const IngredientsTable = ({ composicion }: { composicion: string }) => {
       {formattedComposicion.map((ingredient) => (
         <li
           key={ingredient}
-          className='col-span-1 flex items-start justify-start text-left text-sm'
+          className='col-span-1 inline-flex items-start justify-start text-left'
         >
           <span className='mr-2 text-accent'>•</span>
           {ingredient}
