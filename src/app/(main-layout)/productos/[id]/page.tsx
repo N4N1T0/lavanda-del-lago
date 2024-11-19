@@ -44,6 +44,8 @@ export async function generateMetadata({
     }
   )
 
+  console.log(productNames)
+
   return {
     title: `${desurlizeForBreadcrumbs(response?.nombre) || 'Estamos trabajando en un nombre'}`,
     description: `${response?.descripcion || 'No hay descripción'}`,

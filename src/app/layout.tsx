@@ -18,7 +18,6 @@ import { localization } from '@/components/auth/custom-locale'
 
 // Security
 import SecurityHandling from '@/components/layout/security-handling'
-import CookieConsent from '@/components/ui/cookie'
 
 // Google Tags
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
@@ -64,7 +63,6 @@ export default function RootLayout({
           )}
         >
           {children}
-          <CookieConsent />
           <Toaster />
           <SecurityHandling />
           <FacebookPixel />

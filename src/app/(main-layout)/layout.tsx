@@ -1,6 +1,7 @@
 // Components Imports
 import Footer from '@/components/layout/footer'
 import Navbar from '@/components/layout/navbar'
+import CookieConsent from '@/components/ui/cookie'
 
 /**
  * Renders the main layout of the application.
@@ -18,6 +19,7 @@ const MainLayout = ({
     <>
       <Navbar />
       <main>{children}</main>
+      <CookieConsent />
       <Footer />
     </>
   )
