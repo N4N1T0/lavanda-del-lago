@@ -108,7 +108,10 @@ export const POST = withAxiom(
         new Date(response._createdAt).getTime() < new Date(date).getTime() &&
         response._id === `resellerForm-${id}`
       ) {
-        req.log.info('Reseller Form already created', { userId: id }) // Log existing form
+        req.log.info('Reseller Form already created', {
+          userId: id,
+          formId: `resellerForm-${id}`
+        }) // Log existing form
         return NextResponse.json({
           success: true,
           already: true,
@@ -129,7 +132,10 @@ export const POST = withAxiom(
         })
       })
 
-      req.log.info('Reseller Form created successfully', { userId: id }) // Log success message
+      req.log.info('Reseller Form created successfully', {
+        userId: id,
+        formId: `resellerForm-${id}`
+      }) // Log success message
 
       // Return a success message
       return NextResponse.json({

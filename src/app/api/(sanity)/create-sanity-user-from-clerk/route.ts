@@ -92,6 +92,8 @@ export const GET = withAxiom(
         //   })
       }
 
+       req.log.info('User Created from Clerk', { userId: id, fullName })
+
       return NextResponse.redirect(
         `${process.env.NEXT_PUBLIC_URL!}/${redirectTo}` ||
           process.env.NEXT_PUBLIC_URL!

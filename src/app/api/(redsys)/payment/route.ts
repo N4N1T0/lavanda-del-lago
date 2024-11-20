@@ -85,7 +85,10 @@ export const POST = withAxiom(
       DS_MERCHANT_TITULAR: name
     })
 
-    req.log.info('RedSys redirect form created', { orderId, totalAmount }) // Log success with order details
+    req.log.info('RedSys redirect form created', { orderId, totalAmount, user: user.name, products: products.map((p) => { return {
+      id: p.id,
+      quantity: p.quantity
+    }}) })
 
     // Return the HTML response
     return NextResponse.json({

@@ -123,7 +123,7 @@ export const POST = withAxiom(
         await updateClerkUser(id, firstName, lastName)
         await ensureClerkEmail(id, email)
 
-        req.log.info('User profile updated successfully', { userId: id }) // Log successful update
+        req.log.info('User profile updated successfully', { userId: id, fullName: name, email }) // Log successful update
         return NextResponse.json({
           success: true,
           message: 'The profile has been updated successfully.',
