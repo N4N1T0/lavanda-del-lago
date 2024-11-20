@@ -53,6 +53,7 @@ const SearchPage = async ({
       <section id='search-products-list' className='mt-5'>
         <ul className='grid w-full grid-cols-2 content-center gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6 2xl:gap-10'>
           {results?.hits.map(({ id, document }, index) => (
+            // @ts-expect-error TODO: change the DocumentType for Product
             <ProductCard key={id} product={document} index={index} />
           ))}
         </ul>
