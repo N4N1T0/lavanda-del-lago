@@ -80,7 +80,7 @@ export function breakUrlToBreadcrumb(url: string): Breadcrumbs {
  * capitalizeFirstLetter('javascript') // 'Javascript'
  */
 export function capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  return str?.charAt(0)?.toUpperCase() + str?.slice(1)
 }
 
 /**
@@ -168,7 +168,9 @@ export const removeFromWishlist = (count: Product[], id: string): Product[] => {
  * @return {string[]} - The filtered and sorted array of categories.
  */
 export const categoriesFilter = (categories: CategoriesList[]): string[] => {
-  const tempCategories = categories.map((category) => category.categoria.trim())
+  const tempCategories = categories.map((category) =>
+    category?.categoria?.trim()
+  )
   return ['Todos', ...Array.from(new Set(tempCategories)).sort()]
 }
 
